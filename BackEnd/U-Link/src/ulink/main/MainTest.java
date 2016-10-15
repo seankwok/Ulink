@@ -1,9 +1,11 @@
 package ulink.main;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import ulink.constructor.Client;
 import ulink.dao.DatabaseConnection;
+import ulink.logic.TopK;
 
 public class MainTest {
 
@@ -13,7 +15,11 @@ public class MainTest {
 		
 		ArrayList<Client> clientList = connection.retrieveAllClient();
 		
-		System.out.print(clientList.get(0).getClientName());
+		TopK test = new TopK();
+		
+		HashMap<String,Integer>test1 = test.topReferral();
+		
+		System.out.print(test1.toString());
 	}
 
 }

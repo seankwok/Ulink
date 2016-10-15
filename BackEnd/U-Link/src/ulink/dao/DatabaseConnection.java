@@ -32,19 +32,20 @@ public class DatabaseConnection {
 				 String gender = rs.getString(3);
 				 String dateOfBirth = rs.getString(4);
 				 String mainDianosis = rs.getString(5);
-				 String nationality = rs.getString(6);
-				 String countryOfResidence = rs.getString(7);
-				 String billingStreet = rs.getString(8);
-				 String billingCity = rs.getString(9);
-				 String billingState = rs.getString(10);
-				 String billingCountry = rs.getString(11);
-				 String billingCode = rs.getString(12);
-				 String isMedicial = rs.getString(13);
-				 String isClaim = rs.getString(14);
-				 String claimInformation = rs.getString(15);
-				 String referralName = rs.getString(16);
+				 String clientType = rs.getString(6);
+				 String nationality = rs.getString(7);
+				 String countryOfResidence = rs.getString(8);
+				 String billingStreet = rs.getString(9);
+				 String billingCity = rs.getString(10);
+				 String billingState = rs.getString(11);
+				 String billingCountry = rs.getString(12);
+				 String billingCode = rs.getString(13);
+				 String isMedicial = rs.getString(14);
+				 String isClaim = rs.getString(15);
+				 String claimInformation = rs.getString(16);
+				 String referralName = rs.getString(17);
 				clientList.add(new Client(passportNumber, clientName, gender, dateOfBirth,
-						mainDianosis, nationality, countryOfResidence, billingStreet,billingCity, billingState, billingCountry, billingCode, isMedicial, isClaim,  claimInformation,referralName));
+						mainDianosis,clientType, nationality, countryOfResidence, billingStreet,billingCity, billingState, billingCountry, billingCode, isMedicial, isClaim,  claimInformation,referralName));
 			}
 
 			con.close();

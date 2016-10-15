@@ -6,6 +6,7 @@ public class Client {
 	private String gender;
 	private String dateOfBirth;
 	private String mainDianosis;
+	private String clientType;
 	private String nationality;
 	private String countryOfResidence;
 	private String billingStreet;
@@ -24,8 +25,9 @@ public class Client {
 	//private String followUpPerson;
 	private String referralName;
 	
+
 	public Client(String passportNumber, String clientName, String gender, String dateOfBirth, String mainDianosis,
-			String nationality, String countryOfResidence, String billingStreet, String billingCity,
+			String clientType, String nationality, String countryOfResidence, String billingStreet, String billingCity,
 			String billingState, String billingCountry, String billingCode, String isMedicial, String isClaim,
 			String claimInformation, String referralName) {
 		super();
@@ -34,6 +36,7 @@ public class Client {
 		this.gender = gender;
 		this.dateOfBirth = dateOfBirth;
 		this.mainDianosis = mainDianosis;
+		this.clientType = clientType;
 		this.nationality = nationality;
 		this.countryOfResidence = countryOfResidence;
 		this.billingStreet = billingStreet;
@@ -45,6 +48,15 @@ public class Client {
 		this.isClaim = isClaim;
 		this.claimInformation = claimInformation;
 		this.referralName = referralName;
+	}
+	public String getClientType() {
+		return clientType;
+	}
+	public void setClientType(String clientType) {
+		this.clientType = clientType;
+	}
+	public String getBillingCountry() {
+		return billingCountry;
 	}
 	public void setBillingCountry(String billingCountry) {
 		this.billingCountry = billingCountry;
