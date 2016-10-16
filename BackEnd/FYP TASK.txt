@@ -4,7 +4,7 @@ Top k (1 to 10)
 - Referral top k (Done)
 - Compare between Cases / Appointment by team(Medicial,ops,visa) for different months & year  
    - Medicial (number of in & out)
-   - Visa (Indo & non indo)d
+   - Visa (Indo & non indo)
 - Doctors top k (Done) 
 
 Function 2 ()
