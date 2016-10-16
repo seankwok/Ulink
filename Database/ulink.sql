@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.14
--- http://www.phpmyadmin.net
+-- version 4.6.4
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 15, 2016 at 07:05 PM
--- Server version: 5.6.17
--- PHP Version: 5.5.12
+-- Generation Time: Oct 16, 2016 at 01:44 AM
+-- Server version: 5.7.14
+-- PHP Version: 5.6.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `ulink`
@@ -28,7 +28,7 @@ USE `ulink`;
 -- Table structure for table `client`
 --
 
-CREATE TABLE IF NOT EXISTS `client` (
+CREATE TABLE `client` (
   `passportNumber` varchar(45) NOT NULL,
   `clientName` varchar(45) DEFAULT NULL,
   `gender` varchar(45) DEFAULT NULL,
@@ -45,8 +45,7 @@ CREATE TABLE IF NOT EXISTS `client` (
   `isMedicial` varchar(45) DEFAULT NULL,
   `isClaim` varchar(45) DEFAULT NULL,
   `claimInformation` varchar(45) DEFAULT NULL,
-  `referralName` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`passportNumber`)
+  `referralName` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -54,7 +53,10 @@ CREATE TABLE IF NOT EXISTS `client` (
 --
 
 INSERT INTO `client` (`passportNumber`, `clientName`, `gender`, `dateOfBirth`, `mainDiagnosis`, `clientType`, `nationality`, `countryOfResidence`, `billingStreet`, `billingCity`, `billingState`, `billingCountry`, `billingCode`, `isMedicial`, `isClaim`, `claimInformation`, `referralName`) VALUES
-('G1234456g', 'Sean', 'Male', '19091991', 'none', 'none', 'none', 'none', 'none', 'none', NULL, NULL, NULL, NULL, NULL, NULL, 'abcdefg');
+('1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'von'),
+('123', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'sean'),
+('G1234456g', 'Sean', 'Male', '19091991', 'none', 'none', 'none', 'none', 'none', 'none', NULL, NULL, NULL, NULL, NULL, NULL, 'abcdefg'),
+('test', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'sean');
 
 -- --------------------------------------------------------
 
@@ -62,13 +64,28 @@ INSERT INTO `client` (`passportNumber`, `clientName`, `gender`, `dateOfBirth`, `
 -- Table structure for table `user`
 --
 
-CREATE TABLE IF NOT EXISTS `user` (
+CREATE TABLE `user` (
   `username` varchar(30) NOT NULL,
   `password` varchar(30) NOT NULL,
   `role` varchar(30) NOT NULL,
-  `email` varchar(45) NOT NULL,
-  PRIMARY KEY (`email`)
+  `email` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `client`
+--
+ALTER TABLE `client`
+  ADD PRIMARY KEY (`passportNumber`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`email`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
