@@ -1,0 +1,15 @@
+Function 1 (19/10)
+Top k (1 to 10)
+- Condition top k  
+- Referral top k 
+- Compare between Cases / Appointment by team(Medicial,ops,visa) for different months & year  
+   - Medicial (number of in & out)
+   - Visa (Indo & non indo)
+- Doctors top k
+
+Function 2 ()
+Timeline 
+- Send out emails regularly to your clients (Patients)
+- Query and sort patients based on their age and possible illness. 
+- Able to add | update | delete 
+- Able to filter when was the last screening
