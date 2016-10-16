@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import ulink.constructor.Client;
+import ulink.constructor.Consultation;
 
 public class DatabaseConnection {
 
@@ -56,4 +57,36 @@ public class DatabaseConnection {
 		return clientList;
 	}
 	
+	
+	public ArrayList<Consultation> retrieveAllConsultation() {
+
+		Connection con;
+		ArrayList<Consultation> consultationList = new ArrayList<Consultation>();
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection(
+					"jdbc:mysql://localhost:3306/ulink", "root", "");
+			
+			Statement stmt = con.createStatement();
+			String sql = "Select * from consultation";
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				 int ID = rs.getInt(1);
+				 String appointment = rs.getString(2);
+				 String doctorName = rs.getString(3);
+				 String clinicName = rs.getString(4);
+				 String passportNumber = rs.getString(5);
+				 consultationList.add(new Consultation(ID, appointment, doctorName, clinicName, passportNumber));
+			}
+
+			con.close();
+
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return consultationList;
+	}
 }

@@ -17,7 +17,7 @@ public class MainTest {
 		
 		TopK test = new TopK();
 		
-		HashMap<String,Integer>test1 = test.topReferral();
+		HashMap<String,Integer>test1 = test.topDoctor();
 		
 		System.out.print(test1.toString());
 	}
