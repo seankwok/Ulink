@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map.Entry;
-import java.util.PriorityQueue;
 
 import ulink.constructor.Client;
 import ulink.dao.DatabaseConnection;
@@ -36,6 +34,29 @@ public class TopK {
 		   HashMap<String, Integer> sortedReferral = sortByValue(referralList);
 		
 		   return sortedReferral;
+	
+	}
+	
+	public HashMap<String,Integer> topCondition(){
+		ArrayList<Client> clientList = connection.retrieveAllClient();
+		HashMap<String,Integer> conditionList = new HashMap<String,Integer>();
+		
+		
+		for (int i = 0; i < clientList.size(); i++){
+			Client client = clientList.get(i);
+			String diagnosis  = client.getmainDiagnosis();
+			if (diagnosis != null){
+				if (!conditionList.containsKey(diagnosis)){
+					conditionList.put(diagnosis, 1);
+				}else{
+					conditionList.put(diagnosis, conditionList.get(diagnosis)+1);
+				}
+			}
+		}
+		
+		   HashMap<String, Integer> sortedCondition = sortByValue(conditionList);
+		
+		   return sortedCondition;
 	
 	}
 	

@@ -5,7 +5,7 @@ public class Client {
 	private String clientName;
 	private String gender;
 	private String dateOfBirth;
-	private String mainDianosis;
+	private String mainDiagnosis;
 	private String clientType;
 	private String nationality;
 	private String countryOfResidence;
@@ -26,7 +26,7 @@ public class Client {
 	private String referralName;
 	
 
-	public Client(String passportNumber, String clientName, String gender, String dateOfBirth, String mainDianosis,
+	public Client(String passportNumber, String clientName, String gender, String dateOfBirth, String mainDiagnosis,
 			String clientType, String nationality, String countryOfResidence, String billingStreet, String billingCity,
 			String billingState, String billingCountry, String billingCode, String isMedicial, String isClaim,
 			String claimInformation, String referralName) {
@@ -35,7 +35,7 @@ public class Client {
 		this.clientName = clientName;
 		this.gender = gender;
 		this.dateOfBirth = dateOfBirth;
-		this.mainDianosis = mainDianosis;
+		this.mainDiagnosis = mainDiagnosis;
 		this.clientType = clientType;
 		this.nationality = nationality;
 		this.countryOfResidence = countryOfResidence;
@@ -76,8 +76,8 @@ public class Client {
 	public String getDateOfBirth() {
 		return dateOfBirth;
 	}
-	public String getMainDianosis() {
-		return mainDianosis;
+	public String getmainDiagnosis() {
+		return mainDiagnosis;
 	}
 	public String getNationality() {
 		return nationality;
@@ -121,8 +121,8 @@ public class Client {
 	public void setDateOfBirth(String dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
-	public void setMainDianosis(String mainDianosis) {
-		this.mainDianosis = mainDianosis;
+	public void setmainDiagnosis(String mainDiagnosis) {
+		this.mainDiagnosis = mainDiagnosis;
 	}
 	public void setNationality(String nationality) {
 		this.nationality = nationality;
