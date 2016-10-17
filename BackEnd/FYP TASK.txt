@@ -1,11 +1,11 @@
 Function 1 (19/10)
 Top k (1 to 10)
-- Condition top k  (Done)
-- Referral top k (Done)
+- Condition top k  (Done) filter by dateTime
+- Referral top k (Done) filter by dateTime
 - Compare between Cases / Appointment by team(Medicial,ops,visa) for different months & year  
    - Medicial (number of in & out)
    - Visa (Indo & non indo)
-- Doctors top k (Done) 
+- Doctors top k (Done) filter by dateTime mm/dd/yyyy hh:mm
 
 Function 2 ()
 Timeline 
