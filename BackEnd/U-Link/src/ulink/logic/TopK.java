@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import ulink.constructor.Client;
+import ulink.constructor.Consultation;
 import ulink.dao.DatabaseConnection;
 
 public class TopK {
@@ -57,6 +58,29 @@ public class TopK {
 		   HashMap<String, Integer> sortedCondition = sortByValue(conditionList);
 		
 		   return sortedCondition;
+	
+	}
+	
+	public HashMap<String,Integer> topDoctor(){
+		ArrayList<Consultation> consultationList = connection.retrieveAllConsultation();
+		HashMap<String,Integer> doctorList = new HashMap<String,Integer>();
+		
+		
+		for (int i = 0; i < consultationList.size(); i++){
+			Consultation consultation = consultationList.get(i);
+			String doctorName  = consultation.getDoctorName();
+			if (doctorName != null){
+				if (!doctorList.containsKey(doctorName)){
+					doctorList.put(doctorName, 1);
+				}else{
+					doctorList.put(doctorName, doctorList.get(doctorName)+1);
+				}
+			}
+		}
+		
+		   HashMap<String, Integer> sortedDoctor = sortByValue(doctorList);
+		
+		   return sortedDoctor;
 	
 	}
 	
