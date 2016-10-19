@@ -69,7 +69,7 @@
 </div>
 
     <div class="container">
-     <div class="col-md-6">
+     <div class="col-md-3">
       <div class="form-group">
         <label>Select "X" </label>
         <select class="form-control" id="x-value">
@@ -87,17 +87,58 @@
       </div>
     </div>
       
-      <div class="col-md-6">
+      <div class="col-md-3">
       <div class="form-group">
         <label>Select Criteria </label>
         <select class="form-control" id="criteria">
           <option>Age</option>
-          <option>Condition</option>
           <option>Doctor</option>
           <option>Gender</option>
           <option>Referral</option>
+          <option>Speciality</option>
         </select>
       </div>
+    </div>
+
+
+    <div class="col-md-3">
+      <div class="form-Date">
+        <label>Select Start Date </label>
+         <div class="form-group">
+                <div class='input-group date' id='datetimepicker1'>
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+          </div>
+      </div>
+
+      <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker1').datetimepicker();
+            });
+        </script>
+    </div>
+     
+      <div class="col-md-3">
+      <div class="form-Date">
+        <label>Select End Date </label>
+         <div class="form-group">
+                <div class='input-group date' id='datetimepicker1'>
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+          </div>
+      </div>
+
+      <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker1').datetimepicker();
+            });
+        </script>
     </div>
 
     </div> 
