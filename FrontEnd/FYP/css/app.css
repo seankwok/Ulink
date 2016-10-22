@@ -1,0 +1,233 @@
+/*---------------------------------------------------------------------*/
+/*  COMMON
+/*---------------------------------------------------------------------*/
+
+body {
+    background-color: #288479;
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+    color: #2B2626;
+    line-height: 25px;
+    overflow-x: hidden;
+}
+.section .section-wrapper > .section-content {
+    padding: 80px 0px;
+}
+
+@media (min-width: 768px) {
+  .section .section-wrapper > .section-content {
+    padding: 100px 0px;
+  }
+}
+.text-center{
+  text-align:center;
+}
+.text-yellow{
+  color:#F1EA0E;
+}
+.text-white{
+  color:#fff;
+}
+span.divider {
+    display: block;
+    margin: 30px 0px;
+    width: 300px;
+    height: 3px;
+    background-color: #EF5959;
+}
+span.divider.center {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+/*---------------------------------------------------------------------*/
+/*  TIMELINE
+/*---------------------------------------------------------------------*/
+
+.panel-group.timeline {
+  position: relative;
+  margin-top: 30px;
+}
+
+.panel-group.timeline .timeline-item {
+  position: relative;
+  margin-bottom: 40px;
+}
+
+@media (min-width: 568px) {
+  .panel-group.timeline .timeline-item {
+    margin-bottom: 20px;
+  }
+}
+
+@media (min-width: 768px) {
+  .panel-group.timeline .timeline-item:before {
+    position: absolute;
+    content: '';
+    width: 1px;
+    height: calc(100% + 20px);
+    top: 0;
+    left: 170px;
+    border-left: 1px dashed #fff;
+  }
+}
+
+.panel-group.timeline .timeline-item:last-child {
+  margin-bottom: 0px;
+}
+
+.panel-group.timeline .timeline-item:last-child:before {
+  display: none;
+}
+
+.panel-group.timeline .timeline-item .timeline-year {
+  display: block;
+  position: relative;
+  width: 120px;
+  height: 40px;
+  margin-bottom: -20px;
+  margin-right: auto;
+  margin-left: auto;
+  line-height: 40px;
+  background-color: #DCC417;
+  text-align: center;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 4px;
+}
+
+@media (min-width: 568px) {
+  .panel-group.timeline .timeline-item .timeline-year {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+  }
+}
+
+.panel-group.timeline .timeline-item .timeline-btn {
+  position: absolute;
+  z-index: 5;
+  top: 0;
+  left: 150px;
+  width: 40px;
+  height: 40px;
+  background-color: #C70E32;
+  border-radius: 4px;
+}
+
+@media (max-width: 767px) {
+  .panel-group.timeline .timeline-item .timeline-btn {
+    display: none;
+  }
+}
+
+.panel-group.timeline .timeline-item .timeline-btn > a {
+  display: block;
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+}
+
+.panel-group.timeline .timeline-item .timeline-btn > a:before {
+  display: block;
+  position: absolute;
+  z-index: 15;
+  content: '-';
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  line-height: 38px;
+  color: #ffffff;
+  font-size: 30px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.panel-group.timeline .timeline-item .timeline-btn > a.collapsed:before {
+  content: '+';
+}
+
+.panel-group.timeline .timeline-item .panel {
+  padding: 10px;
+  width: 100%;
+  background: transparent;
+  border: 1px solid #DCCECE;
+  border-radius: 0px;
+}
+
+@media (min-width: 568px) {
+  .panel-group.timeline .timeline-item .panel {
+    width: calc(100% - 140px);
+    margin-left: 140px;
+  }
+}
+
+@media (min-width: 768px) {
+  .panel-group.timeline .timeline-item .panel {
+    width: calc(100% - 210px);
+    margin-left: 210px;
+  }
+}
+
+.panel-group.timeline .timeline-item .panel .panel-heading {
+  position: relative;
+}
+
+.panel-group.timeline .timeline-item .panel .panel-heading .panel-title {
+  text-transform: uppercase;
+  color:#264c47;
+}
+
+@media (max-width: 567px) {
+  .panel-group.timeline .timeline-item .panel .panel-heading .panel-title {
+    padding-top: 20px;
+  }
+}
+
+.panel-group.timeline .timeline-item .panel .panel-collapse .panel-body {
+  padding-top: 5px;
+  border-top: none;
+  color:#000000;
+}
+
+.panel-group.timeline .timeline-item .panel .panel-collapse .panel-body p {
+  margin-bottom: 0px;
+}
+
+/*---------------------------------------------------------------------*/
+/*  TUTORIAL INTRODUCTION - IGNORE THIS
+/*---------------------------------------------------------------------*/
+
+.button{
+display:inline-block;
+text-transform:uppercase;
+padding:1em 1.5em 0.75em;
+border-radius:2px;
+font-weight:bold;
+border:none;color:#fff !important;
+text-decoration:none;
+font-family:'Open Sans Condensed',sans-serif;
+font-size:14px;
+line-height:1;
+cursor:pointer;
+margin-right:10px;
+margin-top:20px;
+}
+.button:hover{
+  opacity:0.9;
+  text-decoration:none;
+}
+.button.green{
+background-color:#a5d16d;
+box-shadow:0 0 5px #a4cf6c inset, 0 1px 1px #eee
+}
+.button.red{
+background-color:#f4836a;
+box-shadow:0 0 5px #ef7f65 inset, 0 1px 1px #eee
+}
+.button.small{font-size:11px}
