@@ -83,6 +83,44 @@ public class TopK {
 	
 	}
 	
+	
+	public HashMap<String,Integer> compareTeam(String startDate, String endDate, String team){
+		ArrayList<String> comapareTeamList = connection.retrieveAllTeam(startDate, endDate, team);
+		HashMap<String,Integer> compareList = new HashMap<String,Integer>();
+		compareList.put("indoIn", 0);
+		compareList.put("indoOut", 0);
+		compareList.put("nonIndoIn", 0);
+		compareList.put("nonIndoOut", 0);
+		//hospitalAdmitted = null means out
+		
+		for (int i = 0; i < comapareTeamList.size()-1; i++){
+			String nationality = comapareTeamList.get(i);
+			String hospitalAdmitted  = comapareTeamList.get(i+1);
+			if (nationality.equals("indo")){
+				if (hospitalAdmitted.equals("null")){
+					int temp = compareList.get("indoOut");
+					compareList.put("indoOut", temp+1);
+				}else{
+					int temp = compareList.get("indoIn");
+					compareList.put("indoIn", temp+1);
+				}
+			} else {
+				if (hospitalAdmitted.equals("null")){
+					int temp = compareList.get("nonIndoIn");
+					compareList.put("nonIndoIn", temp+1);
+				}else{
+					int temp = compareList.get("nonIndoIn");
+					compareList.put("nonIndoIn", temp+1);
+				}
+			}
+		}
+		
+		  
+		
+		   return compareList;
+	
+	}
+	
 	 private static HashMap<String, Integer> sortByValue(HashMap<String, Integer> unsortMap) {
 
 	        // 1. Convert Map to List of Map

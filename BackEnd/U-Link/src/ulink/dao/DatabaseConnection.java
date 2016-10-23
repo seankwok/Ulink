@@ -120,4 +120,37 @@ public class DatabaseConnection {
 
 		return specialityList;
 	}
+	
+	public ArrayList<String> retrieveAllTeam(String startDate, String endDate, String team) {
+
+		Connection con;
+		ArrayList<String> admissionList = new ArrayList<String>();
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection(
+					"jdbc:mysql://localhost:3306/ulink", "root", "");
+			
+			Statement stmt = con.createStatement();
+			String sql = "select client.passportNumber,client.clientName, client.nationality, user.role, followup.hospitalAdmitted from client inner join appointment on client.passportNumber = appointment.passportNumber INNER join user on appointment.email = user.email inner join admission on client.passportNumber = admission.passportNumber inner join followup on admission.followUpID = followup.followUpID where followup.dateOfAdmission >= '"+ startDate +"' && followup.dateOfAdmission <= '"+ endDate +"'&& user.role = '"+ team +"'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				 
+				 String nationality = rs.getString(3);
+				 String hospitalAdmitted = rs.getString(5);
+				 admissionList.add(nationality);
+				 admissionList.add(hospitalAdmitted);
+			}
+
+			con.close();
+
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return admissionList;
+	}
+	
 }

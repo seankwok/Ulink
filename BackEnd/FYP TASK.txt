@@ -2,11 +2,19 @@ Function 1 (19/10)
 Top k (1 to 10)
 - Specialty top k filter by dateTime (Done) 
 - Referral top k filter by dateTime (Done) 
-- Compare between Cases / Appointment by team(Medicial,ops,visa) for different months & year  
+- Compare between Cases / Appointment by team(Medicial,ops,visa) for different months & year  (Done)
    - Medicial (number of in & out)
    - Visa (Indo & non indo)
 
-Admission same as consultation format for SQL 
+Sql statement search based on team, and months/year 
+	spilt to number of in & out, how of many of the in & out are indo & non indo, hospital admitted
+
+
+sql statement 
+select client.passportNumber,client.clientName, client.nationality, user.role, followup.hospitalAdmitted from client inner join appointment on client.passportNumber = appointment.passportNumber INNER join user on appointment.email = user.email inner join admission on client.passportNumber = admission.passportNumber inner join followup on admission.followUpID = followup.followUpID where followup.dateOfAdmission >= "2016-10-05 00:00:00" && followup.dateOfAdmission <= "2016-10-20 00:00:00"
+
+select client.passportNumber,client.clientName, client.nationality, user.role, followup.hospitalAdmitted from client inner join appointment on client.passportNumber = appointment.passportNumber INNER join user on appointment.email = user.email inner join admission on client.passportNumber = admission.passportNumber inner join followup on admission.followUpID = followup.followUpID where followup.dateOfAdmission >= "2016-10-05 00:00:00" && followup.dateOfAdmission <= "2016-10-20 00:00:00" && user.role = "Medicial"
+
 
 1) Medical (inpatient/outpatient)
 - For analysis, we need to know how many inpatient and outpatient cases for medical team
