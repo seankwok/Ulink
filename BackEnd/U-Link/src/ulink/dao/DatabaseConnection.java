@@ -12,7 +12,7 @@ import ulink.constructor.Consultation;
 
 public class DatabaseConnection {
 
-	public ArrayList<Client> retrieveAllClient() {
+	public ArrayList<Client> retrieveAllClient(String startDate, String endDate) {
 
 		Connection con;
 		ArrayList<Client> clientList = new ArrayList<Client>();
@@ -22,7 +22,7 @@ public class DatabaseConnection {
 					"jdbc:mysql://localhost:3306/ulink", "root", "");
 			
 			Statement stmt = con.createStatement();
-			String sql = "Select * from client";
+			String sql = "Select passportNumber,`clientName`,`gender`,dateOfBirth,mainDiagnosis,clientType,nationality,countryOfResidence,billingStreet,billingCity,billingState, billingCountry, billingcode,isMedicial,isClaim,claimInformation, referraldetails.referralName from client inner join referraldetails ON client.referral_ID = referraldetails.referral_ID where referraldetails.r_dateTime >='" + startDate +  "' && referraldetails.r_dateTime <= '" + endDate + "'";
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
@@ -58,7 +58,7 @@ public class DatabaseConnection {
 	}
 	
 	
-	public ArrayList<Consultation> retrieveAllConsultation() {
+	public ArrayList<Consultation> retrieveAllConsultation(String startDate, String endDate) {
 
 		Connection con;
 		ArrayList<Consultation> consultationList = new ArrayList<Consultation>();
@@ -68,7 +68,8 @@ public class DatabaseConnection {
 					"jdbc:mysql://localhost:3306/ulink", "root", "");
 			
 			Statement stmt = con.createStatement();
-			String sql = "Select * from consultation";
+			String sql = "SELECT C_ID, dateTime, consultation.doctorName, clinicName, passportNumber FROM `consultation` INNER JOIN doctor ON consultation.doctorName = doctor.doctorName where dateTime >= '"+ startDate +"' && dateTime <= '" + endDate + "'";
+
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
@@ -88,5 +89,35 @@ public class DatabaseConnection {
 		}
 
 		return consultationList;
+	}
+	
+	public ArrayList<String> retrieveAllSpeciality() {
+
+		Connection con;
+		ArrayList<String> specialityList = new ArrayList<String>();
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection(
+					"jdbc:mysql://localhost:3306/ulink", "root", "");
+			
+			Statement stmt = con.createStatement();
+			String sql = "SELECT speciality from doctor INNER join consultation on doctor.doctorName = consultation.doctorName";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				 
+				 String speciality = rs.getString(1);
+				 specialityList.add(speciality);
+			}
+
+			con.close();
+
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return specialityList;
 	}
 }

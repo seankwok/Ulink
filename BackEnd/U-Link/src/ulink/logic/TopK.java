@@ -15,8 +15,8 @@ import ulink.dao.DatabaseConnection;
 public class TopK {
 	DatabaseConnection connection = new DatabaseConnection();
 	
-	public HashMap<String,Integer> topReferral(){
-		ArrayList<Client> clientList = connection.retrieveAllClient();
+	public HashMap<String,Integer> topReferral(String startDate, String endDate){
+		ArrayList<Client> clientList = connection.retrieveAllClient(startDate, endDate);
 		HashMap<String,Integer> referralList = new HashMap<String,Integer>();
 		
 		
@@ -38,31 +38,30 @@ public class TopK {
 	
 	}
 	
-	public HashMap<String,Integer> topCondition(){
-		ArrayList<Client> clientList = connection.retrieveAllClient();
-		HashMap<String,Integer> conditionList = new HashMap<String,Integer>();
+	public HashMap<String,Integer> topSpeciality(){
+		ArrayList<String> specialityList = connection.retrieveAllSpeciality();
+		HashMap<String,Integer> specialityHash = new HashMap<String,Integer>();
 		
 		
-		for (int i = 0; i < clientList.size(); i++){
-			Client client = clientList.get(i);
-			String diagnosis  = client.getmainDiagnosis();
-			if (diagnosis != null){
-				if (!conditionList.containsKey(diagnosis)){
-					conditionList.put(diagnosis, 1);
+		for (int i = 0; i < specialityList.size(); i++){
+			String speciality = specialityList.get(i);
+			if (speciality != null){
+				if (!specialityHash.containsKey(speciality)){
+					specialityHash.put(speciality, 1);
 				}else{
-					conditionList.put(diagnosis, conditionList.get(diagnosis)+1);
+					specialityHash.put(speciality, specialityHash.get(speciality)+1);
 				}
 			}
 		}
 		
-		   HashMap<String, Integer> sortedCondition = sortByValue(conditionList);
+		   HashMap<String, Integer> sortedCondition = sortByValue(specialityHash);
 		
 		   return sortedCondition;
 	
 	}
 	
-	public HashMap<String,Integer> topDoctor(){
-		ArrayList<Consultation> consultationList = connection.retrieveAllConsultation();
+	public HashMap<String,Integer> topDoctor(String startDate, String endDate){
+		ArrayList<Consultation> consultationList = connection.retrieveAllConsultation(startDate,endDate);
 		HashMap<String,Integer> doctorList = new HashMap<String,Integer>();
 		
 		
