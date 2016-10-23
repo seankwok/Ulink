@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 16, 2016 at 04:07 PM
+-- Generation Time: Oct 23, 2016 at 01:39 AM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -45,18 +45,9 @@ CREATE TABLE `client` (
   `isMedicial` varchar(45) DEFAULT NULL,
   `isClaim` varchar(45) DEFAULT NULL,
   `claimInformation` varchar(45) DEFAULT NULL,
-  `referralName` varchar(45) DEFAULT NULL
+  `referral_ID` int(5) DEFAULT NULL,
+  `PIC_ID` int(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `client`
---
-
-INSERT INTO `client` (`passportNumber`, `clientName`, `gender`, `dateOfBirth`, `mainDiagnosis`, `clientType`, `nationality`, `countryOfResidence`, `billingStreet`, `billingCity`, `billingState`, `billingCountry`, `billingCode`, `isMedicial`, `isClaim`, `claimInformation`, `referralName`) VALUES
-('1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'von'),
-('123', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'sean'),
-('G1234456g', 'Sean', 'Male', '19091991', 'none', 'none', 'none', 'none', 'none', 'none', NULL, NULL, NULL, NULL, NULL, NULL, 'abcdefg'),
-('test', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'sean');
 
 -- --------------------------------------------------------
 
@@ -66,17 +57,16 @@ INSERT INTO `client` (`passportNumber`, `clientName`, `gender`, `dateOfBirth`, `
 
 CREATE TABLE `clinic` (
   `clinicName` varchar(45) NOT NULL,
-  `clinicAddress` varchar(80) NOT NULL,
-  `doctorName` varchar(45) NOT NULL
+  `Address` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `clinic`
 --
 
-INSERT INTO `clinic` (`clinicName`, `clinicAddress`, `doctorName`) VALUES
-('ntu', 'ntu', 'sean'),
-('smu', 'smu', 'kaixin');
+INSERT INTO `clinic` (`clinicName`, `Address`) VALUES
+('ntu', 'ntu'),
+('smu', 'smu');
 
 -- --------------------------------------------------------
 
@@ -85,23 +75,19 @@ INSERT INTO `clinic` (`clinicName`, `clinicAddress`, `doctorName`) VALUES
 --
 
 CREATE TABLE `consultation` (
-  `consultation_ID` int(11) NOT NULL,
-  `appointment` datetime NOT NULL,
+  `C_ID` int(11) NOT NULL,
+  `passportNumber` varchar(45) NOT NULL,
   `doctorName` varchar(45) DEFAULT NULL,
-  `clinicName` varchar(45) DEFAULT NULL,
-  `passportNumber` varchar(45) NOT NULL
+  `dateTime` datetime(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `consultation`
 --
 
-INSERT INTO `consultation` (`consultation_ID`, `appointment`, `doctorName`, `clinicName`, `passportNumber`) VALUES
-(5, '2016-10-04 00:00:00', 'sean', 'ntu', '1'),
-(6, '2016-10-12 00:00:00', 'kaixin', 'ntu', '123'),
-(7, '2016-10-01 00:00:00', 'kaixin', 'ntu', '123'),
-(8, '2016-10-06 00:00:00', 'sean', 'ntu', '123'),
-(9, '2016-10-02 00:00:00', 'kaixin', 'ntu', 'test');
+INSERT INTO `consultation` (`C_ID`, `passportNumber`, `doctorName`, `dateTime`) VALUES
+(3, '123', 'kaixin', '2016-10-05 00:00:00.000000'),
+(4, 'G1234456g', 'nab', '2016-10-19 00:00:00.000000');
 
 -- --------------------------------------------------------
 
@@ -111,16 +97,80 @@ INSERT INTO `consultation` (`consultation_ID`, `appointment`, `doctorName`, `cli
 
 CREATE TABLE `doctor` (
   `doctorName` varchar(45) NOT NULL,
-  `speciality` varchar(45) NOT NULL
+  `speciality` varchar(45) DEFAULT NULL,
+  `clinicName` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `doctor`
 --
 
-INSERT INTO `doctor` (`doctorName`, `speciality`) VALUES
-('kaixin', 'abcc'),
-('sean', 'abc');
+INSERT INTO `doctor` (`doctorName`, `speciality`, `clinicName`) VALUES
+('kaixin', 'abc', 'ntu'),
+('nab', 'nab', 'smu'),
+('nicole', 'nicole', 'ntu'),
+('sean', 'sean', 'ntu'),
+('sy', 'sy', 'smu');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `picdetails`
+--
+
+CREATE TABLE `picdetails` (
+  `PIC_ID` int(6) NOT NULL,
+  `PICName` varchar(45) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `referral`
+--
+
+CREATE TABLE `referral` (
+  `referralName` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `referral`
+--
+
+INSERT INTO `referral` (`referralName`) VALUES
+('asd'),
+('qwe');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `referraldetails`
+--
+
+CREATE TABLE `referraldetails` (
+  `referral_ID` int(5) NOT NULL,
+  `referralName` varchar(45) NOT NULL,
+  `r_dateTime` datetime(6) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `referraldetails`
+--
+
+INSERT INTO `referraldetails` (`referral_ID`, `referralName`, `r_dateTime`) VALUES
+(1, 'asd', '2016-10-01 00:00:00.000000'),
+(2, 'asd', '2016-10-20 00:00:00.000000');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `role`
+--
+
+CREATE TABLE `role` (
+  `roleName` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -143,35 +193,63 @@ CREATE TABLE `user` (
 -- Indexes for table `client`
 --
 ALTER TABLE `client`
-  ADD PRIMARY KEY (`passportNumber`);
+  ADD PRIMARY KEY (`passportNumber`),
+  ADD KEY `referral_ID` (`referral_ID`),
+  ADD KEY `PIC_ID` (`PIC_ID`);
 
 --
 -- Indexes for table `clinic`
 --
 ALTER TABLE `clinic`
-  ADD PRIMARY KEY (`clinicName`),
-  ADD KEY `doctorName` (`doctorName`);
+  ADD PRIMARY KEY (`clinicName`);
 
 --
 -- Indexes for table `consultation`
 --
 ALTER TABLE `consultation`
-  ADD PRIMARY KEY (`consultation_ID`),
-  ADD KEY `fk_doctorName` (`doctorName`),
-  ADD KEY `fk_clinicName` (`clinicName`),
-  ADD KEY `passportNumber` (`passportNumber`);
+  ADD PRIMARY KEY (`C_ID`),
+  ADD KEY `passportNumber` (`passportNumber`),
+  ADD KEY `doctorName` (`doctorName`);
 
 --
 -- Indexes for table `doctor`
 --
 ALTER TABLE `doctor`
-  ADD PRIMARY KEY (`doctorName`);
+  ADD PRIMARY KEY (`doctorName`),
+  ADD KEY `clinicName` (`clinicName`);
+
+--
+-- Indexes for table `picdetails`
+--
+ALTER TABLE `picdetails`
+  ADD PRIMARY KEY (`PIC_ID`),
+  ADD KEY `email` (`email`);
+
+--
+-- Indexes for table `referral`
+--
+ALTER TABLE `referral`
+  ADD PRIMARY KEY (`referralName`);
+
+--
+-- Indexes for table `referraldetails`
+--
+ALTER TABLE `referraldetails`
+  ADD PRIMARY KEY (`referral_ID`),
+  ADD KEY `referralName` (`referralName`);
+
+--
+-- Indexes for table `role`
+--
+ALTER TABLE `role`
+  ADD PRIMARY KEY (`roleName`);
 
 --
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`email`);
+  ADD PRIMARY KEY (`email`),
+  ADD KEY `role` (`role`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -181,24 +259,53 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `consultation`
 --
 ALTER TABLE `consultation`
-  MODIFY `consultation_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `C_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `referraldetails`
+--
+ALTER TABLE `referraldetails`
+  MODIFY `referral_ID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `clinic`
+-- Constraints for table `client`
 --
-ALTER TABLE `clinic`
-  ADD CONSTRAINT `clinic_ibfk_1` FOREIGN KEY (`doctorName`) REFERENCES `doctor` (`doctorName`);
+ALTER TABLE `client`
+  ADD CONSTRAINT `client_ibfk_1` FOREIGN KEY (`referral_ID`) REFERENCES `referraldetails` (`referral_ID`),
+  ADD CONSTRAINT `client_ibfk_2` FOREIGN KEY (`PIC_ID`) REFERENCES `picdetails` (`PIC_ID`);
 
 --
 -- Constraints for table `consultation`
 --
 ALTER TABLE `consultation`
   ADD CONSTRAINT `consultation_ibfk_1` FOREIGN KEY (`passportNumber`) REFERENCES `client` (`passportNumber`),
-  ADD CONSTRAINT `fk_clinicName` FOREIGN KEY (`clinicName`) REFERENCES `clinic` (`clinicName`),
-  ADD CONSTRAINT `fk_doctorName` FOREIGN KEY (`doctorName`) REFERENCES `doctor` (`doctorName`);
+  ADD CONSTRAINT `consultation_ibfk_2` FOREIGN KEY (`doctorName`) REFERENCES `doctor` (`doctorName`);
+
+--
+-- Constraints for table `doctor`
+--
+ALTER TABLE `doctor`
+  ADD CONSTRAINT `doctor_ibfk_1` FOREIGN KEY (`clinicName`) REFERENCES `clinic` (`clinicName`);
+
+--
+-- Constraints for table `picdetails`
+--
+ALTER TABLE `picdetails`
+  ADD CONSTRAINT `picdetails_ibfk_1` FOREIGN KEY (`email`) REFERENCES `user` (`email`);
+
+--
+-- Constraints for table `referraldetails`
+--
+ALTER TABLE `referraldetails`
+  ADD CONSTRAINT `referraldetails_ibfk_1` FOREIGN KEY (`referralName`) REFERENCES `referral` (`referralName`);
+
+--
+-- Constraints for table `user`
+--
+ALTER TABLE `user`
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`role`) REFERENCES `role` (`roleName`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
