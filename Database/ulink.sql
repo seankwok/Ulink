@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 24, 2016 at 02:56 AM
+-- Generation Time: Oct 24, 2016 at 11:07 AM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -75,7 +75,7 @@ CREATE TABLE `client` (
   `passportNumber` varchar(45) NOT NULL,
   `clientName` varchar(45) DEFAULT NULL,
   `gender` varchar(45) DEFAULT NULL,
-  `dateOfBirth` varchar(45) DEFAULT NULL,
+  `dateOfBirth` datetime(6) DEFAULT NULL,
   `mainDiagnosis` varchar(45) DEFAULT NULL,
   `clientType` varchar(45) DEFAULT NULL,
   `nationality` varchar(45) DEFAULT NULL,
@@ -96,9 +96,8 @@ CREATE TABLE `client` (
 --
 
 INSERT INTO `client` (`passportNumber`, `clientName`, `gender`, `dateOfBirth`, `mainDiagnosis`, `clientType`, `nationality`, `countryOfResidence`, `billingStreet`, `billingCity`, `billingState`, `billingCountry`, `billingCode`, `isMedicial`, `isClaim`, `claimInformation`, `referral_ID`) VALUES
-('', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 4),
-('G1234456g', 'SeanClient', NULL, NULL, NULL, NULL, 'Indo', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 3),
-('qwewqewqeqw', 'SeanClient1', NULL, NULL, NULL, NULL, 'none', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+('G1234456g', 'SeanClient', 'Male', '1990-10-01 00:00:00.000000', NULL, NULL, 'Indo', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 3),
+('qwewqewqeqw', 'SeanClient1', 'Female', '1991-09-24 00:00:00.000000', NULL, NULL, 'none', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -156,6 +155,7 @@ CREATE TABLE `doctor` (
 --
 
 INSERT INTO `doctor` (`doctorName`, `speciality`, `clinicName`) VALUES
+('doctorNicole', 'qwe', 'ntu'),
 ('doctorSean', 'doctorSean', 'ntu'),
 ('doctorTest', 'doctorTest', 'smu');
 
@@ -186,13 +186,58 @@ INSERT INTO `followup` (`followUpID`, `hospitalAdmitted`, `hospitalAddress`, `da
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `listoftimeline`
+--
+
+CREATE TABLE `listoftimeline` (
+  `timelineID` int(4) NOT NULL,
+  `conditionName` varchar(45) DEFAULT NULL,
+  `passportNumber` varchar(45) DEFAULT NULL,
+  `yearsToSend` int(4) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `listoftimeline`
+--
+
+INSERT INTO `listoftimeline` (`timelineID`, `conditionName`, `passportNumber`, `yearsToSend`) VALUES
+(7, 'Obesity', 'G1234456g', 1),
+(8, 'Hypertension (High blood pressure)', 'G1234456g', 2),
+(9, 'Diabetic microalbuminuria', 'G1234456g', 1),
+(10, 'Hearing loss', 'G1234456g', 1),
+(11, 'kidney disorder', 'G1234456g', 1),
+(12, 'Liver cancer', 'G1234456g', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `mancondition`
 --
 
 CREATE TABLE `mancondition` (
   `conditionName` varchar(45) NOT NULL,
-  `numOfYears` int(4) DEFAULT NULL
+  `numOfYears` int(4) NOT NULL,
+  `ageRequired` int(3) NOT NULL,
+  `screening` varchar(45) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `mancondition`
+--
+
+INSERT INTO `mancondition` (`conditionName`, `numOfYears`, `ageRequired`, `screening`) VALUES
+('sick1', 3, 20, 'abc'),
+('sick2', 4, 22, 'qwe'),
+('Colorectal cancer screening', 1, 50, 'Computed Tomography (CT) Colonography '),
+('Obesity', 1, 18, 'BMI & Waist circumference'),
+('Hypertension (High blood pressure)', 2, 18, 'Blood pressure measurement '),
+('Hyperlipidaemia', 3, 40, 'Fasting lipids'),
+('Abdominal Aortic Aneurysm', 1, 65, 'Abdominal Ultrasonography'),
+('Diabetic microalbuminuria', 1, 18, 'urine microalbumin'),
+('Hearing loss', 1, 18, 'Audiometry '),
+('kidney disorder', 1, 18, 'Kidney function test'),
+('Liver cancer', 1, 18, 'Ultrasound Hepatobiliary System'),
+('Diabetes mellitus', 3, 40, 'Fasting blood glucose');
 
 -- --------------------------------------------------------
 
@@ -326,6 +371,13 @@ ALTER TABLE `followup`
   ADD PRIMARY KEY (`followUpID`);
 
 --
+-- Indexes for table `listoftimeline`
+--
+ALTER TABLE `listoftimeline`
+  ADD PRIMARY KEY (`timelineID`),
+  ADD KEY `passportNumber` (`passportNumber`);
+
+--
 -- Indexes for table `mancondition`
 --
 ALTER TABLE `mancondition`
@@ -377,6 +429,11 @@ ALTER TABLE `appointment`
 ALTER TABLE `consultation`
   MODIFY `C_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
+-- AUTO_INCREMENT for table `listoftimeline`
+--
+ALTER TABLE `listoftimeline`
+  MODIFY `timelineID` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+--
 -- AUTO_INCREMENT for table `referraldetails`
 --
 ALTER TABLE `referraldetails`
@@ -417,6 +474,12 @@ ALTER TABLE `consultation`
 --
 ALTER TABLE `doctor`
   ADD CONSTRAINT `doctor_ibfk_1` FOREIGN KEY (`clinicName`) REFERENCES `clinic` (`clinicName`);
+
+--
+-- Constraints for table `listoftimeline`
+--
+ALTER TABLE `listoftimeline`
+  ADD CONSTRAINT `listoftimeline_ibfk_1` FOREIGN KEY (`passportNumber`) REFERENCES `client` (`passportNumber`);
 
 --
 -- Constraints for table `referraldetails`
