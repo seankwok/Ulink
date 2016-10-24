@@ -40,7 +40,14 @@
         <li><a href="#">Services</a></li>
         <li><a href="#">Report</a></li>
         <li><a href="#">Doctor</a></li>
-        <li class="active"><a href="timeline.html">Timeline<span class="sr-only">(current)</span></a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Timeline <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="infant.html">Infant</a></li>
+            <li><a href="female.html">Female</a></li>
+            <li><a href="male.html">Male</a></li>
+          </ul>
+        </li>
        
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Analysis <span class="caret"></span></a>
@@ -71,39 +78,35 @@
     <div class="page-header">
        <center><h1>Timeline - Edit</h1></center>
     </div>
-
     <div class="container">
-     <div class="col-md-4">
-      <div class="form-group">
-        <label for="demographic">Demographic</label>
-        <select class="form-control" id="demographic">
-                <option>Infant</option>
-                <option>Female</option>
-                <option>Male</option>
-        </select>
-      </div>
+    <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Age range</th>
+        <th>Common illnesses</th>
+        <th>Recommended screenings</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>xx</td>
+        <td>xx</td>
+        <td>xx</td> 
+        <td>
+        <div class="btn-group">
+          <button type="button" class="btn btn-default"><a href="addNewScreenings.html">Add</a></button>
+          <button type="button" class="btn btn-default">Edit</button>
+          <button type="button" class="btn btn-default">Delete</button>
+        </div>
+        </td>
+      </tr>
+      
+    </tbody>
+  </table>
     </div>
-
+  
     
-     <div class="col-md-4">
-      <div class="form-group">
-        <label for="year">Year</label>
-        <input type="text" class="form-control" id="year"> 
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="form-group">
-        <label for="illness">Illness</label>
-        <input type="text" class="form-control" id="illness"> 
-      </div>
-    </div>
-  
-    <div class="container">
-      <center><a href="#" class="btn btn-primary btn-lg" role="button">Add to List</a></center> 
-    </div>
-  
-    </div>
 
 
 

@@ -5,9 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
    
-    <title>Timeline - Edit</title>
+    <title>Client</title>
 
-    <link href="css/timeline.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -34,14 +33,18 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><a href="index.html">Home</a></li>
-        
-        <li><a href="#">Client</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Client <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="client.html">Client List</a></li>
+            <li><a href="createClient.html">Create New Client</a></li>
+          </ul>
+        </li>       
         <li><a href="#">Invoice</a></li>
         <li><a href="#">Services</a></li>
         <li><a href="#">Report</a></li>
         <li><a href="#">Doctor</a></li>
-        <li class="active"><a href="timeline.html">Timeline<span class="sr-only">(current)</span></a></li>
-       
+        <li><a href="">Timeline</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Analysis <span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -67,46 +70,42 @@
   </div><!-- /.container-fluid -->
 </nav>
 
-
+    
     <div class="page-header">
-       <center><h1>Timeline - Edit</h1></center>
+       <center><h1>Client</h1></center>
     </div>
 
     <div class="container">
-     <div class="col-md-4">
-      <div class="form-group">
-        <label for="demographic">Demographic</label>
-        <select class="form-control" id="demographic">
-                <option>Infant</option>
-                <option>Female</option>
-                <option>Male</option>
-        </select>
-      </div>
-    </div>
+    <table class="table table-striped">
+    <h3>Anna Looloo</h3>
+    <thead>
+      <tr>
+        <th>Appointment Date and Time</th>
+        <th>Doctor</th>
+        <th>Speciality</th>
+        <th>Follow up person</th>
+        <th>Follow up PIC</th>
+        <th>Hospital Admitted</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>xx</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td>xx</td>
+
+
+               
+      </tr>
+      
+    </tbody>
+  </table>
+</div>
+
 
     
-     <div class="col-md-4">
-      <div class="form-group">
-        <label for="year">Year</label>
-        <input type="text" class="form-control" id="year"> 
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="form-group">
-        <label for="illness">Illness</label>
-        <input type="text" class="form-control" id="illness"> 
-      </div>
-    </div>
-  
-    <div class="container">
-      <center><a href="#" class="btn btn-primary btn-lg" role="button">Add to List</a></center> 
-    </div>
-  
-    </div>
-
-
-
-
-</body>
+  </body>
 </html>

@@ -8,9 +8,12 @@
     <title>KPI</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/jquery-1.12.0.js"></script>
+    <!--<script src="js/bootstrap-datetimepicker.min.js"></script>-->
+    <script src="js/bootstrap-datetimepicker.js"></script>
     <script src="js/bootstrap.min.js"></script>
  
   </head>
@@ -72,103 +75,92 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-md-4">
+          <div class="col-md-4">
+          <div class="caption">
+          <div class="form-group">
+            <label>Select Team </label>
+            <select class="form-control" id="month">
+              <option>Medical</option>
+              <option>Operations</option>
+              <option>Visa</option>
+            </select>
+          </div>          
+          </div>
+          </div>
 
-         
-            <div class="caption">
-            <center><h3>Medical Team</h3></center>
+          <div class="col-md-4">
+          <div class="form-group">
+          <label> Select Start Date </label>
+          <div class='input-group date' id='datetimepicker1'>
+            <input type='text' class="form-control" />
+            <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+          </div>
 
-            <div class="form-group">
-            
-              <label>Select Month </label>
-              <select class="form-control" id="month">
-                <option>January</option>
-                <option>February</option>
-                <option>March</option>
-                <option>April</option>
-                <option>May</option>
-                <option>June</option>
-                <option>July</option>
-                <option>August</option>
-                <option>September</option>
-                <option>October</option>
-                <option>November</option>
-                <option>December</option>
-
-              </select>
-            
-            </div>
-
-            <a href="#" class="btn btn-primary" role="button">Generate</a>
-
-            </div>
-          
+          <script type="text/javascript">
+          $(function () {
+            $('#datetimepicker1').datetimepicker();
+         });
+          </script>
+        </div>
         </div>
 
         <div class="col-md-4">
-            
-            <div class="caption">
-            <center><h3>Operations Team</h3></center>
+          <div class="form-group">
+          <label> Select End Date </label>
+          <div class='input-group date' id='datetimepicker1'>
+            <input type='text' class="form-control" />
+            <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+          </div>
 
-            <div class="form-group">
-              <label>Select Month </label>
-              <select class="form-control" id="month">
-                <option>January</option>
-                <option>February</option>
-                <option>March</option>
-                <option>April</option>
-                <option>May</option>
-                <option>June</option>
-                <option>July</option>
-                <option>August</option>
-                <option>September</option>
-                <option>October</option>
-                <option>November</option>
-                <option>December</option>
-
-              </select>
-            </div>
-
-
-            <center><a href="#" class="btn btn-primary" role="button">Generate</a></center> 
-            </div>
-          
+          <script type="text/javascript">
+          $(function () {
+            $('#datetimepicker1').datetimepicker();
+         });
+          </script>
+        </div>
         </div>
 
-        <div class="col-md-4">
-          
-            <div class="caption">
-            <center><h3>Visa Team</h3></center>
-
-            <div class="form-group">
-              <label>Select Month </label>
-              <select class="form-control" id="month">
-                <option>January</option>
-                <option>February</option>
-                <option>March</option>
-                <option>April</option>
-                <option>May</option>
-                <option>June</option>
-                <option>July</option>
-                <option>August</option>
-                <option>September</option>
-                <option>October</option>
-                <option>November</option>
-                <option>December</option>
-
-              </select>
-            </div>
-
-
-            <center><a href="#" class="btn btn-primary" role="button">Generate</a></center> 
-            </div>
-          
-        </div>
 
       </div>
+    
+    <center><div class="btn btn-primary" onclick="myFunction()" role="button">Generate</div></center> 
+
+    <script>
+    function myFunction() {
+        document.getElementById("results");
+            <div class="container">
+    <div class="row">
+    <div class="col-md-6">
+    <svg height="500" width="500">
+      <circle cx="250" cy="250" r="200" stroke="#BCFCBB" stroke-width="3" fill="#BCFCBB" /> 
+    </svg>
     </div>
 
+    }
+    </script>
 
+    <p id="results">
+    <div class="container">
+    <div class="row">
+    <div class="col-md-6">
+    <svg height="500" width="500">
+      <circle cx="250" cy="250" r="200" stroke="#BCFCBB" stroke-width="3" fill="#BCFCBB" /> 
+    </svg>
+    </div>
+
+    <div class="col-md-6">
+    <svg height="500" width="500">
+      <circle cx="250" cy="250" r="200" stroke="#FCBBBC" stroke-width="3" fill="#FCBBBC" /> 
+    </svg>
+    </div>
+
+    </div>
+    </div>
+    </p>
     
   </body>
 </html>
