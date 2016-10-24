@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 23, 2016 at 11:18 AM
+-- Generation Time: Oct 24, 2016 at 02:56 AM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -186,6 +186,17 @@ INSERT INTO `followup` (`followUpID`, `hospitalAdmitted`, `hospitalAddress`, `da
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `mancondition`
+--
+
+CREATE TABLE `mancondition` (
+  `conditionName` varchar(45) NOT NULL,
+  `numOfYears` int(4) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `referral`
 --
 
@@ -313,6 +324,12 @@ ALTER TABLE `doctor`
 --
 ALTER TABLE `followup`
   ADD PRIMARY KEY (`followUpID`);
+
+--
+-- Indexes for table `mancondition`
+--
+ALTER TABLE `mancondition`
+  ADD PRIMARY KEY (`conditionName`);
 
 --
 -- Indexes for table `referral`
