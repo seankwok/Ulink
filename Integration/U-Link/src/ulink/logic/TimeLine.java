@@ -14,7 +14,7 @@ public class TimeLine {
 		DatabaseConnection database = new DatabaseConnection();
 
 		ArrayList<Timeline> timelineList = database.getTimeline();
-		ArrayList<Condition> conditionList = database.retrieveManCondition();
+		ArrayList<Condition> conditionList = database.retrieveAllCondition();
 
 		for (int i = 0; i < timelineList.size(); i++) {
 			Timeline timeline = timelineList.get(i);
@@ -37,7 +37,7 @@ public class TimeLine {
 
 	public HashMap<String, Integer> displayAllScreening() {
 		DatabaseConnection database = new DatabaseConnection();
-		ArrayList<Condition> conditionList = database.retrieveManCondition();
+		ArrayList<Condition> conditionList = database.retrieveAllCondition();
 		HashMap<String, Integer> screeningList = new HashMap<String, Integer>();
 
 		for (int i = 0; i < conditionList.size(); i++) {
@@ -51,7 +51,7 @@ public class TimeLine {
 		DatabaseConnection database = new DatabaseConnection();
 		ArrayList<Client> clientList = database.retrieveAllClientList();
 		ArrayList<Timeline> timelineList = database.getTimeline();
-		ArrayList<Condition> conditionList = database.retrieveManCondition();
+		ArrayList<Condition> conditionList = database.retrieveAllCondition();
 
 		for (int i = 0; i < clientList.size(); i++) {
 			Client client = clientList.get(i);

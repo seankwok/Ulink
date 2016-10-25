@@ -202,16 +202,16 @@ public class DatabaseConnection {
 		return admissionList;
 	}
 
-	public ArrayList<Condition> retrieveManCondition() {
+	public ArrayList<Condition> retrieveAllCondition() {
 
 		Connection con;
-		ArrayList<Condition> manConditionList = new ArrayList<Condition>();
+		ArrayList<Condition> allconditionList = new ArrayList<Condition>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "");
 
 			Statement stmt = con.createStatement();
-			String sql = "SELECT * FROM mancondition";
+			String sql = "SELECT * FROM allcondition";
 
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -221,8 +221,9 @@ public class DatabaseConnection {
 				int numOfYears = rs.getInt(2);
 				int ageRequired = rs.getInt(3);
 				String screening = rs.getString(4);
-				Condition condition = new Condition(conditionName, numOfYears, ageRequired, screening);
-				manConditionList.add(condition);
+				String type = rs.getString(5);
+				Condition condition = new Condition(conditionName, numOfYears, ageRequired, screening, type);
+				allconditionList.add(condition);
 			}
 
 			con.close();
@@ -232,23 +233,24 @@ public class DatabaseConnection {
 			e.printStackTrace();
 		}
 
-		return manConditionList;
+		return allconditionList;
 	}
 
-	public boolean addManCondition(String conditionName, int numberOfYears, int ageRequired, String screening) {
+	public boolean addAllCondition(String conditionName, int numberOfYears, int ageRequired, String screening, String type) {
 
 		Connection con;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "");
 
-			String sql = "INSERT INTO mancondition (conditionName,numOfYears,ageRequired, screening)"
-					+ "VALUES (?,?,?,?)";
+			String sql = "INSERT INTO allcondition (conditionName,numOfYears,ageRequired, screening, type)"
+					+ "VALUES (?,?,?,?,?)";
 			PreparedStatement preparedStmt = con.prepareStatement(sql);
 			preparedStmt.setString(1, conditionName);
 			preparedStmt.setInt(2, numberOfYears);
 			preparedStmt.setInt(3, ageRequired);
 			preparedStmt.setString(4, screening);
+			preparedStmt.setString(5, type);
 			preparedStmt.execute();
 
 			con.close();
@@ -263,13 +265,13 @@ public class DatabaseConnection {
 		return true;
 	}
 
-	public void deleteManCondition(String conditionName) {
+	public void deleteAllCondition(String conditionName) {
 		Connection con;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "");
 
-			String sql = "Delete from mancondition where conditionName = ?";
+			String sql = "Delete from allcondition where conditionName = ?";
 			PreparedStatement preparedStmt = con.prepareStatement(sql);
 			preparedStmt.setString(1, conditionName);
 			preparedStmt.executeUpdate();
@@ -283,18 +285,19 @@ public class DatabaseConnection {
 
 	}
 
-	public void editManCondition(String conditionName, int numOfYears, int ageRequired, String screening) {
+	public void editAllCondition(String conditionName, int numOfYears, int ageRequired, String screening, String type) {
 		Connection con;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "");
 
-			String sql = "UPDATE mancondition SET numOfYears= ? ageRequired = ? screening = ? WHERE conditionName= ?";
+			String sql = "UPDATE allcondition SET numOfYears= ? ageRequired = ? screening = ? type = ? WHERE conditionName= ?";
 			PreparedStatement preparedStmt = con.prepareStatement(sql);
 			preparedStmt.setInt(1, numOfYears);
 			preparedStmt.setInt(2, ageRequired);
 			preparedStmt.setString(3, screening);
-			preparedStmt.setString(4, conditionName);
+			preparedStmt.setString(4, type);
+			preparedStmt.setString(5, conditionName);
 			preparedStmt.executeUpdate();
 
 			con.close();

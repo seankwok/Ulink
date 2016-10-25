@@ -5,13 +5,16 @@ public class Condition {
 	private int years;
 	private int ageRequired;
 	private String screening;
-	
-	public Condition(String conditionName, int years, int ageRequired, String screening) {
+	private String type;
+
+
+	public Condition(String conditionName, int years, int ageRequired, String screening, String type) {
 		super();
 		this.conditionName = conditionName;
 		this.years = years;
 		this.ageRequired = ageRequired;
 		this.screening = screening;
+		this.type = type;
 	}
 	public String getScreening() {
 		return screening;
@@ -38,5 +41,10 @@ public class Condition {
 		this.years = years;
 	}
 	
-	
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
 }
