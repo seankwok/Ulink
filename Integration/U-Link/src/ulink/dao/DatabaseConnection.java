@@ -380,5 +380,39 @@ public class DatabaseConnection {
 		}
 
 	}
+	
+	public ArrayList<Condition> retrieveAllTypeCondition(String types) {
+
+		Connection con;
+		ArrayList<Condition> allconditionList = new ArrayList<Condition>();
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "");
+
+			Statement stmt = con.createStatement();
+			String sql = "SELECT * FROM allcondition where type='" + types + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+
+				String conditionName = rs.getString(1);
+				int numOfYears = rs.getInt(2);
+				int ageRequired = rs.getInt(3);
+				String screening = rs.getString(4);
+				String type = rs.getString(5);
+				Condition condition = new Condition(conditionName, numOfYears, ageRequired, screening, type);
+				allconditionList.add(condition);
+			}
+
+			con.close();
+
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return allconditionList;
+	}
 
 }

@@ -44,6 +44,7 @@
 								success : function(data) {
 									console.log(data.status);
 									if (data.status == "success") {
+										console.log(data.status);
 									$('#message').html("Record Added");
 									$("#message").css("color", "green");
 								}else {
@@ -164,7 +165,7 @@
 	</div>
 
 
-	<div id="abc"></div>
+	<div id="message"></div>
 
 
 </body>
