@@ -3,11 +3,10 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 24, 2016 at 11:07 AM
+-- Generation Time: Oct 27, 2016 at 01:08 AM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
-SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
@@ -43,6 +42,43 @@ INSERT INTO `admission` (`caseNumber`, `followUpID`, `passportNumber`) VALUES
 (1, '123', 'S123qwe'),
 (2, '123', 'G1234456g'),
 (3, 'abc', 'qwewqewqeqw');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `allcondition`
+--
+
+CREATE TABLE `allcondition` (
+  `conditionName` varchar(45) NOT NULL,
+  `numOfYears` int(4) NOT NULL,
+  `ageRequired` int(3) NOT NULL,
+  `screening` varchar(45) NOT NULL,
+  `type` varchar(10) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `allcondition`
+--
+
+INSERT INTO `allcondition` (`conditionName`, `numOfYears`, `ageRequired`, `screening`, `type`) VALUES
+('sick1', 3, 20, 'abc', 'Male'),
+('sick2', 4, 22, 'qwe', 'Male'),
+('Colorectal cancer screening', 1, 50, 'Computed Tomography (CT) Colonography ', 'Male'),
+('Obesity', 1, 18, 'BMI & Waist circumference', 'Male'),
+('Hypertension (High blood pressure)', 2, 18, 'Blood pressure measurement ', 'Male'),
+('Hyperlipidaemia', 3, 40, 'Fasting lipids', 'Male'),
+('Abdominal Aortic Aneurysm', 1, 65, 'Abdominal Ultrasonography', 'Male'),
+('Diabetic microalbuminuria', 1, 18, 'urine microalbumin', 'Male'),
+('Hearing loss', 1, 18, 'Audiometry ', 'Male'),
+('kidney disorder', 1, 18, 'Kidney function test', 'Male'),
+('Liver cancer', 1, 18, 'Ultrasound Hepatobiliary System', 'Infant'),
+('Diabetes mellitus', 3, 40, 'Fasting blood glucose', 'Female'),
+('qq', 1, 1, 'qwe', 'male'),
+('sean', 4, 55, 'qwe', 'female'),
+('qwedddd', 44, 1, 'qwe', 'female'),
+('tgb', 4, 44, 'qweqwewqewq', 'female'),
+('tg', 5, 54, '5tg', 'female');
 
 -- --------------------------------------------------------
 
@@ -202,42 +238,13 @@ CREATE TABLE `listoftimeline` (
 
 INSERT INTO `listoftimeline` (`timelineID`, `conditionName`, `passportNumber`, `yearsToSend`) VALUES
 (7, 'Obesity', 'G1234456g', 1),
-(8, 'Hypertension (High blood pressure)', 'G1234456g', 2),
+(8, 'Hypertension (High blood pressure)', 'G1234456g', 0),
 (9, 'Diabetic microalbuminuria', 'G1234456g', 1),
 (10, 'Hearing loss', 'G1234456g', 1),
 (11, 'kidney disorder', 'G1234456g', 1),
-(12, 'Liver cancer', 'G1234456g', 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `mancondition`
---
-
-CREATE TABLE `mancondition` (
-  `conditionName` varchar(45) NOT NULL,
-  `numOfYears` int(4) NOT NULL,
-  `ageRequired` int(3) NOT NULL,
-  `screening` varchar(45) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `mancondition`
---
-
-INSERT INTO `mancondition` (`conditionName`, `numOfYears`, `ageRequired`, `screening`) VALUES
-('sick1', 3, 20, 'abc'),
-('sick2', 4, 22, 'qwe'),
-('Colorectal cancer screening', 1, 50, 'Computed Tomography (CT) Colonography '),
-('Obesity', 1, 18, 'BMI & Waist circumference'),
-('Hypertension (High blood pressure)', 2, 18, 'Blood pressure measurement '),
-('Hyperlipidaemia', 3, 40, 'Fasting lipids'),
-('Abdominal Aortic Aneurysm', 1, 65, 'Abdominal Ultrasonography'),
-('Diabetic microalbuminuria', 1, 18, 'urine microalbumin'),
-('Hearing loss', 1, 18, 'Audiometry '),
-('kidney disorder', 1, 18, 'Kidney function test'),
-('Liver cancer', 1, 18, 'Ultrasound Hepatobiliary System'),
-('Diabetes mellitus', 3, 40, 'Fasting blood glucose');
+(12, 'Liver cancer', 'G1234456g', 1),
+(13, 'sick1', 'G1234456g', 2),
+(14, 'sick2', 'G1234456g', 3);
 
 -- --------------------------------------------------------
 
@@ -291,7 +298,7 @@ CREATE TABLE `role` (
 --
 
 INSERT INTO `role` (`roleName`) VALUES
-('Medicial'),
+('Medical'),
 ('Ops'),
 ('Visa');
 
@@ -314,7 +321,7 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`username`, `password`, `role`, `email`) VALUES
 ('kaixin', 'kaixin', 'Ops', 'sean@gmail.com'),
-('sean', 'sean', 'Medicial', 'seankwok794@gmail.com');
+('sean', 'sean', 'Medical', 'seankwok794@gmail.com');
 
 --
 -- Indexes for dumped tables
@@ -327,6 +334,12 @@ ALTER TABLE `admission`
   ADD PRIMARY KEY (`caseNumber`),
   ADD KEY `followUpID` (`followUpID`),
   ADD KEY `passportNumber` (`passportNumber`);
+
+--
+-- Indexes for table `allcondition`
+--
+ALTER TABLE `allcondition`
+  ADD PRIMARY KEY (`conditionName`);
 
 --
 -- Indexes for table `appointment`
@@ -378,12 +391,6 @@ ALTER TABLE `listoftimeline`
   ADD KEY `passportNumber` (`passportNumber`);
 
 --
--- Indexes for table `mancondition`
---
-ALTER TABLE `mancondition`
-  ADD PRIMARY KEY (`conditionName`);
-
---
 -- Indexes for table `referral`
 --
 ALTER TABLE `referral`
@@ -432,7 +439,7 @@ ALTER TABLE `consultation`
 -- AUTO_INCREMENT for table `listoftimeline`
 --
 ALTER TABLE `listoftimeline`
-  MODIFY `timelineID` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `timelineID` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `referraldetails`
 --
@@ -492,7 +499,6 @@ ALTER TABLE `referraldetails`
 --
 ALTER TABLE `user`
   ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`role`) REFERENCES `role` (`roleName`);
-SET FOREIGN_KEY_CHECKS=1;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
