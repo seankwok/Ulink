@@ -44,6 +44,7 @@
 								success : function(data) {
 									console.log(data.status);
 									if (data.status == "success") {
+										console.log(data.status);
 									$('#message').html("Record Added");
 									$("#message").css("color", "green");
 								}else {
@@ -129,40 +130,31 @@
 	<div class="container">
 
 		<form>
-			<div class="col-md-4">
 				<div class="form-group">
 					<label for="age">Age</label> <input type="text"
-						class="form-control" id="age">
+						class="form-control" placeholder="Starting age in which patient might be diagnosed with illness" id="age">
 				</div>
-			</div>
-			<div class="col-md-4">
 				<div class="form-group">
 					<label>Common Illness </label> <input type="text"
 						class="form-control" id="illness">
 				</div>
-			</div>
-			<div class="col-md-4">
 				<div class="form-group">
 					<label for="screening">Recommended screening</label> <input
 						type="text" class="form-control" id="screening">
 				</div>
-			</div>
-			<div class="col-md-4">
 				<div class="form-group">
-					<label for="screening">Type</label> <select id="type">
-						<option value="male">Male</option>
-						<option value="female">Female</option>
+					<label for="screening">Demographic affected</label> 
+					<select class="form-control" id="type">
 						<option value="both">Both</option>
 						<option value="infant">Infant</option>
+						<option value="female">Female</option>
+						<option value="male">Male</option>
 					</select>
 				</div>
-			</div>
-						<div class="col-md-4">
 				<div class="form-group">
-					<label for="screening">Years</label> 
-					<input type="text" class="form-control" id="years">
+					<label for="screening">Regularity of Screening</label> 
+					<input type="text" class="form-control" placeholder="How often does one have to go for this screening" id="years">
 				</div>
-			</div>
 			<div align="center">
 				<button type="submit" value="Submit" class="btn btn-primary"
 					id="add">Add</button>
@@ -173,8 +165,7 @@
 	</div>
 
 
-
-	<div id="abc"></div>
+	<div id="message"></div>
 
 
 </body>
