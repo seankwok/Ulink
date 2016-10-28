@@ -43,8 +43,8 @@ $(document).ready(function() {
 					$('#green').html("Number of in Patient " + json.inPatient);
 					$('#red').html("Number of out Patient " + json.outPatient);
 				} else {
-					$('#green').html("Number if in Patient" + json.indo);
-					$('#red').html("Number of out Patient" + json.nonIndo);
+					$('#green').html("Number indo patient " + json.indo);
+					$('#red').html("Number of non Patient " + json.nonIndo);
 				}
 			}
 		});
@@ -179,12 +179,12 @@ $(document).ready(function() {
       </div>
          <div align="center">
  
-    <button type="submit" value="Submit" class="btn btn-primary" id="submit"">Generate</button>
+    <button type="submit" value="Submit" class="btn btn-primary" id="submit">Generate</button>
     </div>
     </div>
  
 
-    
-    
+    <div align="center" id="green"></div>
+    <div align="center" id="red"></div>
   </body>
 </html>

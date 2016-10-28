@@ -30,7 +30,7 @@ public class TopK {
 				}
 			}
 		}
-
+		
 		HashMap<String, Integer> sortedReferral = sortByValue(referralList);
 
 		return sortedReferral;
@@ -81,25 +81,28 @@ public class TopK {
 	}
 
 	public HashMap<String, Integer> compareTeam(String startDate, String endDate, String team) {
-		ArrayList<String> comapareTeamList = connection.retrieveAllTeam(startDate, endDate, team);
+		ArrayList<String> compareTeamList = connection.retrieveAllTeam(startDate, endDate, team);
 		HashMap<String, Integer> compareList = new HashMap<String, Integer>();
 		compareList.put("indo", 0);
 		compareList.put("nonIndo", 0);
 		compareList.put("inPatient", 0);
 		compareList.put("outPatient", 0);
 		// hospitalAdmitted = null means out
-
-		for (int i = 0; i < comapareTeamList.size() - 1; i++) {
-			String nationality = comapareTeamList.get(i);
-			String hospitalAdmitted = comapareTeamList.get(i + 1);
-			if (nationality.equals("indo")) {
+	
+		for (int i = 0; i < compareTeamList.size() - 1; i+=2) {
+			String nationality = compareTeamList.get(i);
+			String hospitalAdmitted = compareTeamList.get(i + 1);
+			System.out.println(nationality + " <<<< COUNTRY" + i);
+			System.out.println(hospitalAdmitted+ "   " + i );
+			if (nationality == null || nationality.equals("indo")) {
 				int temp = compareList.get("indo");
 				compareList.put("indo", temp + 1);
 			} else {
 				int temp = compareList.get("nonIndo");
 				compareList.put("nonIndo", temp + 1);
 			}
-			if (hospitalAdmitted.equals("inPatient")){
+			
+			if (hospitalAdmitted != null){
 				int temp = compareList.get("inPatient");
 				compareList.put("inPatient",temp+1);
 			} else {

@@ -2,7 +2,9 @@ package ulink.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,19 +13,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+
+import ulink.constructor.Condition;
+import ulink.dao.DatabaseConnection;
 import ulink.logic.TopK;
+import ulink.logic.Utility;
 
 /**
- * Servlet implementation class Analysis
+ * Servlet implementation class TopDoctor
  */
-@WebServlet("/Analysis")
-public class Analysis extends HttpServlet {
+@WebServlet("/TopResult")
+public class TopResult extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Analysis() {
+    public TopResult() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,21 +39,26 @@ public class Analysis extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-	
-		PrintWriter out = response.getWriter();
-		TopK analysis = new TopK();
-		String startDate = request.getParameter("startDate");
+		TopK topK = new TopK();
+		HashMap<String, Integer> topList;
+		int kValue = Integer.parseInt(request.getParameter("kValue"));
 		String endDate = request.getParameter("endDate");
-		String team = request.getParameter("teamName");
-	
-		HashMap<String, Integer> analysisList = analysis.compareTeam("2016-10-05 00:00:00","2016-10-20 00:00:00",team);
+		String startDate = request.getParameter("startDate");
+		String type = request.getParameter("type");
+		if (type.equals("doctor")){
+			topList = topK.topDoctor(startDate, endDate);
+		} else if (type.equals("Referral")){
+			topList = topK.topReferral(startDate, endDate);
+		}else {
+			topList = topK.topSpeciality();
+		}
 		
+
 		Gson gson = new Gson();
-		
-		//JsonArray result = (JsonArray) new Gson().toJsonTree(analysisList,new TypeToken<HashMap<String,Integer>>() {}.getType());
-		 String arrayListToJson = gson.toJson(analysisList);
-		
-		
+
+		PrintWriter out = response.getWriter();
+		String arrayListToJson = gson.toJson(topList);
+
 		out.write(arrayListToJson);
 		out.flush();
 		return;

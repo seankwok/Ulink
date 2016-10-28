@@ -180,7 +180,7 @@ public class DatabaseConnection {
 
 			Statement stmt = con.createStatement();
 			String sql = "select client.passportNumber,client.clientName, client.nationality, user.role, followup.hospitalAdmitted from client inner join appointment on client.passportNumber = appointment.passportNumber INNER join user on appointment.email = user.email inner join admission on client.passportNumber = admission.passportNumber inner join followup on admission.followUpID = followup.followUpID where followup.dateOfAdmission >= '"
-					+ startDate + "' && followup.dateOfAdmission <= '" + endDate + "'&& user.role = '" + team + "'";
+					+ startDate + "' && followup.dateOfAdmission <= '" + endDate  + "'";
 
 			ResultSet rs = stmt.executeQuery(sql);
 
