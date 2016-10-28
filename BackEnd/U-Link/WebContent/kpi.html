@@ -43,8 +43,8 @@ $(document).ready(function() {
 					$('#green').html("Number of in Patient " + json.inPatient);
 					$('#red').html("Number of out Patient " + json.outPatient);
 				} else {
-					$('#green').html("Number if in Patient" + json.indo);
-					$('#red').html("Number of out Patient" + json.nonIndo);
+					$('#green').html("Number indo patient " + json.indo);
+					$('#red').html("Number of non Patient " + json.nonIndo);
 				}
 			}
 		});
@@ -73,13 +73,26 @@ $(document).ready(function() {
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home<span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Client</a></li>
+        <li><a href="#">Home<span class="sr-only">(current)</span></a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Client <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="client.html">Client List</a></li>
+            <li><a href="createClient.html">Create New Client</a></li>
+          </ul>
+        </li> 
         <li><a href="#">Invoice</a></li>
         <li><a href="#">Services</a></li>
         <li><a href="#">Report</a></li>
         <li><a href="#">Doctor</a></li>
-        <li><a href="timeline.html">Timeline</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Timeline <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="infant.html">Infant</a></li>
+            <li><a href="female.html">Female</a></li>
+            <li><a href="male.html">Male</a></li>
+          </ul>
+        </li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Analysis <span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -166,31 +179,12 @@ $(document).ready(function() {
       </div>
          <div align="center">
  
-    <button type="submit" value="Submit" class="btn btn-primary" id="submit"">Generate</button>
+    <button type="submit" value="Submit" class="btn btn-primary" id="submit">Generate</button>
     </div>
     </div>
  
 
-    <p id="results">
-    <div class="container">
-    <div class="row">
-    <div class="col-md-6">
-    <svg height="500" width="500">
-      <circle cx="250" cy="250" r="200" stroke="#BCFCBB" stroke-width="3" fill="#BCFCBB" /> 
-      <div id="green"></div>
-    </svg>
-    </div>
-
-    <div class="col-md-6">
-    <svg height="500" width="500">
-      <circle cx="250" cy="250" r="200" stroke="#FCBBBC" stroke-width="3" fill="#FCBBBC"/>
-       <div id="red"></div> 
-    </svg>
-    </div>
-
-    </div>
-    </div>
-    
-    
+    <div align="center" id="green"></div>
+    <div align="center" id="red"></div>
   </body>
 </html>

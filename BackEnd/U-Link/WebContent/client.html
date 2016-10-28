@@ -13,6 +13,66 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
  
+ <script type="text/javascript">
+	$(document).ready(function() {
+
+		displayAll();
+	});
+
+	function displayAll() {
+		var clientDetails = "<thead><tr><th>Client Name</th><th>Nationality</th><th>Gender</th><th>Date of Birth</th><th>Referred by</th></tr></thead>";
+		var isEmpty = false;
+		var completeIsEmpty = false;
+		$
+				.ajax({
+					url : "DisplayAllClient",
+					type : "GET",
+					dataType : "json",
+					success : function(data) {
+
+						var json = jQuery.parseJSON(JSON.stringify(data));
+						console.log(json);
+						$
+								.each(
+										json,
+										function(key, value) {
+											//	$('#toDoID').append($('<div></div>').html());
+											//  var list = $('<ul></ul>');
+
+									
+												clientDetails += '<tr>'
+
+														+ '<td>'
+														+ value.clientName
+														+ '</td>'
+														+ '<td>'
+														+ value.nationality
+														+ '</td>'
+														+ '<td>'
+														+ value.gender
+														+ '</td>'
+														+ '<td>'
+														+ value.dateOfBirth
+														+ '</td>'
+														+ '<td>'
+														+ value.referralName
+														+ '</td></tr>';
+
+								});
+						//	$('#toDoList').append(toDoList);
+					
+							$("#clientDetails").html(clientDetails);
+					
+
+						//(toDoList);
+					}
+				});
+		//
+		//return data;
+
+	}
+</script>
+ 
   </head>
   <body>
     
@@ -44,7 +104,14 @@
         <li><a href="#">Services</a></li>
         <li><a href="#">Report</a></li>
         <li><a href="#">Doctor</a></li>
-        <li><a href="">Timeline</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Timeline <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="infant.html">Infant</a></li>
+            <li><a href="female.html">Female</a></li>
+            <li><a href="male.html">Male</a></li>
+          </ul>
+        </li>  
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Analysis <span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -77,37 +144,9 @@
 
     <div class="container">
     <a href="createClient.html"><button type="button" class="btn btn-default" class="btn pull-right">Create new client</button></a>
-    <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Client Name</th>
-        <th>Client Owner</th>
-        <th>Nationality</th>
-        <th>Gender</th>
-        <th>Date of Birth</th>
-        <th>Referred by</th>
-        <th>PIC</th>
-        <th>LOG</th>
-        <th>ULink can claim</th>
-        <th>VISA Type</th>
+    <table class="table table-striped" id="clientDetails">
+ 
 
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a href="clientAppt.html">Anna Looloo</a> </td>
-        <td>xx</td>
-        <td>xx</td> 
-        <td>xx</td>
-        <td>xx</td>      
-        <td>xx</td>
-        <td>xx</td>
-        <td>xx</td>
-        <td>xx</td>
-        <td>xx</td>
-      </tr>
-      
-    </tbody>
   </table>
 </div>
 

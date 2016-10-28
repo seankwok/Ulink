@@ -42,13 +42,13 @@ public class DatabaseConnection {
 				String billingState = rs.getString(11);
 				String billingCountry = rs.getString(12);
 				String billingCode = rs.getString(13);
-				String isMedicial = rs.getString(14);
+				String isMedical = rs.getString(14);
 				String isClaim = rs.getString(15);
 				String claimInformation = rs.getString(16);
 				String referralName = rs.getString(17);
 				clientList.add(new Client(passportNumber, clientName, gender, dateOfBirth, mainDianosis, clientType,
 						nationality, countryOfResidence, billingStreet, billingCity, billingState, billingCountry,
-						billingCode, isMedicial, isClaim, claimInformation, referralName));
+						billingCode, isMedical, isClaim, claimInformation, referralName));
 			}
 
 			con.close();
@@ -80,7 +80,7 @@ public class DatabaseConnection {
 				String clientName = rs.getString(2);
 				String gender = rs.getString(3);
 				String dateOfBirth = rs.getString(4);
-				String mainDianosis = rs.getString(5);
+				String mainDiagnosis = rs.getString(5);
 				String clientType = rs.getString(6);
 				String nationality = rs.getString(7);
 				String countryOfResidence = rs.getString(8);
@@ -89,13 +89,13 @@ public class DatabaseConnection {
 				String billingState = rs.getString(11);
 				String billingCountry = rs.getString(12);
 				String billingCode = rs.getString(13);
-				String isMedicial = rs.getString(14);
+				String isMedical = rs.getString(14);
 				String isClaim = rs.getString(15);
 				String claimInformation = rs.getString(16);
 				String referralName = rs.getString(17);
-				clientList.add(new Client(passportNumber, clientName, gender, dateOfBirth, mainDianosis, clientType,
+				clientList.add(new Client(passportNumber, clientName, gender, dateOfBirth, mainDiagnosis, clientType,
 						nationality, countryOfResidence, billingStreet, billingCity, billingState, billingCountry,
-						billingCode, isMedicial, isClaim, claimInformation, referralName));
+						billingCode, isMedical, isClaim, claimInformation, referralName));
 			}
 
 			con.close();
@@ -107,6 +107,118 @@ public class DatabaseConnection {
 
 		return clientList;
 	}
+	
+	
+	public void createClient(String passportNumber, String clientName, String gender, String dateOfBirth, String mainDiagnosis, String clientType, String nationality, String countryOfResidence, String billingStreet, String billingCity, String billingState, String billingCountry,
+			String billingCode, String isMedical, String isClaim, String claimInformation, String referralName) {
+
+		Connection con;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
+
+			String sql = "INSERT INTO client (passportNumber, clientName, gender, dateOfBirth, mainDiagnosis, clientType,"
+					+ "nationality, countryOfResidence, billingStreet, billingCity, billingState, billingCountry," +
+						"billingCode, isMedical, isClaim, claimInformation, referralName)"
+					+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			PreparedStatement preparedStmt = con.prepareStatement(sql);
+			preparedStmt.setString(1, passportNumber);
+			preparedStmt.setString(2, clientName);
+			preparedStmt.setString(3, gender);
+			preparedStmt.setString(4, dateOfBirth);
+			preparedStmt.setString(5, mainDiagnosis);
+			preparedStmt.setString(6, clientType);
+			preparedStmt.setString(7, nationality);
+			preparedStmt.setString(8, countryOfResidence);
+			preparedStmt.setString(9, billingStreet);
+			preparedStmt.setString(10, billingCity);
+			preparedStmt.setString(11, billingState);
+			preparedStmt.setString(12, billingCountry);
+			preparedStmt.setString(13, billingCode);
+			preparedStmt.setString(14, isMedical);
+			preparedStmt.setString(15, isClaim);
+			preparedStmt.setString(16, claimInformation);
+			preparedStmt.setString(17, referralName);
+			preparedStmt.execute();
+
+			con.close();
+
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+
+			e.printStackTrace();
+			
+		}
+
+	}
+	
+	
+	
+	public void updateClient(String passportNumber, String clientName, String gender, String dateOfBirth, String mainDiagnosis, String clientType, String nationality, String countryOfResidence, String billingStreet, String billingCity, String billingState, String billingCountry,
+			String billingCode, String isMedical, String isClaim, String claimInformation, String referralName) {
+
+		Connection con;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
+
+			String sql = "UPDATE client set clientName = ? , gender = ? , dateOfBirth = ? , mainDiagnosis = ?, clientType = ?,"
+					+ "nationality = ?, countryOfResidence = ?, billingStreet = ?, billingCity = ?, billingState = ?, billingCountry=?," +
+						"billingCode =?, isMedical = ?, isClaim =? , claimInformation = ?, referralName =? where passportNumber =?";
+			PreparedStatement preparedStmt = con.prepareStatement(sql);
+			
+			preparedStmt.setString(1, clientName);
+			preparedStmt.setString(2, gender);
+			preparedStmt.setString(3, dateOfBirth);
+			preparedStmt.setString(4, mainDiagnosis);
+			preparedStmt.setString(5, clientType);
+			preparedStmt.setString(6, nationality);
+			preparedStmt.setString(7, countryOfResidence);
+			preparedStmt.setString(8, billingStreet);
+			preparedStmt.setString(9, billingCity);
+			preparedStmt.setString(10, billingState);
+			preparedStmt.setString(11, billingCountry);
+			preparedStmt.setString(12, billingCode);
+			preparedStmt.setString(13, isMedical);
+			preparedStmt.setString(14, isClaim);
+			preparedStmt.setString(15, claimInformation);
+			preparedStmt.setString(16, referralName);
+			preparedStmt.setString(17, passportNumber);
+			preparedStmt.execute();
+
+			con.close();
+
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+
+			e.printStackTrace();
+			
+		}
+
+	}
+	
+
+	public void deleteClient(String passportNumber) {
+		Connection con;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
+
+			String sql = "Delete from client where conditionName = ?";
+			PreparedStatement preparedStmt = con.prepareStatement(sql);
+			preparedStmt.setString(1, passportNumber);
+			preparedStmt.executeUpdate();
+
+			con.close();
+
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
+	
 
 	public ArrayList<Consultation> retrieveAllConsultation(String startDate, String endDate) {
 
@@ -180,7 +292,7 @@ public class DatabaseConnection {
 
 			Statement stmt = con.createStatement();
 			String sql = "select client.passportNumber,client.clientName, client.nationality, user.role, followup.hospitalAdmitted from client inner join appointment on client.passportNumber = appointment.passportNumber INNER join user on appointment.email = user.email inner join admission on client.passportNumber = admission.passportNumber inner join followup on admission.followUpID = followup.followUpID where followup.dateOfAdmission >= '"
-					+ startDate + "' && followup.dateOfAdmission <= '" + endDate + "'&& user.role = '" + team + "'";
+					+ startDate + "' && followup.dateOfAdmission <= '" + endDate  + "'";
 
 			ResultSet rs = stmt.executeQuery(sql);
 

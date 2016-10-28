@@ -2,7 +2,6 @@ package ulink.logic;
 
 import java.util.*;
 
-import org.joda.time.DateTime;
 
 import ulink.constructor.*;
 import ulink.dao.DatabaseConnection;
@@ -39,7 +38,8 @@ public class TimeLine {
 		DatabaseConnection database = new DatabaseConnection();
 		ArrayList<Condition> conditionList = database.retrieveAllCondition();
 		HashMap<String, Integer> screeningList = new HashMap<String, Integer>();
-
+		
+		
 		for (int i = 0; i < conditionList.size(); i++) {
 			Condition condition = conditionList.get(i);
 			screeningList.put(condition.getScreening(), condition.getAgeRequired());
@@ -52,12 +52,14 @@ public class TimeLine {
 		ArrayList<Client> clientList = database.retrieveAllClientList();
 		ArrayList<Timeline> timelineList = database.getTimeline();
 		ArrayList<Condition> conditionList = database.retrieveAllCondition();
-
+		Utility utility = new Utility();
+		
 		for (int i = 0; i < clientList.size(); i++) {
 			Client client = clientList.get(i);
 			String dob = client.getDateOfBirth();
 			int year = Integer.parseInt(dob.substring(0, 4));
-			int age = getAge(year);
+			
+			int age = utility.getAge(year);
 			System.out.println(year);
 
 			for (int x = 0; x < conditionList.size(); x++) {
@@ -76,11 +78,6 @@ public class TimeLine {
 		}
 	}
 
-	public int getAge(int year) {
-		DateTime datetime = new DateTime();
-		int currentYear = datetime.getYear();
 
-		return currentYear - year;
-	}
 
 }

@@ -40,7 +40,7 @@ public class Analysis extends HttpServlet {
 		String endDate = request.getParameter("endDate");
 		String team = request.getParameter("teamName");
 	
-		HashMap<String, Integer> analysisList = analysis.compareTeam("2016-10-05 00:00:00","2016-10-20 00:00:00",team);
+		HashMap<String, Integer> analysisList = analysis.compareTeam(startDate,endDate,team);
 		
 		Gson gson = new Gson();
 		

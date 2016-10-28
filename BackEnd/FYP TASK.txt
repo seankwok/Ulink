@@ -1,4 +1,10 @@
-Show age & gender output. 
-list all topk function
-list all client (CRUD)
+
 Diagram 
+
+
+Database password 
+2FeroT8WC0GG
+
+deployment 
+User - Manager
+password - 2FeroT8WC0GG

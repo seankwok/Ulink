@@ -30,6 +30,8 @@ $(document).ready(function() {
 		var startDate = $("#startDate").val();
 		var endDate = $("#endDate").val();
 		var type = $("#type").val();
+		var count =0;
+		var previous;
 		var table = "<tr><th>Ranking</th><th>Name</th><th>value</th>";
 		$.ajax({
 			url : "TopResult",
@@ -44,10 +46,12 @@ $(document).ready(function() {
 						json,
 						function(key, value) {
 							
-
+						if(previous != value){
+							count += 1;	
+						}
 							table += '<tr>'
 									+ '<td>'
-									+ 
+									+ count
 									+ '</td>'
 									+ '<td>'
 									+ key
@@ -56,7 +60,7 @@ $(document).ready(function() {
 									+ value
 									+ '</td></tr>';
 							
-							
+							previous = value;	
 							
 
 						});
@@ -164,7 +168,7 @@ $(document).ready(function() {
 			<div class="form-group">
 				<label>Select Criteria </label> <select class="form-control"
 					id="type">
-					<option value="Doctor">Doctor</option>
+					<option value="doctor">Doctor</option>
 					<option value="Referral">Referral</option>
 					<option value="Speciality">Speciality</option>
 				</select>

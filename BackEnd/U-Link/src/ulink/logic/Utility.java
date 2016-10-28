@@ -12,6 +12,8 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.joda.time.DateTime;
+
 import ulink.constructor.Condition;
 
 public class Utility {
@@ -72,5 +74,17 @@ public class Utility {
 		}
 
 		return typeList;
+	}
+	
+	public String changeDateFormat(String date){
+		return date.substring(3, 5)+ "-" + date.substring(0, 2) + "-"+date.substring(6,10);
+	}
+	
+	
+	public int getAge(int year) {
+		DateTime datetime = new DateTime();
+		int currentYear = datetime.getYear();
+
+		return currentYear - year;
 	}
 }
