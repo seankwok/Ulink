@@ -3,10 +3,11 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 27, 2016 at 01:08 AM
+-- Generation Time: Oct 28, 2016 at 09:56 AM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
+SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
@@ -39,7 +40,6 @@ CREATE TABLE `admission` (
 --
 
 INSERT INTO `admission` (`caseNumber`, `followUpID`, `passportNumber`) VALUES
-(1, '123', 'S123qwe'),
 (2, '123', 'G1234456g'),
 (3, 'abc', 'qwewqewqeqw');
 
@@ -62,23 +62,16 @@ CREATE TABLE `allcondition` (
 --
 
 INSERT INTO `allcondition` (`conditionName`, `numOfYears`, `ageRequired`, `screening`, `type`) VALUES
-('sick1', 3, 20, 'abc', 'Male'),
-('sick2', 4, 22, 'qwe', 'Male'),
 ('Colorectal cancer screening', 1, 50, 'Computed Tomography (CT) Colonography ', 'Male'),
 ('Obesity', 1, 18, 'BMI & Waist circumference', 'Male'),
 ('Hypertension (High blood pressure)', 2, 18, 'Blood pressure measurement ', 'Male'),
 ('Hyperlipidaemia', 3, 40, 'Fasting lipids', 'Male'),
-('Abdominal Aortic Aneurysm', 1, 65, 'Abdominal Ultrasonography', 'Male'),
+('Abdominal Aortic Aneurysm', 1, 65, 'Abdominal Ultrasonography', 'Male'),
 ('Diabetic microalbuminuria', 1, 18, 'urine microalbumin', 'Male'),
 ('Hearing loss', 1, 18, 'Audiometry ', 'Male'),
 ('kidney disorder', 1, 18, 'Kidney function test', 'Male'),
-('Liver cancer', 1, 18, 'Ultrasound Hepatobiliary System', 'Infant'),
-('Diabetes mellitus', 3, 40, 'Fasting blood glucose', 'Female'),
-('qq', 1, 1, 'qwe', 'male'),
-('sean', 4, 55, 'qwe', 'female'),
-('qwedddd', 44, 1, 'qwe', 'female'),
-('tgb', 4, 44, 'qweqwewqewq', 'female'),
-('tg', 5, 54, '5tg', 'female');
+('Liver cancer', 1, 0, 'Ultrasound Hepatobiliary System', 'Infant'),
+('Diabetes mellitus', 3, 40, 'Fasting blood glucose', 'Female');
 
 -- --------------------------------------------------------
 
@@ -320,7 +313,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`username`, `password`, `role`, `email`) VALUES
-('kaixin', 'kaixin', 'Ops', 'sean@gmail.com'),
+('kaixin', 'kaixin', 'Visa', 'sean@gmail.com'),
 ('sean', 'sean', 'Medical', 'seankwok794@gmail.com');
 
 --
@@ -499,6 +492,7 @@ ALTER TABLE `referraldetails`
 --
 ALTER TABLE `user`
   ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`role`) REFERENCES `role` (`roleName`);
+SET FOREIGN_KEY_CHECKS=1;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
