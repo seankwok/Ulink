@@ -37,6 +37,30 @@ $(document).ready(function() {
 			success : function(data) {
 				var json = jQuery.parseJSON(JSON.stringify(data));
 
+
+        //display in table form
+        $
+        .each(
+            jaon,
+            function(key,value) {
+              if(previous!= value){
+                count +=1;
+              }
+                table += '<tr>'
+                      + '<td>'
+                      + inpatient
+                      + '</td>'
+                      + '<td>'
+                      + outPatient
+                      + '</td></tr>';
+
+                      previous=value;
+            });
+        $('#kpi').html(table);
+
+
+
+        /* sean's quotes
 				console.log(json);
 
 				if (teamName == "Medical") {
@@ -46,6 +70,7 @@ $(document).ready(function() {
 					$('#green').html("Number of Indonesian Patients " + json.indo);
 					$('#red').html("Number of Non-Indonesian Patients " + json.nonIndo);
 				}
+  */
 			}
 		});
 
@@ -165,7 +190,7 @@ $(document).ready(function() {
             <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
             </span>
-          </div>
+        </div>
 
           <script type="text/javascript">
           $(function () {
@@ -177,14 +202,22 @@ $(document).ready(function() {
 
 
       </div>
-         <div align="center">
- 
-    <button type="submit" value="Submit" class="btn btn-primary" id="submit">Generate</button>
+    <div class="container" align="center">
+        <button type="submit" value="Submit" class="btn btn-primary" id="submit">Generate</button>
     </div>
-    </div>
- 
+    
 
+    <br>
+    <div class="container">
+
+    <table class="table table-striped" id="kpi">
+    
+    </table>
+  </div>
+    </div>
+    <!-- sean's codes
     <div align="center" id="green"></div>
     <div align="center" id="red"></div>
+    -->
   </body>
 </html>

@@ -158,7 +158,7 @@
       
         <div class="form-group">
           <label for="name">Client Name:</label>
-          <input type="text" class="form-control" id="name">
+          <input type="text" class="form-control" id="name" required>
 
           <label for="dob">Date Of Birth:</label>
           <input type="date" name="dob" class="form-control" id="dob">
@@ -173,18 +173,27 @@
                <option>Company</option>
             </select>
 
-          <label for="nationality">Nationality:</label>
-          <input type="text" class="form-control" id="nationality">
+          <label>Nationality</label>
+            <select class="form-control" id="nationality">
+               <option>Retrieve from db</option>
+               <option>xx</option>
+               <option>xx</option>
+            </select>
 
-          <label for="Residence">Country of Residence:</label>
-          <input type="text" class="form-control" id="Residence">
-
-        
-          <label for="referred_by">Referred by:</label>
-          <input type="text" class="form-control" id="referred_by">
-        </div>
-
-      
+          <label>Country of Residence</label>
+            <select class="form-control" id="Residence">
+               <option>Retrieve from db</option>
+               <option>xx</option>
+               <option>xx</option>
+            </select>
+          
+          <label>Referred by:</label>
+            <select class="form-control" id="referred_by">
+               <option>Retrieve from database</option>
+               <option>xx</option>
+               <option>xx</option>
+            </select>
+      </div>
     </div>  <!--panel default-->
 
     
@@ -245,20 +254,27 @@
         <input type="time" name="appt_time" class="form-control" id="appt_time">
       </div>
 
-      <div class="form-group">
-        <label for="doctor">Doctor:</label>
-        <input type="text" class="form-control" id="doctor">
-      </div>
+      <label>Doctor:</label>
+            <select class="form-control" id="doctor">
+               <option>Retrieve from database</option>
+               <option>xx</option>
+               <option>xx</option>
+            </select>
 
-      <div class="form-group">
-        <label for="speciality">Speciality:</label>
-        <input type="text" class="form-control" id="speciality">
-      </div>
+      <label>Specialty:</label>
+        <select class="form-control" id="speciality">
+          <option>Retrieve from database</option>
+           <option>xx</option>
+           <option>xx</option>
+       </select>
 
-      <div class="form-group">
-        <label for="clinic">Clinic:</label>
-        <input type="text" class="form-control" id="clinic">
-      </div>
+       <label>Clinic:</label>
+          <select class="form-control" id="clinic">
+           <option>Retrieve from database</option>
+          <option>xx</option>
+           <option>xx</option>
+       </select>
+
 
       <div class="form-group">
         <label for="referring_doctor">Referring Doctor (US Embassy):</label>
