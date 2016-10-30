@@ -3,10 +3,11 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 28, 2016 at 10:47 AM
+-- Generation Time: Oct 30, 2016 at 03:51 AM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
+SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
@@ -1062,14 +1063,14 @@ CREATE TABLE `allcondition` (
 --
 
 INSERT INTO `allcondition` (`conditionName`, `numOfYears`, `ageRequired`, `screening`, `type`) VALUES
-('Colorectal cancer screening', 1, 50, 'Computed Tomography (CT) Colonography ', 'Male'),
+('Colorectal cancer screening', 1, 50, 'Computed Tomography (CT) Colonography ', 'Male'),
 ('Obesity', 1, 18, 'BMI & Waist circumference', 'Male'),
 ('Hypertension (High blood pressure)', 2, 18, 'Blood pressure measurement ', 'Male'),
 ('Hyperlipidaemia', 3, 40, 'Fasting lipids', 'Male'),
 ('Abdominal Aortic Aneurysm', 1, 65, 'Abdominal Ultrasonography', 'Male'),
 ('Diabetic microalbuminuria', 1, 18, 'urine microalbumin', 'Male'),
 ('Hearing loss', 1, 18, 'Audiometry ', 'Male'),
-('kidney disorder', 1, 18, 'Kidney function test', 'Male'),
+('kidney disorder', 1, 18, 'Kidney function test', 'Male'),
 ('Liver cancer', 1, 0, 'Ultrasound Hepatobiliary System', 'Infant'),
 ('Diabetes mellitus', 3, 40, 'Fasting blood glucose', 'Female');
 
@@ -1092,7 +1093,8 @@ CREATE TABLE `appointment` (
 
 INSERT INTO `appointment` (`appointmentID`, `passportNumber`, `appointmentDate`, `email`) VALUES
 (1, 'G1234456g', '2016-10-19 00:00:00.000000', 'sean@gmail.com'),
-(2, 'qwewqewqeqw', '2016-10-24 00:00:00.000000', 'seankwok794@gmail.com');
+(2, 'qwewqewqeqw', '2016-10-24 00:00:00.000000', 'seankwok794@gmail.com'),
+(3, 'a1223', '2016-10-07 00:00:00.000000', 'seankwok794@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -3571,7 +3573,7 @@ ALTER TABLE `admission`
 -- AUTO_INCREMENT for table `appointment`
 --
 ALTER TABLE `appointment`
-  MODIFY `appointmentID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `appointmentID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `consultation`
 --
@@ -3641,6 +3643,7 @@ ALTER TABLE `referraldetails`
 --
 ALTER TABLE `user`
   ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`role`) REFERENCES `role` (`roleName`);
+SET FOREIGN_KEY_CHECKS=1;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

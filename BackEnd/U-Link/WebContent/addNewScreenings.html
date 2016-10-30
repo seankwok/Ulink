@@ -22,9 +22,6 @@
 	$(document).ready(
 			function() {
 
-				$('#successMessage').click(function(){
-			        $('.alert').show()
-			    }) 
 				$("#add").click(
 						function() {
 
@@ -48,7 +45,7 @@
 									console.log(data.status);
 									if (data.status == "success") {
 										console.log(data.status);
-									$('#message').html("Record Added");
+									$('#message').html("Successfully added a new screeningd");
 									$("#message").css("color", "green");
 								}else {
 									$('#message').html("fail to add record");
@@ -170,13 +167,12 @@
 			</div>
 		</form>
 	
-		<div class="alert alert-success" id="successMessage">
+		<div class="alert alert-success" id="message">
 	    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-	    <strong>Successfully added a new screening</strong> 
 		</div>
 
-
-	<div id="message"></div>
+</div>
+	
 
 
 </body>

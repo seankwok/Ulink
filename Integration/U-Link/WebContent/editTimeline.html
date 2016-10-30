@@ -18,9 +18,30 @@
 
 		displayAll();
 	});
+	
 
+	function deleteItem(clickedID){
+		var sendData = {
+				"conditionName" : clickedID
+			};
+			console.log(clickedID);
+			$.ajax({
+				url : "DeleteCondition",
+				type : "post",
+				data : sendData,
+				dataType : "json",
+				success : function(data) {
+
+					displayAll();
+					$("#message").html("Task completed");
+					$("#message").css("color", "green");
+				}
+
+			});
+    } 
+	
 	function displayAll() {
-		var timeline = "<tr><th>Age range</th><th>Common illnesses</th><th>Recommended screenings</th><th>type</th><th>Number of years</th><th>Action</th></tr>"
+		var timeline = "<tr><th>Age range</th><th>Common illnesses</th><th>Recommended screenings</th><th>type</th><th>Number of years</th><th>Action</th><th></th></tr>"
 		var completedTask;
 		var isEmpty = false;
 		var completeIsEmpty = false;
@@ -57,14 +78,13 @@
 														+ '</td>'
 														+ '<td>'
 														+ value.years
-														+ '</td>'
-														+ '<td><input type=hidden id=' + value.ID + ' value="'+ value.task +'"></td>'
+														+ '</td>'									
 														+ '<td><a href=# onClick=editItem(this.id) id='
-														+ value.ID
+														+ value.conditionName
 														+ '>Edit</a></td>'
-														+ '<td><a href=# onClick=deleteToDo(this.id) id='
-														+ value.ID
-														+ '>Delete</a></td></tr>';
+														+ '<td><a href=# onClick=deleteItem(this.id) id="'
+														+ value.conditionName
+														+ '">Delete</a></td></tr>';
 
 												isEmpty = true;
 											
@@ -173,15 +193,7 @@
 		
 		</table>
 </div>
-	<div class="container">
-		<table class="table table-striped">
-		
-			
-			<idv id="timeline"></idv>
 
-			
-		</table>
-	</div>
 
 
 
