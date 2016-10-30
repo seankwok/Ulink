@@ -48,7 +48,7 @@ public class DatabaseConnection {
 				String isClaim = rs.getString(15);
 				String claimInformation = rs.getString(16);
 				String referralName = rs.getString(17);
-				clientList.add(new Client(passportNumber, clientName, gender, utility.changeDateFormat(dateOfBirth), mainDianosis, clientType,
+				clientList.add(new Client(passportNumber, clientName, gender, utility.changeDisplayDateFormat(dateOfBirth), mainDianosis, clientType,
 						nationality, countryOfResidence, billingStreet, billingCity, billingState, billingCountry,
 						billingCode, isMedical, isClaim, claimInformation, referralName));
 			}

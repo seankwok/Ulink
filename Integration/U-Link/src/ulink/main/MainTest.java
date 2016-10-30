@@ -1,9 +1,12 @@
 package ulink.main;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.joda.time.DateTime;
 
+import ulink.constructor.Client;
+import ulink.dao.DatabaseConnection;
 import ulink.logic.AgeGender;
 import ulink.logic.TimeLine;
 import ulink.logic.TopK;
@@ -33,7 +36,9 @@ public class MainTest {
 		//int currentYear = datetime.getYear();
 		//System.out.println(currentYear);
 		AgeGender genderByAge = new AgeGender();
-		System.out.print(genderByAge.genderByAge().toString());
+		DatabaseConnection connection = new DatabaseConnection();
+		ArrayList<Client> clientList = connection.retrieveAllClientList();
+		System.out.println(clientList.get(1).getDateOfBirth());
 
 	}
 

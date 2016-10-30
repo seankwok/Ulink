@@ -1,7 +1,7 @@
 package ulink.logic;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.Properties;
 import java.util.TreeMap;
 
@@ -80,6 +80,9 @@ public class Utility {
 		return date.substring(3, 5)+ "-" + date.substring(0, 2) + "-"+date.substring(6,10);
 	}
 	
+	public String changeDisplayDateFormat(String date){
+		return date.substring(8,10)+ "-" + date.substring(5, 7) + "-"+date.substring(0,4);
+	}
 	
 	public int getAge(int year) {
 		DateTime datetime = new DateTime();

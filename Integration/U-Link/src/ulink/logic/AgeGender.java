@@ -1,7 +1,6 @@
 package ulink.logic;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.TreeMap;
 
 import ulink.constructor.Client;
@@ -36,7 +35,7 @@ public class AgeGender {
 		for (int i =0; i<clientList.size(); i++){
 			Client client = clientList.get(i);
 			String dob = client.getDateOfBirth();
-			int birthYear = Integer.parseInt(dob.substring(0, 4));
+			int birthYear = Integer.parseInt(dob.substring(6));
 			int age = utility.getAge(birthYear);
 			String gender = client.getGender();
 			int temp;

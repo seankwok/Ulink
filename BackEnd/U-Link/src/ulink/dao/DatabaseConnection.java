@@ -12,6 +12,7 @@ import ulink.constructor.Client;
 import ulink.constructor.Condition;
 import ulink.constructor.Consultation;
 import ulink.constructor.Timeline;
+import ulink.logic.Utility;
 
 public class DatabaseConnection {
 	
@@ -27,7 +28,8 @@ public class DatabaseConnection {
 			Statement stmt = con.createStatement();
 			String sql = "Select passportNumber,`clientName`,`gender`,dateOfBirth,mainDiagnosis,clientType,nationality,countryOfResidence,billingStreet,billingCity,billingState, billingCountry, billingcode,isMedicial,isClaim,claimInformation, referraldetails.referralName from client inner join referraldetails ON client.referral_ID = referraldetails.referral_ID";
 			ResultSet rs = stmt.executeQuery(sql);
-
+			Utility utility = new Utility();
+			
 			while (rs.next()) {
 				String passportNumber = rs.getString(1);
 				String clientName = rs.getString(2);
@@ -46,7 +48,7 @@ public class DatabaseConnection {
 				String isClaim = rs.getString(15);
 				String claimInformation = rs.getString(16);
 				String referralName = rs.getString(17);
-				clientList.add(new Client(passportNumber, clientName, gender, dateOfBirth, mainDianosis, clientType,
+				clientList.add(new Client(passportNumber, clientName, gender, utility.changeDisplayDateFormat(dateOfBirth), mainDianosis, clientType,
 						nationality, countryOfResidence, billingStreet, billingCity, billingState, billingCountry,
 						billingCode, isMedical, isClaim, claimInformation, referralName));
 			}

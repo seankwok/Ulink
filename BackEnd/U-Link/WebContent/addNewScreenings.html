@@ -22,6 +22,9 @@
 	$(document).ready(
 			function() {
 
+				$('#successMessage').click(function(){
+			        $('.alert').show()
+			    }) 
 				$("#add").click(
 						function() {
 
@@ -81,8 +84,13 @@
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
 					<li><a href="index.html">Home</a></li>
-
-					<li><a href="#">Client</a></li>
+					<li class="dropdown">
+         			 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Client <span class="caret"></span></a>
+			         <ul class="dropdown-menu">
+			            <li><a href="client.html">Client List</a></li>
+			            <li><a href="createClient.html">Create New Client</a></li>
+			          </ul>
+			        </li>
 					<li><a href="#">Invoice</a></li>
 					<li><a href="#">Services</a></li>
 					<li><a href="#">Report</a></li>
@@ -101,7 +109,8 @@
 						aria-expanded="false">Analysis <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a href="kpi.html">KPI</a></li>
-							<li><a href="top-k.html">Top-K</a></li>
+							<li><a href="top-k.html">Ranking</a></li>
+							<li><a href="genderByAge.html">Gender and Age Report</a></li>
 						</ul></li>
 					<li><a href="#">Template</a></li>
 
@@ -145,7 +154,7 @@
 				<div class="form-group">
 					<label for="screening">Demographic affected</label> 
 					<select class="form-control" id="type">
-						<option value="both">Both</option>
+						<option value="both">All</option>
 						<option value="infant">Infant</option>
 						<option value="female">Female</option>
 						<option value="male">Male</option>
@@ -161,8 +170,10 @@
 			</div>
 		</form>
 	
-
-	</div>
+		<div class="alert alert-success" id="successMessage">
+	    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+	    <strong>Successfully added a new screening</strong> 
+		</div>
 
 
 	<div id="message"></div>
