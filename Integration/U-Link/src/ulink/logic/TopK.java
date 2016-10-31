@@ -37,8 +37,8 @@ public class TopK {
 
 	}
 
-	public HashMap<String, Integer> topSpeciality() {
-		ArrayList<String> specialityList = connection.retrieveAllSpeciality();
+	public HashMap<String, Integer> topSpeciality(String startDate, String endDate) {
+		ArrayList<String> specialityList = connection.retrieveAllSpeciality(startDate, endDate);
 		HashMap<String, Integer> specialityHash = new HashMap<String, Integer>();
 
 		for (int i = 0; i < specialityList.size(); i++) {

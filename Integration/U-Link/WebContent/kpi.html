@@ -17,13 +17,15 @@
     <script src="js/bootstrap-datetimepicker.js"></script>
     <script src="js/bootstrap.min.js"></script>
 
+
+
 <script type="text/javascript">
 
 $(document).ready(function() {
 	
 	$("#submit").click (
 			function(){
-			
+		var table;
 		var teamName = $('#teamName').val();
 		var startDate = $("#startDate").val();
 		var endDate = $("#endDate").val();
@@ -36,26 +38,36 @@ $(document).ready(function() {
 			dataType : "json",
 			success : function(data) {
 				var json = jQuery.parseJSON(JSON.stringify(data));
+	
+				console.log(json);
+				if (teamName == "Medical") {
+					table ="<tr><th>Number of in Patient</th><th>Number of out Patient</th>";
+		
+			      
+			                table += '<tr>'
+			                      + '<td>'
+			                      + json.inPatient
+			                      + '</td>'
+			                      + '<td>'
+			                      + json.outPatient
+			                      + '</td></tr>';
 
+			    
 
-        //display in table form
-        $
-        .each(
-            jaon,
-            function(key,value) {
-              if(previous!= value){
-                count +=1;
-              }
-                table += '<tr>'
-                      + '<td>'
-                      + inpatient
-                      + '</td>'
-                      + '<td>'
-                      + outPatient
-                      + '</td></tr>';
+				} else {
+					
+					table ="<tr><th>Number of Indonesian Patients</th><th>Number of Non-Indonesian Patients</th>";
+		
+			      
+			                table += '<tr>'
+			                      + '<td>'
+			                      + json.indo
+			                      + '</td>'
+			                      + '<td>'
+			                      + json.nonIndo
+			                      + '</td></tr>';
+				}
 
-                      previous=value;
-            });
         $('#kpi').html(table);
 
 
@@ -71,8 +83,8 @@ $(document).ready(function() {
 					$('#red').html("Number of Non-Indonesian Patients " + json.nonIndo);
 				}
   */
-			}
-		});
+			
+			} });
 
 
 	});

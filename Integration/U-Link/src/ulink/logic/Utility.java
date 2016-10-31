@@ -77,9 +77,8 @@ public class Utility {
 	}
 	
 	public String changeDateFormat(String date){
-		return date.substring(3, 5)+ "-" + date.substring(0, 2) + "-"+date.substring(6,10);
+		return date.substring(6,10)+ "-" + date.substring(0, 2) + "-" + date.substring(3, 5);
 	}
-	
 	public String changeDisplayDateFormat(String date){
 		return date.substring(8,10)+ "-" + date.substring(5, 7) + "-"+date.substring(0,4);
 	}

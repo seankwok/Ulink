@@ -74,7 +74,7 @@ public class DatabaseConnection {
 
 			Statement stmt = con.createStatement();
 			String sql = "Select passportNumber,`clientName`,`gender`,dateOfBirth,mainDiagnosis,clientType,nationality,countryOfResidence,billingStreet,billingCity,billingState, billingCountry, billingcode,isMedicial,isClaim,claimInformation, referraldetails.referralName from client inner join referraldetails ON client.referral_ID = referraldetails.referral_ID where referraldetails.r_dateTime >='"
-					+ startDate + "' && referraldetails.r_dateTime <= '" + endDate + "'";
+					+ startDate + "' && referraldetails.r_dateTime <= '" + endDate + "'" ;
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
@@ -232,7 +232,7 @@ public class DatabaseConnection {
 
 			Statement stmt = con.createStatement();
 			String sql = "SELECT C_ID, dateTime, consultation.doctorName, clinicName, passportNumber FROM `consultation` INNER JOIN doctor ON consultation.doctorName = doctor.doctorName where dateTime >= '"
-					+ startDate + "' && dateTime <= '" + endDate + "'";
+					+ startDate + "' && dateTime <= '" + endDate +  "' && doctor.doctorName != 'null'";
 
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -255,7 +255,7 @@ public class DatabaseConnection {
 		return consultationList;
 	}
 
-	public ArrayList<String> retrieveAllSpeciality() {
+	public ArrayList<String> retrieveAllSpeciality(String startDate, String endDate) {
 
 		Connection con;
 		ArrayList<String> specialityList = new ArrayList<String>();
@@ -264,7 +264,8 @@ public class DatabaseConnection {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
-			String sql = "SELECT speciality from doctor INNER join consultation on doctor.doctorName = consultation.doctorName";
+			String sql = "SELECT speciality from doctor INNER join consultation on doctor.doctorName = consultation.doctorName where dateTime >= '"
+					+ startDate + "' && dateTime <= '" + endDate + "' && doctor.doctorName != 'null'";
 
 			ResultSet rs = stmt.executeQuery(sql);
 
