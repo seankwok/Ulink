@@ -119,7 +119,7 @@ $(document).ready(function() {
           <ul class="dropdown-menu">
             <li><a href="kpi.html">KPI</a></li>
             <li><a href="ranking.html">Ranking</a></li>
-            <li><a href="genderByAge.html">Gender and Age Report</a></li>
+            <li><a href="genderAndAgeReport.html">Gender and Age Report</a></li>
           </ul>
         </li>
         <li><a href="#">Template</a></li>        
@@ -158,11 +158,11 @@ $(document).ready(function() {
 
       
         <div class="form-group">
-          <label for="clientName">Client Name:</label>
+          <label for="clientName">Client Name:*</label>
           <input type="text" class="form-control" id="clientName" required>
 
           <label for="dateOfBirth">Date Of Birth:</label>
-          <input type="date" class="form-control" id="dateOfBirth">
+          <input type="date" class="form-control" id="dateOfBirth" required>
 
           <label for="gender">Gender</label>
             <select class="form-control" id="gender">
@@ -171,7 +171,7 @@ $(document).ready(function() {
             </select>
 
           <label for="passportNumber">Passport Number /ID Number:</label>
-          <input type="text" class="form-control" id="passportNumber">
+          <input type="text" class="form-control" id="passportNumber" required>
 
             <label>Client Type</label>
             <select class="form-control" id="clientType">
