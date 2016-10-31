@@ -157,14 +157,20 @@
 
       
         <div class="form-group">
-          <label for="name">Client Name:</label>
-          <input type="text" class="form-control" id="name" required>
+          <label for="clientName">Client Name:</label>
+          <input type="text" class="form-control" id="clientName" required>
 
-          <label for="dob">Date Of Birth:</label>
-          <input type="date" name="dob" class="form-control" id="dob">
+          <label for="dateOfBirth">Date Of Birth:</label>
+          <input type="date" class="form-control" id="dateOfBirth">
 
-          <label for="id_no">Passport Number /ID Number:</label>
-          <input type="text" class="form-control" id="id_no">
+          <label for="gender">Gender</label>
+            <select class="form-control" id="gender">
+               <option>Female</option>
+               <option>Male</option>
+            </select>
+
+          <label for="passportNumber">Passport Number /ID Number:</label>
+          <input type="text" class="form-control" id="passportNumber">
 
             <label>Client Type</label>
             <select class="form-control" id="clientType">
@@ -173,26 +179,16 @@
                <option>Company</option>
             </select>
 
-          <label>Nationality</label>
-            <select class="form-control" id="nationality">
-               <option>Retrieve from db</option>
-               <option>xx</option>
-               <option>xx</option>
-            </select>
+          <label for="nationality">Nationality</label>
+          <input type="text" class="form-control" id="nationality" required>
 
-          <label>Country of Residence</label>
-            <select class="form-control" id="Residence">
-               <option>Retrieve from db</option>
-               <option>xx</option>
-               <option>xx</option>
-            </select>
+          <label for="countryOfResidence">Country of Residence</label>
+          <input type="text" class="form-control" id="countryOfResidence" required>
+
+          <label for="referralName">Referred by:</label>
+          <input type="text" class="form-control" id="referralName" required>
           
-          <label>Referred by:</label>
-            <select class="form-control" id="referred_by">
-               <option>Retrieve from database</option>
-               <option>xx</option>
-               <option>xx</option>
-            </select>
+          
       </div>
     </div>  <!--panel default-->
 
@@ -206,22 +202,22 @@
       </div>
       
         <div class="form-group">
-        <label for="billing_street">Street:</label>
-        <input type="text" class="form-control" id="billing_street">
+        <label for="billingStreet">Street:</label>
+        <input type="text" class="form-control" id="billingStreet">
       
     
-        <label for="billing_city">City:</label>
-        <input type="text" class="form-control" id="billing_city">
+        <label for="billingCity">City:</label>
+        <input type="text" class="form-control" id="billingCity">
       
       
       
-        <label for="billing_state">State:</label>
-        <input type="text" class="form-control" id="billing_state">
+        <label for="billingState">State:</label>
+        <input type="text" class="form-control" id="billingState">
       
       
       
-        <label for="billing_code">Code:</label>
-        <input type="text" class="form-control" id="billing_code">
+        <label for="billingCode">Code:</label>
+        <input type="text" class="form-control" id="billingCode">
       
       
       
