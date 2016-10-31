@@ -13,29 +13,30 @@
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 <script type="text/javascript">
-	$(document).ready(
-			function() {
+$(document).ready(function() {
+
+});
 
 				$("#add").click(
 						function() {
-							var passportNumber = $("passportNumber").val();
-							var clientName = $("clientName").val();
-							var gender = $("gender").val();
-							var dateOfBirth = $("dateOfBirth").val();
-							var mainDiagnosis = $("mainDiagnosis").val();
-							var clientType = $("clienType").val(); 
-							var nationality = $("nationality").val();
-							var countryOfResidence = $("countryOfResidence").val();
-							var billingStreet  = $("billingStreet").val();
-							var billingCity = $("billingCity");
-							var billingState = $("billingState").val();
-							var billingCountry = $("billingCountry").val();
-							var billingCode = $("billingCode").val();
-							var isMedical = $("isMedical").val();
-							var isClaim = $("isClaim").val();
-							var claimInformation = $("claimInformation").val();
-							var referralName = $("referralName").val();
-							
+							var passportNumber = $("#passportNumber").val();
+							var clientName = $("#clientName").val();
+							var gender = $("#gender").val();
+							var dateOfBirth = $("#dateOfBirth").val();
+							var mainDiagnosis = $("#mainDiagnosis").val();
+							var clientType = $("#clienType").val(); 
+							var nationality = $("#nationality").val();
+							var countryOfResidence = $("#countryOfResidence").val();
+							var billingStreet  = $("#billingStreet").val();
+							var billingCity = $("#billingCity");
+							var billingState = $("#billingState").val();
+							var billingCountry = $("#billingCountry").val();
+							var billingCode = $("#billingCode").val();
+							var isMedical = $("#isMedical").val();
+							var isClaim = $("#isClaim").val();
+							var claimInformation = $("#claimInformation").val();
+							var referralName = $("#referralName").val();
+							console.log(dateOfBirth);
 							$.ajax({
 								url : "CreateClient",
 								type : "get",
@@ -70,7 +71,7 @@
 
 						});
 
-			});
+	
 </script>
  
   </head>
@@ -437,7 +438,7 @@
 
 </div> <!--// container close-->
 	<div align="center">
-   <button class="btn btn-primary btn-lg" role="button">Add Client</button> 
+   <button id="add" class="btn btn-primary btn-lg" role="button">Add Client</button> 
   </div>
 
 

@@ -3,11 +3,10 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 30, 2016 at 03:51 AM
+-- Generation Time: Oct 31, 2016 at 08:33 AM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
-SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
@@ -1063,12 +1062,13 @@ CREATE TABLE `allcondition` (
 --
 
 INSERT INTO `allcondition` (`conditionName`, `numOfYears`, `ageRequired`, `screening`, `type`) VALUES
-('Colorectal cancer screening', 1, 50, 'Computed Tomography (CT) Colonography ', 'Male'),
+('cold', 555, 40, 'test', 'both'),
+('14', 14, 14, '14', 'male'),
 ('Obesity', 1, 18, 'BMI & Waist circumference', 'Male'),
 ('Hypertension (High blood pressure)', 2, 18, 'Blood pressure measurement ', 'Male'),
 ('Hyperlipidaemia', 3, 40, 'Fasting lipids', 'Male'),
 ('Abdominal Aortic Aneurysm', 1, 65, 'Abdominal Ultrasonography', 'Male'),
-('Diabetic microalbuminuria', 1, 18, 'urine microalbumin', 'Male'),
+('test', 4, 15, 'nil', 'female'),
 ('Hearing loss', 1, 18, 'Audiometry ', 'Male'),
 ('kidney disorder', 1, 18, 'Kidney function test', 'Male'),
 ('Liver cancer', 1, 0, 'Ultrasound Hepatobiliary System', 'Infant'),
@@ -1116,7 +1116,7 @@ CREATE TABLE `client` (
   `billingState` varchar(45) DEFAULT NULL,
   `billingCountry` varchar(45) DEFAULT NULL,
   `billingCode` varchar(45) DEFAULT NULL,
-  `isMedicial` varchar(45) DEFAULT NULL,
+  `isMedical` varchar(45) DEFAULT NULL,
   `isClaim` varchar(45) DEFAULT NULL,
   `claimInformation` varchar(45) DEFAULT NULL,
   `referral_ID` int(5) DEFAULT NULL
@@ -1126,7 +1126,7 @@ CREATE TABLE `client` (
 -- Dumping data for table `client`
 --
 
-INSERT INTO `client` (`passportNumber`, `clientName`, `gender`, `dateOfBirth`, `mainDiagnosis`, `clientType`, `nationality`, `countryOfResidence`, `billingStreet`, `billingCity`, `billingState`, `billingCountry`, `billingCode`, `isMedicial`, `isClaim`, `claimInformation`, `referral_ID`) VALUES
+INSERT INTO `client` (`passportNumber`, `clientName`, `gender`, `dateOfBirth`, `mainDiagnosis`, `clientType`, `nationality`, `countryOfResidence`, `billingStreet`, `billingCity`, `billingState`, `billingCountry`, `billingCode`, `isMedical`, `isClaim`, `claimInformation`, `referral_ID`) VALUES
 ('a1', 'Merry Kusumawati Utomo', 'Female', '1954-08-25 00:00:00.000000', 'null', 'null ', 'Indonesian', 'null ', 'null ', 'null ', 'null ', 'null ', 'null ', 'null ', 'Yes', 'null ', 1),
 ('a10', 'Briana Jones', 'Female', '1954-08-26 00:00:00.000000', 'null ', 'null ', 'American', 'null ', 'null ', 'null ', 'null ', 'null ', 'null ', 'null ', 'Yes', 'null ', 10),
 ('a100', 'Peter Joseph Curt Browne', 'Male', '1954-08-27 00:00:00.000000', 'null ', 'null ', 'New Zealand', 'null ', 'null ', 'null ', 'null ', 'null ', 'null ', 'null ', 'null', 'null ', 100),
@@ -3643,7 +3643,6 @@ ALTER TABLE `referraldetails`
 --
 ALTER TABLE `user`
   ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`role`) REFERENCES `role` (`roleName`);
-SET FOREIGN_KEY_CHECKS=1;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

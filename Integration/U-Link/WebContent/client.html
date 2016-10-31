@@ -21,7 +21,7 @@
 
   function deleteItem(clickedID){
     var sendData = {
-        "clientName" : clickedID
+        "passportNumber" : clickedID
       };
       console.log(clickedID);
       $.ajax({
@@ -77,12 +77,12 @@
 														+ '</td>'
 														+ '<td>'
 														+ value.referralName
-														+ '</td><a href=# onClick=editItem(this.id) id='
-                            + value.clientName
+														+ '</td><a href=# onClick=deleteItem(this.id) id='
+                            + value.passportNumber
                             +'Edit</a></td>'
                             +'<td><a href=# onClick=deleteItem(this.id) id='
-                            + value.clientName
-                            +'"> Delete</a></td></tr>';
+                            + value.passportNumber
+                            +'> Delete</a></td></tr>';
 
 								});
 						//	$('#toDoList').append(toDoList);

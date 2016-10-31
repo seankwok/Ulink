@@ -19,8 +19,9 @@
 <script src="js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
-	$(document).ready(
-			function() {
+$(document).ready(function() {
+
+});
 
 				$("#add").click(
 						function() {
@@ -45,18 +46,19 @@
 									console.log(data.status);
 									if (data.status == "success") {
 										console.log(data.status);
-									$('#message').html("Successfully added a new screenings");
+									$('#message').html("Record Added");
 									$("#message").css("color", "green");
 								}else {
-									$('#message').html("Fail to add record");
+									$('#message').html("fail to add record");
 									$("#message").css("color", "red");
 								}
 								}  
+						 
 							});
 
 						});
 
-			});
+		
 </script>
 
 </head>
@@ -166,7 +168,7 @@
 					id="add">Add</button>
 			</div>
 		</form>
-
+	<div id="message"></div>
 
 </div>
 	

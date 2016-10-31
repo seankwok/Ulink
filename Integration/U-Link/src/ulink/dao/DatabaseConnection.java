@@ -26,7 +26,7 @@ public class DatabaseConnection {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
-			String sql = "Select passportNumber,`clientName`,`gender`,dateOfBirth,mainDiagnosis,clientType,nationality,countryOfResidence,billingStreet,billingCity,billingState, billingCountry, billingcode,isMedicial,isClaim,claimInformation, referraldetails.referralName from client inner join referraldetails ON client.referral_ID = referraldetails.referral_ID";
+			String sql = "Select passportNumber,`clientName`,`gender`,dateOfBirth,mainDiagnosis,clientType,nationality,countryOfResidence,billingStreet,billingCity,billingState, billingCountry, billingcode,ismedical,isClaim,claimInformation, referraldetails.referralName from client inner join referraldetails ON client.referral_ID = referraldetails.referral_ID";
 			ResultSet rs = stmt.executeQuery(sql);
 			Utility utility = new Utility();
 			
@@ -73,7 +73,7 @@ public class DatabaseConnection {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
-			String sql = "Select passportNumber,`clientName`,`gender`,dateOfBirth,mainDiagnosis,clientType,nationality,countryOfResidence,billingStreet,billingCity,billingState, billingCountry, billingcode,isMedicial,isClaim,claimInformation, referraldetails.referralName from client inner join referraldetails ON client.referral_ID = referraldetails.referral_ID where referraldetails.r_dateTime >='"
+			String sql = "Select passportNumber,`clientName`,`gender`,dateOfBirth,mainDiagnosis,clientType,nationality,countryOfResidence,billingStreet,billingCity,billingState, billingCountry, billingcode,ismedical,isClaim,claimInformation, referraldetails.referralName from client inner join referraldetails ON client.referral_ID = referraldetails.referral_ID where referraldetails.r_dateTime >='"
 					+ startDate + "' && referraldetails.r_dateTime <= '" + endDate + "'" ;
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -112,7 +112,7 @@ public class DatabaseConnection {
 	
 	
 	public void createClient(String passportNumber, String clientName, String gender, String dateOfBirth, String mainDiagnosis, String clientType, String nationality, String countryOfResidence, String billingStreet, String billingCity, String billingState, String billingCountry,
-			String billingCode, String isMedical, String isClaim, String claimInformation, String referralName) {
+			String billingCode, String isMedical, String isClaim, String claimInformation, int referralName) {
 
 		Connection con;
 		try {
@@ -121,8 +121,9 @@ public class DatabaseConnection {
 
 			String sql = "INSERT INTO client (passportNumber, clientName, gender, dateOfBirth, mainDiagnosis, clientType,"
 					+ "nationality, countryOfResidence, billingStreet, billingCity, billingState, billingCountry," +
-						"billingCode, isMedical, isClaim, claimInformation, referralName)"
+						"billingCode, isMedical, isClaim, claimInformation, referral_ID)"
 					+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			Utility utility = new Utility();
 			PreparedStatement preparedStmt = con.prepareStatement(sql);
 			preparedStmt.setString(1, passportNumber);
 			preparedStmt.setString(2, clientName);
@@ -140,7 +141,7 @@ public class DatabaseConnection {
 			preparedStmt.setString(14, isMedical);
 			preparedStmt.setString(15, isClaim);
 			preparedStmt.setString(16, claimInformation);
-			preparedStmt.setString(17, referralName);
+			preparedStmt.setInt(17, referralName);
 			preparedStmt.execute();
 
 			con.close();
@@ -206,7 +207,7 @@ public class DatabaseConnection {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
-			String sql = "Delete from client where conditionName = ?";
+			String sql = "DELETE FROM client WHERE passportNumber = ?";
 			PreparedStatement preparedStmt = con.prepareStatement(sql);
 			preparedStmt.setString(1, passportNumber);
 			preparedStmt.executeUpdate();
@@ -505,7 +506,7 @@ public class DatabaseConnection {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
-			String sql = "SELECT * FROM allcondition where type='" + types + "'";
+			String sql = "SELECT * FROM allcondition where type= 'both' || type='" + types + "'";
 
 			ResultSet rs = stmt.executeQuery(sql);
 
