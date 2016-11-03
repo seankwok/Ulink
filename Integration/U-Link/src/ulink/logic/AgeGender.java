@@ -13,23 +13,23 @@ public class AgeGender {
 		DatabaseConnection connection = new DatabaseConnection();
 		ArrayList<Client> clientList = connection.retrieveAllClientList();
 		TreeMap<String,Integer> genderByAgeList = new TreeMap<String,Integer>();
-		genderByAgeList.put("M10", 0);
-		genderByAgeList.put("M20", 0);
-		genderByAgeList.put("M30", 0);
-		genderByAgeList.put("M40", 0);
-		genderByAgeList.put("M50", 0);
-		genderByAgeList.put("M60", 0);
-		genderByAgeList.put("M70", 0);
-		genderByAgeList.put("M80", 0);
+		genderByAgeList.put("Male 10 - 20", 0);
+		genderByAgeList.put("Male 20 - 30", 0);
+		genderByAgeList.put("Male 30 - 40", 0);
+		genderByAgeList.put("Male 40 - 50", 0);
+		genderByAgeList.put("Male 50 - 60", 0);
+		genderByAgeList.put("Male 50 - 70", 0);
+		genderByAgeList.put("Male 70 - 80", 0);
+		genderByAgeList.put("Male Above 80", 0);
 		
-		genderByAgeList.put("F10", 0);
-		genderByAgeList.put("F20", 0);
-		genderByAgeList.put("F30", 0);
-		genderByAgeList.put("F40", 0);
-		genderByAgeList.put("F50", 0);
-		genderByAgeList.put("F60", 0);
-		genderByAgeList.put("F70", 0);
-		genderByAgeList.put("F80", 0);
+		genderByAgeList.put("Female 10 - 20", 0);
+		genderByAgeList.put("Female 20 - 30", 0);
+		genderByAgeList.put("Female 30 - 40", 0);
+		genderByAgeList.put("Female 40 - 50", 0);
+		genderByAgeList.put("Female 50 - 60", 0);
+		genderByAgeList.put("Female 60 - 70", 0);
+		genderByAgeList.put("Female 70 - 80", 0);
+		genderByAgeList.put("Female Above 80", 0);
 		
 		
 		for (int i =0; i<clientList.size(); i++){
@@ -40,53 +40,53 @@ public class AgeGender {
 			String gender = client.getGender();
 			int temp;
 			if (age <=10 && gender.equals("Male")){
-				temp = genderByAgeList.get("M10");
-				genderByAgeList.put("M10", temp+1);
+				temp = genderByAgeList.get("Male 10 - 20");
+				genderByAgeList.put("Male 10 - 20", temp+1);
 			} else if(age <=20 && gender.equals("Male")){
-				temp = genderByAgeList.get("M20");
-				genderByAgeList.put("M20", temp+1);
+				temp = genderByAgeList.get("Male 20 - 30");
+				genderByAgeList.put("Male 20 - 30", temp+1);
 			} else if(age <=30 && gender.equals("Male")){
-				temp = genderByAgeList.get("M30");
-				genderByAgeList.put("M30", temp+1);
+				temp = genderByAgeList.get("Male 30 - 40");
+				genderByAgeList.put("Male 30 - 40", temp+1);
 			} else if(age <=40 && gender.equals("Male")){
-				temp = genderByAgeList.get("M40");
-				genderByAgeList.put("M40", temp+1);
+				temp = genderByAgeList.get("Male 40 - 50");
+				genderByAgeList.put("Male 40 - 50", temp+1);
 			} else if(age <=50 && gender.equals("Male")){
-				temp = genderByAgeList.get("M50");
-				genderByAgeList.put("M50", temp+1);
+				temp = genderByAgeList.get("Male 50 - 60");
+				genderByAgeList.put("Male 50 - 60", temp+1);
 			} else if(age <=60 && gender.equals("Male")){
-				temp = genderByAgeList.get("M60");
-				genderByAgeList.put("M60", temp+1);
+				temp = genderByAgeList.get("Male 60 - 70");
+				genderByAgeList.put("Male 60 - 70", temp+1);
 			} else if(age <=70 && gender.equals("Male")){
-				temp = genderByAgeList.get("M70");
-				genderByAgeList.put("M70", temp+1);
+				temp = genderByAgeList.get("Male 70 - 80");
+				genderByAgeList.put("Male 70 - 80", temp+1);
 			} else if(age <=80 && gender.equals("Male")){
-				temp = genderByAgeList.get("M80");
-				genderByAgeList.put("M80", temp+1);
+				temp = genderByAgeList.get("Male Above 80");
+				genderByAgeList.put("Male Above 80", temp+1);
 			} else if(age <=10 && gender.equals("Female")){
-				temp = genderByAgeList.get("F10");
-				genderByAgeList.put("F10", temp+1);
+				temp = genderByAgeList.get("Female 10 - 20");
+				genderByAgeList.put("Female 10 - 20", temp+1);
 			} else if(age <=20 && gender.equals("Female")){
-				temp = genderByAgeList.get("F20");
-				genderByAgeList.put("F20", temp+1);
+				temp = genderByAgeList.get("Female 20 - 30");
+				genderByAgeList.put("Female 20 - 30", temp+1);
 			}  else if(age <=30 && gender.equals("Female")){
-				temp = genderByAgeList.get("F30");
-				genderByAgeList.put("F30", temp+1);
+				temp = genderByAgeList.get("Female 30 - 40");
+				genderByAgeList.put("Female 30 - 40", temp+1);
 			}  else if(age <=40 && gender.equals("Female")){
-				temp = genderByAgeList.get("F40");
-				genderByAgeList.put("F40", temp+1);
+				temp = genderByAgeList.get("Female 40 - 50");
+				genderByAgeList.put("Female 40 - 50", temp+1);
 			}  else if(age <=50 && gender.equals("Female")){
-				temp = genderByAgeList.get("F50");
-				genderByAgeList.put("F50", temp+1);
+				temp = genderByAgeList.get("Female 50 - 60");
+				genderByAgeList.put("Female 50 - 60", temp+1);
 			}  else if(age <=60 && gender.equals("Female")){
-				temp = genderByAgeList.get("F60");
-				genderByAgeList.put("F60", temp+1);
+				temp = genderByAgeList.get("Female 60 - 70");
+				genderByAgeList.put("Female 60 - 70", temp+1);
 			}  else if(age <=70 && gender.equals("Female")){
-				temp = genderByAgeList.get("F70");
-				genderByAgeList.put("F70", temp+1);
+				temp = genderByAgeList.get("Female 70 - 80");
+				genderByAgeList.put("Female 70 - 80", temp+1);
 			}  else if(age <=80 && gender.equals("Female")){
-				temp = genderByAgeList.get("F80");
-				genderByAgeList.put("F80", temp+1);
+				temp = genderByAgeList.get("Female Above 80");
+				genderByAgeList.put("Female Above 80", temp+1);
 			}   
 		
 			
