@@ -5,64 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
    
-    <title>Timeline-Infant</title>
+    <title>Timeline</title>
 
-    <link href="css/app.css" rel="stylesheet">
-    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/timeline.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-
-    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/app.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-
- <script type="text/javascript">
-	$(document).ready(function() {
-
-		displayAll();
-	});
-
-	function displayAll() {
-		var timeline = "";
-		var completedTask;
-		var isEmpty = false;
-		var completeIsEmpty = false;
-		$
-				.ajax({
-					url : "InfantTimeline",
-					type : "GET",
-					dataType : "json",
-					success : function(data) {
-
-						var json = jQuery.parseJSON(JSON.stringify(data));
-						console.log(json);
-						
-						$
-								.each(
-										json,
-										function(key, value) {
-													
-												timeline += '<div class="timeline-item"><div class="timeline-year"><span class="timeline-year">'										
-														+ key
-														+ ' years </span></div><div class="timeline-btn"><a href="#exp1" data-toggle="collapse" data-parent="#experience"></a></div><div class="panel"><div class="panel-heading"><div class="panel-title"><h4>List of screenings</h4></div></div><div id="exp1" class="panel-collapse collapse in"><div class="panel-body"><p><br>'
-														+  value
-				                                        + '</p><a href="infantPatients.html" class="btn btn-info" role="button" style="float:right">View Patients</a></div></div></div></div>'  
-
-										});
-						//	$('#toDoList').append(toDoList);
-					
-							$("#timeline").html(timeline);
-					
-
-						//(toDoList);
-					}
-				});
-		//
-		//return data;
-
-	}
-</script>	   
+    <script src="js/bootstrap.min.js"></script>
  
   </head>
   <body>
@@ -90,14 +40,13 @@
             <li><a href="client.html">Client List</a></li>
             <li><a href="createClient.html">Create New Client</a></li>
           </ul>
-        </li> 
+        </li>  
         <li><a href="#">Cases</a></li>
         <li><a href="#">Invoice</a></li>
         <li><a href="#">Services</a></li>
         <li><a href="#">Report</a></li>
         <li><a href="#">Doctor</a></li>
-        
-       <li class="dropdown">
+        <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Timeline <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="infant.html">Infant</a></li>
@@ -105,12 +54,11 @@
             <li><a href="male.html">Male</a></li>
           </ul>
         </li>
-
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Analysis <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="kpi.html">KPI</a></li>
-            <li><a href="ranking.html">Ranking</a></li>
+              <li><a href="ranking.html">Ranking</a></li>
             <li><a href="genderAndAgeReport.html">Gender and Age Report</a></li>
           </ul>
         </li>
@@ -132,36 +80,35 @@
   </div><!-- /.container-fluid -->
 </nav>
 
+
     <div class="page-header">
-       <h1 align="center">Timeline - Infant</h1>
+       <h1 align="center">Timeline - Common Illnesses/Advised Screenings</h1>
     </div>
+
     <div class="container">
-    <div class="btn-group" style="float:right">
-      <a href="editTimeline.html"><button type="button" class="btn btn-default">Edit</button></a>
-    </div>
-    </div>
-    <div class="container section-wrapper">
-            <div class="section-content">
-             <!-- EXPERIENCE START -->
-                <div class="row">
-                    <div class="col-md-10 col-md-offset-1">
-                        <div class="panel-group timeline" id="experience">
-                            <div id="timeline"></div>
-	
-                        </div>
-                        <!-- //.panel-group -->
-                    </div>
-                    <!-- //.col-md-10 -->
-                </div>
-                <!-- //EXPERIENCE END -->
-            </div>
-            <!-- //.section-content -->
-        </div>
+  
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Year</th>
+        <th>Common Illnesses</th>
+        <th>Recommended Screenings</th>
+        <th>List of Patients</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Chicken Pox</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>   
+    </tbody>
+  </table>
+</div>
 
 
 
 
-
-    
-  </body>
+</body>
 </html>

@@ -102,6 +102,7 @@ $(document).ready(function() {
             <li><a href="createClient.html">Create New Client</a></li>
           </ul>
         </li>
+        <li><a href="#">Cases</a></li>
         <li><a href="#">Invoice</a></li>
         <li><a href="#">Services</a></li>
         <li><a href="#">Report</a></li>
@@ -122,7 +123,8 @@ $(document).ready(function() {
             <li><a href="genderAndAgeReport.html">Gender and Age Report</a></li>
           </ul>
         </li>
-        <li><a href="#">Template</a></li>        
+        <li><a href="#">Template</a></li>
+
 
       </ul>
       <form class="navbar-form navbar-right">
@@ -189,11 +191,11 @@ $(document).ready(function() {
           <label for="referralName">Referred by:</label>
           <input type="text" class="form-control" id="referralName" required>
           
-          
+          </div>
       </div>
     </div>  <!--panel default-->
 
-    
+    <div class="col-md-6">    
     <div class="panel panel-default">
       
       <div class="panel-heading">
@@ -228,213 +230,11 @@ $(document).ready(function() {
       
       
     </div> <!-- panel default-->
+  </div>
   
-  
-</div> <!--// close col-md-6-->
-
-<div class="col-md-6">
-
-      <div class="panel-group">
-    <div class="panel panel-default">
-    
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" href="#collapse3">Consultation</a>
-      </h4>
-    </div>
-
-    <div id="collapse3" class="panel-collapse collapse">
-
-      <div class="form-group">
-        <label for="appt">Appointment Date and Time:</label>
-        <input type="date" name="appt_date" class="form-control" id="appt_date">
-        <input type="time" name="appt_time" class="form-control" id="appt_time">
-      </div>
-
-      <label>Doctor:</label>
-            <select class="form-control" id="doctor">
-               <option>Retrieve from database</option>
-               <option>xx</option>
-               <option>xx</option>
-            </select>
-
-      <label>Specialty:</label>
-        <select class="form-control" id="speciality">
-          <option>Retrieve from database</option>
-           <option>xx</option>
-           <option>xx</option>
-       </select>
-
-       <label>Clinic:</label>
-          <select class="form-control" id="clinic">
-           <option>Retrieve from database</option>
-          <option>xx</option>
-           <option>xx</option>
-       </select>
-
-
-      <div class="form-group">
-        <label for="referring_doctor">Referring Doctor (US Embassy):</label>
-        <input type="text" class="form-control" id="referring_doctor">
-      </div>
-
-      <div class="form-group">
-        <label for="referring_doctor_email">Referring Doctor Email:</label>
-        <input type="email" class="form-control" id="referring_doctor_email">
-      </div>
-
-      <div class="form-group">
-        <label for="follow_up_date">Follow-up Date:</label>
-        <input type="date" name="follow_up_date" class="form-control" id="follow_up_date">
-      </div>
-
-      <div class="form-group">
-        <label for="follow_up_person">Follow-up Person:</label>
-        <input type="text" class="form-control" id="follow_up_person">
-      </div>
-
-      <div class="form-group">
-        <label for="consultation_remarks">Remarks:</label>
-        <input type="textarea" rows="5" class="form-control" id="consultation_remarks">
-      </div>
-
-    </div> <!--// panel collapse-->
-
-  </div> <!--// panel default-->
-  </div> <!--// panel grooup-->
-
-
-      <div class="panel-group">
-      <div class="panel panel-default">
-
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" href="#collapse4">Medical</a>
-        </h4>
-      </div>
-
-      <div id="collapse4" class="panel-collapse collapse">
-      
-      <div class="container">
-        If yes, please tick:
-        <div class="checkbox">
-          <label><input type="checkbox">Yes</label>
-          <label><input type="checkbox">No</label>
-        </div>
-
-        Ulink can claim, please tick:
-        <div class="checkbox">
-          <label><input type="checkbox">Yes</label>
-          <label><input type="checkbox">No</label>
-        </div>
-      </div>
-      <div class="form-group">
-          <label>If no:</label>
-          <select class="form-control" id="uLinkCannotClaim">
-             <option>Appointment not made by Ulink</option>
-             <option>Old patient</option>
-             <option>Others</option>
-          </select>
-      </div>
-
-      </div> <!--// panel collapse-->
-    </div>  <!--panel default-->
-    </div> <!--panel group-->
-
-    <div class="panel-group">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" href="#collapse5">Admission</a>
-        </h4>
-      </div>
-    <div id="collapse5" class="panel-collapse collapse">
-      
-      <div class="form-group">
-          <label for="case_num">Case number:</label>
-          <input type="text" class="form-control" id="case_num">
-        </div>
-        <div class="form-group">
-          <label for="hospital">Hospital Admitted:</label>
-          <input type="text" class="form-control" id="hospital">
-        </div>
-        <div class="form-group">
-          <label for="hospital_add">Hospital Address:</label>
-          <input type="textarea" rows="5" class="form-control" id="hospital_add">
-        </div>
-        <div class="form-group">
-          <label for="admission_date">Date of Admission:</label>
-          <input type="date" name="admission_date" class="form-control" id="admission_date">
-        </div>
-        <div class="form-group">
-          <label for="discharge_date">Discharge Date:</label>
-          <input type="date" name="discharge_date" class="form-control" id="discharge_date">
-        </div>
-        <div class="form-group">
-          <label for="add_specialist">Additional specialist:</label>
-          <input type="text" class="form-control" id="add_specialist">
-        </div>
-        <div class="form-group">
-          <label for="admission_remarks">Remarks:</label>
-          <input type="textarea" rows="5" class="form-control" id="admission_remarks">
-        </div>
 
 
 
-    </div> <!--panel collapse-->
-    </div> <!--panel default-->
-  </div> <!-- panel group-->
-
-  <div class="panel-group">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" href="#collapse6">Letter of Guarantee</a>
-      </h4>
-    </div>
-    <div id="collapse6" class="panel-collapse collapse">
-        
-      If LOG issued, please tick:
-        <div class="checkbox">
-          <label><input type="checkbox">Yes</label>
-          <label><input type="checkbox">No</label>
-        </div>
-        <div class="form-group">
-          <label>Amount covered:</label>
-          <select class="form-control" id="log_amt_covered">
-             <option>Full-inpatient</option>
-             <option>Full-outpatient</option>
-             <option>Full-day surgery</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="other_coverage">Other coverage:</label>
-          <input type="text" class="form-control" id="other_coverage">
-        </div>
-        <div class="form-group">
-          <label for="log_issue_date">LOG Issue Date:</label>
-          <input type="date" name="log_issue_date" class="form-control" id="log_issue_date">
-        </div>
-        <div class="form-group">
-          <label for="invoice_date">Invoice Date:</label>
-          <input type="date" name="invoice_date" class="form-control" id="invoice_date">
-        </div>
-        <div class="form-group">
-          <label for="log_add_specialist">Additional specialist:</label>
-          <input type="text" class="form-control" id="log_add_specialist">
-        </div>
-        <div class="form-group">
-          <label for="log_remarks">Remarks:</label>
-          <input type="textarea" rows="5" class="form-control" id="log_remarks">
-        </div>
-
-
-        
-      </div> <!--panel collapse-->
-      </div> <!--panel default-->
-    </div> <!-- panel group-->
-
-</div><!--close col-md-6-->
 
 </div> <!--// container close-->
 <div id="message" align="center"></div>
