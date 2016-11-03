@@ -93,8 +93,8 @@ public class TopK {
 			String nationality = compareTeamList.get(i);
 			String hospitalAdmitted = compareTeamList.get(i + 1);
 			System.out.println(nationality + " <<<< COUNTRY" + i);
-			System.out.println(hospitalAdmitted+ "   " + i );
-			if (nationality == null && hospitalAdmitted.equals("indo")) {
+			System.out.println(hospitalAdmitted+ "   " + (i+1));
+			if (nationality.equals("Indonesian")) {
 				int temp = compareList.get("indo");
 				compareList.put("indo", temp + 1);
 			} else {

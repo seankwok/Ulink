@@ -14,56 +14,55 @@
     <script src="js/bootstrap.min.js"></script>
  
  <script type="text/javascript">
-	$(document).ready(function() {
 
-		displayAll();
-	});
+		$(document).ready(function() {
 
-  function deleteItem(clickedID){
-    var sendData = {
-        "passportNumber" : clickedID
-      };
-      console.log(clickedID);
-      $.ajax({
-        url : "DeleteClient",
-        type : "post",
-        data : sendData,
-        dataType : "json",
-        success : function(data) {
+			displayAll();
+		});
 
-          displayAll();
-          $("#message").html("Client Deleted");
-          $("#message").css("color", "green");
-        }
+		function deleteItem(clickedID) {
+			var sendData = {
+				"passportNumber" : clickedID
+			};
+			console.log(clickedID);
+			$.ajax({
+				url : "DeleteClient",
+				type : "post",
+				data : sendData,
+				dataType : "json",
+				success : function(data) {
 
-      });
-    } 
+					displayAll();
+					$("#message").html("Client Deleted");
+					$("#message").css("color", "green");
+				}
 
+			});
+		}
 
-	function displayAll() {
-		var clientDetails = "<thead><tr><th>Client Name</th><th>Nationality</th><th>Gender</th><th>Date of Birth</th><th>Referred by</th><th>Follow-up PIC</th><th>Action</th><th></th></tr></thead>";
-		var isEmpty = false;
-		var completeIsEmpty = false;
-		$
-				.ajax({
-					url : "DisplayAllClient",
-					type : "GET",
-					dataType : "json",
-					success : function(data) {
+		function displayAll() {
+			var clientDetails = "<thead><tr><th>Client Name</th><th>Nationality</th><th>Gender</th><th>Date of Birth</th><th>Referred by</th><th>Action</th><th></th></tr></thead>";
+			var isEmpty = false;
+			var completeIsEmpty = false;
+			$
+					.ajax({
+						url : "DisplayAllClient",
+						type : "GET",
+						dataType : "json",
+						success : function(data) {
 
-						var json = jQuery.parseJSON(JSON.stringify(data));
-						console.log(json);
-						$
-								.each(
-										json,
-										function(key, value) {
-											//	$('#toDoID').append($('<div></div>').html());
-											//  var list = $('<ul></ul>');
+							var json = jQuery.parseJSON(JSON.stringify(data));
+							console.log(json);
+							$
+									.each(
+											json,
+											function(key, value) {
+												//	$('#toDoID').append($('<div></div>').html());
+												//  var list = $('<ul></ul>');
 
-									
 												clientDetails += '<tr>'
 
-														+ '<td>'
+												+ '<td>'
 														+ value.clientName
 														+ '</td>'
 														+ '<td>'
@@ -76,31 +75,28 @@
 														+ value.dateOfBirth
 														+ '</td>'
 														+ '<td>'
-                            + value.followUpPIC
-                            + '</td>'
-                            + '<td>'
 														+ value.referralName
-														+ '</td><a href=# onClick=deleteItem(this.id) id='
-                            + value.passportNumber
-                            +'Edit</a></td>'
-                            +'<td><a href=# onClick=deleteItem(this.id) id='
-                            + value.passportNumber
-                            +'> Delete</a></td></tr>';
+														+ '</td>'
+														+ '<td><a href=updateClient.html onClick=editItem(this.id) id='
+														+ value.passportNumber
+														+ '>Edit</a></td>'
+														+ '<td><a href=# onClick=deleteItem(this.id) id='
+														+ value.passportNumber
+														+ '> Delete</a></td></tr>';
 
-								});
-						//	$('#toDoList').append(toDoList);
-					
+											});
+							//	$('#toDoList').append(toDoList);
+
 							$("#clientDetails").html(clientDetails);
-					
 
-						//(toDoList);
-					}
-				});
-		//
-		//return data;
+							//(toDoList);
+						}
+					});
+			//
+			//return data;
 
-	}
-</script>
+		}
+	</script>
  
   </head>
   <body>

@@ -23,7 +23,7 @@ public class MainTest {
 		HashMap<String,Integer>test1 = test.topDoctor("2016-10-05 00:00:00","2016-10-05 00:00:00");
 		//HashMap<String,Integer>test2 = test.topReferral("2016-10-01 00:00:00","2016-10-20 00:00:00");
 		//HashMap<String,Integer>test3 = test.topSpeciality();
-		HashMap<String, Integer>test4 = test.compareTeam("2016-10-05 00:00:00","2016-10-20 00:00:00","Medical");
+		HashMap<String, Integer>test4 = test.compareTeam("2015-10-05 00:00:00","2017-10-20 00:00:00","Visa");
 		//timeline.sendEmail();
 		//timeline.addScreeningToTimeline();
 		HashMap<String,Integer> test5 = timeline.displayAllScreening();

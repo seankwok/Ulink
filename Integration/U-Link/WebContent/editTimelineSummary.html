@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Timeline - Summary</title>
+<title>Timeline - Edit Fields</title>
 
 
 <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -14,97 +14,50 @@
 <script src="js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
-	$(document).ready(function() {
-
-		displayAll();
-	});
+$(document).ready(function() {
 	
+});
 
-	function deleteItem(clickedID){
-		var sendData = {
-				"conditionName" : clickedID
-			};
-			console.log(clickedID);
-			$.ajax({
-				url : "DeleteCondition",
-				type : "post",
-				data : sendData,
-				dataType : "json",
-				success : function(data) {
+				$("#update").click(
+						function() {
 
-					displayAll();
-					$("#message").html("Task completed");
-					$("#message").css("color", "green");
-				}
-
-			});
-    } 
-	
-	function displayAll() {
-		var timeline = "<tr><th>Age range</th><th>Common illnesses</th><th>Recommended screenings</th><th>Type</th><th>Frequency(Years)</th><th>Action</th><th></th></tr>"
-		var completedTask;
-		var isEmpty = false;
-		var completeIsEmpty = false;
-		$
-				.ajax({
-					url : "DisplayAll",
-					type : "GET",
-					dataType : "json",
-					success : function(data) {
-
-						var json = jQuery.parseJSON(JSON.stringify(data));
-						console.log(json);
-						$
-								.each(
-										json,
-										function(key, value) {
-											//	$('#toDoID').append($('<div></div>').html());
-											//  var list = $('<ul></ul>');
-
+							var age = $('#age').val();
+							var illness = $("#illness").val();
+							var screening = $("#screening").val();
+							var type = $("#type").val();
+							var years = $("#years").val();
+							console.log(age);
+							console.log(type);
+							$.ajax({
+								url : "Edit",
+								type : "get",
+								data : 'age=' + age + '&' + 'illness='
+										+ illness + '&' + 'screening='
+										+ screening + '&' + 'type='
+										+ type+ '&' + 'years='
+										+ years,
+								dataType : "json",
+								success : function(data) {
+									console.log(data.status);
+									if (data.status == "success") {
+										console.log(data.status);
+									$('#message').html("Successfully edited selected an illness!");
 									
-												timeline += '<tr>'
+								}else {
+									$('#message').html("Fail to update record");
+								
+								}
+								}  
+						 
+							});
 
-														+ '<td>'
-														+ value.ageRequired
-														+ '</td>'
-														+ '<td>'
-														+ value.conditionName
-														+ '</td>'
-														+ '<td>'
-														+ value.screening
-														+ '</td>'
-														+ '<td>'
-														+ value.type
-														+ '</td>'
-														+ '<td>'
-														+ value.years
-														+ '</td>'									
-														+ '<td><a href="editTimelineSummary.html" onClick=editItem(this.id) id='
-														+ value.conditionName
-														+ '>Edit</a></td>'
-														+ '<td><a href=# onClick=deleteItem(this.id) id="'
-														+ value.conditionName
-														+ '">Delete</a></td></tr>';
+						});
+				
+				
+				
 
-												isEmpty = true;
-											
-
-
-										});
-						//	$('#toDoList').append(toDoList);
-					
-							$("#timeline").html(timeline);
-					
-
-						//(toDoList);
-					}
-				});
-		//
-		//return data;
-
-	}
+		
 </script>
-
 </head>
 <body>
 
@@ -177,24 +130,50 @@
 
 
 	<div class="page-header">
-		<h1 align="center">Timeline - Summary</h1>
+		<h1 align="center">Timeline - Edit Fields</h1>
 	</div>
 
-	<div class="container">
-   
-    <div class="btn-group" style="float:right">
-      <a href="addNewScreenings.html"><button type="button" class="btn btn-default">Add New Screening</button></a>
-    </div>
-    
-    </div>
+	
 		<div class="container">
+			<form>
+				<div class="form-group">
+					<label for="age">Age</label> <input type="text"
+						class="form-control" id="age">
+				</div>
+				<div class="form-group">
+					<label>Common Illness </label> <input type="text"
+						class="form-control" id="illness">
+				</div>
+				<div class="form-group">
+					<label for="screening">Recommended screening</label> <input
+						type="text" class="form-control" id="screening">
+				</div>
 
-		<table class="table table-striped" id="timeline">
+				<div class="form-group">
+					<label for="screening">Demographic Affected</label>
+					<select class="form-control" id="type">
+		               <option value="infant">Infant</option>
+		               <option value="female">Female</option>
+		               <option value="male">Male</option>
+		               <option value="both">Male and Female</option>
+		            </select>  
+				</div>
+
+				<div class="form-group">
+					<label for="screening">Frequency of Screening (In years)</label> 
+					<input type="text" class="form-control" id="years">
+				</div>
+
+				<div align="center">
+				<button type="submit" value="update" class="btn btn-primary"
+				id="update">Update</button>
+				</div>
+			
+		</form>
+			
+		</div>
+
 		
-		</table>
-</div>
-
-
 
 
 
