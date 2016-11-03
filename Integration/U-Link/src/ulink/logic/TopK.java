@@ -88,13 +88,13 @@ public class TopK {
 		compareList.put("inPatient", 0);
 		compareList.put("outPatient", 0);
 		// hospitalAdmitted = null means out
-	
+	System.out.println(endDate);
 		for (int i = 0; i < compareTeamList.size() - 1; i+=2) {
 			String nationality = compareTeamList.get(i);
 			String hospitalAdmitted = compareTeamList.get(i + 1);
 			System.out.println(nationality + " <<<< COUNTRY" + i);
 			System.out.println(hospitalAdmitted+ "   " + i );
-			if (nationality == null || nationality.equals("indo")) {
+			if (nationality == null && hospitalAdmitted.equals("indo")) {
 				int temp = compareList.get("indo");
 				compareList.put("indo", temp + 1);
 			} else {

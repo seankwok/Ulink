@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+
 import ulink.logic.TopK;
+import ulink.logic.Utility;
 
 /**
  * Servlet implementation class Analysis
@@ -36,12 +38,13 @@ public class Analysis extends HttpServlet {
 	
 		PrintWriter out = response.getWriter();
 		TopK analysis = new TopK();
-		String startDate = request.getParameter("startDate");
-		String endDate = request.getParameter("endDate");
+		Utility utility = new Utility();
+		String startDate = utility.changeDateFormat(request.getParameter("startDate"));
+		String endDate = utility.changeDateFormat(request.getParameter("endDate"));
 		String team = request.getParameter("teamName");
-	
-		HashMap<String, Integer> analysisList = analysis.compareTeam(startDate,endDate,team);
 		
+		HashMap<String, Integer> analysisList = analysis.compareTeam(startDate,endDate,team);
+		System.out.println(analysisList.toString());
 		Gson gson = new Gson();
 		
 		//JsonArray result = (JsonArray) new Gson().toJsonTree(analysisList,new TypeToken<HashMap<String,Integer>>() {}.getType());
