@@ -40,6 +40,26 @@
 			});
     } 
 	
+	function editItem(clickedID){
+		var sendData = {
+				"conditionName" : clickedID
+			};
+			console.log(clickedID);
+			$.ajax({
+				url : "EditCondition",
+				type : "post",
+				data : sendData,
+				dataType : "json",
+				success : function(data) {
+
+					displayAll();
+					$("#message").html("Task completed");
+					$("#message").css("color", "green");
+				}
+
+			});
+    } 
+	
 	function displayAll() {
 		var timeline = "<tr><th>Age range</th><th>Common illnesses</th><th>Recommended screenings</th><th>Type</th><th>Frequency(Years)</th><th>Action</th><th></th></tr>"
 		var completedTask;
@@ -79,9 +99,9 @@
 														+ '<td>'
 														+ value.years
 														+ '</td>'									
-														+ '<td><a href="editTimelineSummary.html" onClick=editItem(this.id) id='
+														+ '<td><a href="editTimelineSummary.html" onClick=editItem(this.id) id="'
 														+ value.conditionName
-														+ '>Edit</a></td>'
+														+ '">Edit</a></td>'
 														+ '<td><a href=# onClick=deleteItem(this.id) id="'
 														+ value.conditionName
 														+ '">Delete</a></td></tr>';

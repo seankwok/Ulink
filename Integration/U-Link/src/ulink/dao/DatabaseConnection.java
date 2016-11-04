@@ -54,7 +54,7 @@ public class DatabaseConnection {
 			}
 
 			con.close();
-
+			
 		} catch (SQLException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -407,7 +407,7 @@ public class DatabaseConnection {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
-			String sql = "UPDATE allcondition SET numOfYears= ? ageRequired = ? screening = ? type = ? WHERE conditionName= ?";
+			String sql = "UPDATE allcondition SET numOfYears= ?, ageRequired = ?, screening = ?, type = ? WHERE conditionName= ?";
 			PreparedStatement preparedStmt = con.prepareStatement(sql);
 			preparedStmt.setInt(1, numOfYears);
 			preparedStmt.setInt(2, ageRequired);
@@ -530,5 +530,39 @@ public class DatabaseConnection {
 
 		return allconditionList;
 	}
+	
+	public Condition retrieveConditionDetails(String name) {
+		Condition condition = null;
+		Connection con;
+		ArrayList<Condition> allconditionList = new ArrayList<Condition>();
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
+			Statement stmt = con.createStatement();
+			String sql = "SELECT * FROM allcondition where conditionName='" + name + "'";
+			
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+
+				String conditionName = rs.getString(1);
+				int numOfYears = rs.getInt(2);
+				int ageRequired = rs.getInt(3);
+				String screening = rs.getString(4);
+				String type = rs.getString(5);
+				condition = new Condition(conditionName, numOfYears, ageRequired, screening, type);
+			
+			}
+
+			con.close();
+
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return condition;
+	}
+	
 }

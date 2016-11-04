@@ -3,25 +3,25 @@ package ulink.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.mail.Session;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import ulink.dao.DatabaseConnection;
+import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class Edit
+ * Servlet implementation class EditCondition
  */
-@WebServlet("/Edit")
-public class Edit extends HttpServlet {
+@WebServlet("/EditCondition")
+public class EditCondition extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Edit() {
+    public EditCondition() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,20 +31,7 @@ public class Edit extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		PrintWriter out = response.getWriter();
-		DatabaseConnection connection = new DatabaseConnection();
-		
-		int age = Integer.parseInt(request.getParameter("age"));
-		String illness = request.getParameter("illness");
-		String screening = request.getParameter("screening");
-		String type = request.getParameter("type");
-		int years = Integer.parseInt(request.getParameter("years"));
-		connection.editAllCondition(illness, years, age, screening,type);
-		System.out.println(age);
-		String jsonInString = "{\"status\":\"success\"}";
-		out.write(jsonInString);
-		out.flush();
-		return;
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -53,6 +40,17 @@ public class Edit extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+		HttpSession session = request.getSession();
+		String condition = request.getParameter("conditionName");
+		session.setAttribute("condition", condition);
+		PrintWriter out = response.getWriter();
+		String jsonInString = "{\"status\":\"success\"}";
+		
+		
+		out.write(jsonInString);
+	
+		out.flush();
+		return;
 	}
 
 }

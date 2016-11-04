@@ -14,49 +14,74 @@
 <script src="js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
-$(document).ready(function() {
-	
-});
+	$(document).ready(function() {
+		displayAll();
+		
+		$("#update")
+		.click(
+				function() {
 
-				$("#update").click(
-						function() {
-
-							var age = $('#age').val();
-							var illness = $("#illness").val();
-							var screening = $("#screening").val();
-							var type = $("#type").val();
-							var years = $("#years").val();
-							console.log(age);
-							console.log(type);
-							$.ajax({
+					var age = $('#age').val();
+					var illness = $("#illness").val();
+					var screening = $("#screening").val();
+					var type = $("#type").val();
+					var years = $("#years").val();
+					console.log(age);
+					console.log(type);
+					$
+							.ajax({
 								url : "Edit",
 								type : "get",
 								data : 'age=' + age + '&' + 'illness='
 										+ illness + '&' + 'screening='
-										+ screening + '&' + 'type='
-										+ type+ '&' + 'years='
-										+ years,
+										+ screening + '&' + 'type=' + type
+										+ '&' + 'years=' + years,
 								dataType : "json",
 								success : function(data) {
 									console.log(data.status);
 									if (data.status == "success") {
 										console.log(data.status);
-									$('#message').html("Successfully edited selected an illness!");
-									
-								}else {
-									$('#message').html("Fail to update record");
-								
+										$('#message')
+												.html(
+														"Successfully edited selected an illness!");
+
+									} else {
+										$('#message').html(
+												"Fail to update record");
+
+									}
 								}
-								}  
-						 
+
 							});
 
-						});
-				
-				
-				
+				});
+	});
 
-		
+	function displayAll() {
+	
+		$.ajax({
+			url : "EditCondition2",
+			type : "GET",
+			dataType : "json",
+			
+	
+			success : function(data) {
+				
+				var json = jQuery.parseJSON(JSON.stringify(data));
+				
+				console.log(json.type);	
+				
+				$("#illness").val(json.conditionName);
+				$("#years").val(json.years);
+				$("#age").val(json.ageRequired);
+				$("#screening").val(json.screening);
+				$("#type").val(json.type);
+			}
+
+		});
+	}
+
+
 </script>
 </head>
 <body>
@@ -80,14 +105,14 @@ $(document).ready(function() {
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
 					<li><a href="index.html">Home</a></li>
-					<li class="dropdown">
-         			 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Client <span class="caret"></span></a>
-			         <ul class="dropdown-menu">
-			            <li><a href="client.html">Client List</a></li>
-			            <li><a href="createClient.html">Create New Client</a></li>
-			          </ul>
-			        </li> 
-			        <li><a href="#">Cases</a></li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">Client <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="client.html">Client List</a></li>
+							<li><a href="createClient.html">Create New Client</a></li>
+						</ul></li>
+					<li><a href="#">Cases</a></li>
 					<li><a href="#">Invoice</a></li>
 					<li><a href="#">Services</a></li>
 					<li><a href="#">Report</a></li>
@@ -107,7 +132,8 @@ $(document).ready(function() {
 						<ul class="dropdown-menu">
 							<li><a href="kpi.html">KPI</a></li>
 							<li><a href="ranking.html">Ranking</a></li>
-							<li><a href="genderAndAgeReport.html">Gender and Age Report</a></li>
+							<li><a href="genderAndAgeReport.html">Gender and Age
+									Report</a></li>
 						</ul></li>
 					<li><a href="#">Template</a></li>
 
@@ -134,47 +160,47 @@ $(document).ready(function() {
 		<h1 align="center">Timeline - Edit Fields</h1>
 	</div>
 
-	
-		<div class="container">
-			<form>
-				<div class="form-group">
-					<label for="age">Age</label> <input type="text"
-						class="form-control" id="age">
-				</div>
-				<div class="form-group">
-					<label>Common Illness </label> <input type="text"
-						class="form-control" id="illness">
-				</div>
-				<div class="form-group">
-					<label for="screening">Recommended screening</label> <input
-						type="text" class="form-control" id="screening">
-				</div>
 
-				<div class="form-group">
-					<label for="screening">Demographic Affected</label>
-					<select class="form-control" id="type">
-		               <option value="infant">Infant</option>
-		               <option value="female">Female</option>
-		               <option value="male">Male</option>
-		               <option value="both">Male and Female</option>
-		            </select>  
-				</div>
+	<div class="container">
+		<form>
+			<div class="form-group">
+				<label for="age">Age</label> <input type="text" class="form-control"
+					id="age">
+			</div>
+			<div class="form-group">
+				<label>Common Illness </label> <input type="text"
+					class="form-control" id="illness">
+			</div>
+			<div class="form-group">
+				<label for="screening">Recommended screening</label> <input
+					type="text" class="form-control" id="screening">
+			</div>
 
-				<div class="form-group">
-					<label for="screening">Frequency of Screening (In years)</label> 
-					<input type="text" class="form-control" id="years">
-				</div>
+			<div class="form-group">
+				<label for="screening">Demographic Affected</label> <select
+					class="form-control" id="type">
+					<option value="infant">Infant</option>
+					<option value="female">Female</option>
+					<option value="male">Male</option>
+					<option value="both">Male and Female</option>
+				</select>
+			</div>
 
-				<div align="center">
+			<div class="form-group">
+				<label for="screening">Frequency of Screening (In years)</label> <input
+					type="text" class="form-control" id="years">
+			</div>
+
+			<div align="center">
 				<button type="submit" value="update" class="btn btn-primary"
-				id="update">Update</button>
-				</div>
-			
-		</form>
-			
-		</div>
+					id="update">Update</button>
+			</div>
 
-		
+		</form>
+
+	</div>
+
+
 
 
 

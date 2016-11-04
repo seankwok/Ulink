@@ -32,7 +32,7 @@ $(document).ready(function() {
 		var type = $("#type").val();
 		var count =0;
 		var previous;
-		var table = "<tr><th>Ranking</th><th>Name</th><th>Number of times doctor was engaged</th>";
+		var table = "<tr><th>Ranking</th><th>Name</th><th>Number of times "+ type +" was engaged</th>";
 		$.ajax({
 			url : "TopResult",
 			type : "get",
