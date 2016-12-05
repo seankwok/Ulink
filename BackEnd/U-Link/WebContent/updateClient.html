@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+    <title>Client</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+
+
+				$("#add").click(
+						function() {
+							var passportNumber = $("#passportNumber").val();
+							var clientName = $("#clientName").val();
+							var gender = $("#gender").val();
+							var dateOfBirth = $("#dateOfBirth").val();
+							var mainDiagnosis = $("#mainDiagnosis").val();
+							var clientType = $("#clienType").val(); 
+							var nationality = $("#nationality").val();
+							var countryOfResidence = $("#countryOfResidence").val();
+							var billingStreet  = $("#billingStreet").val();
+							var billingCity = $("#billingCity");
+							var billingState = $("#billingState").val();
+							var billingCountry = $("#billingCountry").val();
+							var billingCode = $("#billingCode").val();
+							var isMedical = $("#isMedical").val();
+							var isClaim = $("#isClaim").val();
+							var claimInformation = $("#claimInformation").val();
+							var referralName = $("#referralName").val();
+							console.log(dateOfBirth);
+							$.ajax({
+								url : "CreateClient",
+								type : "get",
+								data : 'passportNumber=' + passportNumber + '&' + 'clientName='
+										+ clientName + '&' + 'gender='
+										+ gender + '&' + 'dateOfBirth='
+										+ dateOfBirth+ '&' + 'mainDiagnosis='
+										+ mainDiagnosis + '&' + 'clientType=' + clientType + '&' + 'nationality='
+											+ nationality + '&' + 'countryOfResidence='
+											+ countryOfResidence + '&' + 'billingStreet='
+											+ billingStreet+ '&' + 'billingCity='
+											+ billingCity + '&' + 'billingState='
+											+ billingState + '&' + 'billingCountry='
+											+ billingCountry+ '&' + 'billingCode='
+											+ billingCode + '&' + 'isMedical=' + isMedical + '&' + 'isClaim='
+												+ isClaim + '&' + 'claimInformation='
+												+ claimInformation + '&' + 'referralName='
+												+ referralName,
+								dataType : "json",
+								success : function(data) {
+									console.log(data.status);
+									if (data.status == "success") {
+										console.log(data.status);
+									$('#message').html("Record Added");
+									$("#message").css("color", "green");
+								}else {
+									$('#message').html("fail to add record");
+									$("#message").css("color", "red");
+								}
+								}  
+							});
+
+						});
+});
+	
+</script>
+ 
+  </head>
+  <body>
+    
+   <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Ulink Assist</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">Home</a></li>
+               
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Client <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="client.html">Client List</a></li>
+            <li><a href="createClient.html">Create New Client</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Cases</a></li>
+        <li><a href="#">Invoice</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Report</a></li>
+        <li><a href="#">Doctor</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Timeline <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="infant.html">Infant</a></li>
+            <li><a href="female.html">Female</a></li>
+            <li><a href="male.html">Male</a></li>
+          </ul>
+        </li>  
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Analysis <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="kpi.html">KPI</a></li>
+            <li><a href="ranking.html">Ranking</a></li>
+            <li><a href="genderAndAgeReport.html">Gender and Age Report</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Template</a></li>        
+
+      </ul>
+      <form class="navbar-form navbar-right">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">Logout</a></li>
+        
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+    
+    <div class="page-header">
+       <h1 align="center">Client - Update Client</h1>
+    </div>
+
+<div class="container">
+<form action="client.html" method="POST">
+   
+    <div class="col-md-6">
+
+      <div class="panel panel-default">
+
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          Client Information
+        </h4>
+      </div>
+
+        <div class="form-group">
+          <label for="clientName">Client Name:*</label>
+          <input type="text" class="form-control" id="clientName" required>
+
+          <label for="dateOfBirth">Date Of Birth:*</label>
+          <input type="date" class="form-control" id="dateOfBirth" required>
+
+          <label for="gender">Gender</label>
+            <select class="form-control" id="gender">
+               <option>Female</option>
+               <option>Male</option>
+            </select>
+
+          <label for="passportNumber">Passport Number /ID Number:*</label>
+          <input type="text" class="form-control" id="passportNumber" required>
+
+            <label>Client Type</label>
+            <select class="form-control" id="clientType">
+               <option>Individual</option>
+               <option>Employee</option>
+               <option>Company</option>
+            </select>
+
+          <label for="nationality">Nationality</label>
+          <input type="text" class="form-control" id="nationality" required>
+
+          <label for="countryOfResidence">Country of Residence</label>
+          <input type="text" class="form-control" id="countryOfResidence" required>
+
+          <label for="referralName">Referred by:</label>
+          <input type="text" class="form-control" id="referralName" required>
+          
+          
+      </div>
+    </div>  <!--panel default-->
+
+    
+    <div class="panel panel-default">
+      
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          Billing Information
+        </h4>
+      </div>
+      
+        <div class="form-group">
+        <label for="billingStreet">Street:</label>
+        <input type="text" class="form-control" id="billingStreet">
+      
+    
+        <label for="billingCity">City:</label>
+        <input type="text" class="form-control" id="billingCity">
+      
+      
+      
+        <label for="billingState">State:</label>
+        <input type="text" class="form-control" id="billingState">
+      
+      
+      
+        <label for="billingCode">Code:</label>
+        <input type="text" class="form-control" id="billingCode">
+      
+      
+      
+        <label for="billing_country">Country:</label>
+        <input type="text" class="form-control" id="billing_country">
+      </div>
+      
+      
+    </div> <!-- panel default-->
+  
+  
+</div> <!--// close col-md-6-->
+
+<div class="col-md-6">
+
+      <div class="panel-group">
+    <div class="panel panel-default">
+    
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" href="#collapse3">Consultation</a>
+      </h4>
+    </div>
+
+    <div id="collapse3" class="panel-collapse collapse">
+
+      <div class="form-group">
+        <label for="appt">Appointment Date and Time:</label>
+        <input type="date" name="appt_date" class="form-control" id="appt_date">
+        <input type="time" name="appt_time" class="form-control" id="appt_time">
+      </div>
+
+      <label>Doctor:</label>
+            <select class="form-control" id="doctor">
+               <option>Retrieve from database</option>
+               <option>xx</option>
+               <option>xx</option>
+            </select>
+
+      <label>Specialty:</label>
+        <select class="form-control" id="speciality">
+          <option>Retrieve from database</option>
+           <option>xx</option>
+           <option>xx</option>
+       </select>
+
+       <label>Clinic:</label>
+          <select class="form-control" id="clinic">
+           <option>Retrieve from database</option>
+          <option>xx</option>
+           <option>xx</option>
+       </select>
+
+
+      <div class="form-group">
+        <label for="referring_doctor">Referring Doctor (US Embassy):</label>
+        <input type="text" class="form-control" id="referring_doctor">
+      </div>
+
+      <div class="form-group">
+        <label for="referring_doctor_email">Referring Doctor Email:</label>
+        <input type="email" class="form-control" id="referring_doctor_email">
+      </div>
+
+      <div class="form-group">
+        <label for="follow_up_date">Follow-up Date:</label>
+        <input type="date" name="follow_up_date" class="form-control" id="follow_up_date">
+      </div>
+
+      <div class="form-group">
+        <label for="follow_up_person">Follow-up Person:</label>
+        <input type="text" class="form-control" id="follow_up_person">
+      </div>
+
+      <div class="form-group">
+        <label for="consultation_remarks">Remarks:</label>
+        <input type="textarea" rows="5" class="form-control" id="consultation_remarks">
+      </div>
+
+    </div> <!--// panel collapse-->
+
+  </div> <!--// panel default-->
+  </div> <!--// panel grooup-->
+
+
+      <div class="panel-group">
+      <div class="panel panel-default">
+
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" href="#collapse4">Medical</a>
+        </h4>
+      </div>
+
+      <div id="collapse4" class="panel-collapse collapse">
+      
+      <div class="container">
+        If yes, please tick:
+        <div class="checkbox">
+          <label><input type="checkbox">Yes</label>
+          <label><input type="checkbox">No</label>
+        </div>
+
+        Ulink can claim, please tick:
+        <div class="checkbox">
+          <label><input type="checkbox">Yes</label>
+          <label><input type="checkbox">No</label>
+        </div>
+      </div>
+      <div class="form-group">
+          <label>If no:</label>
+          <select class="form-control" id="uLinkCannotClaim">
+             <option>Appointment not made by Ulink</option>
+             <option>Old patient</option>
+             <option>Others</option>
+          </select>
+      </div>
+
+      </div> <!--// panel collapse-->
+    </div>  <!--panel default-->
+    </div> <!--panel group-->
+
+    <div class="panel-group">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" href="#collapse5">Admission</a>
+        </h4>
+      </div>
+    <div id="collapse5" class="panel-collapse collapse">
+      
+      <div class="form-group">
+          <label for="case_num">Case number:</label>
+          <input type="text" class="form-control" id="case_num">
+        </div>
+        <div class="form-group">
+          <label for="hospital">Hospital Admitted:</label>
+          <input type="text" class="form-control" id="hospital">
+        </div>
+        <div class="form-group">
+          <label for="hospital_add">Hospital Address:</label>
+          <input type="textarea" rows="5" class="form-control" id="hospital_add">
+        </div>
+        <div class="form-group">
+          <label for="admission_date">Date of Admission:</label>
+          <input type="date" name="admission_date" class="form-control" id="admission_date">
+        </div>
+        <div class="form-group">
+          <label for="discharge_date">Discharge Date:</label>
+          <input type="date" name="discharge_date" class="form-control" id="discharge_date">
+        </div>
+        <div class="form-group">
+          <label for="add_specialist">Additional specialist:</label>
+          <input type="text" class="form-control" id="add_specialist">
+        </div>
+        <div class="form-group">
+          <label for="admission_remarks">Remarks:</label>
+          <input type="textarea" rows="5" class="form-control" id="admission_remarks">
+        </div>
+
+
+
+    </div> <!--panel collapse-->
+    </div> <!--panel default-->
+  </div> <!-- panel group-->
+
+  <div class="panel-group">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" href="#collapse6">Letter of Guarantee</a>
+      </h4>
+    </div>
+    <div id="collapse6" class="panel-collapse collapse">
+        
+      If LOG issued, please tick:
+        <div class="checkbox">
+          <label><input type="checkbox">Yes</label>
+          <label><input type="checkbox">No</label>
+        </div>
+        <div class="form-group">
+          <label>Amount covered:</label>
+          <select class="form-control" id="log_amt_covered">
+             <option>Full-inpatient</option>
+             <option>Full-outpatient</option>
+             <option>Full-day surgery</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="other_coverage">Other coverage:</label>
+          <input type="text" class="form-control" id="other_coverage">
+        </div>
+        <div class="form-group">
+          <label for="log_issue_date">LOG Issue Date:</label>
+          <input type="date" name="log_issue_date" class="form-control" id="log_issue_date">
+        </div>
+        <div class="form-group">
+          <label for="invoice_date">Invoice Date:</label>
+          <input type="date" name="invoice_date" class="form-control" id="invoice_date">
+        </div>
+        <div class="form-group">
+          <label for="log_add_specialist">Additional specialist:</label>
+          <input type="text" class="form-control" id="log_add_specialist">
+        </div>
+        <div class="form-group">
+          <label for="log_remarks">Remarks:</label>
+          <input type="textarea" rows="5" class="form-control" id="log_remarks">
+        </div>
+
+
+        
+      </div> <!--panel collapse-->
+      </div> <!--panel default-->
+    </div> <!-- panel group-->
+
+</div><!--close col-md-6-->
+</form>
+</div> <!--// container close-->
+<div id="message" align="center"></div>
+	<div align="center">
+        <button type="submit" value="update" class="btn btn-primary"
+        id="update">Update</button>
+  </div>
+
+
+  
+    
+  </body>
+</html>
