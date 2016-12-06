@@ -32,8 +32,8 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home<span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Upload Templates</a></li>
+        <li><a href="#">Home</a></li>
+        <li  class="active"><a href="#">Upload Templates</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Screenings <span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -65,7 +65,22 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+	<div class="page-header">
+	  <center><h1>Upload Templates</h1></center>
+	</div>
+	<div class="col-md-6 col-md-offset-3">
+	<div class="panel panel-default">
+	  <div class="panel-body">
+	    <p>Please select a file to upload </p>
+	<form action="demo_form.asp">
+	  <input type="file" name="pic" accept="image/*">
+	  <input type="submit">
+	</form>
 
+	  </div>
+	</div>
+	</div>
+	
     
   </body>
 </html>
