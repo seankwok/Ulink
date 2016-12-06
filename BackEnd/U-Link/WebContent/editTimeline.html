@@ -40,8 +40,28 @@
 			});
     } 
 	
+	function editItem(clickedID){
+		var sendData = {
+				"conditionName" : clickedID
+			};
+			console.log(clickedID);
+			$.ajax({
+				url : "EditCondition",
+				type : "post",
+				data : sendData,
+				dataType : "json",
+				success : function(data) {
+
+					displayAll();
+					$("#message").html("Task completed");
+					$("#message").css("color", "green");
+				}
+
+			});
+    } 
+	
 	function displayAll() {
-		var timeline = "<tr><th>Age range</th><th>Common illnesses</th><th>Recommended screenings</th><th>type</th><th>Number of years</th><th>Action</th><th></th></tr>"
+		var timeline = "<tr><th>Age range</th><th>Common illnesses</th><th>Recommended screenings</th><th>Type</th><th>Frequency(Years)</th><th>Action</th><th></th></tr>"
 		var completedTask;
 		var isEmpty = false;
 		var completeIsEmpty = false;
@@ -79,9 +99,9 @@
 														+ '<td>'
 														+ value.years
 														+ '</td>'									
-														+ '<td><a href=# onClick=editItem(this.id) id='
+														+ '<td><a href="editTimelineSummary.html" onClick=editItem(this.id) id="'
 														+ value.conditionName
-														+ '>Edit</a></td>'
+														+ '">Edit</a></td>'
 														+ '<td><a href=# onClick=deleteItem(this.id) id="'
 														+ value.conditionName
 														+ '">Delete</a></td></tr>';
@@ -134,6 +154,7 @@
 			            <li><a href="createClient.html">Create New Client</a></li>
 			          </ul>
 			        </li> 
+			        <li><a href="#">Cases</a></li>
 					<li><a href="#">Invoice</a></li>
 					<li><a href="#">Services</a></li>
 					<li><a href="#">Report</a></li>
@@ -152,8 +173,8 @@
 						aria-expanded="false">Analysis <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a href="kpi.html">KPI</a></li>
-							<li><a href="top-k.html">Ranking</a></li>
-							<li><a href="genderByAge.html">Gender and Age Report</a></li>
+							<li><a href="ranking.html">Ranking</a></li>
+							<li><a href="genderAndAgeReport.html">Gender and Age Report</a></li>
 						</ul></li>
 					<li><a href="#">Template</a></li>
 

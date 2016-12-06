@@ -37,8 +37,8 @@ public class TopK {
 
 	}
 
-	public HashMap<String, Integer> topSpeciality() {
-		ArrayList<String> specialityList = connection.retrieveAllSpeciality();
+	public HashMap<String, Integer> topSpeciality(String startDate, String endDate) {
+		ArrayList<String> specialityList = connection.retrieveAllSpeciality(startDate, endDate);
 		HashMap<String, Integer> specialityHash = new HashMap<String, Integer>();
 
 		for (int i = 0; i < specialityList.size(); i++) {
@@ -88,13 +88,13 @@ public class TopK {
 		compareList.put("inPatient", 0);
 		compareList.put("outPatient", 0);
 		// hospitalAdmitted = null means out
-	
+	System.out.println(endDate);
 		for (int i = 0; i < compareTeamList.size() - 1; i+=2) {
 			String nationality = compareTeamList.get(i);
 			String hospitalAdmitted = compareTeamList.get(i + 1);
 			System.out.println(nationality + " <<<< COUNTRY" + i);
-			System.out.println(hospitalAdmitted+ "   " + i );
-			if (nationality == null || nationality.equals("indo")) {
+			System.out.println(hospitalAdmitted+ "   " + (i+1));
+			if (nationality.equals("Indonesian")) {
 				int temp = compareList.get("indo");
 				compareList.put("indo", temp + 1);
 			} else {

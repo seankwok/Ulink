@@ -52,7 +52,7 @@ public class TopResult extends HttpServlet {
 		} else if (type.equals("Referral")){
 			topList = topK.topReferral(startDate, endDate);
 		}else {
-			topList = topK.topSpeciality();
+			topList = topK.topSpeciality(startDate, endDate);
 		}
 		
 		System.out.println(startDate + "   "  + endDate);

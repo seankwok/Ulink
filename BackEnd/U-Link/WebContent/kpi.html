@@ -17,13 +17,15 @@
     <script src="js/bootstrap-datetimepicker.js"></script>
     <script src="js/bootstrap.min.js"></script>
 
+
+
 <script type="text/javascript">
 
 $(document).ready(function() {
 	
 	$("#submit").click (
 			function(){
-			
+		var table;
 		var teamName = $('#teamName').val();
 		var startDate = $("#startDate").val();
 		var endDate = $("#endDate").val();
@@ -36,7 +38,41 @@ $(document).ready(function() {
 			dataType : "json",
 			success : function(data) {
 				var json = jQuery.parseJSON(JSON.stringify(data));
+	
+				console.log(json);
+				if (teamName == "Medical") {
+					table ="<tr><th>Number of in Patient</th><th>Number of out Patient</th>";
+		
+			      
+			                table += '<tr>'
+			                      + '<td>'
+			                      + json.inPatient
+			                      + '</td>'
+			                      + '<td>'
+			                      + json.outPatient
+			                      + '</td></tr>';
 
+			    
+
+				} else {
+					
+					table ="<tr><th>Number of Indonesian Patients</th><th>Number of Non-Indonesian Patients</th>";
+		
+			      
+			                table += '<tr>'
+			                      + '<td>'
+			                      + json.indo
+			                      + '</td>'
+			                      + '<td>'
+			                      + json.nonIndo
+			                      + '</td></tr>';
+				}
+
+        $('#kpi').html(table);
+
+
+
+        /* sean's quotes
 				console.log(json);
 
 				if (teamName == "Medical") {
@@ -46,8 +82,9 @@ $(document).ready(function() {
 					$('#green').html("Number of Indonesian Patients " + json.indo);
 					$('#red').html("Number of Non-Indonesian Patients " + json.nonIndo);
 				}
-			}
-		});
+  */
+			
+			} });
 
 
 	});
@@ -81,6 +118,7 @@ $(document).ready(function() {
             <li><a href="createClient.html">Create New Client</a></li>
           </ul>
         </li> 
+        <li><a href="#">Cases</a></li>
         <li><a href="#">Invoice</a></li>
         <li><a href="#">Services</a></li>
         <li><a href="#">Report</a></li>
@@ -97,8 +135,8 @@ $(document).ready(function() {
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Analysis <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="kpi.html">KPI</a></li>
-            <li><a href="top-k.html">Ranking</a></li>
-            <li><a href="genderByAge.html">Gender and Age Report</a></li>
+              <li><a href="ranking.html">Ranking</a></li>
+            <li><a href="genderAndAgeReport.html">Gender and Age Report</a></li>
           </ul>
         </li>
         <li><a href="#">Template</a></li>
@@ -165,7 +203,7 @@ $(document).ready(function() {
             <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
             </span>
-          </div>
+        </div>
 
           <script type="text/javascript">
           $(function () {
@@ -177,14 +215,22 @@ $(document).ready(function() {
 
 
       </div>
-         <div align="center">
- 
-    <button type="submit" value="Submit" class="btn btn-primary" id="submit">Generate</button>
+    <div class="container" align="center">
+        <button type="submit" value="Submit" class="btn btn-primary" id="submit">Generate</button>
     </div>
-    </div>
- 
+    
 
+    <br>
+    <div class="container">
+
+    <table class="table table-striped" id="kpi">
+    
+    </table>
+  </div>
+    </div>
+    <!-- sean's codes
     <div align="center" id="green"></div>
     <div align="center" id="red"></div>
+    -->
   </body>
 </html>
