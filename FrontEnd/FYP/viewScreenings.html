@@ -32,10 +32,10 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="index.html">Home<span class="sr-only">(current)</span></a></li>
+        <li><a href="index.html">Home<span class="sr-only"></span></a></li>
         <li><a href="upload.html">Upload Templates</a></li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Screenings <span class="caret"></span></a>
+          <a href="#" class="active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Screenings <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="addScreening.html">Add Screenings</a></li>
             <li><a href="viewScreenings.html">View Screenings</a></li>
@@ -49,7 +49,6 @@
             <li><a href="#">Gender and Age Report</a></li>
           </ul>
         </li>
-        
         
       </ul>
       <u1>
@@ -72,6 +71,84 @@
   </div><!-- /.container-fluid -->
 </nav>
 
-    
+<div class="col-md-8 col-md-offset-2">
+<div class="panel panel-default">
+  <div class="panel-body">
+  <h3><b>Filter results</b></h3>
+    <form>
+    	<div class="form-group">
+		<div class="col-md-4">
+			<label for="screening">Demographic affected</label> 
+			<select class="form-control" id="type">
+				<option value="both">All</option>
+				<option value="female">Female</option>
+				<option value="male">Male</option>
+			</select>
+			</div>
+		</div>
+		
+		<div class="col-md-4">
+		<label for="screening">Age Range</label> 
+		<select class="form-control" id="age">
+			<option value="0-10">0-10</option>
+			<option value="11-20">11-20</option>
+			<option value="21-30">21-30</option>
+			<option value="31-40">31-40</option>
+			<option value="41-50">41-50</option>
+			<option value="51-60">51-60</option>
+			<option value="61-70">61-70</option>
+			<option value="71-80">71-80</option>
+			<option value=">81">>81</option>
+		</select>
+		</div>
+		
+		<div align="center">
+		<button type="submit" value="Submit" class="btn btn-default btn-lg" id="generate">Generate</button>
+		</div>
+    </form>
+  </div>
+</div>
+</div>
+
+<div class="container">
+  
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Age at which patients should start going for screenings</th>
+        <th>Common Illness</th>
+        <th>Recommended Screening</th>
+        <th>Affected Demographic</th>
+        <th>Frequency of screening</th>
+        <th>View Patients</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+  </table>
+</div>
+
+
+   <!-- warning message for deleting screening -->
+   <div class="container" align="center">
+	<div class="col-md-6" align="center">
+ 	 <div class="alert alert-danger alert-dismissible" role="alert">
+  		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  		You are about to delete a screening. Proceed?
+	</div>
+ 	</div>
+  </div>  
+  
+  
+   <!-- success message for deleting screening -->
+   <div class="container" align="center">
+	<div class="col-md-6" align="center">
+ 	 <div class="alert alert-success alert-dismissible" role="alert">
+  		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  		Screening successfully deleted.
+	</div>
+ 	</div>
+  </div>
+  
   </body>
 </html>
