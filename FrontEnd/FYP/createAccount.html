@@ -13,6 +13,48 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
  
+ 
+ 	<script type="text/javascript">
+	$(document)
+			.ready(
+					function() {
+
+						$("#create")
+								.click(
+										function() {
+											var username =  $('#inputEmail').val();
+											var password =  $('#inputPassword').val();
+											var confirmPassword =  $('#inputConfirmPassword').val();
+																						
+											$.ajax({
+												url : "CreateUser",
+												type : "post",
+												data : 'username=' + username
+														+ '&'
+														+ 'password='
+														+ password + '&'
+														+ 'confirmPassword='
+														+ confirmPassword,
+													
+												dataType : "json",
+
+												success : function(data) {
+													console
+															.log(data.status);
+													if (data.status == "success") {
+														$('#createSuccess')
+																.html("Successfully created a new account!");
+													}										}
+
+												}
+
+											});
+										}
+								)
+					}
+			)
+ 	</script>
+ 
   </head>
   <body>
     
@@ -75,7 +117,7 @@
 	   <b>New Account</b>
 	  </div>
 	</div>
-	
+	<div>
 	<form class="form-horizontal" >
   <div class="form-group">
     <label class="col-sm-2 control-label">Email</label>
@@ -97,14 +139,15 @@
   </div>
   
   <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
+    <div class="col-sm-offset-2 col-sm-10" id="create">
       <button type="submit" class="btn btn-default">Create New Account</button>
     </div>
   </div>
 </form>
-	
-	
-		
+	</div>
+	<div class="col-md-6 col-md-offset-2">
+	<div class="alert alert-success" id="createSuccess" role="alert"></div>
+	</div>
     
   </body>
 </html>
