@@ -13,7 +13,46 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+    
  
+ <script type="text/javascript">
+	$(document)
+			.ready(
+					function() {
+						$("#login").click
+						
+						(function(){
+							var username = $("#username").val(),
+							if (username == "") { // if username variable is empty
+							       $('.errormess').html("Please insert your email"); // printing error message
+							       return false; // stop the script
+							    }
+							
+							var password = $("#password").val(),
+							if (username == "") { // if password variable is empty
+							       $('.errormess').html("Please insert your password"); // printing error message
+							       return false; // stop the script
+							    }
+							
+
+							$.ajax({
+								url: "LoginServlet",
+								type: "post";
+								data: "Username" + username + "&password" + password,
+								dataType: json,
+								success : function(data) {
+									console
+											.log(data.status);
+									if (data.status == "success") {
+									//link to index.html
+									}
+	
+								}
+								
+							})
+						})
+					}
+ </script>
   </head>
 <body>
 <div class="container">
@@ -26,7 +65,7 @@
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-lg-12">
-								<form id="login-form" action="http://phpoll.com/login/process" method="post" >
+								<form id="login-form" method="post" >
 									<div class="form-group">
 										<input type="text" id="username" class="form-control" placeholder="Email" value="">
 									</div>
@@ -40,19 +79,23 @@
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-6 col-sm-offset-3">
-												<input type="submit" id="login-submit"  class="form-control btn btn-login" value="login">
+												<input type="submit" id="login"  class="form-control btn btn-login" value="login">
 											</div>
 										</div>
 									</div>
-									
+								
 								</form>
 								
 							</div>
 						</div>
 					</div>
+					
+					
 				</div>
 			</div>
 		</div>
+		<span class="errormess"></span>
+		
 	</div>
 </body>
 </html>
