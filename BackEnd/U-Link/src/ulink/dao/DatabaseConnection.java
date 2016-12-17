@@ -12,6 +12,7 @@ import ulink.constructor.Client;
 import ulink.constructor.Condition;
 import ulink.constructor.Consultation;
 import ulink.constructor.Timeline;
+import ulink.constructor.User;
 import ulink.logic.Utility;
 
 public class DatabaseConnection {
@@ -565,4 +566,15 @@ public class DatabaseConnection {
 		return condition;
 	}
 	
+
+	public void createUser(String username, String password){
+		
+		
+	}
+	
+	public ArrayList<User> getUser(){
+		
+		return null;
+	}
 }
+

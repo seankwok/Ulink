@@ -1,5 +1,7 @@
 package ulink.logic;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import java.util.Properties;
@@ -15,6 +17,8 @@ import javax.mail.internet.MimeMessage;
 import org.joda.time.DateTime;
 
 import ulink.constructor.Condition;
+import ulink.constructor.User;
+import ulink.dao.DatabaseConnection;
 
 public class Utility {
 
@@ -88,5 +92,46 @@ public class Utility {
 		int currentYear = datetime.getYear();
 
 		return currentYear - year;
+	}
+	
+	public String hash(String password) {
+		  StringBuffer sb = new StringBuffer();
+		 MessageDigest md;
+		try {
+			md = MessageDigest.getInstance("SHA-256");
+		
+	        md.update(password.getBytes());
+	        
+	        byte byteData[] = md.digest();
+	 
+	        //convert the byte to hex format method 1
+	      
+	        for (int i = 0; i < byteData.length; i++) {
+	         sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+	        }
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	       return sb.toString();
+	       
+}
+	
+	public boolean loginValidatation(String username, String password){
+		boolean isValid = false;
+		DatabaseConnection database = new DatabaseConnection();
+		Utility utility = new Utility();
+
+		ArrayList<User> userList = database.getUser();
+		
+		for (int i=0; i <userList.size(); i++){
+			User user = userList.get(i);
+			String hPassword = utility.hash(password);
+			if (username.toLowerCase().equals(user.getUsername().toLowerCase()) && hPassword.equals(user.getPassword())){
+				isValid = true;
+			}
+		}
+		
+		return isValid;
 	}
 }
