@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 18, 2016 at 03:34 AM
+-- Generation Time: Dec 18, 2016 at 03:46 AM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `ulink`
 --
+CREATE DATABASE IF NOT EXISTS `ulink` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `ulink`;
 
 -- --------------------------------------------------------
 
