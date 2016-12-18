@@ -2,20 +2,14 @@ package ulink.constructor;
 
 public class User {
 	private String email;
-	private String username;
+	//private String username;
 	private String password;
 	private String roles;
 	
 	
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	public User(String username, String password, String roles, String email) {
+	public User(String email, String password, String roles) {
 		super();
-		this.username = username;
+		//this.username = username;
 		this.password = password;
 		this.roles = roles;
 		this.email = email;

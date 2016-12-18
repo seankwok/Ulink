@@ -12,6 +12,7 @@ import ulink.constructor.Client;
 import ulink.constructor.Condition;
 import ulink.constructor.Consultation;
 import ulink.constructor.Timeline;
+import ulink.constructor.User;
 import ulink.logic.Utility;
 
 public class DatabaseConnection {
@@ -565,4 +566,54 @@ public class DatabaseConnection {
 		return condition;
 	}
 	
+
+	public void createUser(String email, String password, String roles){
+		Connection con;
+		try {
+		Class.forName("com.mysql.jdbc.Driver");
+		con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
+		Statement stmt = con.createStatement();
+
+		String sql = "INSERT INTO user (email,password,roles) "
+				+ "VALUES (?,?,?)";
+		PreparedStatement preparedStmt = con.prepareStatement(sql);
+		preparedStmt.setString(1, email);
+		preparedStmt.setString(2, password);
+		preparedStmt.setString(3, roles);
+		preparedStmt.execute();
+
+		con.close();
+
+	} catch (SQLException | ClassNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+		
+	}
+	
+	public ArrayList<User> getUser(){
+		ArrayList<User> userList = new ArrayList<User>();
+		Connection con;
+		try {
+		Class.forName("com.mysql.jdbc.Driver");
+		con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
+		Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from User");
+
+			while (rs.next()) {
+				String email = rs.getString(1);
+				String password = rs.getString(2);
+				String roles = rs.getString(3);
+				
+				userList.add(new User(email, password,roles));
+			}
+
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return userList;
+	}
 }
+
