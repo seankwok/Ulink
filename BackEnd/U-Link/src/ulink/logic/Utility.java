@@ -127,7 +127,7 @@ public class Utility {
 		for (int i=0; i <userList.size(); i++){
 			User user = userList.get(i);
 			String hPassword = utility.hash(password);
-			if (username.toLowerCase().equals(user.getUsername().toLowerCase()) && hPassword.equals(user.getPassword())){
+			if (username.toLowerCase().equals(user.getEmail().toLowerCase()) && hPassword.equals(user.getPassword())){
 				isValid = true;
 			}
 		}

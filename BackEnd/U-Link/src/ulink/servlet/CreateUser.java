@@ -44,13 +44,15 @@ public class CreateUser extends HttpServlet {
 		DatabaseConnection connection = new DatabaseConnection();
 		Utility utility = new Utility();
 		PrintWriter out = response.getWriter();
-
+			
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String repeatPassword = request.getParameter("repeatPassword");
+		String roles = request.getParameter("roles");
 		if (password.equals(repeatPassword)) {
 			String hPassword = utility.hash(password);
-			connection.createUser(username, hPassword);
+			connection.createUser(username, hPassword,roles);
+			String jsonInString = "{\"status\":\"success\"}";
 		} else {
 			response.sendRedirect("./Login.html");
 			String jsonInString = "{\"status\":\"fail\"}";
