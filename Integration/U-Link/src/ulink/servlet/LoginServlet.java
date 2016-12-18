@@ -60,8 +60,9 @@ public class LoginServlet extends HttpServlet {
 			//return;
 			//request.getRequestDispatcher("./ToDoServlet").forward(request, response);
 		} else {
-			request.setAttribute("error", "Invalid username/password");
-			request.getRequestDispatcher("Login.html").forward(request, response);
+			String jsonInString = "{\"status\":\"fail\"}";
+			out.write(jsonInString);
+			out.flush();
 			return;
 		}
 		

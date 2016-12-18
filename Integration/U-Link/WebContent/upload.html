@@ -17,25 +17,32 @@
 	$(document).ready(function() {
 		$("#submit").click(function() {
 			var inputFile = $("#InputFile").val();
-			console.log("print");
-			$.ajax({
-				url : "UploadServlet",
-				type : "post",
-				data : "inputFile=" + inputFile,
-				dataType : "json",
-				
-				success : function(data) {
-					console.log(data.status);
-					if (data.status == "success") {
-						$("#successAlert").html("<div class='col-md-6 col-md-offset-3'><div class='alert alert-success' role='alert'>Successfully uploaded a file</div></div>")
-					}
+			var uploadedTime = $("#timestamp").val();
+			if(inputFile == ""){
+				$("#inputAlert").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Please choose excel files only</strong></div>");
+			} else{
+				$.ajax({
+					url : "UploadServlet",
+					type : "post",
+					data : "inputFile=" + inputFile,
+					dataType : "file",
+					
+					success : function(data) {
+						console.log(data.status);
+						if (data.status == "success") {
+							$("#inputAlert").html("<div class='col-md-6 col-md-offset-3'><div class='alert alert-success' role='alert'>Successfully uploaded a file</div></div>")
+						}
 
-				}
-				
-				
-			})
+					}
+					
+				})
+			}
+			
 		})
+		
+		document.getElementById("timestamp").innerHTML = Date();
 	})
+	
 </script>
  
   </head>
@@ -95,22 +102,32 @@
 	<div class="page-header">
 	  <center><h1>Upload Templates</h1></center>
 	</div>
-	<div class="col-md-6 col-md-offset-3">
-	<div class="panel panel-default">
-	  <div class="panel-body">
-		<div class="form-group">
-		    <label for="InputFile">Please select a file to upload</label>
-		    <input type="file" id="InputFile">
-		    <input type="submit" id="submit">
-	  	</div>
-	  </div>
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+		<div class="panel panel-default">
+		  <div class="panel-body">
+			<div class="form-group">
+			    <label for="InputFile">Please select a file to upload</label>
+			    <input type="file" id="InputFile">
+			    <input type="submit" id="submit">
+		  	</div>
+		  </div>
+		</div>
+		</div>
+		
+		<div class="col-md-3">
+			<div class="col-md-6 ">
+	<div class="alert alert-info" role="alert">Last uploaded at </div> <div id="timestamp"></div>
+	
+	
 	</div>
-	</div>
-	<div class="col-md-6 col-md-offset-3">
-	<div class="alert alert-info" role="alert">Last uploaded at </div>
+		</div>
 	</div>
 	
-	<div class="col-md-6 col-md-offset-3" id="successAlert"></div>
+	
+	
+	<div class="col-md-6 col-md-offset-3" id="inputAlert"></div>
+	
 	
     
   </body>
