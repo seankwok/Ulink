@@ -5,13 +5,38 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
    
-    <title>Index</title>
+    <title>Upload</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+ 	
+ 	<script type="text/javascript">
+	$(document).ready(function() {
+		$("#submit").click(function() {
+			var inputFile = $("#InputFile").val();
+			console.log("print");
+			$.ajax({
+				url : "UploadServlet",
+				type : "post",
+				data : "inputFile=" + inputFile,
+				dataType : "json",
+				
+				success : function(data) {
+					console.log(data.status);
+					if (data.status == "success") {
+						$("#successAlert").html("<div class='col-md-6 col-md-offset-3'><div class='alert alert-success' role='alert'>Successfully uploaded a file</div></div>")
+					}
+
+				}
+				
+				
+			})
+		})
+	})
+</script>
  
   </head>
   <body>
@@ -29,11 +54,10 @@
       <a class="navbar-brand" href="#">Ulink Assist</a>
     </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="index.html">Home<span class="sr-only">(current)</span></a></li>
-        <li><a href="upload.html">Upload Templates</a></li>
+        <li><a href="index.html">Home</a></li>
+        <li  class="active"><a href="upload.html">Upload Templates</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Screenings <span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -52,17 +76,14 @@
         
         
       </ul>
-      <u1>
       <form class="navbar-form navbar-right">
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Search">
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
       </form>
-      </u1>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="login.html">Logout</a></li>
-        
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="accountManagement.html">Account Management</a></li>
@@ -71,7 +92,26 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-
+	<div class="page-header">
+	  <center><h1>Upload Templates</h1></center>
+	</div>
+	<div class="col-md-6 col-md-offset-3">
+	<div class="panel panel-default">
+	  <div class="panel-body">
+		<div class="form-group">
+		    <label for="InputFile">Please select a file to upload</label>
+		    <input type="file" id="InputFile">
+		    <input type="submit" id="submit">
+	  	</div>
+	  </div>
+	</div>
+	</div>
+	<div class="col-md-6 col-md-offset-3">
+	<div class="alert alert-info" role="alert">Last uploaded at </div>
+	</div>
+	
+	<div class="col-md-6 col-md-offset-3" id="successAlert"></div>
+	
     
   </body>
 </html>

@@ -19,8 +19,17 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#login").click(function() {
+			boolean inputError = false;
 			var username = $("#username").val();
+			if(username == null){
+				$("#inputAlert").html("<div class='col-md-8 col-md-offset-2'><div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Username cannot be empty!</strong></div></div>");
+				}
 			var password = $("#password").val();
+			if(password == null){
+				$("#inputAlert").html(
+						"<div class='col-md-8 col-md-offset-2'><div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Username cannot be empty!</strong></div></div>"
+				);
+			}
 			
 			console.log("PASS");
 			$.ajax({
@@ -59,11 +68,11 @@
 								<form id="login-form" method="post">
 									<div class="form-group">
 										<input type="text" id="username" class="form-control"
-											placeholder="Email" value="">
+											placeholder="Email" required>
 									</div>
 									<div class="form-group">
 										<input type="password" id="password" class="form-control"
-											placeholder="Password" value="">
+											placeholder="Password" required>
 									</div>
 									<div class="form-group text-center">
 										<input type="checkbox" id="remember"> <label
@@ -88,8 +97,7 @@
 				</div>
 			</div>
 		</div>
-		<span class="errormess"></span>
-
+		<div id="inputAlert"></div>
 	</div>
 </body>
 </html>
