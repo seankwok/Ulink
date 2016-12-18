@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.3
+-- version 4.6.4
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Nov 03, 2016 at 03:02 AM
--- Server version: 5.6.31
--- PHP Version: 5.6.24
+-- Host: 127.0.0.1
+-- Generation Time: Dec 18, 2016 at 03:34 AM
+-- Server version: 5.7.14
+-- PHP Version: 5.6.25
 
 SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `ulink`
 --
-CREATE DATABASE IF NOT EXISTS `ulink` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `ulink`;
 
 -- --------------------------------------------------------
 
@@ -1063,14 +1061,17 @@ CREATE TABLE `allcondition` (
 --
 
 INSERT INTO `allcondition` (`conditionName`, `numOfYears`, `ageRequired`, `screening`, `type`) VALUES
-('cold', 2, 25, 'jabs', 'both'),
-('Chicken Pox', 1, 1, '-', 'infant'),
+('cold', 11, 11, '1', 'infant'),
 ('cancer', 1, 20, '-', 'female'),
 ('Hypertension (High blood pressure)', 2, 18, 'Blood pressure measurement ', 'Male'),
 ('Hyperlipidaemia', 3, 40, 'Fasting lipids', 'Male'),
 ('Diabetic microalbuminuria', 1, 18, 'urine microalbumin', 'Male'),
 ('Hearing loss', 1, 18, 'Audiometry ', 'Male'),
-('Diabetes mellitus', 3, 40, 'Fasting blood glucose', 'Female');
+('Diabetes mellitus', 3, 40, 'Fasting blood glucose', 'Female'),
+('kidney disoorder/dysfunction', 1, 18, 'Kidney function test/Renal panel ', 'Female'),
+(' Liver cancer/ Hepatocellular carcinoma (HCC)', 1, 18, 'Ultrasound Hepatobiliary System', 'Female'),
+('Cervical cancer screening', 3, 25, 'Pap test', 'Female'),
+('Heart Disease', 2, 25, 'Cholesterol test', 'Female');
 
 -- --------------------------------------------------------
 
@@ -4479,19 +4480,17 @@ INSERT INTO `role` (`roleName`) VALUES
 --
 
 CREATE TABLE `user` (
-  `username` varchar(30) NOT NULL,
-  `password` varchar(30) NOT NULL,
-  `role` varchar(30) NOT NULL,
-  `email` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `email` varchar(40) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `roles` varchar(15) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`username`, `password`, `role`, `email`) VALUES
-('kaixin', 'kaixin', 'Visa', 'sean@gmail.com'),
-('sean', 'sean', 'Medical', 'seankwok794@gmail.com');
+INSERT INTO `user` (`email`, `password`, `roles`) VALUES
+('admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'admin');
 
 --
 -- Indexes for dumped tables
@@ -4583,8 +4582,7 @@ ALTER TABLE `role`
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`email`),
-  ADD KEY `role` (`role`);
+  ADD PRIMARY KEY (`email`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -4663,12 +4661,6 @@ ALTER TABLE `listoftimeline`
 --
 ALTER TABLE `referraldetails`
   ADD CONSTRAINT `referraldetails_ibfk_1` FOREIGN KEY (`referralName`) REFERENCES `referral` (`referralName`);
-
---
--- Constraints for table `user`
---
-ALTER TABLE `user`
-  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`role`) REFERENCES `role` (`roleName`);
 SET FOREIGN_KEY_CHECKS=1;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
