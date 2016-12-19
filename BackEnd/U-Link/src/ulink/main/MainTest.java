@@ -10,6 +10,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import ulink.logic.Utility;
+
 public class MainTest {
 
 	public static void main(String[] args) {
@@ -39,32 +41,9 @@ public class MainTest {
 		 * System.out.println(clientList.get(1).getDateOfBirth());
 		 * "C:/Users/Sean/Desktop/test.xlsx"
 		 */
-		try {
-        String excelFilePath = "C:/Users/Sean/Desktop/test.xlsx";
-        FileInputStream inputStream = new FileInputStream(new File(excelFilePath));
-         
-        Workbook workbook = new XSSFWorkbook(inputStream);
-        Sheet firstSheet = workbook.getSheetAt(0);
-        Iterator<Row> iterator = firstSheet.iterator();
-         
-        while (iterator.hasNext()) {
-            Row nextRow = iterator.next();
-            Iterator<Cell> cellIterator = nextRow.cellIterator();
-             
-            while (cellIterator.hasNext()) {
-                Cell cell = cellIterator.next();
-                System.out.print(cell.toString());
-                System.out.print(" - ");
-            }
-            System.out.println();
-        }
-        
-        workbook.close();
-        inputStream.close();
-
-		} catch(Exception e){
-			
-		}
+		Utility utility = new Utility();
+		System.out.print(utility.hash("admin"));
+		
          
 
 	}
