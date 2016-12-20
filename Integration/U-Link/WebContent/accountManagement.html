@@ -14,6 +14,35 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
  
+ 
+ 	<script type="text/javascript">
+	$(document).ready(function() {
+		
+		
+		$("#reset").click(function() {
+			var newPassword = $("#newPassword").val();
+			if(newPassword == ""){
+				$("#inputAlert").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Please enter new password</strong></div>");
+			} else{
+				$("#inputAlert").html("<div class='alert alert-success alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Password has been changed</strong></div>");
+
+			}
+			
+		});
+		
+		$.get( "DisplayAllUser", function( data ) {
+	        //Do your logic with the response
+	        if(data == "myvalue"){
+	            $("p").css("display", "none");
+	         }
+	    });
+		
+		
+		
+	})
+
+</script>
+ 
   </head>
   <body>
     
@@ -70,37 +99,70 @@
 </nav>
 
 
-	
+	<div class="col-md-6 col-md-offset-3">
 	<div class="panel panel-default">
 	  <div class="panel-body">
-	   You are currently logged in as
+	 	
+	   <div align="center"><h3><b>You are currently logged in as Admin </b></h3><br>
+	   <button type="button" class="btn btn-default"><a href="createAccount.html"> Create new account </a></button>
+	   </div>
 	   
+	  
 	  </div>
-  
+  	
 	</div>
-	<button class="btn btn-default"><a href="createAccount.html">Create new account</a></button>
+	</div>
 	 
 	 
 	 
 		<div class="container" id="table">
-			<table>
+			<table class="table table-bordered">
 		  <tr>
 		    <th>Username</th> 
 		    <th>Reset Password</th>
 		    <th>Delete</th>
 		  </tr>
 		  
-		</table>
+		  <tr>
+		  <td>
+		  xx
+		  </td>
+			<td>
+			<form class="form-inline">
+			  <div class="form-group">
+			    <input type="text" class="form-control" id="newPassword" placeholder="New Password">
+			  </div>
+			  <button type="button" class="btn btn-default" id="reset">Reset</button>
+			
+			</form>
+			</td>
+			<td>
+			  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#deleteUser">Delete</button>
+				<div class="modal fade" id="deleteUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" >You are about to delete a user. Proceed?</h4>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			        <button type="button" class="btn btn-primary">Yes</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			 </td>
+		  </tr>
+		  
+		  
+			</table>
 		</div>
 		
-		<form class="form-inline">
-		  <div class="form-group">
-		    <input type="text" class="form-control" id="newPassword" placeholder="New Password">
-		  </div>
-		  <button type="submit" class="btn btn-default">Reset</button>
-		</form>
-	
+		<div class="col-md-8 col-md-offset-2" id="inputAlert"></div>
 		
-    
+
+	
+
   </body>
 </html>

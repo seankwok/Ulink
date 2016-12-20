@@ -14,20 +14,22 @@
     <script src="js/bootstrap.min.js"></script>
  	
  	<script type="text/javascript">
-	$(document)
-			.ready(
-					function() {
-
-						$("#generate")
-								.click(
-										function() {
-											var demographic =  $('#type').val();
-											var age =  $('#age').val();
-											
-										}
-								)
-					}
-			)
+	$(document).ready(function() {
+		$("#generate").click(
+		var demographic =  $("#type").val();
+		var age =  $("#age").val();
+		)}
+	
+		$("#editScreening").click(
+		var editedAge = $("#editedAge").val();
+		var editedCommonIllness = $("#editedCommonIllness").val();
+		var editedRecommendedScreening = $("#editedRecommendedScreening").val();
+		var editedType = $("#editedType").val();
+		var editedFrequency = $("#editedFrequency").val();
+		
+		// pass values to your backend
+		)		
+	)
  	</script>
  
  
@@ -105,8 +107,6 @@
 				<label class="checkbox-inline"><input type="checkbox" name="type" id="type" value="female">Female</label>
 				<label class="checkbox-inline"><input type="checkbox" name="type" id="type" value="male">Male</label>
 		</div>
-		
-		
 				
 		<div class="col-md-4">
 		<label for="screening">Age Range</label> 
@@ -124,8 +124,10 @@
 		</div>
 		
 		<div align="center">
-		<button type="submit" value="Submit" class="btn btn-default btn-lg" id="generate">Generate</button>
+		<button type="button" class="btn btn-default btn-lg" id="generate"><a href="filteredResults.html"> Generate </a></button>
 		</div>
+		
+		
 		</div>
 		</div>
     </form>
@@ -149,31 +151,77 @@
         <th>Edit</th>
         <th>Delete</th>
       </tr>
+      <th>xx</th>
+        <td>xxs</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td><a href ="">Link to client list</a></td>
+        <td>
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editScreening">Edit</button>
+        <div class="modal fade" id="editScreening" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title">Edit screening information</h4>
+		      </div>
+		      <div class="modal-body">
+		        <form>
+		          <div class="form-group">
+		            <label for="age" class="control-label">Age at which patients should start going for screening:</label>
+		            <input type="text" class="form-control" id="editedAge">
+		          </div>
+		          <div class="form-group">
+		            <label for="illness" class="control-label">Common Illness:</label>
+		            <input type="text" class="form-control" id="editedCommonIllness">
+		          </div>
+		          <div class="form-group">
+		            <label for="screening" class="control-label">Recommended Screening:</label>
+		            <input type="text" class="form-control" id="editedRecommendedScreening">
+		          </div>
+		          <div class="form-group">
+		            <label for="demo" class="control-label">Affected demographic:</label>
+					<label class="checkbox-inline"><input type="checkbox" name="type" id="editedType" value="infant">Infant</label>
+					<label class="checkbox-inline"><input type="checkbox" name="type" id="editedType" value="female">Female</label>
+					<label class="checkbox-inline"><input type="checkbox" name="type" id="editedType" value="male">Male</label>
+		          </div>
+		          <div class="form-group">
+		            <label for="frequency" class="control-label">Frequency of Screening:</label>
+		            <input type="text" class="form-control" id="editedFrequency">
+		          </div>
+		        </form>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-success">Update Information</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		        
+        </td>
+        <td>
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#deleteUser">Delete</button>
+				<div class="modal fade" id="deleteUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" >You are about to delete a screening. Proceed?</h4>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			        <button type="button" class="btn btn-primary">Yes</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			</td>
+      </tr>
+      
     </thead>
   </table>
 </div>
-
-
-   <!-- warning message for deleting screening -->
-   <div class="container" align="center">
-	<div class="col-md-6" align="center">
- 	 <div class="alert alert-danger alert-dismissible" role="alert">
-  		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  		You are about to delete a screening. Proceed?
-	</div>
- 	</div>
-  </div>  
-  
-  
-   <!-- success message for deleting screening -->
-   <div class="container" align="center">
-	<div class="col-md-6" align="center">
- 	 <div class="alert alert-success alert-dismissible" role="alert">
-  		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  		Screening successfully deleted.
-	</div>
- 	</div>
-  </div>
-  
   </body>
 </html>

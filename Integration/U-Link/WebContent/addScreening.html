@@ -14,52 +14,40 @@
     <script src="js/bootstrap.min.js"></script>
  
  	<script type="text/javascript">
-	$(document)
-			.ready(
+	$(document).ready(function() {
+			$("#add").click(
 					function() {
+					var startingAge =  $('#age').val();
+					var illness =  $('#illness').val();
+					var screening =  $('#screening').val();
+					var demographic =  $('#type').val();
+					var regularity =  $('#years').val();
+					$.ajax({
+						url : "Add",
+						type : "get",
+						data : 'age=' + startingAge
+						+ '&'
+						+ 'illness='
+						+ illness + '&'
+						+ 'screening='
+						+ screening
+						+ '&' + 'type='
+						+ demographic + '&'
+						+ 'years='
+						+ regularity,
+						dataType : "json",
+						success : function(data) {
+						console.log(data.status);
+						if (data.status == "success") {
+							$('#addedSuccessfully').html("added successfully");
+						}												
+						}
+						});
 
-						$("#add")
-								.click(
-										function() {
-											var startingAge =  $('#age').val();
-											var illness =  $('#illness').val();
-											var screening =  $('#screening').val();
-											var demographic =  $('#type').val();
-											var regularity =  $('#years').val();
-											
-											$
-											.ajax({
-												url : "Add",
-												type : "get",
-												data : 'age=' + startingAge
-														+ '&'
-														+ 'illness='
-														+ illness + '&'
-														+ 'screening='
-														+ screening
-														+ '&' + 'type='
-														+ demographic + '&'
-														+ 'years='
-														+ regularity,
-												dataType : "json",
-
-												success : function(data) {
-													console
-															.log(data.status);
-													
-													if (data.status == "success") {
-														$('#addedSuccessfully')
-																.html("added successfully");
-													}												
-												}
-
-												}
-
-											});
-										}
-								)
-					}
-			)
+					});
+	});
+					
+			
  	</script>
  
  
