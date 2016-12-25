@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,7 +40,21 @@ public class DisplayAllUser extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.setContentType("application/json");
+		
+		PrintWriter out = response.getWriter();
+		DatabaseConnection connection = new DatabaseConnection();
+		ArrayList<User> userList = connection.getUser();
+
+		//JsonArray result = (JsonArray) new Gson().toJsonTree(userList, new TypeToken<List<User>>() {}.getType());
+		
+		
+		//String json = new Gson().toJson(userList);
+		request.setAttribute("userList", userList);
+		RequestDispatcher rd=request.getRequestDispatcher("DisplayAllUser.jsp");  
+		rd.forward(request, response);
+		
+		return;
 	}
 
 	/**
@@ -48,18 +63,6 @@ public class DisplayAllUser extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-		PrintWriter out = response.getWriter();
-		DatabaseConnection connection = new DatabaseConnection();
-		ArrayList<User> userList = connection.getUser();
-		Gson gson = new Gson();
-
-		JsonArray result = (JsonArray) new Gson().toJsonTree(userList, new TypeToken<List<User>>() {
-		}.getType());
-		String arrayListToJson = gson.toJson(result);
-
-		out.write(arrayListToJson);
-		out.flush();
-		return;
 		
 		
 	}
