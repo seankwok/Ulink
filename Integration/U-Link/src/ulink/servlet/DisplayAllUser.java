@@ -51,7 +51,7 @@ public class DisplayAllUser extends HttpServlet {
 		
 		//String json = new Gson().toJson(userList);
 		request.setAttribute("userList", userList);
-		RequestDispatcher rd=request.getRequestDispatcher("DisplayAllUser.jsp");  
+		RequestDispatcher rd=request.getRequestDispatcher("accountManagement.jsp");  
 		rd.forward(request, response);
 		
 		return;

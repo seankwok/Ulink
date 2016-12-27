@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -42,7 +43,8 @@ public class DisplayAll extends HttpServlet {
 		
 		DatabaseConnection database = new DatabaseConnection();
 		ArrayList<Condition> conditionList = database.retrieveAllCondition();
-		
+		out.println(conditionList.size());
+		/*
 		Gson gson = new Gson();
 		
 		JsonArray result = (JsonArray) new Gson().toJsonTree(conditionList,new TypeToken<List<Condition>>() {}.getType());
@@ -51,6 +53,11 @@ public class DisplayAll extends HttpServlet {
 		
 		out.write(arrayListToJson);
 		out.flush();
+		*/
+		
+		request.setAttribute("conditionList", conditionList);
+		RequestDispatcher rd=request.getRequestDispatcher("viewScreenings.jsp");  
+		rd.forward(request, response);
 		return;
 		
 		

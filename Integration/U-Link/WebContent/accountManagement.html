@@ -14,6 +14,33 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
  
+	<script type="text/javascript">
+ 	window.onload = loadUser();
+ 	
+ 	function loadUser() {
+ 		$.get("DisplayAllUser", function(responseJson) {          // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
+ 	        var $table = $("<table>").appendTo($("#tableDiv")); // Create HTML <table> element and append it to HTML DOM element with ID "somediv".
+ 	       window.alert(responseJson);
+ 	        $.each(responseJson, function(index, user) {    // Iterate over the JSON array.
+ 	        	window.alert("loop");
+ 	            $("<tr>").appendTo($table)                     // Create HTML <tr> element, set its text content with currently iterated item and append it to the <table>.
+ 	                .append($("<td>").text(user.email))        // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
+ 	                .append($("<td>").text(user.password))      // Create HTML <td> element, set its text content with name of currently iterated product and append it to the <tr>.
+ 	                .append($("<td>").text(user.roles));    // Create HTML <td> element, set its text content with price of currently iterated product and append it to the <tr>.
+ 	        });
+ 	    });
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		window.alert("loadUser");
+ 	}
+ 	</script>
+ 
  
  	<script type="text/javascript">
 	$(document).ready(function() {
@@ -35,11 +62,28 @@
 	        if(data == "myvalue"){
 	            $("p").css("display", "none");
 	         }
+
 	    });
 		
 		
+		$.getJSON( "DisplayAllUser", function( data ) {
+		     
+		   // var json = JSON.parse(data);
+	       // ArrayList<String> emailList = new ArrayList<String>(); 
+	       // for (var email in json){
+	       // emailList.add(email);
+	       //	console.log(email + "=" + json[email]);
+	       //}
+	      var items = []; 
+	      $.each( data, function( key, val ) {
+	    	  items.push("<li id='" + key + "'>" + val + "</li>") ; 
+	    	  }); 
 		
-	})
+		$( "<ul/>" , {
+			"class" : "my-new-list", 
+			html: items.join("")
+     		}).appendTo( "body" ); 
+		}); 
 
 </script>
  
@@ -115,7 +159,7 @@
 	 
 	 
 	 
-		<div class="container" id="table">
+		<div class="container" id="tableDiv">
 			<table class="table table-bordered">
 		  <tr>
 		    <th>Username</th> 
@@ -126,6 +170,31 @@
 		  <tr>
 		  <td>
 		  xx
+		  <p id="demo"> </p> 
+	  <Script>
+		$.getJSON( "DisplayAllUser", function( data ) { 
+		 //var data = JSON.parse(data) ; 
+		// var data = {"email":"admin","password":"admin","roles":"admin"}; //data format from DisplayAllUser 
+		  
+		 $.each(data, function(i, field){
+                $("div").append(field + " ");
+            });
+	    });
+		//document.getElementById("demo").innerHTML = data.email; 		  
+	        
+		  //var test = <%request.getAttribute("arrayListToJson"); 
+		  // var json = JSON.parse(test);
+		  //document.getElementById("demo").innerHTML = json.email; 
+	 </Script>
+		  
+		  
+           
+    
+		  
+		
+		
+	
+	
 		  </td>
 			<td>
 			<form class="form-inline">
