@@ -19,28 +19,53 @@
  	<script type="text/javascript">
 	$(document).ready(function() {
 		
-		
 		$("#reset").click(function() {
-			var newPassword = $("#newPassword").val();
-			if(newPassword == ""){
-				$("#inputAlert").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Please enter new password</strong></div>");
-			} else{
-				$("#inputAlert").html("<div class='alert alert-success alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Password has been changed</strong></div>");
-
-			}
+			var email = $("#email").val();
+			var password = $("#password").val();
+			console.log(email);
+			console.log(password);
 			
+			$.ajax({
+				url : "EditUser",
+				type : "post",
+				data :'email=' + email + '&password='+ password,
+				dataType : "json",
+					success : function(data) {
+						console.log("test");
+					if (data.status == "success") {
+						
+						$("#inputAlert").html("<div class='alert alert-success' role='alert'><strong>Password has been reset</strong></div>");
+					}else{
+						console.log("fail");
+					}
+					}
+				});
 		});
 		
-		$.get( "DisplayAllUser", function( data ) {
-	        //Do your logic with the response
-	        if(data == "myvalue"){
-	            $("p").css("display", "none");
-	         }
-
-	    });
 		
-
-
+		
+		$("#delete").click(function() {
+			var email = $("#email").val();
+			
+			$.ajax({
+				url : "DeleteUser",
+				type : "get",
+				data : 'email=' + email,
+				dataType : "json",
+				success : function(data) {
+				console.log("hey");
+				console.log(data.status);
+				if (data.status == "success") {
+					$("#inputAlert").html("<div class='alert alert-success' role='alert'><strong>User has been removed</strong></div>");
+				}else{
+					console.log("test fail");
+				}											
+				}
+			});
+		});
+	});
+		
+	
 </script>
  
   </head>
@@ -54,7 +79,7 @@
 	  <div class="panel-body">
 	 	
 	   <div align="center"><h3><b>You are currently logged in as Admin </b></h3><br>
-	   <button type="button" class="btn btn-default"><a href="createAccount.html"> Create new account </a></button>
+	   <form action="createAccount.jsp"><input type="submit" class="btn btn-default" value="Create new account"></form></button>
 	   </div>
 	   
 	  
@@ -79,20 +104,20 @@
     		if(userList !=null){
     			for(User user: userList){
     				out.println("<tr><td>");
-    			
-    		  		out.println(user.getEmail());
-    		  		
+    				String email = user.getEmail();
+    		  		out.println(email);
+    		  	
     		  		out.println("</td>");
     		  		
-    		  		%>
+    	%>
     		  		
     		  		<td>
 			<form class="form-inline">
 			  <div class="form-group">
-			    <input type="text" class="form-control" id="newPassword" placeholder="New Password">
+			  	<input type="hidden" name="username" value="<%=email%>" id="email">
+			    <input type="text" class="form-control" id="password" placeholder="New Password" required>
 			  </div>
-			  <button type="button" class="btn btn-default" id="reset">Reset</button>
-			
+			  <button type="submit" class="btn btn-default" id="reset">Reset</button>
 			</form>
 			</td>
 			<td>
@@ -106,16 +131,14 @@
 			      </div>
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			        <button type="button" class="btn btn-primary">Yes</button>
+			        <button type="submit" class="btn btn-primary" id="delete" data-dismiss="modal">Yes</button>
 			      </div>
 			    </div>
 			  </div>
 			</div>
 			 </td>
     		  		
-    		  		
     		  		<%
-    		  		
     		  		
     		  		
     		  	}
@@ -127,19 +150,11 @@
 		  
 		  %>
 		  
-		  
-
-			
-		 
-		  
-		  
 			</table>
 		</div>
 		
-		<div class="col-md-8 col-md-offset-2" id="inputAlert"></div>
+		<div class="col-md-8 col-md-offset-2" id="inputAlert">
 		
-
-	
-
+</div>
   </body>
 </html>

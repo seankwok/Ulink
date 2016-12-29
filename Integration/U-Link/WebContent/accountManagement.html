@@ -57,6 +57,30 @@
 			
 		});
 		
+<<<<<<< HEAD
+		$.get("DisplayAllUser", function ( data ){
+			var display = "<tr><th>Username</th><th>Reset Password</th><th>Delete</th></tr>";
+			if (data=="myValue"){
+				 $("p").css("display", "none");
+			} else {
+				var json = jQuery.parseJSON(JSON.stringify(data));
+				for (var i = 0; i<json.length; i++){
+					var user = json[i];
+					display += "<tr><td>"
+							+ user.getEmail
+							+ "</td>"
+							+ "<td><form class='form-inline'><div class='form-group'><input type='text' class='form-control' id='newPassword' placeholder='New Password'></div><button type='button' class='btn btn-default' id='reset'>Reset</button></form></td>"
+							+ "<td><button type='button' class='btn btn-default' data-toggle='modal' data-target=''#deleteUser'>Delete</button><div class='modal fade' id='deleteUser' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel'><div class='modal-dialog' role='document'><div class='modal-content'><div class='modal-header'><button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button><h4 class='modal-title' >You are about to delete a user. Proceed?</h4><div class='modal-footer'><button type='button' class='btn btn-default' data-dismiss='modal'>Close</button><button type='button' class='btn btn-primary'>Yes</button></div></div></div></div></td></tr>"
+							console.log("hey");
+					$("#table").html(display);
+				}
+				
+			}
+			
+		});
+		
+		
+=======
 		$.get( "DisplayAllUser", function( data ) {
 	        //Do your logic with the response
 	        if(data == "myvalue"){
@@ -64,6 +88,7 @@
 	         }
 
 	    });
+>>>>>>> origin/master
 		
 		
 		$.getJSON( "DisplayAllUser", function( data ) {
@@ -161,6 +186,8 @@
 	 
 		<div class="container" id="tableDiv">
 			<table class="table table-bordered">
+<<<<<<< HEAD
+=======
 		  <tr>
 		    <th>Username</th> 
 		    <th>Reset Password</th>
@@ -224,6 +251,7 @@
 			 </td>
 		  </tr>
 		  
+>>>>>>> origin/master
 		  
 			</table>
 		</div>

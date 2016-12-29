@@ -15,21 +15,55 @@
  	
  	<script type="text/javascript">
 	$(document).ready(function() {
-		$("#generate").click(
-		var demographic =  $("#type").val();
-		var age =  $("#age").val();
-		)}
+		$("#generate").click(function(){
+		var demographic = $("#type").val();
+		var age = $("#age").val();
+		$.ajax({
+			url : "",
+			type : "",
+			data : '=' + demographic
+					+ '&=' + age,
+			dataType : "json",
+			success : function(data) {
+			console.log("hey");
+			if (data.status == "success") {
+				window.location = "";
+			}else{
+				console.log("fail");
+			}
+			}
+			});
+		
+		});
 	
-		$("#editScreening").click(
+		$("#updateInfo").click(function(){
 		var editedAge = $("#editedAge").val();
 		var editedCommonIllness = $("#editedCommonIllness").val();
 		var editedRecommendedScreening = $("#editedRecommendedScreening").val();
 		var editedType = $("#editedType").val();
 		var editedFrequency = $("#editedFrequency").val();
+		$.ajax({
+			url : "",
+			type : "",
+			data : '=' + editedAge
+					+ '&=' + editedCommonIllness,
+					+ '&=' + editedRecommendedScreening,
+					+ '&=' + editedType,
+					+ '&=' + editedFrequency,
+			dataType : "json",
+			success : function(data) {
+			console.log("hey");
+			if (data.status == "success") {
+				concole.log("pass");
+			}else{
+				console.log("fail");
+			}
+			}
+			});
+		});	
 		
-		// pass values to your backend
-		)		
-	)
+		
+	});
  	</script>
  
  
@@ -54,7 +88,7 @@
 				<label class="checkbox-inline"><input type="checkbox" name="type" id="type" value="female">Female</label>
 				<label class="checkbox-inline"><input type="checkbox" name="type" id="type" value="male">Male</label>
 		</div>
-				
+			
 		<div class="col-md-4">
 		<label for="screening">Age Range</label> 
 		<select class="form-control" id="age">
@@ -137,31 +171,33 @@
 		        <form>
 		          <div class="form-group">
 		            <label for="age" class="control-label">Age at which patients should start going for screening:</label>
-		            <input type="text" class="form-control" id="editedAge">
+		            <input type="text" class="form-control" id="editedAge" required>
 		          </div>
 		          <div class="form-group">
 		            <label for="illness" class="control-label">Common Illness:</label>
-		            <input type="text" class="form-control" id="editedCommonIllness">
+		            <input type="text" class="form-control" id="editedCommonIllness" required>
 		          </div>
 		          <div class="form-group">
 		            <label for="screening" class="control-label">Recommended Screening:</label>
-		            <input type="text" class="form-control" id="editedRecommendedScreening">
+		            <input type="text" class="form-control" id="editedRecommendedScreening" required>
 		          </div>
 		          <div class="form-group">
 		            <label for="demo" class="control-label">Affected demographic:</label>
-					<label class="checkbox-inline"><input type="checkbox" name="type" id="editedType" value="infant">Infant</label>
-					<label class="checkbox-inline"><input type="checkbox" name="type" id="editedType" value="female">Female</label>
-					<label class="checkbox-inline"><input type="checkbox" name="type" id="editedType" value="male">Male</label>
+		            <div id="editedType">
+					<label class="checkbox-inline"><input type="checkbox" name="type"  value="infant">Infant</label>
+					<label class="checkbox-inline"><input type="checkbox" name="type"  value="female">Female</label>
+					<label class="checkbox-inline"><input type="checkbox" name="type"  value="male">Male</label>
+		          	</div>
 		          </div>
 		          <div class="form-group">
 		            <label for="frequency" class="control-label">Frequency of Screening:</label>
-		            <input type="text" class="form-control" id="editedFrequency">
+		            <input type="text" class="form-control" id="editedFrequency" required>
 		          </div>
 		        </form>
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-success">Update Information</button>
+		        <button type="button" class="btn btn-success" id="updateInfo">Update Information</button>
 		      </div>
 		    </div>
 		  </div>

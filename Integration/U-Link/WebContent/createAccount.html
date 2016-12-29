@@ -31,9 +31,9 @@
 						+ 'password='+ password,
 				dataType : "json",
 				success : function(data) {
-				console.log(data.status);
+				console.log("hey");
+				
 				if (data.status == "success") {
-					
 					$("#createSuccess").html("<div class='col-sm-offset-2 col-sm-4'><div class='alert alert-success' role='alert'>Account successfully created</div></div>");
 				}
 
@@ -111,7 +111,7 @@
     <label class="col-sm-2 control-label">Email</label>
     <div class="col-sm-4">
    
-      <input type="email" class="form-control" id="inputEmail" placeholder="Email"> <b>@Ulinkassist.com</b>
+      <input type="text" class="form-control" id="inputEmail" placeholder="Email"> <b>@Ulinkassist.com</b>
     </div>
   </div>
  

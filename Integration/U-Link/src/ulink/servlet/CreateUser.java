@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +15,7 @@ import ulink.logic.Utility;
 /**
  * Servlet implementation class CreateUser
  */
+@WebServlet("/CreateUser")
 public class CreateUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -46,9 +48,20 @@ public class CreateUser extends HttpServlet {
 		PrintWriter out = response.getWriter();
 			
 		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		String repeatPassword = request.getParameter("repeatPassword");
 		String roles = request.getParameter("roles");
+		String password = request.getParameter("password");
+		
+		String hPassword = utility.hash(password);
+		connection.createUser(username, hPassword,roles);
+		
+		String jsonInString = "{\"status\":\"success\"}";
+
+		out.write(jsonInString);
+
+		out.flush();
+		/*
+		String repeatPassword = request.getParameter("repeatPassword");
+		
 		if (password.equals(repeatPassword)) {
 			String hPassword = utility.hash(password);
 			connection.createUser(username, hPassword,roles);
@@ -65,6 +78,7 @@ public class CreateUser extends HttpServlet {
 		out.write(jsonInString);
 
 		out.flush();
+		*/
 		return;
 
 	}

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -16,9 +17,10 @@
   </head>
   <body>
     
-   
-     out
+   <%@ include file="navigator.jsp"%>
 
     
   </body>
+</html>
+</body>
 </html>

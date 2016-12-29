@@ -14,12 +14,12 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li><a href="index.html">Home<span class="sr-only"></span></a></li>
+        <li><a href="index.jsp">Home<span class="sr-only"></span></a></li>
         <li><a href="upload.html">Upload Templates</a></li>
         <li class="dropdown">
           <a href="#" class="active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Screenings <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="addScreening.html">Add Screenings</a></li>
+            <li><a href="addScreening.jsp">Add Screenings</a></li>
             <li><a href="viewScreenings.jsp">View Screenings</a></li>
           </ul>
         </li> 
