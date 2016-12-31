@@ -52,6 +52,7 @@ public class UploadServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
+    	
     	   DiskFileItemFactory factory = new DiskFileItemFactory();
            factory.setSizeThreshold(THRESHOLD_SIZE);
            factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
@@ -83,8 +84,8 @@ public class UploadServlet extends HttpServlet {
         try {
 
           
-            List formItems = upload.parseRequest(request);
-            Iterator iter = formItems.iterator();
+        	 List<FileItem> multiparts = upload.parseRequest(request);
+            Iterator iter = multiparts.iterator();
              
             // iterates over form's fields
             while (iter.hasNext()) {

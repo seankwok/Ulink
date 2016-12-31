@@ -14,6 +14,110 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
  
+ 
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		displayAll();
+	});
+	
+
+	function deleteItem(clickedID){
+		var sendData = {
+				"email" : clickedID
+			};
+			console.log(clickedID);
+			$.ajax({
+				url : "DeleteUser",
+				type : "post",
+				data : sendData,
+				dataType : "json",
+				success : function(data) {
+
+					displayAll();
+					$("#message").html("Task completed");
+					$("#message").css("color", "green");
+				}
+
+			});
+    } 
+	
+	function editItem(clickedID){
+		var sendData = {
+				"conditionName" : clickedID
+			};
+			console.log(clickedID);
+			$.ajax({
+				url : "EditCondition",
+				type : "post",
+				data : sendData,
+				dataType : "json",
+				success : function(data) {
+
+					displayAll();
+					$("#message").html("Task completed");
+					$("#message").css("color", "green");
+				}
+
+			});
+    } 
+	
+	function displayAll() {
+		var userInformation = "<tr><th>Username</th><th>roles</th><th></th></tr>"
+		var completedTask;
+		var isEmpty = false;
+		var completeIsEmpty = false;
+		$
+				.ajax({
+					url : "DisplayAllUser",
+					type : "GET",
+					dataType : "json",
+					success : function(data) {
+
+						var json = jQuery.parseJSON(JSON.stringify(data));
+						console.log(json);
+						$
+								.each(
+										json,
+										function(key, value) {
+											//	$('#toDoID').append($('<div></div>').html());
+											//  var list = $('<ul></ul>');
+					
+									
+												userInformation += '<tr>'
+
+														+ '<td>'
+														+ value.email
+														+ '</td>'
+														+ '<td>'
+														+ value.roles
+														+ '</td>'							
+														+ '<td><a href="editTimelineSummary.html" onClick=editItem(this.id) id="'
+														+ value.email
+														+ '">Edit</a></td>'
+														+ '<td><a href=# onClick=deleteItem(this.id) id="'
+														+ value.email
+														+ '">Delete</a></td></tr>';
+
+												isEmpty = true;
+											
+
+
+										});
+						//	$('#toDoList').append(toDoList);
+					
+							$("#userInformation").html(userInformation);
+					
+
+						//(toDoList);
+					}
+				});
+		//
+		//return data;
+
+	}
+</script>
+ 
   </head>
   <body>
     
@@ -83,7 +187,7 @@
 	 
 	 
 		<div class="container" id="table">
-			<table>
+			<table id="userInformation">
 		  <tr>
 		    <th>Username</th> 
 		    <th>Reset Password</th>

@@ -51,6 +51,7 @@ public class LoginServlet extends HttpServlet {
 		System.out.println(isValid);
 		PrintWriter out = response.getWriter();
 		if (isValid){		
+			session.setAttribute(username, "user");
 			String jsonInString = "{\"status\":\"success\"}";
 			out.write(jsonInString);
 			out.flush();

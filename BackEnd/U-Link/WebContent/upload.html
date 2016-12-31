@@ -22,7 +22,7 @@
 				url : "UploadServlet",
 				type : "post",
 				data : "inputFile=" + inputFile,
-				dataType : "json",
+				contentType : "multipart/form-data",
 				
 				success : function(data) {
 					console.log(data.status);
@@ -101,7 +101,7 @@
 		<div class="form-group" >
 		<form method="post" action="UploadServlet" enctype="multipart/form-data">
 		    <label for="InputFile">Please select a file to upload</label>
-		    <input type="file" id="InputFile">
+		    <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
 		    <input type="submit" id="submit">
 		    </form>
 	  	</div>
