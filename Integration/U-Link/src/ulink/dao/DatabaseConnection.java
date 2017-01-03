@@ -1,6 +1,5 @@
 package ulink.dao;
 
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -327,7 +326,6 @@ public class DatabaseConnection {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
-			//con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "");
 
 			Statement stmt = con.createStatement();
 			String sql = "SELECT * FROM allcondition";
@@ -598,14 +596,15 @@ public class DatabaseConnection {
 		Connection con;
 		try {
 		Class.forName("com.mysql.jdbc.Driver");
-		//con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "");
 		con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 		Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("select * from User");
+
 			while (rs.next()) {
 				String email = rs.getString(1);
 				String password = rs.getString(2);
-				String roles = rs.getString(3);	
+				String roles = rs.getString(3);
+				
 				userList.add(new User(email, password,roles));
 			}
 
@@ -615,47 +614,6 @@ public class DatabaseConnection {
 		}
 
 		return userList;
-	}
-	
-	public void deleteUser(String email) {
-		Connection con;
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
-
-			String sql = "DELETE FROM user WHERE email = ?";
-			PreparedStatement preparedStmt = con.prepareStatement(sql);
-			preparedStmt.setString(1, email);
-			preparedStmt.executeUpdate();
-
-			con.close();
-
-		} catch (SQLException | ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-	
-	public void editUser(String email, String password) {
-		Connection con;
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
-
-			String sql = "UPDATE user SET password= ? WHERE email = ?";
-			PreparedStatement preparedStmt = con.prepareStatement(sql);
-			preparedStmt.setString(1, password);
-			preparedStmt.setString(2, email);
-			preparedStmt.executeUpdate();
-
-			con.close();
-
-		} catch (SQLException | ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 	}
 }
 
