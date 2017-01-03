@@ -2,34 +2,26 @@ package ulink.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.reflect.TypeToken;
-
-import ulink.constructor.Condition;
 import ulink.dao.DatabaseConnection;
 
 /**
- * Servlet implementation class DisplayAll
+ * Servlet implementation class DeleteUser
  */
-@WebServlet("/DisplayAll")
-public class DisplayAll extends HttpServlet {
+@WebServlet("/DeleteUser")
+public class DeleteUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DisplayAll() {
+    public DeleteUser() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -39,29 +31,17 @@ public class DisplayAll extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+		DatabaseConnection connection = new DatabaseConnection();
+		String email = request.getParameter("email");
+		connection.deleteClient(email);
+		
+		
 		PrintWriter out = response.getWriter();
-		
-		DatabaseConnection database = new DatabaseConnection();
-		ArrayList<Condition> conditionList = database.retrieveAllCondition();
-		out.println(conditionList.size());
-		/*
-		Gson gson = new Gson();
-		
-		JsonArray result = (JsonArray) new Gson().toJsonTree(conditionList,new TypeToken<List<Condition>>() {}.getType());
-		  String arrayListToJson = gson.toJson(result);
-		
-		
-		out.write(arrayListToJson);
+		String jsonInString = "{\"status\":\"success\"}";
+		out.write(jsonInString);
 		out.flush();
-		*/
-		
-		request.setAttribute("conditionList", conditionList);
-		RequestDispatcher rd=request.getRequestDispatcher("viewScreenings.jsp");  
-		rd.forward(request, response);
 		return;
-		
-		
-		
 	}
 
 	/**

@@ -8,24 +8,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-
-
+import ulink.dao.DatabaseConnection;
 import ulink.logic.Utility;
 
-
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class EditUser
  */
-@WebServlet("/LoginServlet")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/EditUser")
+public class EditUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public EditUser() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,6 +32,8 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+
 	}
 
 	/**
@@ -42,30 +41,20 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		System.out.println(password);
+		doGet(request, response);
+		DatabaseConnection connection = new DatabaseConnection();
 		Utility utility = new Utility();
-		boolean isValid = utility.loginValidatation(username, password);
-		HttpSession session=request.getSession();  
-		System.out.println(isValid);
-		PrintWriter out = response.getWriter();
-		if (isValid){		
-			String jsonInString = "{\"status\":\"success\"}";
-			out.write(jsonInString);
-			out.flush();
-			return;
-		//	session.setAttribute("admin",username);  
-			//response.sendRedirect("http://localhost:8080/U-Link/index.html");
-			//return;
-			//request.getRequestDispatcher("./ToDoServlet").forward(request, response);
-		} else {
-			String jsonInString = "{\"status\":\"fail\"}";
-			out.write(jsonInString);
-			out.flush();
-			return;
-		}
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
+		String hPassword = utility.hash(password);
+		connection.editUser(email, hPassword);
 		
+		
+		PrintWriter out = response.getWriter();
+		String jsonInString = "{\"status\":\"success\"}";
+		out.write(jsonInString);
+		out.flush();
+		return;
 	}
 
 }

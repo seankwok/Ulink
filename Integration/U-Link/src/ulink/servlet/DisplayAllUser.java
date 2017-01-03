@@ -16,20 +16,21 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 
-import ulink.constructor.Condition;
+import ulink.constructor.Client;
+import ulink.constructor.User;
 import ulink.dao.DatabaseConnection;
 
 /**
- * Servlet implementation class DisplayAll
+ * Servlet implementation class DisplayAllUser
  */
-@WebServlet("/DisplayAll")
-public class DisplayAll extends HttpServlet {
+@WebServlet("/DisplayAllUser")
+public class DisplayAllUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DisplayAll() {
+    public DisplayAllUser() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -39,29 +40,21 @@ public class DisplayAll extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		response.setContentType("application/json");
+		
 		PrintWriter out = response.getWriter();
-		
-		DatabaseConnection database = new DatabaseConnection();
-		ArrayList<Condition> conditionList = database.retrieveAllCondition();
-		out.println(conditionList.size());
-		/*
-		Gson gson = new Gson();
-		
-		JsonArray result = (JsonArray) new Gson().toJsonTree(conditionList,new TypeToken<List<Condition>>() {}.getType());
-		  String arrayListToJson = gson.toJson(result);
+		DatabaseConnection connection = new DatabaseConnection();
+		ArrayList<User> userList = connection.getUser();
+
+		//JsonArray result = (JsonArray) new Gson().toJsonTree(userList, new TypeToken<List<User>>() {}.getType());
 		
 		
-		out.write(arrayListToJson);
-		out.flush();
-		*/
-		
-		request.setAttribute("conditionList", conditionList);
-		RequestDispatcher rd=request.getRequestDispatcher("viewScreenings.jsp");  
+		//String json = new Gson().toJson(userList);
+		request.setAttribute("userList", userList);
+		RequestDispatcher rd=request.getRequestDispatcher("accountManagement.jsp");  
 		rd.forward(request, response);
+		
 		return;
-		
-		
-		
 	}
 
 	/**
@@ -70,6 +63,8 @@ public class DisplayAll extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+		
+		
 	}
 
 }
