@@ -48,7 +48,6 @@ public class DisplayAll extends HttpServlet {
 		JsonArray result = (JsonArray) new Gson().toJsonTree(conditionList,new TypeToken<List<Condition>>() {}.getType());
 		  String arrayListToJson = gson.toJson(result);
 		  System.out.print(arrayListToJson);
-		
 		out.write(arrayListToJson);
 		out.flush();
 		return;
