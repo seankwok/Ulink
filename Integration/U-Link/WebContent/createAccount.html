@@ -22,7 +22,7 @@
 			var roles = $("#accountType").val();
 			var url = "index.html";
 			if(username == "" || password == ""){
-				$("#inputAlert").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Please input empty fields</strong></div>");
+				$("#createSuccess").html("<div class='alert alert-danger' role='alert'><center><strong>Please input empty fields</strong></center></div>");
 			} else{
 			
 			$.ajax({
@@ -38,9 +38,9 @@
 				success : function(data) {
 					console.log("TEST");
 					console.log(data.status);
-					$("#inputAlert").html("<a href='accountManagement.html'>Click here to view accounts</a>");
+					$("#createSuccess").html("<a href='accountManagement.html'>Click here to view accounts</a>");
 					if(data.status == 'success'){
-						$("#inputAlert").html("<a  href='accountManagement.html'>Click here to view accounts</a>");
+						$("#createSuccess").html("<a  href='accountManagement.html'>Click here to view accounts</a>");
 						window.location.href = url;
 					}
 					console.log("stupid");	

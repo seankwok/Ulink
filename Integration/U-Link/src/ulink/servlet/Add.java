@@ -47,6 +47,8 @@ public class Add extends HttpServlet {
 		for (int i=0; i<type.length; i++){
 		connection.addAllCondition(illness, years, age, screening,type[i]);
 		}
+		
+		System.out.println("test");
 		String jsonInString = "{\"status\":\"success\"}";
 		out.write(jsonInString);
 		out.flush();

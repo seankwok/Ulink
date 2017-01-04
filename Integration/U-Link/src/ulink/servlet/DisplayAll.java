@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ import ulink.dao.DatabaseConnection;
  * Servlet implementation class DisplayAll
  */
 @WebServlet("/DisplayAll")
+
 public class DisplayAll extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
