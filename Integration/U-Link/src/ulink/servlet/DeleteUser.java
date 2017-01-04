@@ -32,16 +32,7 @@ public class DeleteUser extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
-		DatabaseConnection connection = new DatabaseConnection();
-		String email = request.getParameter("email");
-		connection.deleteClient(email);
-		
-		
-		PrintWriter out = response.getWriter();
-		String jsonInString = "{\"status\":\"success\"}";
-		out.write(jsonInString);
-		out.flush();
-		return;
+	
 	}
 
 	/**
@@ -50,6 +41,16 @@ public class DeleteUser extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+		DatabaseConnection connection = new DatabaseConnection();
+		String email = request.getParameter("email");
+		connection.deleteUser(email);
+		
+		System.out.print(email);
+		PrintWriter out = response.getWriter();
+		//String jsonInString = "{\"status\":\"success\"}";
+		//out.write(jsonInString);
+		out.flush();
+		return;
 	}
 
 }

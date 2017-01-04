@@ -46,6 +46,7 @@ public class Add extends HttpServlet {
 		int years = Integer.parseInt(request.getParameter("years"));
 		connection.addAllCondition(illness, years, age, screening,type);
 		
+		out.println("age");
 		String jsonInString = "{\"status\":\"success\"}";
 		out.write(jsonInString);
 		out.flush();

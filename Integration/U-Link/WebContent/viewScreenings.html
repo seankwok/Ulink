@@ -8,35 +8,100 @@
     <title>View Screening</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="js/jquery-1.12.0.js"></script>
+<script src="js/bootstrap.min.js"></script>
+ 	
+ 	<style>
+ 	
+ 	#table th, td {
+    padding: 10px;
+    text-align: center;
+
+ 	}
+ 	</style>
+ 	
  	
  	<script type="text/javascript">
-	$(document).ready(function() {
-		$("#generate").click(
-		var demographic =  $("#type").val();
-		var age =  $("#age").val();
-		)}
 	
-		$("#editScreening").click(
-		var editedAge = $("#editedAge").val();
-		var editedCommonIllness = $("#editedCommonIllness").val();
-		var editedRecommendedScreening = $("#editedRecommendedScreening").val();
-		var editedType = $("#editedType").val();
-		var editedFrequency = $("#editedFrequency").val();
+	$(document).ready(function() {
+		displayAll();
+	});
 		
-		// pass values to your backend
-		)		
-	)
- 	</script>
- 
- 
- 
- 
- 
+	function deleteItem(clickedID){
+			
+			var sendData = {
+					"conditionName" : clickedID
+				};
+				console.log(clickedID);
+				$.ajax({
+					url : "DeleteCondition",
+					type : "post",
+					data : sendData,
+					dataType : "json",
+					success : function(data) {
+						displayAll();
+						console.log("delete");
+					}
+	
+				});
+	    } 
+		
+	function displayAll(){
+		var table = "";
+		var isEmpty = false;
+		$.ajax({
+			url: "DisplayAll",
+			type: "get",
+		    
+		    dataType : "json",
+		    
+		    success: function(data){
+		    	var json = jQuery.parseJSON(JSON.stringify(data));
+		    	console.log(json);
+		    	table += "<table border='1'><tr><th>Starting Age</th><th>Common Illness</th><th>Recommended Screening</th><th>Affected Demographic</th><th>Frequency of screening in years</th><th>View Patients</th><th>Edit</th><th>Delete</th></tr>";
+		    	$.each(json,function(key, value) {
+		    		table += "<tr><td>"
+	    				+ value["ageRequired"]
+	    				+ "</td>"
+	    				+ "<td>"
+	    				+ value["conditionName"]
+    					+ "</td>"
+    					+ "<td>"
+	    				+ value["screening"]
+    					+ "</td>"
+    					+ "<td>"
+	    				+ value["type"]
+    					+ "</td>"
+    					+ "<td>"
+	    				+ value["years"]
+    					+ "</td>"
+    					+ "<td>"
+	    				+ "<a href='index.html'>Link to view patients</a>"
+    					+ "</td>"
+    					+ "<td>"
+	    				+ "<a href='editTimelineSummary.html'>Edit</a>"
+    					+ "</td>"
+    					+ '<td><a href=# onClick=deleteItem(this.id) id="'
+						+ value.conditionName
+						+ '">Delete</a></td></tr>'		    				
+						+ "</td></tr>"
+		    	});
+		    	table += "</table>"
+		    	$("#table").html(table);
+		    	
+		    }	
+		    
+		});	
+		}
+		
+	
+	
+	
+		
+ </script>
   </head>
+  
   <body>
     
    <nav class="navbar navbar-default">
@@ -56,7 +121,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><a href="index.html">Home<span class="sr-only"></span></a></li>
-        <li><a href="upload.html">Upload Templates</a></li>
+        <li><a href="upload.html">Upload Patient Data</a></li>
         <li class="dropdown">
           <a href="#" class="active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Screenings <span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -137,91 +202,9 @@
 
 
 
-<div class="container">
+<div class="container" id="table">
   
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>Age at which patients should start going for screenings</th>
-        <th>Common Illness</th>
-        <th>Recommended Screening</th>
-        <th>Affected Demographic</th>
-        <th>Frequency of screening</th>
-        <th>View Patients</th>
-        <th>Edit</th>
-        <th>Delete</th>
-      </tr>
-      <th>xx</th>
-        <td>xxs</td>
-        <td>xx</td>
-        <td>xx</td>
-        <td>xx</td>
-        <td><a href ="">Link to client list</a></td>
-        <td>
-        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editScreening">Edit</button>
-        <div class="modal fade" id="editScreening" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title">Edit screening information</h4>
-		      </div>
-		      <div class="modal-body">
-		        <form>
-		          <div class="form-group">
-		            <label for="age" class="control-label">Age at which patients should start going for screening:</label>
-		            <input type="text" class="form-control" id="editedAge">
-		          </div>
-		          <div class="form-group">
-		            <label for="illness" class="control-label">Common Illness:</label>
-		            <input type="text" class="form-control" id="editedCommonIllness">
-		          </div>
-		          <div class="form-group">
-		            <label for="screening" class="control-label">Recommended Screening:</label>
-		            <input type="text" class="form-control" id="editedRecommendedScreening">
-		          </div>
-		          <div class="form-group">
-		            <label for="demo" class="control-label">Affected demographic:</label>
-					<label class="checkbox-inline"><input type="checkbox" name="type" id="editedType" value="infant">Infant</label>
-					<label class="checkbox-inline"><input type="checkbox" name="type" id="editedType" value="female">Female</label>
-					<label class="checkbox-inline"><input type="checkbox" name="type" id="editedType" value="male">Male</label>
-		          </div>
-		          <div class="form-group">
-		            <label for="frequency" class="control-label">Frequency of Screening:</label>
-		            <input type="text" class="form-control" id="editedFrequency">
-		          </div>
-		        </form>
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-success">Update Information</button>
-		      </div>
-		    </div>
-		  </div>
-		</div>
-		        
-        </td>
-        <td>
-        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#deleteUser">Delete</button>
-				<div class="modal fade" id="deleteUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-			  <div class="modal-dialog" role="document">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			        <h4 class="modal-title" >You are about to delete a screening. Proceed?</h4>
-			      </div>
-			      <div class="modal-footer">
-			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			        <button type="button" class="btn btn-primary">Yes</button>
-			      </div>
-			    </div>
-			  </div>
-			</div>
-			</td>
-      </tr>
-      
-    </thead>
-  </table>
+  
 </div>
   </body>
 </html>

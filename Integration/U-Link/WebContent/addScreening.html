@@ -15,36 +15,37 @@
  
  	<script type="text/javascript">
 	$(document).ready(function() {
-			$("#add").click(
-					function() {
-					var startingAge =  $('#age').val();
-					var illness =  $('#illness').val();
-					var screening =  $('#screening').val();
-					var demographic =  $('#type').val();
-					var regularity =  $('#years').val();
-					$.ajax({
-						url : "Add",
-						type : "get",
-						data : 'age=' + startingAge
-						+ '&'
-						+ 'illness='
-						+ illness + '&'
-						+ 'screening='
-						+ screening
-						+ '&' + 'type='
-						+ demographic + '&'
-						+ 'years='
-						+ regularity,
-						dataType : "json",
-						success : function(data) {
-						console.log(data.status);
-						if (data.status == "success") {
-							$('#addedSuccessfully').html("added successfully");
-						}												
-						}
-						});
-
-					});
+	
+		
+		$('#add').onclick(function(){
+			
+			var newScreening = {
+				age: $('#age').val(),
+				illness: $('#illness').val(),
+				screening: $('#screening').val(),
+				type: $('#type').val(),
+				years: $('#years').val(),
+			};
+			console.log(newScreening);
+			
+			$.ajax({
+				type: 'get',
+				url: "Add",
+				data: newScreening,
+				success: function(data){
+					console.log(data.status);
+					if (data.status == "success") {
+						$('#message').html("<div class='alert alert-success' role='alert'><center><b> Successfully added new screening </b></center></div>");
+					} else{
+						$('#message').html("<div class='alert alert-danger' role='alert'><center><b> Please enter a number for Age/ Frequency! </b></center></div>");
+					}	
+				}
+			});
+			
+		});
+		
+		
+		
 	});
 					
 			
@@ -72,7 +73,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><a href="index.html">Home<span class="sr-only"></span></a></li>
-        <li><a href="upload.html">Upload Templates</a></li>
+        <li><a href="upload.html">Upload Patient Data</a></li>
         <li class="dropdown">
           <a href="#" class="active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Screenings <span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -132,9 +133,9 @@
 				
 				<div>
 				<label for="screening">Demographic affected</label> <br>
-				<label class="checkbox-inline"><input type="checkbox" name="type" id="type" value="infant">Infant</label>
-				<label class="checkbox-inline"><input type="checkbox" name="type" id="type" value="female">Female</label>
-				<label class="checkbox-inline"><input type="checkbox" name="type" id="type" value="male">Male</label>
+				<label class="checkbox-inline"><input type="checkbox" name="infant" id="type" value="infant">Infant</label>
+				<label class="checkbox-inline"><input type="checkbox" name="female" id="type" value="female">Female</label>
+				<label class="checkbox-inline"><input type="checkbox" name="male" id="type" value="male">Male</label>
 				</div>
 				<br>
 				
@@ -149,10 +150,9 @@
 					id="add">Add</button>
 			</div>
 		</form>
-</div>
+	</div>
 
-<div class="col-md-8 col-md-offset-2" id="addedSuccessfully"></div>
-<div class='col-md-8 col-md-offset-2' id="errorMsg"></div>
+	<div class='col-md-8 col-md-offset-2' id="message"></div>
 
 
 

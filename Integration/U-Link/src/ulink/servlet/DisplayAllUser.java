@@ -45,15 +45,18 @@ public class DisplayAllUser extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		DatabaseConnection connection = new DatabaseConnection();
 		ArrayList<User> userList = connection.getUser();
-
-		//JsonArray result = (JsonArray) new Gson().toJsonTree(userList, new TypeToken<List<User>>() {}.getType());
+		System.out.print(userList.size());
+		JsonArray result = (JsonArray) new Gson().toJsonTree(userList, new TypeToken<List<User>>() {}.getType());
 		
-		
-		//String json = new Gson().toJson(userList);
+		String json = new Gson().toJson(result);
+		/*
 		request.setAttribute("userList", userList);
 		RequestDispatcher rd=request.getRequestDispatcher("accountManagement.jsp");  
 		rd.forward(request, response);
-		
+		*/
+
+		out.write(json);
+		out.flush();
 		return;
 	}
 

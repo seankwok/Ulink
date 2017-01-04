@@ -226,7 +226,7 @@
     			} 
     			
     		}else{
-    			response.sendRedirect("DisplayAll");
+    			
     		}
 		
 		%>
