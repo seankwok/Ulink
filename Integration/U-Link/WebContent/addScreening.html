@@ -21,14 +21,13 @@
 			    var age= $('#age').val();
 				var illness= $('#illness').val();
 				var screening= $('#screening').val();
-				var type=$(':checkbox').map(function(){
+				var type=$('input[name="demo"]:checked').map(function(){
 					return this.value;
 				}).get();
 				
-				
 				var years= $('#years').val();
-			
-console.log(type);			
+				console.log(type);	
+				
 			$.ajax({
 				type: 'get',
 				url: "Add",
@@ -43,8 +42,8 @@ console.log(type);
 					+ 'years=' + years,
 				success: function(data){
 					console.log(data.status);
+					$('#message').html("<div class='alert alert-success' role='alert'><center><b> Successfully added new screening </b></center></div>");
 					if (data.status == "success") {
-						$('#message').html("<div class='alert alert-success' role='alert'><center><b> Successfully added new screening </b></center></div>");
 					}
 				}
 			});
@@ -141,7 +140,7 @@ console.log(type);
 				<div>
 				<label for="screening">Demographic affected</label> <br>
 				<label class="checkbox-inline"><input type="checkbox" name="demo" id="type" value="infant">Infant</label>
-				<label class="checkbox-inline"><input type="checkbox" name="demo" id="type" value="female">Female</label>
+				<label class="checkbox-inline"><input type="checkbox" name="demo"  id="type" value="female">Female</label>
 				<label class="checkbox-inline"><input type="checkbox" name="demo" id="type" value="male">Male</label>
 				</div>
 				<br>
