@@ -19,8 +19,12 @@
 		$("#create").click(function(){
 			var username = $("#inputEmail").val();
 			var password = $("#inputPassword").val();
-			var roles = $("#roles").val();
-			console.log(username);
+			var roles = $("#accountType").val();
+			var url = "index.html";
+			if(username == "" || password == ""){
+				$("#inputAlert").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Please input empty fields</strong></div>");
+			} else{
+			
 			$.ajax({
 				url: "CreateUser",
 				type: "post",
@@ -29,14 +33,20 @@
 						+'roles=' + roles
 						+'&'
 						+ 'password='+ password,
+				async: false,
 				dataType: "json",
 				success : function(data) {
 					console.log("TEST");
-					if (data.status == "success") {
-						window.location="accountManagement.html";
+					console.log(data.status);
+					$("#inputAlert").html("<a href='accountManagement.html'>Click here to view accounts</a>");
+					if(data.status == 'success'){
+						$("#inputAlert").html("<a  href='accountManagement.html'>Click here to view accounts</a>");
+						window.location.href = url;
 					}
+					console.log("stupid");	
 				}
 			});
+			}
 		});
 	});
  	</script>
@@ -109,7 +119,7 @@
     <label class="col-sm-2 control-label">Email</label>
     <div class="col-sm-4">
    
-      <input type="text" class="form-control" id="inputEmail" placeholder="Email"> <b>@Ulinkassist.com</b>
+      <input type="text" class="form-control" id="inputEmail" placeholder="Email" required> <b>@Ulinkassist.com</b>
     </div>
   </div>
  
@@ -127,7 +137,7 @@
   <div class="form-group">
     <label class="col-sm-2 control-label">Password</label>
     <div class="col-sm-4">
-      <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+      <input type="password" class="form-control" id="inputPassword" placeholder="Password" required>
     </div>
   </div>
   
@@ -138,6 +148,6 @@
     </div>
   </div>
 </form>
-	<div id="createSuccess"></div>
+	<div class="col-md-8 col-md-offset-2" id="createSuccess"></div>
   </body>
 </html>
