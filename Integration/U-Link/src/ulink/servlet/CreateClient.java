@@ -50,10 +50,9 @@ public class CreateClient extends HttpServlet {
 		String isMedical = request.getParameter("isMedical");
 		String isClaim = request.getParameter("isclaim");
 		String claimInformation = request.getParameter("claimInformation");
-		int referralName = 3;
 		
-		connection.createClient(passportNumber, clientName, gender, dateOfBirth, mainDiagnosis, clientType, nationality, countryOfResidence, billingStreet, billingCity, billingState, billingCountry, billingCode, isMedical, isClaim, claimInformation, referralName);
 		
+		//connection.createClient(passportNumber, clientName, gender, dateOfBirth, mainDiagnosis, clientType, nationality, countryOfResidence, billingStreet, billingCity, billingState, billingCountry, billingCode, isMedical, isClaim, claimInformation, referralName);		
 		
 		
 		String jsonInString = "{\"status\":\"success\"}";

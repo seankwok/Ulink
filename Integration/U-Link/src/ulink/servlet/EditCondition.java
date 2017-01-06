@@ -41,8 +41,8 @@ public class EditCondition extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 		HttpSession session = request.getSession();
-		String condition = request.getParameter("conditionName");
-		session.setAttribute("condition", condition);
+		String ID = request.getParameter("ID");
+		session.setAttribute("ID", ID);
 		PrintWriter out = response.getWriter();
 		String jsonInString = "{\"status\":\"success\"}";
 		

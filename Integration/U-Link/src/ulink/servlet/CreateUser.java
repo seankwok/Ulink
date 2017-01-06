@@ -2,6 +2,7 @@ package ulink.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ulink.constructor.Client;
 import ulink.dao.DatabaseConnection;
 import ulink.logic.Utility;
 
@@ -46,19 +48,30 @@ public class CreateUser extends HttpServlet {
 		DatabaseConnection connection = new DatabaseConnection();
 		Utility utility = new Utility();
 		PrintWriter out = response.getWriter();
-			
+			boolean check = false;
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String roles = request.getParameter("roles");
+		ArrayList<Client> clientList = connection.retrieveAllClientList();	
 		
-			String hPassword = utility.hash(password);
-			connection.createUser(username, hPassword,roles);
-			String jsonInString = "{\"status\":\"success\"}";
-		
+		for (int i = 0; i < clientList.size(); i++){
+			if (clientList.get(i).getAccountID().equals(username)){
+				check = true;
+			}	
+		}
+		if (!check){
+		String hPassword = utility.hash(password);
+		connection.createUser(username, hPassword,roles);
+		String jsonInString = "{\"status\":\"success\"}";
 			out.write(jsonInString);
 			out.flush();
 			return;
-		
+		}else {
+			String jsonInString = "{\"status\":\"fail\"}";
+			out.write(jsonInString);
+			out.flush();
+			return;
+		}
 
 	}
 

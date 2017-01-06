@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 05, 2017 at 04:47 AM
+-- Generation Time: Jan 06, 2017 at 03:59 AM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -31,11 +31,24 @@ USE `ulink`;
 CREATE TABLE `allcondition` (
   `ID` int(11) NOT NULL,
   `conditionName` varchar(255) NOT NULL,
-  `years` int(90) DEFAULT NULL,
+  `numOfYears` int(90) DEFAULT NULL,
   `ageRequired` int(90) DEFAULT NULL,
   `screening` varchar(255) DEFAULT NULL,
   `type` varchar(90) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `allcondition`
+--
+
+INSERT INTO `allcondition` (`ID`, `conditionName`, `numOfYears`, `ageRequired`, `screening`, `type`) VALUES
+(1, '1', 1, 1, '1', 'infant,female,male'),
+(2, '1', 12, 1, '1', 'infant,female,male'),
+(3, '2', 2, 2, '2', 'infant,female,male'),
+(4, '2', 2, 2, '2', '[Ljava.lang.String;@f20ee96'),
+(5, '2', 2, 2, '2', 'infant'),
+(6, '2', 2, 2, '2', 'female'),
+(7, '2', 2, 2, '2', 'male');
 
 -- --------------------------------------------------------
 
@@ -367,6 +380,15 @@ ALTER TABLE `client`
 ALTER TABLE `user`
   ADD PRIMARY KEY (`email`);
 
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `allcondition`
+--
+ALTER TABLE `allcondition`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- Constraints for dumped tables
 --

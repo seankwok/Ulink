@@ -51,17 +51,17 @@ public class LoginServlet extends HttpServlet {
 		boolean isValid = utility.loginValidatation(username, password);
 		HttpSession session=request.getSession();  
 		
-		//PrintWriter out = response.getWriter();
+		PrintWriter out = response.getWriter();
 		if (isValid){		
 			session.setAttribute("admin", username);
 			System.out.print("Test");
-			//String jsonInString = "{\"status\":\"success\"}";
-			//out.write(jsonInString);
-			//out.flush();
-			//return;
-			session.setAttribute("admin",username);  
-			response.sendRedirect("./index.html");
+			String jsonInString = "{\"status\":\"success\"}";
+			out.write(jsonInString);
+			out.flush();
 			return;
+			//session.setAttribute("admin",username);  
+			//response.sendRedirect("./index.html");
+			//return;
 			//request.getRequestDispatcher("./ToDoServlet").forward(request, response);
 		} 
 		

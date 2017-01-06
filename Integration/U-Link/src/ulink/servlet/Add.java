@@ -42,13 +42,15 @@ public class Add extends HttpServlet {
 		int age = Integer.parseInt(request.getParameter("age"));
 		String illness = request.getParameter("illness");
 		String screening = request.getParameter("screening");
-		String[] type = request.getParameterValues("type");
+		String [] types = request.getParameterValues("type");
 		int years = Integer.parseInt(request.getParameter("years"));
+		String [] type = types[0].split(",");
 		for (int i=0; i<type.length; i++){
 		connection.addAllCondition(illness, years, age, screening,type[i]);
+		
 		}
 		
-		System.out.println("test");
+		System.out.println(illness);
 		String jsonInString = "{\"status\":\"success\"}";
 		out.write(jsonInString);
 		out.flush();

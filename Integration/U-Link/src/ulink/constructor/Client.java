@@ -1,156 +1,316 @@
 package ulink.constructor;
 
 public class Client {
-	private String passportNumber;
+	private String accountID;
+	private String clientOwner;
 	private String clientName;
+	private String clientType;
+	private String company;
+	private String nationality;
 	private String gender;
 	private String dateOfBirth;
+	private String email;
+	private String medical;
 	private String mainDiagnosis;
-	private String clientType;
-	private String nationality;
-	private String countryOfResidence;
-	private String billingStreet;
-	private String billingCity;
-	private String billingState;
-	private String billingCountry;
-	private String billingCode;
-	private String isMedicial;
-	private String isClaim;
-	private String claimInformation;
-	//private String consultationDateTime;
-	//private String referringDoctorEmail;
-	//private String caseNumber;
-	//private String visaType;
-	//private String personInCharge;
-	//private String followUpPerson;
-	private String referralName;
+	private String referredByPIC;
+	private String appointment;
+	private String doctor;
+	private String specialty;
+	private String clinic;
+	private String otherDoctor;
+	private String followUpPerson;
+	private String followUpPIC;
+	private String hospitalAdmitted;
+	private String log;
+	private String claim;
+	private String visa;
+	private String visaType;
+	private String visaType2;
 	
-
-	public Client(String passportNumber, String clientName, String gender, String dateOfBirth, String mainDiagnosis,
-			String clientType, String nationality, String countryOfResidence, String billingStreet, String billingCity,
-			String billingState, String billingCountry, String billingCode, String isMedicial, String isClaim,
-			String claimInformation, String referralName) {
+	
+		public Client(String accountID, String clientOwner, String clientName, String clientType, String company,
+				String nationality, String gender, String dateOfBirth, String email, String medical, String mainDiagnosis,
+				String referredByPIC, String appointment, String doctor, String specialty, String clinic,
+				String otherDoctor, String followUpPerson, String followUpPIC, String hospitalAdmitted, String log,
+				String claim, String visa, String visaType, String visaType2) {
 		super();
-		this.passportNumber = passportNumber;
+		this.accountID = accountID;
+		this.clientOwner = clientOwner;
 		this.clientName = clientName;
+		this.clientType = clientType;
+		this.company = company;
+		this.nationality = nationality;
 		this.gender = gender;
 		this.dateOfBirth = dateOfBirth;
+		this.email = email;
+		this.medical = medical;
 		this.mainDiagnosis = mainDiagnosis;
-		this.clientType = clientType;
-		this.nationality = nationality;
-		this.countryOfResidence = countryOfResidence;
-		this.billingStreet = billingStreet;
-		this.billingCity = billingCity;
-		this.billingState = billingState;
-		this.billingCountry = billingCountry;
-		this.billingCode = billingCode;
-		this.isMedicial = isMedicial;
-		this.isClaim = isClaim;
-		this.claimInformation = claimInformation;
-		this.referralName = referralName;
+		this.referredByPIC = referredByPIC;
+		this.appointment = appointment;
+		this.doctor = doctor;
+		this.specialty = specialty;
+		this.clinic = clinic;
+		this.otherDoctor = otherDoctor;
+		this.followUpPerson = followUpPerson;
+		this.followUpPIC = followUpPIC;
+		this.hospitalAdmitted = hospitalAdmitted;
+		this.log = log;
+		this.claim = claim;
+		this.visa = visa;
+		this.visaType = visaType;
+		this.visaType2 = visaType2;
 	}
-	public String getClientType() {
-		return clientType;
+
+
+	public String getAccountID() {
+		return accountID;
 	}
-	public void setClientType(String clientType) {
-		this.clientType = clientType;
+
+
+	public void setAccountID(String accountID) {
+		this.accountID = accountID;
 	}
-	public String getBillingCountry() {
-		return billingCountry;
+
+
+	public String getClientOwner() {
+		return clientOwner;
 	}
-	public void setBillingCountry(String billingCountry) {
-		this.billingCountry = billingCountry;
+
+
+	public void setClientOwner(String clientOwner) {
+		this.clientOwner = clientOwner;
 	}
-	public void setReferralName(String referralName) {
-		this.referralName = referralName;
-	}
-	public String getPassportNumber() {
-		return passportNumber;
-	}
+
+
 	public String getClientName() {
 		return clientName;
 	}
-	public String getGender() {
-		return gender;
-	}
-	public String getDateOfBirth() {
-		return dateOfBirth;
-	}
-	public String getmainDiagnosis() {
-		return mainDiagnosis;
-	}
-	public String getNationality() {
-		return nationality;
-	}
-	public String getCountryOfResidence() {
-		return countryOfResidence;
-	}
-	public String getBillingStreet() {
-		return billingStreet;
-	}
-	public String getBillingCity() {
-		return billingCity;
-	}
-	public String getBillingState() {
-		return billingState;
-	}
-	public String getBillingCode() {
-		return billingCode;
-	}
-	public String getIsMedicial() {
-		return isMedicial;
-	}
-	public String getIsClaim() {
-		return isClaim;
-	}
-	public String getClaimInformation() {
-		return claimInformation;
-	}
-	public String getReferralName() {
-		return referralName;
-	}
-	public void setPassportNumber(String passportNumber) {
-		this.passportNumber = passportNumber;
-	}
+
+
 	public void setClientName(String clientName) {
 		this.clientName = clientName;
 	}
-	public void setGender(String gender) {
-		this.gender = gender;
+
+
+	public String getClientType() {
+		return clientType;
 	}
-	public void setDateOfBirth(String dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
+
+
+	public void setClientType(String clientType) {
+		this.clientType = clientType;
 	}
-	public void setmainDiagnosis(String mainDiagnosis) {
-		this.mainDiagnosis = mainDiagnosis;
+
+
+	public String getCompany() {
+		return company;
 	}
+
+
+	public void setCompany(String company) {
+		this.company = company;
+	}
+
+
+	public String getNationality() {
+		return nationality;
+	}
+
+
 	public void setNationality(String nationality) {
 		this.nationality = nationality;
 	}
-	public void setCountryOfResidence(String countryOfResidence) {
-		this.countryOfResidence = countryOfResidence;
+
+
+	public String getGender() {
+		return gender;
 	}
-	public void setBillingStreet(String billingStreet) {
-		this.billingStreet = billingStreet;
+
+
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
-	public void setBillingCity(String billingCity) {
-		this.billingCity = billingCity;
+
+
+	public String getDateOfBirth() {
+		return dateOfBirth;
 	}
-	public void setBillingState(String billingState) {
-		this.billingState = billingState;
+
+
+	public void setDateOfBirth(String dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
 	}
-	public void setBillingCode(String billingCode) {
-		this.billingCode = billingCode;
+
+
+	public String getEmail() {
+		return email;
 	}
-	public void setIsMedicial(String isMedicial) {
-		this.isMedicial = isMedicial;
+
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
-	public void setIsClaim(String isClaim) {
-		this.isClaim = isClaim;
+
+
+	public String getMedical() {
+		return medical;
 	}
-	public void setClaimInformation(String claimInformation) {
-		this.claimInformation = claimInformation;
+
+
+	public void setMedical(String medical) {
+		this.medical = medical;
+	}
+
+
+	public String getMainDiagnosis() {
+		return mainDiagnosis;
+	}
+
+
+	public void setMainDiagnosis(String mainDiagnosis) {
+		this.mainDiagnosis = mainDiagnosis;
+	}
+
+
+	public String getReferredByPIC() {
+		return referredByPIC;
+	}
+
+
+	public void setReferredByPIC(String referredByPIC) {
+		this.referredByPIC = referredByPIC;
+	}
+
+
+	public String getAppointment() {
+		return appointment;
+	}
+
+
+	public void setAppointment(String appointment) {
+		this.appointment = appointment;
+	}
+
+
+	public String getDoctor() {
+		return doctor;
+	}
+
+
+	public void setDoctor(String doctor) {
+		this.doctor = doctor;
+	}
+
+
+	public String getSpecialty() {
+		return specialty;
+	}
+
+
+	public void setSpecialty(String specialty) {
+		this.specialty = specialty;
+	}
+
+
+	public String getClinic() {
+		return clinic;
+	}
+
+
+	public void setClinic(String clinic) {
+		this.clinic = clinic;
+	}
+
+
+	public String getOtherDoctor() {
+		return otherDoctor;
+	}
+
+
+	public void setOtherDoctor(String otherDoctor) {
+		this.otherDoctor = otherDoctor;
+	}
+
+
+	public String getFollowUpPerson() {
+		return followUpPerson;
+	}
+
+
+	public void setFollowUpPerson(String followUpPerson) {
+		this.followUpPerson = followUpPerson;
+	}
+
+
+	public String getFollowUpPIC() {
+		return followUpPIC;
+	}
+
+
+	public void setFollowUpPIC(String followUpPIC) {
+		this.followUpPIC = followUpPIC;
+	}
+
+
+	public String getHospitalAdmitted() {
+		return hospitalAdmitted;
+	}
+
+
+	public void setHospitalAdmitted(String hospitalAdmitted) {
+		this.hospitalAdmitted = hospitalAdmitted;
+	}
+
+
+	public String getLog() {
+		return log;
+	}
+
+
+	public void setLog(String log) {
+		this.log = log;
+	}
+
+
+	public String getClaim() {
+		return claim;
+	}
+
+
+	public void setClaim(String claim) {
+		this.claim = claim;
+	}
+
+
+	public String getVisa() {
+		return visa;
+	}
+
+
+	public void setVisa(String visa) {
+		this.visa = visa;
+	}
+
+
+	public String getVisaType() {
+		return visaType;
+	}
+
+
+	public void setVisaType(String visaType) {
+		this.visaType = visaType;
+	}
+
+
+	public String getVisaType2() {
+		return visaType2;
+	}
+
+
+	public void setVisaType2(String visaType2) {
+		this.visaType2 = visaType2;
 	}
 	
+		
 	
 }

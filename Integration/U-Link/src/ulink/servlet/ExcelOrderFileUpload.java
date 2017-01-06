@@ -26,10 +26,8 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  
 import com.google.gson.JsonObject;
-
-import ulink.dao.DatabaseConnection;
-@WebServlet("/upload")
-public class UploadServlet extends HttpServlet {
+@WebServlet("/upload1")
+public class ExcelOrderFileUpload extends HttpServlet {
  
     private static final long serialVersionUID = 1L;
     private static final String TMP_DIR_PATH = "/MyTempFiles";
@@ -37,7 +35,7 @@ public class UploadServlet extends HttpServlet {
     private static final String DESTINATION_DIR_PATH ="/MySavedFiles";
     private File destinationDir;
  
-    public UploadServlet() {
+    public ExcelOrderFileUpload() {
         super();
     }
  
@@ -88,7 +86,7 @@ public class UploadServlet extends HttpServlet {
         String fileName = null;
         String fullName = null;
         File file = null;
-    	
+ 
         try {
  
             //Parse the request
@@ -126,24 +124,17 @@ public class UploadServlet extends HttpServlet {
             String extension = FilenameUtils.getExtension(fullName);
             if(extension.trim().equalsIgnoreCase("xlsx")){
                 count = processExcelFile(file);
-
-        		out.write(count);
-        		out.flush();
-        		return;
-        		
             }
             else if(extension.trim().equalsIgnoreCase("xls")){
                 //process your binary excel file
-            	  count = processExcelFile(file);
-
-          		out.write(count);
-          		out.flush();
-          		return;
             }
             if(extension.trim().equalsIgnoreCase("csv")){
                 //process your CSV file
             }
-
+ 
+            myObj.addProperty("success", true);
+            myObj.addProperty("message", count + " item(s) were processed for file " + fileName);
+            out.println(myObj.toString());
  
         }
         catch(FileUploadException ex) {
@@ -162,8 +153,8 @@ public class UploadServlet extends HttpServlet {
  
     private int processExcelFile(File file){
  
-    	DatabaseConnection connection = new DatabaseConnection();
-    	int count = 0;
+ 
+        int count = 0;
  
         try{
             // Creating Input Stream 
@@ -177,47 +168,39 @@ public class UploadServlet extends HttpServlet {
  
             /** We now need something to iterate through the cells.**/
             Iterator<Row> rowIter = mySheet.rowIterator();
-            rowIter.next();
-            rowIter.next();
             while(rowIter.hasNext()){
-            	
+ 
                 XSSFRow myRow = (XSSFRow) rowIter.next();
                 Iterator<Cell> cellIter = myRow.cellIterator();
-                
-                
-                
-                																						
-                		XSSFCell accountID = (XSSFCell) cellIter.next();
-                		XSSFCell clientOwner = (XSSFCell) cellIter.next();
-                		XSSFCell clientName = (XSSFCell) cellIter.next();
-                		XSSFCell clientType = (XSSFCell) cellIter.next();
-                		XSSFCell company = (XSSFCell) cellIter.next();
-                		XSSFCell nationality = (XSSFCell) cellIter.next();
-                		XSSFCell gender = (XSSFCell) cellIter.next();
-                		XSSFCell dateOfBirth = (XSSFCell) cellIter.next();
-                		XSSFCell email = (XSSFCell) cellIter.next();
-                		XSSFCell medical = (XSSFCell) cellIter.next();
-                		XSSFCell mainDiagnosis = (XSSFCell) cellIter.next();
-                		XSSFCell referredByPIC = (XSSFCell) cellIter.next();
-                		XSSFCell appointment = (XSSFCell) cellIter.next();
-                		XSSFCell doctor = (XSSFCell) cellIter.next();
-                		XSSFCell specialty = (XSSFCell) cellIter.next();
-                		XSSFCell clinic = (XSSFCell) cellIter.next();
-                		XSSFCell otherDoctor = (XSSFCell) cellIter.next();
-                		XSSFCell followUpPerson = (XSSFCell) cellIter.next();
-                		XSSFCell followUpPIC = (XSSFCell) cellIter.next();
-                		XSSFCell hospitalAdmitted = (XSSFCell) cellIter.next();
-                		XSSFCell log = (XSSFCell) cellIter.next();
-                		XSSFCell claim = (XSSFCell) cellIter.next();
-                		XSSFCell visa = (XSSFCell) cellIter.next();
-                		XSSFCell visaType = (XSSFCell) cellIter.next();
-                		XSSFCell visaType2 = (XSSFCell) cellIter.next();
-                		System.out.println(clientName.toString().length());
-                		connection.createClient(accountID.toString(), clientOwner.toString(), clientName.toString(), clientType.toString(), company.toString(), nationality.toString(), gender.toString(), dateOfBirth.toString(), email.toString(), medical.toString(), mainDiagnosis.toString(), referredByPIC.toString(), appointment.toString(), doctor.toString(), specialty.toString(), clinic.toString(), otherDoctor.toString(), followUpPerson.toString(), followUpPIC.toString(), hospitalAdmitted.toString(), log.toString(), claim.toString(), visa.toString(), visaType.toString(), visaType2.toString());
-                	    count++;
-                    
+                while(cellIter.hasNext()){
  
-                
+                    XSSFCell myCell = (XSSFCell) cellIter.next();
+                    //get cell index
+                    System.out.println("Cell column index: " + myCell.getColumnIndex());
+                    //get cell type
+                    System.out.println("Cell Type: " + myCell.getCellType());
+ 
+                    //get cell value
+                    switch (myCell.getCellType()) {
+                    case XSSFCell.CELL_TYPE_NUMERIC :
+                        System.out.println("Cell Value: " + myCell.getNumericCellValue());
+                        break;
+                    case XSSFCell.CELL_TYPE_STRING:   
+                        System.out.println("Cell Value: " + myCell.getStringCellValue());
+                        break;
+                    default:   
+                        System.out.println("Cell Value: " + myCell.getRawValue());
+                        break;   
+                    }
+                    System.out.println("---");
+ 
+                    if(myCell.getColumnIndex() == 0 && 
+                            !myCell.getStringCellValue().trim().equals("") &&
+                            !myCell.getStringCellValue().trim().equals("Item Number")){
+                        count++;
+                    }
+ 
+                }
  
             }
         }

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-   
+     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Upload</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -18,11 +18,12 @@
 		$("#submit").click(function() {
 			var inputFile = $("#InputFile").val();
 			var uploadedTime = $("#timestamp").val();
+			console.log(inputFile);
 			if(inputFile == ""){
 				$("#inputAlert").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Please choose excel files only</strong></div>");
 			} else{
 				$.ajax({
-					url : "UploadServlet",
+					url : "ExcelOrderUpload",
 					type : "post",
 					data : "inputFile=" + inputFile,
 					dataType : "file",
@@ -42,6 +43,14 @@
 		var uploadedTime = 
 		document.getElementById("timestamp").innerHTML = Date();
 	})
+	function logout(){
+		$.ajax({
+			url: "Logout",
+			type: "post",
+			
+		});
+	}
+	
 	
 </script>
  
@@ -90,7 +99,7 @@
         <button type="submit" class="btn btn-default">Submit</button>
       </form>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="login.html">Logout</a></li>
+        <li><a href="login.html" onClick=logout()>Logout</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="accountManagement.html">Account Management</a></li>
@@ -108,8 +117,11 @@
 		  <div class="panel-body">
 			<div class="form-group">
 			    <label for="InputFile">Please select a file to upload</label>
-			    <input type="file" id="InputFile">
-			    <input type="submit" id="submit">
+			    
+			                <form action="upload" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" />
+                <input type="submit" value="upload" />
+            </form>  
 		  	</div>
 		  </div>
 		</div>

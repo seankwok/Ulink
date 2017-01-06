@@ -32,9 +32,9 @@ public class DeleteCondition extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		DatabaseConnection connection = new DatabaseConnection();
-		String conditionName = request.getParameter("conditionName");
-		connection.deleteAllCondition(conditionName);
-		System.out.println(conditionName);
+		int ID = Integer.parseInt(request.getParameter("ID"));
+		connection.deleteAllCondition(ID);
+		//System.out.println(conditionName);
 		
 		PrintWriter out = response.getWriter();
 		String jsonInString = "{\"status\":\"success\"}";

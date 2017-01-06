@@ -46,6 +46,7 @@ public class EditUser extends HttpServlet {
 		Utility utility = new Utility();
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
+		System.out.print(password);
 		String hPassword = utility.hash(password);
 		connection.editUser(email, hPassword);
 		

@@ -21,13 +21,17 @@
 			    var age= $('#age').val();
 				var illness= $('#illness').val();
 				var screening= $('#screening').val();
-				var type=$('input[name="demo"]:checked').map(function(){
+				var type=$(':checkbox').map(function(){
 					return this.value;
 				}).get();
-				
 				var years= $('#years').val();
-				console.log(type);	
+				console.log(illness);
+				if(age == "" || illness == "" || screening == "" || type == "" || years == ""){
+					$('#message').html("<div class='alert alert-danger' role='alert'><center><b> Please input empty fields. </b></center></div>");
+
+				} else{
 				
+			
 			$.ajax({
 				type: 'get',
 				url: "Add",
@@ -42,18 +46,27 @@
 					+ 'years=' + years,
 				success: function(data){
 					console.log(data.status);
-					$('#message').html("<div class='alert alert-success' role='alert'><center><b> Successfully added new screening </b></center></div>");
-					if (data.status == "success") {
-					}
+					if (data.status == "success") 
+						$('#message').html("<div class='alert alert-success' role='alert'><center><b> Successfully added new screening </b></center></div>");
+					else
+						$('#message').html("<div class='alert alert-danger' role='alert'><center><b> Screening already exist. </b></center></div>");
+
 				}
 			});
+				}
 			
 		});
 		
 		
 		
 	});
-					
+	function logout(){
+		$.ajax({
+			url: "Logout",
+			type: "post",
+			
+		});
+	}			
 			
  	</script>
  
@@ -107,7 +120,7 @@
       </form>
       </u1>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="login.html">Logout</a></li>
+        <li><a href="login.html" onClick=logout()>Logout</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="accountManagement.html">Account Management</a></li>
@@ -125,7 +138,7 @@
 
 		<form>
 				<div class="form-group">
-					<label for="age">Age</label> <input type="text"
+					<label for="age">Age</label> <input type="number"
 						class="form-control" placeholder="Starting age in which patient might be diagnosed with illness" id="age" required>
 				</div>
 				<div class="form-group">
@@ -140,14 +153,14 @@
 				<div>
 				<label for="screening">Demographic affected</label> <br>
 				<label class="checkbox-inline"><input type="checkbox" name="demo" id="type" value="infant">Infant</label>
-				<label class="checkbox-inline"><input type="checkbox" name="demo"  id="type" value="female">Female</label>
+				<label class="checkbox-inline"><input type="checkbox" name="demo" id="type" value="female">Female</label>
 				<label class="checkbox-inline"><input type="checkbox" name="demo" id="type" value="male">Male</label>
 				</div>
 				<br>
 				
 				<div class="form-group">
-					<label for="screening">Regularity of Screening (In years)</label> 
-					<input type="text" class="form-control" placeholder="How often does one have to go for this screening" id="years" required>
+					<label for="screening">Regularity of Screening</label> 
+					<input type="text" class="form-control" placeholder="How often does one have to go for this screening (Eg. every 3 months)" id="years" required>
 				</div>
 				
 				

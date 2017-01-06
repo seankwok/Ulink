@@ -33,28 +33,37 @@ public class DatabaseConnection {
 			Utility utility = new Utility();
 			
 			while (rs.next()) {
-				String passportNumber = rs.getString(1);
-				String clientName = rs.getString(2);
-				String gender = rs.getString(3);
-				String dateOfBirth = rs.getString(4);
-				String mainDianosis = rs.getString(5);
-				String clientType = rs.getString(6);
-				String nationality = rs.getString(7);
-				String countryOfResidence = rs.getString(8);
-				String billingStreet = rs.getString(9);
-				String billingCity = rs.getString(10);
-				String billingState = rs.getString(11);
-				String billingCountry = rs.getString(12);
-				String billingCode = rs.getString(13);
-				String isMedical = rs.getString(14);
-				String isClaim = rs.getString(15);
-				String claimInformation = rs.getString(16);
-				String referralName = rs.getString(17);
-				clientList.add(new Client(passportNumber, clientName, gender, utility.changeDisplayDateFormat(dateOfBirth), mainDianosis, clientType,
-						nationality, countryOfResidence, billingStreet, billingCity, billingState, billingCountry,
-						billingCode, isMedical, isClaim, claimInformation, referralName));
+				String accountID = rs.getString(1);
+				String clientOwner = rs.getString(2);
+				String clientName = rs.getString(3); 
+				String clientType = rs.getString(4);
+				String company = rs.getString(5);
+				String nationality = rs.getString(6);
+				String gender = rs.getString(7);
+				String dateOfBirth = rs.getString(8);
+				String email = rs.getString(9);
+				String medical = rs.getString(10);
+				String mainDiagnosis = rs.getString(11);
+				String referredByPIC = rs.getString(12);
+				String appointment = rs.getString(13);
+				String doctor = rs.getString(14);
+				String specialty = rs.getString(15);
+				String clinic = rs.getString(16);
+				String otherDoctor = rs.getString(17);
+				String followUpPerson = rs.getString(18);
+				String followUpPIC = rs.getString(19);
+				String hospitalAdmitted = rs.getString(20);
+				String log = rs.getString(21);
+				String claim = rs.getString(22);
+				String visa = rs.getString(23);
+				String visaType = rs.getString(24);
+				String visaType2 = rs.getString(25);
+				
+				clientList.add(new Client(accountID,clientOwner,clientName,clientType,company,nationality,gender,dateOfBirth,email,medical,
+						mainDiagnosis,referredByPIC,appointment,doctor,specialty,clinic,otherDoctor,followUpPerson,followUpPIC,hospitalAdmitted,
+						log,claim,visa,visaType,visaType2));
 			}
-
+				
 			con.close();
 			
 		} catch (SQLException | ClassNotFoundException e) {
@@ -80,26 +89,35 @@ public class DatabaseConnection {
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
-				String passportNumber = rs.getString(1);
-				String clientName = rs.getString(2);
-				String gender = rs.getString(3);
-				String dateOfBirth = rs.getString(4);
-				String mainDiagnosis = rs.getString(5);
-				String clientType = rs.getString(6);
-				String nationality = rs.getString(7);
-				String countryOfResidence = rs.getString(8);
-				String billingStreet = rs.getString(9);
-				String billingCity = rs.getString(10);
-				String billingState = rs.getString(11);
-				String billingCountry = rs.getString(12);
-				String billingCode = rs.getString(13);
-				String isMedical = rs.getString(14);
-				String isClaim = rs.getString(15);
-				String claimInformation = rs.getString(16);
-				String referralName = rs.getString(17);
-				clientList.add(new Client(passportNumber, clientName, gender, dateOfBirth, mainDiagnosis, clientType,
-						nationality, countryOfResidence, billingStreet, billingCity, billingState, billingCountry,
-						billingCode, isMedical, isClaim, claimInformation, referralName));
+				String accountID = rs.getString(1);
+				String clientOwner = rs.getString(2);
+				String clientName = rs.getString(3); 
+				String clientType = rs.getString(4);
+				String company = rs.getString(5);
+				String nationality = rs.getString(6);
+				String gender = rs.getString(7);
+				String dateOfBirth = rs.getString(8);
+				String email = rs.getString(9);
+				String medical = rs.getString(10);
+				String mainDiagnosis = rs.getString(11);
+				String referredByPIC = rs.getString(12);
+				String appointment = rs.getString(13);
+				String doctor = rs.getString(14);
+				String specialty = rs.getString(15);
+				String clinic = rs.getString(16);
+				String otherDoctor = rs.getString(17);
+				String followUpPerson = rs.getString(18);
+				String followUpPIC = rs.getString(19);
+				String hospitalAdmitted = rs.getString(20);
+				String log = rs.getString(21);
+				String claim = rs.getString(22);
+				String visa = rs.getString(23);
+				String visaType = rs.getString(24);
+				String visaType2 = rs.getString(25);
+				
+				clientList.add(new Client(accountID,clientOwner,clientName,clientType,company,nationality,gender,dateOfBirth,email,medical,
+						mainDiagnosis,referredByPIC,appointment,doctor,specialty,clinic,otherDoctor,followUpPerson,followUpPIC,hospitalAdmitted,
+						log,claim,visa,visaType,visaType2));
 			}
 
 			con.close();
@@ -113,37 +131,46 @@ public class DatabaseConnection {
 	}
 	
 	
-	public void createClient(String passportNumber, String clientName, String gender, String dateOfBirth, String mainDiagnosis, String clientType, String nationality, String countryOfResidence, String billingStreet, String billingCity, String billingState, String billingCountry,
-			String billingCode, String isMedical, String isClaim, String claimInformation, int referralName) {
+	public void createClient(String accountID, String clientOwner, String clientName, String clientType, String company,
+			String nationality, String gender, String dateOfBirth, String email, String medical, String mainDiagnosis,
+			String referredByPIC, String appointment, String doctor, String specialty, String clinic,
+			String otherDoctor, String followUpPerson, String followUpPIC, String hospitalAdmitted, String log,
+			String claim, String visa, String visaType, String visaType2) {
 
 		Connection con;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
-			String sql = "INSERT INTO client (passportNumber, clientName, gender, dateOfBirth, mainDiagnosis, clientType,"
-					+ "nationality, countryOfResidence, billingStreet, billingCity, billingState, billingCountry," +
-						"billingCode, isMedical, isClaim, claimInformation, referral_ID)"
-					+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			String sql = "INSERT INTO client (accountID,clientOwner,clientName,clientType,company,nationality,gender,dateOfBirth,email,medical,mainDiagnosis,referredByPIC,appointment,doctor,specialty,clinic,otherDoctor,followUpPerson,followUpPIC,hospitalAdmitted,log,claim,visa,visaType,visaType2)"
+					+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			Utility utility = new Utility();
 			PreparedStatement preparedStmt = con.prepareStatement(sql);
-			preparedStmt.setString(1, passportNumber);
-			preparedStmt.setString(2, clientName);
-			preparedStmt.setString(3, gender);
-			preparedStmt.setString(4, dateOfBirth);
-			preparedStmt.setString(5, mainDiagnosis);
-			preparedStmt.setString(6, clientType);
-			preparedStmt.setString(7, nationality);
-			preparedStmt.setString(8, countryOfResidence);
-			preparedStmt.setString(9, billingStreet);
-			preparedStmt.setString(10, billingCity);
-			preparedStmt.setString(11, billingState);
-			preparedStmt.setString(12, billingCountry);
-			preparedStmt.setString(13, billingCode);
-			preparedStmt.setString(14, isMedical);
-			preparedStmt.setString(15, isClaim);
-			preparedStmt.setString(16, claimInformation);
-			preparedStmt.setInt(17, referralName);
+			preparedStmt.setString(1, accountID);
+			preparedStmt.setString(2, clientOwner);
+			preparedStmt.setString(3, clientName);
+			preparedStmt.setString(4, clientType);
+			preparedStmt.setString(5, company);
+			preparedStmt.setString(6, nationality);
+			preparedStmt.setString(7, gender);
+			preparedStmt.setString(8, dateOfBirth);
+			preparedStmt.setString(9, email);
+			preparedStmt.setString(10, medical);
+			preparedStmt.setString(11, mainDiagnosis);
+			preparedStmt.setString(12, referredByPIC);
+			preparedStmt.setString(13, appointment);
+			preparedStmt.setString(14, doctor);
+			preparedStmt.setString(15, specialty);
+			preparedStmt.setString(16, clinic);
+			preparedStmt.setString(17, otherDoctor);
+			preparedStmt.setString(18, followUpPerson);
+			preparedStmt.setString(19, followUpPIC);
+			preparedStmt.setString(20, hospitalAdmitted);
+			preparedStmt.setString(21, log);
+			preparedStmt.setString(22, claim);
+			preparedStmt.setString(23, visa);
+			preparedStmt.setString(24, visaType);
+			preparedStmt.setString(25, visaType2);
 			preparedStmt.execute();
 
 			con.close();
@@ -335,13 +362,13 @@ public class DatabaseConnection {
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
-
-				String conditionName = rs.getString(1);
-				int numOfYears = rs.getInt(2);
-				int ageRequired = rs.getInt(3);
-				String screening = rs.getString(4);
-				String type = rs.getString(5);
-				Condition condition = new Condition(conditionName, numOfYears, ageRequired, screening, type);
+				int ID = rs.getInt(1);
+				String conditionName = rs.getString(2);
+				int numOfYears = rs.getInt(3);
+				int ageRequired = rs.getInt(4);
+				String screening = rs.getString(5);
+				String type = rs.getString(6);
+				Condition condition = new Condition(ID,conditionName, numOfYears, ageRequired, screening, type);
 				allconditionList.add(condition);
 			}
 
@@ -384,15 +411,15 @@ public class DatabaseConnection {
 		return true;
 	}
 
-	public void deleteAllCondition(String conditionName) {
+	public void deleteAllCondition(int ID) {
 		Connection con;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
-			String sql = "Delete from allcondition where conditionName = ?";
+			String sql = "Delete from allcondition where ID = ?";
 			PreparedStatement preparedStmt = con.prepareStatement(sql);
-			preparedStmt.setString(1, conditionName);
+			preparedStmt.setInt(1, ID);
 			preparedStmt.executeUpdate();
 
 			con.close();
@@ -514,13 +541,13 @@ public class DatabaseConnection {
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
-
-				String conditionName = rs.getString(1);
-				int numOfYears = rs.getInt(2);
-				int ageRequired = rs.getInt(3);
-				String screening = rs.getString(4);
-				String type = rs.getString(5);
-				Condition condition = new Condition(conditionName, numOfYears, ageRequired, screening, type);
+				int ID = rs.getInt(1);
+				String conditionName = rs.getString(2);
+				int numOfYears = rs.getInt(3);
+				int ageRequired = rs.getInt(4);
+				String screening = rs.getString(5);
+				String type = rs.getString(6);
+				Condition condition = new Condition(ID, conditionName, numOfYears, ageRequired, screening, type);
 				allconditionList.add(condition);
 			}
 
@@ -534,7 +561,7 @@ public class DatabaseConnection {
 		return allconditionList;
 	}
 	
-	public Condition retrieveConditionDetails(String name) {
+	public Condition retrieveConditionDetails(int ID) {
 		Condition condition = null;
 		Connection con;
 		ArrayList<Condition> allconditionList = new ArrayList<Condition>();
@@ -543,18 +570,18 @@ public class DatabaseConnection {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
-			String sql = "SELECT * FROM allcondition where conditionName='" + name + "'";
+			String sql = "SELECT * FROM allcondition where conditionName='" + ID + "'";
 			
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
-
-				String conditionName = rs.getString(1);
-				int numOfYears = rs.getInt(2);
-				int ageRequired = rs.getInt(3);
-				String screening = rs.getString(4);
-				String type = rs.getString(5);
-				condition = new Condition(conditionName, numOfYears, ageRequired, screening, type);
+				//int Id = rs.getInt(1);
+				String conditionName = rs.getString(2);
+				int numOfYears = rs.getInt(3);
+				int ageRequired = rs.getInt(4);
+				String screening = rs.getString(5);
+				String type = rs.getString(6);
+				condition = new Condition(ID,conditionName, numOfYears, ageRequired, screening, type);
 			
 			}
 

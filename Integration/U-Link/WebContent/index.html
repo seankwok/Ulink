@@ -13,6 +13,15 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
  
+ <script>
+ function logout(){
+		$.ajax({
+			url: "Logout",
+			type: "post",
+			
+		});
+	}
+	</script>
   </head>
   <body>
     
@@ -61,7 +70,7 @@
       </form>
       </u1>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="login.html">Logout</a></li>
+        <li><a href="login.html" onClick=logout()>Logout</a></li>
         
       </ul>
       <ul class="nav navbar-nav navbar-right">
