@@ -7,15 +7,12 @@
    
     <title>Account Management</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
-	<link href="css/bootstrap-editable.css" rel="stylesheet">
 
     <script src="js/jquery-1.12.0.js"></script>
     
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/bootstrap-editable.min.js"></script>
-    <script src="js/bootstrap-editable.js"></script>
+
  
  	
  	
@@ -65,28 +62,25 @@
 	
 
 	function editItem(clickedID){
-		
-		var newPassword = document.getElementsByClassName(clickedID);
 		var sendData = {
-				"email" : clickedID,
-				"password": newPassword
+				"email" : clickedID
 			};
-		console.log(newPassword);
+			console.log(clickedID);
 			$.ajax({
-				url : "EditUser",
+				url : "EditUserPassword",
 				type : "post",
 				data : sendData,
 				dataType : "json",
 				complete : function(data) {
-					
 					displayAll();
-					 
-					$('#message').html("<div class='alert alert-success' role='alert'><center><b> Password has been reset </b></center></div>");
-				
+						window.location="editUserPassword.html";
+					
 				}
+
 			});
-		
-    }
+	}
+	
+
 	
 	function displayAll(){
 		var table = "";
@@ -103,10 +97,9 @@
 		    		table += "<tr><td>"
 		    				+ value["email"]
 		    				+ "</td>"
-		    				+ "<td>"
-		    				+ '<form><input type="text" class="'+value.email+'"><a href=# onClick=editItem(this.id) id="'
+		    				+ '<td><a href=# onClick=editItem(this.id) id="'
 							+ value.email
-							+ '">Reset</form></td>'
+							+ '">Reset</a></td>'
 		    				+ '<td><a href=# onClick=deleteItem(this.id) id="'
 							+ value.email
 							+ '">Delete</a></td>'
