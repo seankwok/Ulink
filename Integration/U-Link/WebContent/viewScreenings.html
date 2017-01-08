@@ -8,9 +8,13 @@
     <title>View Screening</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="js/jquery-1.12.0.js"></script>
-<script src="js/bootstrap.min.js"></script>
+    <link href="http://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" rel="stylesheet">
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="js/jquery-1.12.0.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="http://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+	
  	
  	<style>
  	
@@ -26,6 +30,10 @@
 	
 	$(document).ready(function() {
 		displayAll();
+
+		$("#table").DataTable();
+			
+		});
 		/* $("#generate").click(function(){
 			   var demo = $(':checkbox').map(function(){
 					return this.value;
@@ -50,7 +58,8 @@
 			   
 			    
 			  }); */
-	}); 
+			  
+ 
 		
 	function deleteItem(clickedID){
 			
@@ -98,20 +107,19 @@
 	}
 	
 	function displayAll(){
-		var table = "";
+		var table = "<table id='table'  class='display' cellspacing='0' width='100%'>";
 		var isEmpty = false;
 		$.ajax({
 			url: "DisplayAll",
 			type: "get",
-		    
 		    dataType : "json",
 		    
 		    success: function(data){
 		    	var json = jQuery.parseJSON(JSON.stringify(data));
 		    	console.log(json);
-		    	table += "<table border='1'><tr><th>Starting Age</th><th>Common Illness</th><th>Recommended Screening</th><th>Affected Demographic</th><th>Frequency of screening in years</th><th>View Patients</th><th>Edit</th><th>Delete</th></tr>";
+		    	table += "<thead><tr><th>Starting Age</th><th>Common Illness</th><th>Recommended Screening</th><th>Affected Demographic</th><th>Frequency of screening in years</th><th>View Patients</th><th>Edit</th><th>Delete</th></tr></thead>";
 		    	$.each(json,function(key, value) {
-		    		table += "<tr><td>"
+		    		table += "<tbody><tr><td>"
 	    				+ value["ageRequired"]
 	    				+ "</td>"
 	    				+ "<td>"
@@ -137,10 +145,11 @@
     					+ '<td><a href=# onClick=deleteItem(this.id) id="'
 						+ value.ID
 						+ '">Delete</a></td></tr>'		    				
-						+ "</td></tr>"
+						+ "</td></tr></tbody>"
 		    	});
 		    	table += "</table>"
-		    	$("#table").html(table);
+		    		$("#display").html(table);
+		    	$("#table").DataTable();
 		    	
 		    }	
 		    
@@ -174,6 +183,7 @@
       <ul class="nav navbar-nav">
         <li><a href="index.html">Home<span class="sr-only"></span></a></li>
         <li><a href="upload.html">Upload Patient Data</a></li>
+         <li><a href="client.html">Client</a></li>
         <li class="dropdown">
           <a href="#" class="active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Screenings <span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -211,31 +221,11 @@
   </div><!-- /.container-fluid -->
 </nav>
 
-<div class="col-md-8 col-md-offset-2">
-<div class="panel panel-default">
-  <div class="panel-body">
-  <h3><b>Filter results</b></h3>
-    <form>
-   <div class="form-group">
-     <label for="screening">Demographic affected</label> <br>
-      <label class="checkbox-inline"><input type="checkbox" name="type" id="type" value="infant">Infant</label>
-   <label class="checkbox-inline"><input type="checkbox" name="type" id="type" value="female">Female</label>
-   <label class="checkbox-inline"><input type="checkbox" name="type" id="type" value="male">Male</label>
-   </div>
-   <div class="form-group">
-     <label for="ageRange">Age Range</label><br>
-     Starting Age <input type="number" class="form-control" id="startingAge" min="1" max="100" required>
-     Ending Age <input type="number" class="form-control" id="endingAge" min="1" max="100" required>
-   </div>
-   <center><button type="submit" class="btn btn-default btn-lg" id="generate">Generate</button></center>
- </form>
-  </div>
-  </div>
-  </div>
+<div class="page-header" align="center">
+  <h1><b>View Screenings</b></h1>
+</div>
 
-
-
-<div class="container" id="table">
+<div class="container" id="display" >
   
   
 </div>
