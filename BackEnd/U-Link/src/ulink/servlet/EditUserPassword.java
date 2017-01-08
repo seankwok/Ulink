@@ -2,35 +2,26 @@ package ulink.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
+import javax.mail.Session;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.reflect.TypeToken;
-
-import ulink.constructor.Condition;
-import ulink.dao.DatabaseConnection;
+import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class DisplayAll
+ * Servlet implementation class EditCondition
  */
-@WebServlet("/DisplayAll")
-
-public class DisplayAll extends HttpServlet {
+@WebServlet("/EditUserPassword")
+public class EditUserPassword extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DisplayAll() {
+    public EditUserPassword() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -40,23 +31,7 @@ public class DisplayAll extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		PrintWriter out = response.getWriter();
-		
-		DatabaseConnection database = new DatabaseConnection();
-		ArrayList<Condition> conditionList = database.retrieveAllCondition();
-		
-		Gson gson = new Gson();
-		
-		JsonArray result = (JsonArray) new Gson().toJsonTree(conditionList,new TypeToken<List<Condition>>() {}.getType());
-		  String arrayListToJson = gson.toJson(result);
-		  System.out.print(arrayListToJson);
-		
-		out.write(arrayListToJson);
-		out.flush();
-		return;
-		
-		
-		
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -65,6 +40,17 @@ public class DisplayAll extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+		HttpSession session = request.getSession();
+		String email = request.getParameter("email");
+		session.setAttribute("email", email);
+		PrintWriter out = response.getWriter();
+		String jsonInString = "{\"status\":\"success\"}";
+		
+		
+		out.write(jsonInString);
+	
+		out.flush();
+		return;
 	}
 
 }

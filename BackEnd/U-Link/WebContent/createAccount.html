@@ -15,44 +15,47 @@
  
  
  	<script type="text/javascript">
-	$(document)
-			.ready(
-					function() {
+	$(document).ready(function() {
+		$("#create").click(function(){
+			var username = $("#inputEmail").val();
+			var password = $("#inputPassword").val();
+			var roles = $("#accountType").val();
+			var url = "index.html";
+			if(username == "" || password == ""){
+				$("#createSuccess").html("<div class='alert alert-danger' role='alert'><center><strong>Please input empty fields</strong></center></div>");
+			} else{
+			
+			$.ajax({
+				url: "CreateUser",
+				type: "post",
+				data: 'username=' + username
+						+ '&'
+						+'roles=' + roles
+						+'&'
+						+ 'password='+ password,
+				async: false,
+				dataType: "json",
+				complete : function(data) {
+					console.log(data.status);
+					if(data.status == 'success'){
+						$("#createSuccess").html("<div class='alert alert-success' role='alert'><center><strong>Account created successfully</strong></center></div>");
+					}else{
+						$("#createSuccess").html("<div class='alert alert-danger' role='alert'><center><strong>Username is taken</strong></center></div>");
 
-						$("#create")
-								.click(
-										function() {
-											var username =  $('#inputEmail').val();
-											var password =  $('#inputPassword').val();
-											var confirmPassword =  $('#inputConfirmPassword').val();
-																						
-											$.ajax({
-												url : "CreateUser",
-												type : "post",
-												data : 'username=' + username
-														+ '&'
-														+ 'password='
-														+ password + '&'
-														+ 'confirmPassword='
-														+ confirmPassword,
-													
-												dataType : "json",
-
-												success : function(data) {
-													console
-															.log(data.status);
-													if (data.status == "success") {
-														$('#createSuccess')
-																.html("Successfully created a new account!");
-													}										}
-
-												}
-
-											});
-										}
-								)
 					}
-			)
+				}
+			});
+			}
+		});
+	});
+	
+	function logout(){
+		$.ajax({
+			url: "Logout",
+			type: "post",
+			
+		});
+	}
  	</script>
  
   </head>
@@ -75,7 +78,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
       <li><a href="index.html">Home</a></li>
-        <li><a href="upload.html">Upload Templates</a></li>
+        <li><a href="upload.html">Upload Patient Data</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Screenings <span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -101,7 +104,7 @@
         <button type="submit" class="btn btn-default">Submit</button>
       </form>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="login.html">Logout</a></li>
+        <li><a href="login.html" onClick=logout()>Logout</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
       	<li class="active"><a href="accountManagement.html">Account Management <span class="sr-only">(current)</span></a></li>
@@ -117,21 +120,22 @@
 	   <b>New Account</b>
 	  </div>
 	</div>
-	<div>
+	
 	<form class="form-horizontal" >
   <div class="form-group">
     <label class="col-sm-2 control-label">Email</label>
-    <div class="col-sm-6"> 
-      <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+    <div class="col-sm-4">
+   
+      <input type="text" class="form-control" id="inputEmail" placeholder="Email" required> <b>@Ulinkassist.com</b>
     </div>
   </div>
  
  <div class="form-group">
     <label class="col-sm-2 control-label">Account Type</label>
-    <div class="col-sm-6"> 
-      <select class="form-control">
-	  <option>Admin</option>
-	  <option>Non-Admin</option>
+    <div class="col-sm-4" > 
+      <select class="form-control" id="accountType" >
+	  <option value="admin">Admin</option>
+	  <option value="non-admin">Non-Admin</option>
 	</select>
     </div>
   </div>
@@ -139,22 +143,18 @@
   
   <div class="form-group">
     <label class="col-sm-2 control-label">Password</label>
-    <div class="col-sm-6">
-      <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+    <div class="col-sm-4">
+      <input type="password" class="form-control" id="inputPassword" placeholder="Password" required>
     </div>
   </div>
   
   
   <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10" id="create">
-      <button type="submit" class="btn btn-default">Create New Account</button>
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default" id="create">Create New Account</button>
     </div>
   </div>
 </form>
-	</div>
-	<div class="col-md-6 col-md-offset-2">
-	<div class="alert alert-success" id="createSuccess" role="alert"></div>
-	</div>
-    
+	<div class="col-md-8 col-md-offset-2" id="createSuccess"></div>
   </body>
 </html>

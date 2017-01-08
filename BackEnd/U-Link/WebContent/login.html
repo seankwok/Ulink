@@ -19,37 +19,38 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#login").click(function() {
-			boolean inputError = false;
 			var username = $("#username").val();
-			if(username == null){
-				$("#inputAlert").html("<div class='col-md-8 col-md-offset-2'><div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Username cannot be empty!</strong></div></div>");
-				}
 			var password = $("#password").val();
-			if(password == null){
-				$("#inputAlert").html(
-						"<div class='col-md-8 col-md-offset-2'><div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Username cannot be empty!</strong></div></div>"
-				);
-			}
-			
-			console.log("PASS");
-			$.ajax({
-				url : "LoginServlet",
-				type : "post",
-				data : "username=" + username + "&password=" + password,
-				dataType : "json",
+			if(username == "" || password == ""){
+				$("#inputAlert").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Please input empty fields</strong></div>");
+			} else{
 				
-				success : function(data) {
-					console.log(data.status);
-					if (data.status == "success") {
-						window.location = 'index.html'
-						console.log("PASS1");
+				$.ajax({
+					url : "LoginServlet",
+					type : "post",
+					data : "username=" + username + "&password=" + password,
+					dataType : "json",
+					
+					success : function(data) {
+						console.log(data.status);
+						if (data.status == "success") {
+							window.location = "index.html";
+							console.log("PASS1");
+						}else{
+							console.log("fail");
+							$("#inputAlert").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Incorrect username/password</strong></div>");
+							
+						}
+
 					}
 
-				}
-
-			})
+				})
+			}
+			
 		})
+			
 	})
+
 </script>
 </head>
 <body>
@@ -74,10 +75,6 @@
 										<input type="password" id="password" class="form-control"
 											placeholder="Password" required>
 									</div>
-									<div class="form-group text-center">
-										<input type="checkbox" id="remember"> <label
-											for="remember"> Remember Me</label>
-									</div>
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-6 col-sm-offset-3">
@@ -97,7 +94,10 @@
 				</div>
 			</div>
 		</div>
-		<div id="inputAlert"></div>
+		
+		<div class="col-md-8 col-md-offset-2" id="inputAlert">
+		
+		</div>
 	</div>
 </body>
 </html>

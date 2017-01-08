@@ -41,12 +41,13 @@ public class EditCondition2 extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		
-		String condition = (String) session.getAttribute("condition");
+		String conditionId =  (String) session.getAttribute("ID");
 		DatabaseConnection database = new DatabaseConnection();
-		Condition conditionType = database.retrieveConditionDetails(condition);	
+		System.out.println(conditionId);
+		Condition conditionType = database.retrieveConditionDetails(Integer.parseInt(conditionId));	
 		PrintWriter out = response.getWriter();
 		Gson gson = new Gson();
-	
+		
 		  String arrayListToJson = gson.toJson(conditionType);
 		  	System.out.println(arrayListToJson);
 			out.write(arrayListToJson);

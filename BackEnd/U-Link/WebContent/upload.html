@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-   
+     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Upload</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -17,25 +17,41 @@
 	$(document).ready(function() {
 		$("#submit").click(function() {
 			var inputFile = $("#InputFile").val();
-			console.log("print");
-			$.ajax({
-				url : "UploadServlet",
-				type : "post",
-				data : "inputFile=" + inputFile,
-				contentType : "multipart/form-data",
-				
-				success : function(data) {
-					console.log(data.status);
-					if (data.status == "success") {
-						$("#successAlert").html("<div class='col-md-6 col-md-offset-3'><div class='alert alert-success' role='alert'>Successfully uploaded a file</div></div>")
-					}
+			var uploadedTime = $("#timestamp").val();
+			console.log(inputFile);
+			if(inputFile == ""){
+				$("#inputAlert").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Please choose excel files only</strong></div>");
+			} else{
+				$.ajax({
+					url : "upload",
+					type : "post",
+					data : "inputFile=" + inputFile,
+					dataType : "file",
+					success : function(data) {
+						console.log(data.status);
+						if (data.status == "success") {
+							$("#inputAlert").html("<div class='alert alert-success' role='alert'><center><b> Successfully uploaded a file! </b></center></div>");
+							$("#rowsUpdate").html("<div class='alert alert-success' role='alert'><center><b>Number of rows updated: </b></center></div>");
+						}
 
-				}
-				
-				
-			})
+					}
+					
+				})
+			}
+			
 		})
+		var uploadedTime = 
+		document.getElementById("timestamp").innerHTML = Date();
 	})
+	function logout(){
+		$.ajax({
+			url: "Logout",
+			type: "post",
+			
+		});
+	}
+	
+	
 </script>
  
   </head>
@@ -57,7 +73,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><a href="index.html">Home</a></li>
-        <li  class="active"><a href="upload.html">Upload Templates</a></li>
+        <li  class="active"><a href="upload.html">Upload Patient Data</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Screenings <span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -83,7 +99,7 @@
         <button type="submit" class="btn btn-default">Submit</button>
       </form>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="login.html">Logout</a></li>
+        <li><a href="login.html" onClick=logout()>Logout</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="accountManagement.html">Account Management</a></li>
@@ -93,26 +109,36 @@
   </div><!-- /.container-fluid -->
 </nav>
 	<div class="page-header">
-	  <center><h1>Upload Templates</h1></center>
+	  <center><h1>Upload Patient Data</h1></center>
 	</div>
-	<div class="col-md-6 col-md-offset-3">
-	<div class="panel panel-default">
-	  <div class="panel-body">
-		<div class="form-group" >
-		<form method="post" action="UploadServlet" enctype="multipart/form-data">
-		    <label for="InputFile">Please select a file to upload</label>
-		    <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
-		    <input type="submit" id="submit">
-		    </form>
-	  	</div>
-	  </div>
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+		<div class="panel panel-default">
+		  <div class="panel-body">
+			<div class="form-group">
+			    <label for="InputFile">Please select a file to upload</label>
+			    
+			                <form action="upload" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" />
+                <input type="submit" value="upload" />
+            </form>  
+		  	</div>
+		  </div>
+		</div>
+		</div>
+		
+		<div class="col-md-3">
+			<div class="col-md-6 ">
+	<div class="alert alert-info" role="alert">Last uploaded at </div> <div id="timestamp"></div>
+	
+	
 	</div>
-	</div>
-	<div class="col-md-6 col-md-offset-3">
-	<div class="alert alert-info" role="alert">Last uploaded at </div>
+		</div>
 	</div>
 	
-	<div class="col-md-6 col-md-offset-3" id="successAlert"></div>
+	<div class="col-md-6 col-md-offset-3" id="inputAlert"></div>
+	<div class="col-md-6 col-md-offset-3" id="rowsUpdate"></div>
+	
 	
     
   </body>

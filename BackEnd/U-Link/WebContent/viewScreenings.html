@@ -8,33 +8,152 @@
     <title>View Screening</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="js/jquery-1.12.0.js"></script>
+<script src="js/bootstrap.min.js"></script>
+ 	
+ 	<style>
+ 	
+ 	#table th, td {
+    padding: 10px;
+    text-align: center;
+
+ 	}
+ 	</style>
+ 	
  	
  	<script type="text/javascript">
-	$(document)
-			.ready(
-					function() {
-
-						$("#generate")
-								.click(
-										function() {
-											var demographic =  $('#type').val();
-											var age =  $('#age').val();
-											
-										}
-								)
+	
+	$(document).ready(function() {
+		displayAll();
+		/* $("#generate").click(function(){
+			   var demo = $(':checkbox').map(function(){
+					return this.value;
+				}).get();
+			   var startingAge = $("#startingAge").val();
+			   var endingAge = $("#endingAge").val();
+			    if(endingAge < startingAge){
+			    $('#message').html("<div class='alert alert-danger' role='alert'><center><b> Ending age must be larger than starting age </b></center></div>");
+			   } else{
+				   $.ajax({
+					  var sendData = {'demo=' + demo + '&startingAge=' + startingAge + '&endingAge=' + endingAge}
+				   }
+						url : "",
+						type : "",
+						data : sendData,
+						dataType : "json",
+						complete : function(data) {
+							displayAll();
+													
+						}
+			   }
+			   
+			    
+			  }); */
+	}); 
+		
+	function deleteItem(clickedID){
+			
+			var sendData = {
+					"ID" : clickedID
+				};
+				console.log(clickedID);
+				$.ajax({
+					url : "DeleteCondition",
+					type : "post",
+					data : sendData,
+					dataType : "json",
+					success : function(data) {
+						displayAll();
+						console.log("delete");
 					}
-			)
- 	</script>
- 
- 
- 
- 
- 
+	
+				});
+	    } 
+	function logout(){
+		$.ajax({
+			url: "Logout",
+			type: "post",
+			
+		});
+	}
+	
+	function editItem(clickedID){
+		var sendData = {
+				"ID" : clickedID
+			};
+			console.log(clickedID);
+			$.ajax({
+				url : "EditCondition",
+				type : "post",
+				data : sendData,
+				dataType : "json",
+				complete : function(data) {
+					displayAll();
+						window.location="editTimelineSummary.html";
+					
+				}
+
+			});
+	}
+	
+	function displayAll(){
+		var table = "";
+		var isEmpty = false;
+		$.ajax({
+			url: "DisplayAll",
+			type: "get",
+		    
+		    dataType : "json",
+		    
+		    success: function(data){
+		    	var json = jQuery.parseJSON(JSON.stringify(data));
+		    	console.log(json);
+		    	table += "<table border='1'><tr><th>Starting Age</th><th>Common Illness</th><th>Recommended Screening</th><th>Affected Demographic</th><th>Frequency of screening in years</th><th>View Patients</th><th>Edit</th><th>Delete</th></tr>";
+		    	$.each(json,function(key, value) {
+		    		table += "<tr><td>"
+	    				+ value["ageRequired"]
+	    				+ "</td>"
+	    				+ "<td>"
+	    				+ value["conditionName"]
+    					+ "</td>"
+    					+ "<td>"
+	    				+ value["screening"]
+    					+ "</td>"
+    					+ "<td>"
+	    				+ value["type"]
+    					+ "</td>"
+    					+ "<td>"
+	    				+ value["years"]
+    					+ "</td>"
+    					+ "<td>"
+	    				+ "<a href='index.html'>Link to view patients</a>"
+    					+ "</td>"
+    					+ "<td>"
+	    				+ "<a href='#' onClick=editItem(this.id) id= '"
+	    				+ value.ID
+	    				+ "'>Edit</a>"
+    					+ "</td>"
+    					+ '<td><a href=# onClick=deleteItem(this.id) id="'
+						+ value.ID
+						+ '">Delete</a></td></tr>'		    				
+						+ "</td></tr>"
+		    	});
+		    	table += "</table>"
+		    	$("#table").html(table);
+		    	
+		    }	
+		    
+		});	
+		}
+		
+	
+	
+	
+		
+ </script>
   </head>
+  
   <body>
     
    <nav class="navbar navbar-default">
@@ -54,7 +173,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><a href="index.html">Home<span class="sr-only"></span></a></li>
-        <li><a href="upload.html">Upload Templates</a></li>
+        <li><a href="upload.html">Upload Patient Data</a></li>
         <li class="dropdown">
           <a href="#" class="active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Screenings <span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -81,7 +200,7 @@
       </form>
       </u1>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="login.html">Logout</a></li>
+        <li><a href="login.html" onClick=logout()>Logout</a></li>
         
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -97,83 +216,28 @@
   <div class="panel-body">
   <h3><b>Filter results</b></h3>
     <form>
-    	<div class="form-group">
-    	<div class="row">
-		<div class="col-md-4">
-			<label for="screening">Demographic affected</label> <br>
-				<label class="checkbox-inline"><input type="checkbox" name="type" id="type" value="infant">Infant</label>
-				<label class="checkbox-inline"><input type="checkbox" name="type" id="type" value="female">Female</label>
-				<label class="checkbox-inline"><input type="checkbox" name="type" id="type" value="male">Male</label>
-		</div>
-		
-		
-				
-		<div class="col-md-4">
-		<label for="screening">Age Range</label> 
-		<select class="form-control" id="age">
-			<option value="0-10">0-10</option>
-			<option value="11-20">11-20</option>
-			<option value="21-30">21-30</option>
-			<option value="31-40">31-40</option>
-			<option value="41-50">41-50</option>
-			<option value="51-60">51-60</option>
-			<option value="61-70">61-70</option>
-			<option value="71-80">71-80</option>
-			<option value=">81">>81</option>
-		</select>
-		</div>
-		
-		<div align="center">
-		<button type="submit" value="Submit" class="btn btn-default btn-lg" id="generate">Generate</button>
-		</div>
-		</div>
-		</div>
-    </form>
+   <div class="form-group">
+     <label for="screening">Demographic affected</label> <br>
+      <label class="checkbox-inline"><input type="checkbox" name="type" id="type" value="infant">Infant</label>
+   <label class="checkbox-inline"><input type="checkbox" name="type" id="type" value="female">Female</label>
+   <label class="checkbox-inline"><input type="checkbox" name="type" id="type" value="male">Male</label>
+   </div>
+   <div class="form-group">
+     <label for="ageRange">Age Range</label><br>
+     Starting Age <input type="number" class="form-control" id="startingAge" min="1" max="100" required>
+     Ending Age <input type="number" class="form-control" id="endingAge" min="1" max="100" required>
+   </div>
+   <center><button type="submit" class="btn btn-default btn-lg" id="generate">Generate</button></center>
+ </form>
   </div>
   </div>
   </div>
 
 
 
-<div class="container">
+<div class="container" id="table">
   
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>Age at which patients should start going for screenings</th>
-        <th>Common Illness</th>
-        <th>Recommended Screening</th>
-        <th>Affected Demographic</th>
-        <th>Frequency of screening</th>
-        <th>View Patients</th>
-        <th>Edit</th>
-        <th>Delete</th>
-      </tr>
-    </thead>
-  </table>
+  
 </div>
-
-
-   <!-- warning message for deleting screening -->
-   <div class="container" align="center">
-	<div class="col-md-6" align="center">
- 	 <div class="alert alert-danger alert-dismissible" role="alert">
-  		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  		You are about to delete a screening. Proceed?
-	</div>
- 	</div>
-  </div>  
-  
-  
-   <!-- success message for deleting screening -->
-   <div class="container" align="center">
-	<div class="col-md-6" align="center">
- 	 <div class="alert alert-success alert-dismissible" role="alert">
-  		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  		Screening successfully deleted.
-	</div>
- 	</div>
-  </div>
-  
   </body>
 </html>

@@ -1,6 +1,7 @@
 package ulink.constructor;
 
 public class Condition {
+	private int ID;
 	private String conditionName;
 	private int years;
 	private int ageRequired;
@@ -8,13 +9,17 @@ public class Condition {
 	private String type;
 
 
-	public Condition(String conditionName, int years, int ageRequired, String screening, String type) {
+	public Condition(int ID, String conditionName, int years, int ageRequired, String screening, String type) {
 		super();
+		this.ID = ID;
 		this.conditionName = conditionName;
 		this.years = years;
 		this.ageRequired = ageRequired;
 		this.screening = screening;
 		this.type = type;
+	}
+	public int getID(){
+		return ID;
 	}
 	public String getScreening() {
 		return screening;

@@ -5,28 +5,39 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
    
-    <title>Index</title>
+    <title>Filtered results</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+ 	
+ 	<script type="text/javascript">
+	$(document)
+			.ready(
+					function() {
+
+						$("#generate")
+								.click(
+										function() {
+											var demographic =  $('#type').val();
+											var age =  $('#age').val();
+											
+										}
+								)
+					}
+			)
+ 	</script>
  
- <script>
- function logout(){
-		$.ajax({
-			url: "Logout",
-			type: "post",
-			
-		});
-	}
-	</script>
+ 
+ 
+ 
+ 
   </head>
   <body>
     
-   
-     <nav class="navbar navbar-default">
+   <nav class="navbar navbar-default">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -43,7 +54,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><a href="index.html">Home<span class="sr-only"></span></a></li>
-        <li><a href="upload.html">Upload Patient Data</a></li>
+        <li><a href="upload.html">Upload Templates</a></li>
         <li class="dropdown">
           <a href="#" class="active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Screenings <span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -70,7 +81,7 @@
       </form>
       </u1>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="login.html" onClick=logout()>Logout</a></li>
+        <li><a href="login.html">Logout</a></li>
         
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -81,6 +92,40 @@
   </div><!-- /.container-fluid -->
 </nav>
 
-    
+
+  <div class="page-header" align="center">
+  <h2><b>Filtered results</b></h2>
+   
+  </div>
+
+
+
+
+<div class="container">
+  
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Age at which patients should start going for screenings</th>
+        <th>Common Illness</th>
+        <th>Recommended Screening</th>
+        <th>Affected Demographic</th>
+        <th>Frequency of screening</th>
+        <th>View Patients</th>
+       
+      </tr>
+      <th>xx</th>
+        <td>xxs</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td>xx</td>
+        <td><a href ="">Link to client list</a></td>
+       
+      </tr>
+      
+    </thead>
+  </table>
+</div>
+  
   </body>
 </html>

@@ -19,6 +19,7 @@ import ulink.logic.Utility;
  * Servlet implementation class LoginServlet
  */
 @WebServlet("/LoginServlet")
+ 
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -45,26 +46,24 @@ public class LoginServlet extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		System.out.println(password);
+		
 		Utility utility = new Utility();
 		boolean isValid = utility.loginValidatation(username, password);
 		HttpSession session=request.getSession();  
-		System.out.println(isValid);
+		
 		PrintWriter out = response.getWriter();
 		if (isValid){		
-			session.setAttribute(username, "user");
+			session.setAttribute("admin", username);
+			System.out.print("Test");
 			String jsonInString = "{\"status\":\"success\"}";
 			out.write(jsonInString);
 			out.flush();
 			return;
-		//	session.setAttribute("admin",username);  
-			//response.sendRedirect("http://localhost:8080/U-Link/index.html");
+			//session.setAttribute("admin",username);  
+			//response.sendRedirect("./index.html");
 			//return;
 			//request.getRequestDispatcher("./ToDoServlet").forward(request, response);
-		} else {
-			request.setAttribute("error", "Invalid username/password");
-			request.getRequestDispatcher("Login.html").forward(request, response);
-			return;
-		}
+		} 
 		
 	}
 

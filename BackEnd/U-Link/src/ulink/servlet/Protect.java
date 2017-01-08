@@ -20,11 +20,7 @@ public class Protect implements Filter {
 
     /**
      * Default constructor. 
-     */
-    public Protect() {
-        // TODO Auto-generated constructor stub
-    }
-
+  
 	/**
 	 * @see Filter#destroy()
 	 */
@@ -45,8 +41,9 @@ public class Protect implements Filter {
 		
 		
 		HttpSession session = req.getSession(false);
-
-		if(!uri.contains("Login") && session == null && !uri.contains("css") && !uri.contains("js")){
+		System.out.println(uri);
+		System.out.println(session);
+		if(!uri.contains("ogin") && session == null && !uri.contains("css") && !uri.contains("js")){
 			
 			res.sendRedirect("./login.html");
 			return;
