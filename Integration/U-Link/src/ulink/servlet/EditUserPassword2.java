@@ -42,13 +42,12 @@ public class EditUserPassword2 extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		String email =  (String) session.getAttribute("email");
-		String password =  (String) session.getAttribute("password");
-		DatabaseConnection database = new DatabaseConnection();
-		database.editUser(email, password);
+	
 		PrintWriter out = response.getWriter();
 	
-		String jsonInString = "{\"status\":\"success\"}";
-		out.write(jsonInString);
+		//String jsonInString = "{\"status\":\"success\"}";
+		out.write(email);
+		System.out.print(email);
 		out.flush();
 		
 	
