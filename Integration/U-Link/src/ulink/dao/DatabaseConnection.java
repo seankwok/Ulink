@@ -570,7 +570,7 @@ public class DatabaseConnection {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
-			String sql = "SELECT * FROM allcondition where conditionName='" + ID + "'";
+			String sql = "SELECT * FROM allcondition where ID='" + ID + "'";
 			
 			ResultSet rs = stmt.executeQuery(sql);
 
