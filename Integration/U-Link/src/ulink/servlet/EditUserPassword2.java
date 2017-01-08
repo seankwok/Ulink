@@ -44,10 +44,10 @@ public class EditUserPassword2 extends HttpServlet {
 		String email =  (String) session.getAttribute("email");
 		String password =  (String) session.getAttribute("password");
 		DatabaseConnection database = new DatabaseConnection();
+		database.editUser(email, password);
 		PrintWriter out = response.getWriter();
 	
-		String jsonInString = email;
-		System.out.print(jsonInString);
+		String jsonInString = "{\"status\":\"success\"}";
 		out.write(jsonInString);
 		out.flush();
 		
