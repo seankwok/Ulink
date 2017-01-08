@@ -1,6 +1,7 @@
 package ulink.servlet;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Iterator;
@@ -18,6 +19,11 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -126,38 +132,95 @@ public class UploadServlet extends HttpServlet {
             String extension = FilenameUtils.getExtension(fullName);
             if(extension.trim().equalsIgnoreCase("xlsx")){
                 count = processExcelFile(file);
-
+                System.out.print(count);
         		out.write(count);
         		out.flush();
+        		
         		return;
         		
             }
             else if(extension.trim().equalsIgnoreCase("xls")){
                 //process your binary excel file
-            	  count = processExcelFile(file);
+            	  count = test(file);
 
           		out.write(count);
           		out.flush();
+          		//response.sendRedirect("./upload.html");
           		return;
             }
             if(extension.trim().equalsIgnoreCase("csv")){
                 //process your CSV file
+            	return;
             }
 
  
         }
         catch(FileUploadException ex) {
             log("Error encountered while parsing the request",ex);
-            myObj.addProperty("success", false);
+            //myObj.addProperty("success", false);
             out.println(myObj.toString());
+            response.sendRedirect("./upload.html");
+            return;
         } catch(Exception ex) {
             log("Error encountered while uploading file",ex);
             myObj.addProperty("success", false);
             out.println(myObj.toString());
+            response.sendRedirect("./upload.html");
+            return;
         }
  
-        out.close();
- 
+        request.getRequestDispatcher("./upload.html").forward(request, response);
+        //response.sendRedirect("./upload.html");
+        return;
+    }
+    
+    private int test(File file) throws FileNotFoundException, IOException{
+    	 POIFSFileSystem fs = new POIFSFileSystem(new FileInputStream(file));
+    	    HSSFWorkbook wb = new HSSFWorkbook(fs);
+    	    HSSFSheet sheet = wb.getSheetAt(0);
+    	    HSSFRow row;
+    	    HSSFCell cell;
+    	    int count = 0;
+    	    DatabaseConnection connection = new DatabaseConnection();
+    	    Iterator<Row> rowIter = sheet.rowIterator();
+    	    rowIter.next();
+            rowIter.next();
+            while(rowIter.hasNext()){
+            	 row = (HSSFRow) rowIter.next();
+                 Iterator<Cell> cellIter = row.cellIterator();
+                 																				
+                 		HSSFCell accountID = (HSSFCell) cellIter.next();
+                 		HSSFCell clientOwner = (HSSFCell) cellIter.next();
+                 		HSSFCell clientName = (HSSFCell) cellIter.next();
+                 		HSSFCell clientType = (HSSFCell) cellIter.next();
+                 		HSSFCell company = (HSSFCell) cellIter.next();
+                 		HSSFCell nationality = (HSSFCell) cellIter.next();
+                 		HSSFCell gender = (HSSFCell) cellIter.next();
+                 		HSSFCell dateOfBirth = (HSSFCell) cellIter.next();
+                 		HSSFCell email = (HSSFCell) cellIter.next();
+                 		HSSFCell medical = (HSSFCell) cellIter.next();
+                 		HSSFCell mainDiagnosis = (HSSFCell) cellIter.next();
+                 		HSSFCell referredByPIC = (HSSFCell) cellIter.next();
+                 		HSSFCell appointment = (HSSFCell) cellIter.next();
+                 		HSSFCell doctor = (HSSFCell) cellIter.next();
+                 		HSSFCell specialty = (HSSFCell) cellIter.next();
+                 		HSSFCell clinic = (HSSFCell) cellIter.next();
+                 		HSSFCell otherDoctor = (HSSFCell) cellIter.next();
+                 		HSSFCell followUpPerson = (HSSFCell) cellIter.next();
+                 		HSSFCell followUpPIC = (HSSFCell) cellIter.next();
+                 		HSSFCell hospitalAdmitted = (HSSFCell) cellIter.next();
+                 		HSSFCell log = (HSSFCell) cellIter.next();
+                 		HSSFCell claim = (HSSFCell) cellIter.next();
+                 		HSSFCell visa = (HSSFCell) cellIter.next();
+                 		HSSFCell visaType = (HSSFCell) cellIter.next();
+                 		HSSFCell visaType2 = (HSSFCell) cellIter.next();
+                 		System.out.println(clientName.toString().length());
+                 		connection.createClient(accountID.toString(), clientOwner.toString(), clientName.toString(), clientType.toString(), company.toString(), nationality.toString(), gender.toString(), dateOfBirth.toString(), email.toString(), medical.toString(), mainDiagnosis.toString(), referredByPIC.toString(), appointment.toString(), doctor.toString(), specialty.toString(), clinic.toString(), otherDoctor.toString(), followUpPerson.toString(), followUpPIC.toString(), hospitalAdmitted.toString(), log.toString(), claim.toString(), visa.toString(), visaType.toString(), visaType2.toString());
+                 	    count++;
+                     
+            }
+    	    return count;
+    	    
     }
  
     private int processExcelFile(File file){

@@ -21,13 +21,14 @@
 			    var age= $('#age').val();
 				var illness= $('#illness').val();
 				var screening= $('#screening').val();
-				var type=$(':checkbox').map(function(){
-					return this.value;
+				var type = $('input[name="demo"]:checked').map(function() {
+				    return this.value;
 				}).get();
+				
 				var years= $('#years').val();
-				console.log(illness);
+				console.log(type);
 				if(age == "" || illness == "" || screening == "" || type == "" || years == ""){
-					$('#message').html("<div class='alert alert-danger' role='alert'><center><b> Please input empty fields. </b></center></div>");
+					$('#message').html("<div class='alert alert-danger' alert-dismissible role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><center><b> Please input empty fields.</b></center></div>");
 
 				} else{
 				
@@ -44,15 +45,12 @@
 					+ 'type=' + type
 					+ '&'
 					+ 'years=' + years,
-				success: function(data){
-					console.log(data.status);
-					if (data.status == "success") 
-						$('#message').html("<div class='alert alert-success' role='alert'><center><b> Successfully added new screening </b></center></div>");
-					else
-						$('#message').html("<div class='alert alert-danger' role='alert'><center><b> Screening already exist. </b></center></div>");
-
-				}
+				complete: function(data){
+					$('#message').html("<div class='alert alert-success' role='alert'><center><b> Successfully added new screening </b></center></div>");
+					window.location="viewScreenings.html";
+			}
 			});
+			return false;
 				}
 			
 		});

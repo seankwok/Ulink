@@ -21,14 +21,14 @@ import ulink.dao.DatabaseConnection;
 /**
  * Servlet implementation class EditCondition2
  */
-@WebServlet("/EditCondition2")
-public class EditCondition2 extends HttpServlet {
+@WebServlet("/EditUserPassword2")
+public class EditUserPassword2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EditCondition2() {
+    public EditUserPassword2() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -41,17 +41,17 @@ public class EditCondition2 extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		
-		String conditionId =  (String) session.getAttribute("ID");
+		String email =  (String) session.getAttribute("email");
+		String password =  (String) session.getAttribute("password");
 		DatabaseConnection database = new DatabaseConnection();
-		System.out.println(conditionId);
-		Condition conditionType = database.retrieveConditionDetails(Integer.parseInt(conditionId));	
 		PrintWriter out = response.getWriter();
-		Gson gson = new Gson();
+	
+		String jsonInString = email;
+		System.out.print(jsonInString);
+		out.write(jsonInString);
+		out.flush();
 		
-		  String arrayListToJson = gson.toJson(conditionType);
-		  	System.out.println(arrayListToJson);
-			out.write(arrayListToJson);
-			out.flush();
+	
 		return;
 	}
 
