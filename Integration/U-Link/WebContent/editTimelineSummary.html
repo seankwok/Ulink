@@ -24,7 +24,10 @@
 					var age = $('#age').val();
 					var illness = $("#illness").val();
 					var screening = $("#screening").val();
-					var type = $("#type").val();
+					var type = $('input[name="demo"]:checked').map(function() {
+					    return this.value;
+					}).get();
+					
 					var years = $("#years").val();
 					console.log(age);
 					console.log(type);
@@ -71,7 +74,7 @@
 			complete : function(data) {
 				console.log(data);
 				var json = jQuery.parseJSON(JSON.stringify(data));
-				console.log();
+				console.log(json);
 				$("#illness").val(json.responseJSON.conditionName);
 				$("#years").val(json.responseJSON.years);
 				$("#age").val(json.responseJSON.ageRequired);
@@ -166,9 +169,9 @@
 
 			<div>
 				<label for="screening">Demographic affected</label> <br>
-				<label class="checkbox-inline"><input type="checkbox" name="infant" id="type" value="infant">Infant</label>
-				<label class="checkbox-inline"><input type="checkbox" name="female" id="type" value="female">Female</label>
-				<label class="checkbox-inline"><input type="checkbox" name="male" id="type" value="male">Male</label>
+				<label class="checkbox-inline"><input type="checkbox" name="demo" id="type" value="infant">Infant</label>
+				<label class="checkbox-inline"><input type="checkbox" name="demo" id="type" value="female">Female</label>
+				<label class="checkbox-inline"><input type="checkbox" name="demo" id="type" value="male">Male</label>
 				</div>
 				<br>
 
