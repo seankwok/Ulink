@@ -14,9 +14,10 @@
     <script src="js/bootstrap.min.js"></script>
  <style>
  	
- 	#clientDetails th, td {
+ 	#table th, td {
     padding: 10px;
     text-align: center;
+    border: 1px;
 
  	}
  	</style>
@@ -39,39 +40,42 @@
 				data : sendData,
 				dataType : "json",
 				success : function(data) {
-				
+					
 				}
 
 			});
 		}
 
 		function displayAll() {
-			var clientDetails = "<table><thead><tr><th>Client Name</th><th>Client Type</th><th>Visa/Medical</th></tr></thead>";
+			var table = "";
 			var isEmpty = false;
-			var completeIsEmpty = false;
 			$.ajax({
-						url : "DisplayAllClient",
-						type : "GET",
-						dataType : "json",
-						complete : function(data) {
-							var json = jQuery.parseJSON(JSON.stringify(data));
-							console.log(json);
-							$.each(json,function(key, value) {
-										clientDetails += "<tbody><tr><td>"
-														+ value["clientName"]
-														+ "</td>"
-														+ "<td>"
-														+ value["clientType"]
-														+ "</td">
-														+ "<td>"
-														+ value["gender"]
-														+ "</td></tr></tbody>";
-
-							});
-							clientDetails += "</table>"
-							$("#clientDetails").html(clientDetails);
-						}
-					});
+				url: "DisplayAllClient",
+				type: "get",
+			    dataType : "json",
+			    complete: function(data){
+			    	console.log(data);
+			    	var json = jQuery.parseJSON(JSON.stringify(data));
+			    	console.log(json);
+			    	table += "<thead><tr><th>Client Name</th><th>Client Type</th><th>Visa/Medical</th></tr></thead>";
+			    	$.each(json,function(key, value) {
+			    		table += "<tbody><tr><td>"
+		    				+ value["clientName"]
+		    				+ "</td>"
+		    				+ "<td>"
+		    				+ value["clientType"]
+	    					+ "</td>"
+	    					+ "<td>"
+		    				+ value["gender"]
+	    					+ "</td></tr></tbody>"
+	    					
+			    	});
+			    	table += "</table>"
+			    		$("#table").html(table);
+			    	
+			    }	
+			    
+			});	
 		
 		}
 	</script>
@@ -138,7 +142,7 @@
        <h1 align="center"><b>Client List</b></h1>
     </div>
 
-    <div class="container" id="clientDetails"></div>
+    <div class="container" id="table" align="center"></div>
     
 
 
