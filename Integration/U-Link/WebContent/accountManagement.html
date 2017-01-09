@@ -85,28 +85,32 @@
 	function displayAll(){
 		var table = "";
 		var isEmpty = false;
+		
+		
 		$.ajax({
 			url: "DisplayAllUser",
 			type: "get",
 		    dataType : "json",
-		    success: function(data){
-		    	var json = jQuery.parseJSON(JSON.stringify(data));
-		    	console.log(json);
-		    	table += "<table><tr><th>User Email</th><th>Password</th><th>Delete</th></tr>";
-		    	$.each(json,function(key, value) {
-		    		table += "<tr><td>"
-		    				+ value["email"]
-		    				+ "</td>"
-		    				+ '<td><a href=# onClick=editItem(this.id) id="'
-							+ value.email
-							+ '">Reset</a></td>'
-		    				+ '<td><a href=# onClick=deleteItem(this.id) id="'
-							+ value.email
-							+ '">Delete</a></td>'
-							+ "</td></tr>";
-		    	});
-		    	table += "</table>"
-		    	$("#table").html(table);
+		    success: function(data){		    	
+		    		var json = jQuery.parseJSON(JSON.stringify(data));
+			    	console.log(data);
+					table += "<div class='col-md-6 col-md-offset-3'><div class='panel panel-default'><div class='panel-body'><div align='center'><h3><b>You are currently logged in as an admin</b></h3><br><button type='submit' class='btn btn-default'><a href='createAccount.html'> Create new account </a></button></div></div> </div></div>";
+			    	table += "<table><tr><th>User Email</th><th>Password</th><th>Delete</th></tr>";
+			    	$.each(json,function(key, value) {
+			    		table += "<tr><td>"
+			    				+ value["email"]
+			    				+ "</td>"
+			    				+ '<td><a href=# onClick=editItem(this.id) id="'
+								+ value.email
+								+ '">Reset</a></td>'
+			    				+ '<td><a href=# onClick=deleteItem(this.id) id="'
+								+ value.email
+								+ '">Delete</a></td>'
+								+ "</td></tr>";
+			    	});
+			    	table += "</table>"
+			    	$("#table").html(table);
+
 		    	
 		    }	
 		    
@@ -172,17 +176,9 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-	<div class="container">
-	<div class="col-md-6 col-md-offset-3">
-	<div class="panel panel-default">
-	  <div class="panel-body">
-	   <div align="center"><h3><b>You are currently logged in as Admin </b></h3><br>
-	   <button type="submit" class="btn btn-default"><a href="createAccount.html"> Create new account </a></button>
-	   </div>
-	  </div> 
-	</div>
-	</div>
-	</div>
+	
+	
+
 	<div  class="container" id="table" align="center"></div>
 	<div class='col-md-8 col-md-offset-2' id="message"></div>
 		
