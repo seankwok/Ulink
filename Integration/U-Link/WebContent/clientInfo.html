@@ -12,68 +12,74 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
- <style>
- 	
- 	#clientDetails th, td {
-    padding: 10px;
-    text-align: center;
-
- 	}
- 	</style>
  
  <script type="text/javascript">
 
 		$(document).ready(function() {
-
 			displayAll();
+			displayApptDateAndTime();
 		});
 
-		function directToClientProfile(clickedID) {
-			var sendData = {
-				"accountID" : clickedID
-			};
-			console.log(clickedID);
-			$.ajax({
-				url : "",
-				type : "",
-				data : sendData,
-				dataType : "json",
-				success : function(data) {
-				
-				}
-
-			});
-		}
 
 		function displayAll() {
-			var clientDetails = "<table><thead><tr><th>Client Name</th><th>Client Type</th><th>Visa/Medical</th></tr></thead>";
+			var clientDetails = "<thead><tr><th>Age</th></tr><tr><th>Gender</th></tr><tr><th>Nationality</th></tr><tr><th>Date of Birth</th></tr><tr><th>Company</th></tr><tr><th>Email</th></tr><tr><th>Client Owner</th></tr><tr><th>Person In Charge</th></tr><tr><th>Referred By</th></tr><tr><th>Visa requested by</th></tr><tr><th>Visa Type</th></tr></thead>";
 			var isEmpty = false;
 			var completeIsEmpty = false;
 			$.ajax({
 						url : "DisplayAllClient",
 						type : "GET",
 						dataType : "json",
-						complete : function(data) {
+						success : function(data) {
+
 							var json = jQuery.parseJSON(JSON.stringify(data));
 							console.log(json);
 							$.each(json,function(key, value) {
-										clientDetails += "<tbody><tr><td>"
-														+ value["clientName"]
-														+ "</td>"
-														+ "<td>"
-														+ value["clientType"]
-														+ "</td">
-														+ "<td>"
-														+ value["gender"]
-														+ "</td></tr></tbody>";
+											clientDetails += '<tr><td>'
+															+ value.clientName
+															+ '</td></tr>'
+															+ '<tr><td>'
+															+ value.age
+															+ '</td></tr>'
+															+ '<tr><td>'
+															+ value.gender
+															+ '</td></tr>'
+															+ '<tr><td>'
+															+ value.nationality
+															+ '</td></tr>'
+															+ '<tr><td>'
+															+ value.dateOfBirth
+															+ '</td></tr>'
+															+ '<tr><td>'
+															+ value.company
+															+ '</td></tr>'
+															+ '<tr><td>'
+															+ value.email
+															+ '</td></tr>'
+															+'<tr><td>'
+															+ value.clientOwner
+															+ '</td></tr>'
+															+ '<tr><td>'
+															+ value.personInCharge
+															+ '</td></tr>'
+															+ '<tr><td>'
+															+ value.referredBy
+															+ '</td></tr>'
+															+ '<tr><td>'
+															+ value.visaRequest
+															+ '</td></tr>'
+															+ '<tr><td>'
+															+ value.visaType
+															+ '</td></tr>';
+															
+											});
 
-							});
-							clientDetails += "</table>"
-							$("#clientDetails").html(clientDetails);
+							$("#clientInfo").html(clientDetails);
 						}
 					});
 		
 		}
+		
+		
 	</script>
  
   </head>
@@ -126,7 +132,7 @@
         <li><a href="login.html" onClick=logout()>Logout</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-      	<li><a href="accountManagement.html">Account Management <span class="sr-only">(current)</span></a></li>
+      	<li class="active"><a href="accountManagement.html">Account Management <span class="sr-only">(current)</span></a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
@@ -135,13 +141,12 @@
 
 	
     <div class="page-header">
-       <h1 align="center"><b>Client List</b></h1>
+       <h1 align="center">Client Info</h1>
     </div>
 
-    <div class="container" id="clientDetails"></div>
-    
-
-
+   <div class="container">
+	<div class=".col-md-6" id="clientInfo"></div>
+</div>
     
   </body>
 </html>

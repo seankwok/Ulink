@@ -43,13 +43,13 @@ public class DisplayAllClient extends HttpServlet {
 
 		DatabaseConnection database = new DatabaseConnection();
 		ArrayList<Client> clientList = database.retrieveAllClientList();
+		System.out.print(clientList);
 
 		Gson gson = new Gson();
 
 		JsonArray result = (JsonArray) new Gson().toJsonTree(clientList, new TypeToken<List<Client>>() {
 		}.getType());
 		String arrayListToJson = gson.toJson(result);
-
 		out.write(arrayListToJson);
 		out.flush();
 		return;

@@ -62,12 +62,12 @@ public class CreateUser extends HttpServlet {
 		if (!check){
 		String hPassword = utility.hash(password);
 		connection.createUser(username, hPassword,roles);
-		String jsonInString = "{\"status\":\"success\"}";
+		String jsonInString = "success";
 			out.write(jsonInString);
 			out.flush();
 			return;
 		}else {
-			String jsonInString = "{\"status\":\"fail\"}";
+			String jsonInString = "fail";
 			out.write(jsonInString);
 			out.flush();
 			return;

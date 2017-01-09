@@ -41,7 +41,7 @@ public class Edit extends HttpServlet {
 		int years = Integer.parseInt(request.getParameter("years"));
 		connection.editAllCondition(illness, years, age, screening,type);
 		System.out.println(age);
-		String jsonInString = "{\"status\":\"success\"}";
+		String jsonInString = "success";
 		out.write(jsonInString);
 		out.flush();
 		return;

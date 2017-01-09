@@ -33,18 +33,22 @@
 						+'roles=' + roles
 						+'&'
 						+ 'password='+ password,
-				async: false,
 				dataType: "json",
+				async: false,
 				complete : function(data) {
-					console.log(data.status);
-					if(data.status == 'success'){
+					console.log(data);
+					if (data.status == '200' || data.responseText == 'success'){
 						$("#createSuccess").html("<div class='alert alert-success' role='alert'><center><strong>Account created successfully</strong></center></div>");
-					}else{
+						window.location="accountManagement.html";
+						return false;
+					} 
+					if (data.responseText == 'fail'){
 						$("#createSuccess").html("<div class='alert alert-danger' role='alert'><center><strong>Username is taken</strong></center></div>");
-
+						return false;
 					}
 				}
 			});
+			return false;
 			}
 		});
 	});
@@ -79,6 +83,7 @@
       <ul class="nav navbar-nav">
       <li><a href="index.html">Home</a></li>
         <li><a href="upload.html">Upload Patient Data</a></li>
+         <li><a href="client.html">Client</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Screenings <span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -107,7 +112,7 @@
         <li><a href="login.html" onClick=logout()>Logout</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-      	<li class="active"><a href="accountManagement.html">Account Management <span class="sr-only">(current)</span></a></li>
+      	<li><a href="accountManagement.html">Account Management <span class="sr-only">(current)</span></a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

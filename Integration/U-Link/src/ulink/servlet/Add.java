@@ -51,7 +51,7 @@ public class Add extends HttpServlet {
 		}
 		
 		System.out.println(illness);
-		String jsonInString = "{\"status\":\"success\"}";
+		String jsonInString = "success";
 		out.write(jsonInString);
 		out.flush();
 		return;

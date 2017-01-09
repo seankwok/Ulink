@@ -30,9 +30,7 @@
 	
 	$(document).ready(function() {
 		displayAll();
-
-		$("#table").DataTable();
-			
+		
 		});
 		/* $("#generate").click(function(){
 			   var demo = $(':checkbox').map(function(){
@@ -114,10 +112,10 @@
 			type: "get",
 		    dataType : "json",
 		    
-		    success: function(data){
+		    complete: function(data){
 		    	var json = jQuery.parseJSON(JSON.stringify(data));
 		    	console.log(json);
-		    	table += "<thead><tr><th>Starting Age</th><th>Common Illness</th><th>Recommended Screening</th><th>Affected Demographic</th><th>Frequency of screening in years</th><th>View Patients</th><th>Edit</th><th>Delete</th></tr></thead>";
+		    	table += "<thead><tr><th>Starting Age</th><th>Common Illness</th><th>Recommended Screening</th><th>Affected Demographic</th><th>Regularity of Screening</th><th>View Patients</th><th>Edit</th><th>Delete</th></tr></thead>";
 		    	$.each(json,function(key, value) {
 		    		table += "<tbody><tr><td>"
 	    				+ value["ageRequired"]
@@ -149,7 +147,6 @@
 		    	});
 		    	table += "</table>"
 		    		$("#display").html(table);
-		    	$("#table").DataTable();
 		    	
 		    }	
 		    
