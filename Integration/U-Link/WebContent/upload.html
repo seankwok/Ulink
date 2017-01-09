@@ -15,6 +15,7 @@
  	
  	<script type="text/javascript">
 	$(document).ready(function() {
+		var numRows = retrieveNumRows();
 		$("#submit").click(function() {
 			var inputFile = $("#InputFile").val();
 			var uploadedTime = $("#timestamp").val();
@@ -47,7 +48,15 @@
 		$.ajax({
 			url: "Logout",
 			type: "post",
-			
+			 
+		});
+	}
+	
+	function retrieveNumRows(){
+		$.ajax({
+			url: "UploadServlet",
+			type: "post",
+			return ;
 		});
 	}
 	

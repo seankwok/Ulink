@@ -114,7 +114,7 @@
 		    success: function(data){
 		    	var json = jQuery.parseJSON(JSON.stringify(data));
 		    	console.log(json);
-		    	table += "<thead><tr><th>Starting Age</th><th>Common Illness</th><th>Recommended Screening</th><th>Affected Demographic</th><th>Frequency of screening in years</th><th>View Patients</th><th>Edit</th><th>Delete</th></tr></thead>";
+		    	table += "<thead><tr><th>Starting Age</th><th>Common Illness</th><th>Recommended Vaccination/ Screening</th><th>Affected Demographic</th><th>Regularity of screening</th><th>View Patients</th><th>Edit</th><th>Delete</th></tr></thead>";
 		    	$.each(json,function(key, value) {
 		    		table += "<tbody><tr><td>"
 	    				+ value["ageRequired"]
