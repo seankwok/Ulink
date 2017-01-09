@@ -20,7 +20,6 @@
 			var username = $("#inputEmail").val();
 			var password = $("#inputPassword").val();
 			var roles = $("#accountType").val();
-			var url = "index.html";
 			if(username == "" || password == ""){
 				$("#createSuccess").html("<div class='alert alert-danger' role='alert'><center><strong>Please input empty fields</strong></center></div>");
 			} else{
@@ -37,13 +36,12 @@
 				async: false,
 				complete : function(data) {
 					console.log(data);
-					if (data.status == '200' || data.responseText == 'success'){
-						$("#createSuccess").html("<div class='alert alert-success' role='alert'><center><strong>Account created successfully</strong></center></div>");
-						window.location="accountManagement.html";
-						return false;
-					} 
 					if (data.responseText == 'fail'){
 						$("#createSuccess").html("<div class='alert alert-danger' role='alert'><center><strong>Username is taken</strong></center></div>");
+						return false;
+					}else {
+						$("#createSuccess").html("<div class='alert alert-success' role='alert'><center><strong>Account created successfully</strong></center></div>");
+						window.location="accountManagement.html";
 						return false;
 					}
 				}

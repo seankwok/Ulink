@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ulink.constructor.Client;
+import ulink.constructor.User;
 import ulink.dao.DatabaseConnection;
 import ulink.logic.Utility;
 
@@ -52,10 +53,10 @@ public class CreateUser extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String roles = request.getParameter("roles");
-		ArrayList<Client> clientList = connection.retrieveAllClientList();	
+		ArrayList<User> userList = connection.getUser();	
 		
-		for (int i = 0; i < clientList.size(); i++){
-			if (clientList.get(i).getAccountID().equals(username)){
+		for (int i = 0; i < userList.size(); i++){
+			if (userList.get(i).getEmail().equals(username)){
 				check = true;
 			}	
 		}

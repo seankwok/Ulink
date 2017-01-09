@@ -44,6 +44,7 @@ public class DisplayAll extends HttpServlet {
 		
 		DatabaseConnection database = new DatabaseConnection();
 		ArrayList<Condition> conditionList = database.retrieveAllCondition();
+		System.out.print(conditionList);
 		
 		Gson gson = new Gson();
 		

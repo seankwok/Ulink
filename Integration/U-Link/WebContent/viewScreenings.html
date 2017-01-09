@@ -8,12 +8,10 @@
     <title>View Screening</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="http://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" rel="stylesheet">
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="js/jquery-1.12.0.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-	<script src="http://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 	
  	
  	<style>
@@ -30,7 +28,8 @@
 	
 	$(document).ready(function() {
 		displayAll();
-		
+
+			
 		});
 		/* $("#generate").click(function(){
 			   var demo = $(':checkbox').map(function(){
@@ -112,10 +111,10 @@
 			type: "get",
 		    dataType : "json",
 		    
-		    complete: function(data){
+		    success: function(data){
 		    	var json = jQuery.parseJSON(JSON.stringify(data));
 		    	console.log(json);
-		    	table += "<thead><tr><th>Starting Age</th><th>Common Illness</th><th>Recommended Screening</th><th>Affected Demographic</th><th>Regularity of Screening</th><th>View Patients</th><th>Edit</th><th>Delete</th></tr></thead>";
+		    	table += "<thead><tr><th>Starting Age</th><th>Common Illness</th><th>Recommended Screening</th><th>Affected Demographic</th><th>Frequency of screening in years</th><th>View Patients</th><th>Edit</th><th>Delete</th></tr></thead>";
 		    	$.each(json,function(key, value) {
 		    		table += "<tbody><tr><td>"
 	    				+ value["ageRequired"]
