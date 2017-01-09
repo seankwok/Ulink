@@ -14,12 +14,23 @@
     <script src="js/bootstrap.min.js"></script>
  <style>
  	
- 	#table th, td {
+ 	#table th {
     padding: 10px;
-    text-align: center;
+    text-align: left;
     border: 1px;
 
  	}
+ 	
+ 	#table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px;
+
+ 	}
+ 	
+ 	a:hover { 
+    	font color: "blue";
+	}
  	</style>
  
  <script type="text/javascript">
@@ -48,7 +59,7 @@
 		}
 
 		function displayAll() {
-			var table = "";
+			var table = "<table class=' table-hover'>";
 			var isEmpty = false;
 			$.ajax({
 				url: "DisplayAllClient",
@@ -56,22 +67,20 @@
 			    dataType : "json",
 			    complete: function(data){
 			    	var json = jQuery.parseJSON(data.responseText);
-			    	table += "<thead><tr><th>Client Name</th><th>Client Type</th><th>Visa/Medical</th><th>View Profile</th></tr></thead>";
+			    	table += "<thead><tr><th>Client Name</th><th>Client Type</th><th width=30%>Visa/Medical</th></tr></thead>";
 					$.each(json, function(i, item){
-						table 	+= "<tbody><tr><td>"
-		    					+ item.clientName
-		    					+ "</td>"
-		    					+ "<td>"
-		    					+ item.clientType
-		    					+ "</td>"
-		    					+ "<td>"
-		    					+ item.clientType
-		    					+ "</td>"
-		    					+ "<td>"
-			    				+ "<a href='#' onClick=directToClientProfile(this.id) id= '"
+						table 	+= "<tbody><tr ><td>"
+								+ "<a href='#' onClick=directToClientProfile(this.id) id= '"
 			    				+ item.clientName
-			    				+ "'>View</a>"
-		    					+ "</td></tr></tbody>"
+			    				+ "'>"+item.clientName +"</a>"
+		    					+ "</td>"
+		    					+ "<td width=30%>"
+		    					+ item.clientType
+		    					+ "</td>"
+		    					+ "<td>"
+		    					+ item.clientType
+		    					+ "</td>"
+		    					+ "</tr></tbody>"
 		    					
 					});
 			    	table += "</table>"
