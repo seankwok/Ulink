@@ -88,7 +88,8 @@ public class Utility {
 	}
 	
 	public int getAge(String dob) {
-		if (dob != null){
+		if (dob.length() > 0 && dob != null && dob != ""){
+			dob = dob.replace('/', '-');
 		int year = Integer.parseInt(dob.substring(5));
 		DateTime datetime = new DateTime();
 		int currentYear = datetime.getYear();

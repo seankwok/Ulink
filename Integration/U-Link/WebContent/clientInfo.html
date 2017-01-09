@@ -12,74 +12,106 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+ <style>
+ 	
+ 	#profile th {
+    padding: 10px;
+    text-align: left;
+    border: 1px;
+
+ 	}
+ 	
+ 	#profile td {
+    padding: 10px;
+    text-align: left;
+    border: 1px;
+
+ 	}
+ 	
+ 	a:hover { 
+    	font color: "blue";
+	}
+ 	</style>
  
  <script type="text/javascript">
 
 		$(document).ready(function() {
 			displayAll();
-			displayApptDateAndTime();
 		});
 
 
 		function displayAll() {
-			var clientDetails = "<thead><tr><th>Age</th></tr><tr><th>Gender</th></tr><tr><th>Nationality</th></tr><tr><th>Date of Birth</th></tr><tr><th>Company</th></tr><tr><th>Email</th></tr><tr><th>Client Owner</th></tr><tr><th>Person In Charge</th></tr><tr><th>Referred By</th></tr><tr><th>Visa requested by</th></tr><tr><th>Visa Type</th></tr></thead>";
-			var isEmpty = false;
-			var completeIsEmpty = false;
+			var profileTable = "<table>";
+		
 			$.ajax({
-						url : "DisplayAllClient",
-						type : "GET",
-						dataType : "json",
-						success : function(data) {
-
-							var json = jQuery.parseJSON(JSON.stringify(data));
-							console.log(json);
-							$.each(json,function(key, value) {
-											clientDetails += '<tr><td>'
-															+ value.clientName
-															+ '</td></tr>'
-															+ '<tr><td>'
-															+ value.age
-															+ '</td></tr>'
-															+ '<tr><td>'
-															+ value.gender
-															+ '</td></tr>'
-															+ '<tr><td>'
-															+ value.nationality
-															+ '</td></tr>'
-															+ '<tr><td>'
-															+ value.dateOfBirth
-															+ '</td></tr>'
-															+ '<tr><td>'
-															+ value.company
-															+ '</td></tr>'
-															+ '<tr><td>'
-															+ value.email
-															+ '</td></tr>'
-															+'<tr><td>'
-															+ value.clientOwner
-															+ '</td></tr>'
-															+ '<tr><td>'
-															+ value.personInCharge
-															+ '</td></tr>'
-															+ '<tr><td>'
-															+ value.referredBy
-															+ '</td></tr>'
-															+ '<tr><td>'
-															+ value.visaRequest
-															+ '</td></tr>'
-															+ '<tr><td>'
-															+ value.visaType
-															+ '</td></tr>';
-															
-											});
-
-							$("#clientInfo").html(clientDetails);
-						}
+				url : "DisplayAllClientByName",
+				type : "post",
+				dataType : "json",
+				complete : function(data) {
+					var json = jQuery.parseJSON(data.responseText);
+					console.log(json);
+					profileTable += "<thead>"
+				          $.each(json, function(i, item){
+				          profileTable   +="<tr>"
+				                +"<th>Client Name</th>"
+				                +"<td>"+item.clientName+"</td>"
+				                +"</tr>"
+				                
+				                +"<tr>"
+				                +"<th>Client Type</th>"
+				                +"<td>"+item.clientType+"</td>"
+				                +"</tr>"                
+				                
+				                +"<tr>"
+				                +"<th>Company</th>"
+				                +"<td>"+item.company+"</td>"
+				                +"</tr>"
+				                
+				                +"<tr>"
+				                +"<th>Nationality</th>"
+				                +"<td>"+item.nationality+"</td>"
+				                +"</tr>"
+				                
+				                +"<tr>"
+				                +"<th>Gender</th>"
+				                +"<td>"+item.gender+"</td>"
+				                +"</tr>"
+				                
+				                +"<tr>"
+				                +"<th>Date of Birth</th>"
+				                +"<td>"+item.dateOfBirth+"</td>"
+				                +"</tr>"
+				                
+				                +"<tr>"
+				                +"<th>Email</th>"
+				                +"<td>"+item.email+"</td>"
+				                +"</tr>"
+				                
+				                +"<tr>"
+				                +"<th>Client Owner</th>"
+				                +"<td>"+item.clientOwner+"</td>"
+				                +"</tr>"
+				                
+				                +"<tr>"
+				                +"<th>PIC</th>"
+				                +"<td>"+item.PIC+"</td>"
+				                +"</tr>"
+				                
+				                +"<tr>"
+				                +"<th>Referred By</th>"
+				                +"<td>"+item.referredBy+"</td>"
+				                +"</tr>"
+				                  + "</tbody>"
+				 
 					});
-		
+					profileTable += "</table>"
+			    	$("#profile").html(profileTable);
+				}
+									
+				
+
+			});
 		}
-		
-		
 	</script>
  
   </head>
@@ -132,7 +164,7 @@
         <li><a href="login.html" onClick=logout()>Logout</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-      	<li class="active"><a href="accountManagement.html">Account Management <span class="sr-only">(current)</span></a></li>
+      	<li><a href="accountManagement.html">Account Management <span class="sr-only">(current)</span></a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
@@ -141,11 +173,13 @@
 
 	
     <div class="page-header">
-       <h1 align="center">Client Info</h1>
+       <h1 align="center"><b>Client Info</b></h1>
     </div>
+    
+    
 
-   <div class="container">
-	<div class=".col-md-6" id="clientInfo"></div>
+   <div class="container" align="center"
+ id="profile">
 </div>
     
   </body>

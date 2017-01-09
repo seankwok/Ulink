@@ -50,6 +50,8 @@ HttpSession session = request.getSession();
 		DatabaseConnection connection = new DatabaseConnection();
 		//String  = request.getParameter("clientName");
 		ArrayList<Client> clientList = connection.retrieveAllClientByName(clientName);
+		System.out.print(clientName);
+		System.out.print(clientList);
 		PrintWriter out = response.getWriter();
 		Gson gson = new Gson();
 

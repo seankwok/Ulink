@@ -39,24 +39,29 @@
 
 			displayAll();
 			
+			
 		});
 
-		function directToClientProfile(clickedID) {
+		function directToClientProfile(clickedID){
 			var sendData = {
-				"accountID" : clickedID
-			};
-			console.log(clickedID);
-			$.ajax({
-				url : "",
-				type : "",
-				data : sendData,
-				dataType : "json",
-				success : function(data) {
-					window.location="clientInfo.html";
-				}
+					"clientName" : clickedID
+				};
+				console.log(clickedID);
+				$.ajax({
+					url : "DisplayAllClientByName2",
+					type : "post",
+					data : sendData,
+					dataType : "json",
+					complete : function(data) {
+						displayAll();
+							window.location="clientInfo.html";
+						
+					}
 
-			});
+				});
 		}
+		
+		
 
 		function displayAll() {
 			var table = "<table class=' table-hover'>";
@@ -69,7 +74,7 @@
 			    	var json = jQuery.parseJSON(data.responseText);
 			    	table += "<thead><tr><th>Client Name</th><th>Client Type</th><th width=30%>Visa/Medical</th></tr></thead>";
 					$.each(json, function(i, item){
-						table 	+= "<tbody><tr ><td>"
+						table 	+= "<tbody><tr><td>"
 								+ "<a href='#' onClick=directToClientProfile(this.id) id= '"
 			    				+ item.clientName
 			    				+ "'>"+item.clientName +"</a>"
@@ -78,7 +83,7 @@
 		    					+ item.clientType
 		    					+ "</td>"
 		    					+ "<td>"
-		    					+ item.clientType
+		    					+ item.medical
 		    					+ "</td>"
 		    					+ "</tr></tbody>"
 		    					
@@ -156,6 +161,7 @@
     </div>
 
     <div class="container" id="table" align="center"></div>
+     <div class="container" id="profile" align="center"></div>
     
 
 

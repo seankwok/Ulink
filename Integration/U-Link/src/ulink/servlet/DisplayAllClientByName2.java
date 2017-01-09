@@ -30,7 +30,7 @@ public class DisplayAllClientByName2 extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -41,6 +41,7 @@ public class DisplayAllClientByName2 extends HttpServlet {
 		doGet(request, response);
 		HttpSession session = request.getSession();
 		String clientName = request.getParameter("clientName");
+		System.out.println(clientName + "        ");
 		session.setAttribute("clientName", clientName);
 		PrintWriter out = response.getWriter();
 		String jsonInString = "{\"status\":\"success\"}";
