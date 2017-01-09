@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 09, 2017 at 07:21 AM
+-- Generation Time: Jan 09, 2017 at 02:14 PM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -31,7 +31,7 @@ USE `ulink`;
 CREATE TABLE `allcondition` (
   `ID` int(11) NOT NULL,
   `conditionName` varchar(255) NOT NULL,
-  `numOfYears` int(90) DEFAULT NULL,
+  `numOfYears` varchar(255) DEFAULT NULL,
   `ageRequired` int(90) DEFAULT NULL,
   `screening` varchar(255) DEFAULT NULL,
   `type` varchar(90) DEFAULT NULL
@@ -42,32 +42,9 @@ CREATE TABLE `allcondition` (
 --
 
 INSERT INTO `allcondition` (`ID`, `conditionName`, `numOfYears`, `ageRequired`, `screening`, `type`) VALUES
-(1, '1', 1, 1, '1', 'infant,female,male'),
-(2, '1', 12, 1, '1', 'infant,female,male'),
-(3, '2', 2, 2, '2', 'infant,female,male'),
-(15, '123', 123, 12, '123', 'female'),
-(5, '2', 2, 2, '2', 'infant'),
-(7, '2', 2, 2, '2', 'male'),
-(8, 'cold', 12, 14, '1', 'infant'),
-(9, 'cold', 12, 14, '1', 'female'),
-(10, 'cold', 12, 14, '1', 'male'),
-(14, '123', 123, 12, '123', 'infant'),
-(29, 'diedie', 1, 10, 'diedie', 'female'),
-(16, '123', 123, 12, '123', 'male'),
-(17, '1', 1, 1, '12321', 'infant'),
-(18, '1', 1, 1, '12321', 'female'),
-(19, '1', 1, 1, '12321', 'male'),
-(20, 'dying', 3, 1000, 'dying', 'infant'),
-(21, 'dying', 3, 1000, 'dying', 'female'),
-(22, 'dying', 3, 1000, 'dying', 'male'),
-(23, '123', 123, 123, '123', 'infant'),
-(24, '123', 123, 123, '123', 'female'),
-(25, '123', 123, 123, '123', 'male'),
-(26, 'testtest', 1, 1121, 'testtest', 'infant'),
-(27, 'testtest', 1, 1121, 'testtest', 'female'),
-(28, 'testtest', 1, 1121, 'testtest', 'male'),
-(30, 'died', 12, 12, 'died', 'male'),
-(31, '12312312321', 1, 12333, 'test12312312', 'female');
+(40, '123', '123', 22, '123', 'male'),
+(39, '123', '123', 22, '123', 'female'),
+(31, '12312312321', '1', 12333, 'test12312312', 'male');
 
 -- --------------------------------------------------------
 
@@ -2157,7 +2134,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `allcondition`
 --
 ALTER TABLE `allcondition`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
