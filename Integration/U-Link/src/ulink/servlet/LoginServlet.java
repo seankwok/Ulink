@@ -45,7 +45,7 @@ public class LoginServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		System.out.println(password);
+		
 		
 		Utility utility = new Utility();
 		boolean isValid = utility.loginValidatation(username, password);
@@ -53,6 +53,7 @@ public class LoginServlet extends HttpServlet {
 		
 		PrintWriter out = response.getWriter();
 		if (isValid){		
+			
 			session.setAttribute("admin", username);
 			System.out.print("Test");
 			String jsonInString = "success";

@@ -74,7 +74,7 @@ public class UploadServlet extends HttpServlet {
         //PrintWriter to send the JSON response back
         PrintWriter out = response.getWriter();
  
-        //set content type and header attributes
+       // set content type and header attributes
         response.setContentType("text/html");
         response.setHeader("Cache-control", "no-cache, no-store");
         response.setHeader("Pragma", "no-cache");
@@ -135,7 +135,7 @@ public class UploadServlet extends HttpServlet {
                 System.out.print(count);
         		out.write(count);
         		out.flush();
-        		
+
         		return;
         		
             }
@@ -146,26 +146,27 @@ public class UploadServlet extends HttpServlet {
           		out.write(count);
           		out.flush();
           		//response.sendRedirect("./upload.html");
+          		//request.getRequestDispatcher("./upload.html").forward(request, response);
           		return;
             }
-            if(extension.trim().equalsIgnoreCase("csv")){
-                //process your CSV file
-            	return;
-            }
-
+            
+     
  
         }
         catch(FileUploadException ex) {
             log("Error encountered while parsing the request",ex);
             //myObj.addProperty("success", false);
-            out.println(myObj.toString());
-            response.sendRedirect("./upload.html");
+            //out.println(myObj.toString());
+            
+            //request.getRequestDispatcher("./upload.html").forward(request, response);
             return;
         } catch(Exception ex) {
             log("Error encountered while uploading file",ex);
-            myObj.addProperty("success", false);
-            out.println(myObj.toString());
-            response.sendRedirect("./upload.html");
+           // myObj.addProperty("success", false);
+           
+            // out.println(myObj.toString());
+            
+            //request.getRequestDispatcher("./upload.html").forward(request, response);
             return;
         }
  
@@ -219,6 +220,7 @@ public class UploadServlet extends HttpServlet {
                  	    count++;
                      
             }
+           
     	    return count;
     	    
     }
