@@ -13,14 +13,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet Filter implementation class Protect
+ * Servlet Filter implementation class ProtectAccount
  */
-@WebFilter("/Protect")
-public class Protect implements Filter {
+@WebFilter("/ProtectAccount")
+public class ProtectAccount implements Filter {
 
     /**
      * Default constructor. 
-  
+     */
+    public ProtectAccount() {
+        // TODO Auto-generated constructor stub
+    }
+
 	/**
 	 * @see Filter#destroy()
 	 */
@@ -40,12 +44,12 @@ public class Protect implements Filter {
 		String uri = req.getRequestURI();
 		
 		
-		HttpSession session = req.getSession(false);
-		//System.out.println(uri);
-		//System.out.println(session);
-		if(!uri.contains("ogin") && session == null && !uri.contains("css") && !uri.contains("js")){
+		HttpSession session = req.getSession();
+		String roles = (String)session.getAttribute("admin");
+		System.out.println(roles + " QWEWQRQWEW ");
+		if(!roles.equals("admin") && !uri.contains("css") && !uri.contains("js")){
 			
-			res.sendRedirect("./login.html");
+			res.sendRedirect("./index.html");
 			return;
 		}else{
 			// pass the request along the filter chain
@@ -53,6 +57,7 @@ public class Protect implements Filter {
 			return;
 		}
 	}
+
 
 	/**
 	 * @see Filter#init(FilterConfig)

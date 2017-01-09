@@ -44,8 +44,8 @@
 					+ '&'
 					+ 'years=' + years,
 				complete: function(data){
-					console.log(data.status);
-					if(data.status == "success"){
+					console.log(data.responseText);
+					if(data.responseText == "success" || data.status == "200"){
 						$('#message').html("<div class='alert alert-success' role='alert'><center><b> Successfully added new screening </b></center></div>");
 						window.location="viewScreenings.html";
 					} else{

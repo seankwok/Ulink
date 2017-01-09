@@ -28,9 +28,9 @@ public class DatabaseConnection {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
-			String sql = "Select passportNumber,`clientName`,`gender`,dateOfBirth,mainDiagnosis,clientType,nationality,countryOfResidence,billingStreet,billingCity,billingState, billingCountry, billingcode,ismedical,isClaim,claimInformation, referraldetails.referralName from client inner join referraldetails ON client.referral_ID = referraldetails.referral_ID";
+			String sql = "select * from client";
 			ResultSet rs = stmt.executeQuery(sql);
-			Utility utility = new Utility();
+			//Utility utility = new Utility();
 			
 			while (rs.next()) {
 				String accountID = rs.getString(1);
@@ -184,72 +184,7 @@ public class DatabaseConnection {
 
 	}
 	
-	
-	
-	public void updateClient(String passportNumber, String clientName, String gender, String dateOfBirth, String mainDiagnosis, String clientType, String nationality, String countryOfResidence, String billingStreet, String billingCity, String billingState, String billingCountry,
-			String billingCode, String isMedical, String isClaim, String claimInformation, String referralName) {
 
-		Connection con;
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
-
-			String sql = "UPDATE client set clientName = ? , gender = ? , dateOfBirth = ? , mainDiagnosis = ?, clientType = ?,"
-					+ "nationality = ?, countryOfResidence = ?, billingStreet = ?, billingCity = ?, billingState = ?, billingCountry=?," +
-						"billingCode =?, isMedical = ?, isClaim =? , claimInformation = ?, referralName =? where passportNumber =?";
-			PreparedStatement preparedStmt = con.prepareStatement(sql);
-			
-			preparedStmt.setString(1, clientName);
-			preparedStmt.setString(2, gender);
-			preparedStmt.setString(3, dateOfBirth);
-			preparedStmt.setString(4, mainDiagnosis);
-			preparedStmt.setString(5, clientType);
-			preparedStmt.setString(6, nationality);
-			preparedStmt.setString(7, countryOfResidence);
-			preparedStmt.setString(8, billingStreet);
-			preparedStmt.setString(9, billingCity);
-			preparedStmt.setString(10, billingState);
-			preparedStmt.setString(11, billingCountry);
-			preparedStmt.setString(12, billingCode);
-			preparedStmt.setString(13, isMedical);
-			preparedStmt.setString(14, isClaim);
-			preparedStmt.setString(15, claimInformation);
-			preparedStmt.setString(16, referralName);
-			preparedStmt.setString(17, passportNumber);
-			preparedStmt.execute();
-
-			con.close();
-
-		} catch (SQLException | ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
-			
-		}
-
-	}
-	
-
-	public void deleteClient(String passportNumber) {
-		Connection con;
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
-
-			String sql = "DELETE FROM client WHERE passportNumber = ?";
-			PreparedStatement preparedStmt = con.prepareStatement(sql);
-			preparedStmt.setString(1, passportNumber);
-			preparedStmt.executeUpdate();
-
-			con.close();
-
-		} catch (SQLException | ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-	
 	
 
 	public ArrayList<Consultation> retrieveAllConsultation(String startDate, String endDate) {
@@ -364,7 +299,7 @@ public class DatabaseConnection {
 			while (rs.next()) {
 				int ID = rs.getInt(1);
 				String conditionName = rs.getString(2);
-				int numOfYears = rs.getInt(3);
+				String numOfYears = rs.getString(3);
 				int ageRequired = rs.getInt(4);
 				String screening = rs.getString(5);
 				String type = rs.getString(6);
@@ -382,7 +317,7 @@ public class DatabaseConnection {
 		return allconditionList;
 	}
 
-	public boolean addAllCondition(String conditionName, int numberOfYears, int ageRequired, String screening, String type) {
+	public boolean addAllCondition(String conditionName, String numberOfYears, int ageRequired, String screening, String type) {
 
 		Connection con;
 		try {
@@ -393,7 +328,7 @@ public class DatabaseConnection {
 					+ "VALUES (?,?,?,?,?)";
 			PreparedStatement preparedStmt = con.prepareStatement(sql);
 			preparedStmt.setString(1, conditionName);
-			preparedStmt.setInt(2, numberOfYears);
+			preparedStmt.setString(2, numberOfYears);
 			preparedStmt.setInt(3, ageRequired);
 			preparedStmt.setString(4, screening);
 			preparedStmt.setString(5, type);
@@ -431,19 +366,20 @@ public class DatabaseConnection {
 
 	}
 
-	public void editAllCondition(String conditionName, int numOfYears, int ageRequired, String screening, String type) {
+	public void editAllCondition(int ID, String conditionName, String numOfYears, int ageRequired, String screening, String type) {
 		Connection con;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
-			String sql = "UPDATE allcondition SET numOfYears= ?, ageRequired = ?, screening = ?, type = ? WHERE conditionName= ?";
+			String sql = "UPDATE allcondition SET numOfYears= ?, ageRequired = ?, screening = ?, type = ?, conditionName = ?  WHERE ID = ?";
 			PreparedStatement preparedStmt = con.prepareStatement(sql);
-			preparedStmt.setInt(1, numOfYears);
+			preparedStmt.setString(1, numOfYears);
 			preparedStmt.setInt(2, ageRequired);
 			preparedStmt.setString(3, screening);
 			preparedStmt.setString(4, type);
 			preparedStmt.setString(5, conditionName);
+			preparedStmt.setInt(6, ID);
 			preparedStmt.executeUpdate();
 
 			con.close();
@@ -543,7 +479,7 @@ public class DatabaseConnection {
 			while (rs.next()) {
 				int ID = rs.getInt(1);
 				String conditionName = rs.getString(2);
-				int numOfYears = rs.getInt(3);
+				String numOfYears = rs.getString(3);
 				int ageRequired = rs.getInt(4);
 				String screening = rs.getString(5);
 				String type = rs.getString(6);
@@ -577,7 +513,7 @@ public class DatabaseConnection {
 			while (rs.next()) {
 				//int Id = rs.getInt(1);
 				String conditionName = rs.getString(2);
-				int numOfYears = rs.getInt(3);
+				String numOfYears = rs.getString(3);
 				int ageRequired = rs.getInt(4);
 				String screening = rs.getString(5);
 				String type = rs.getString(6);
@@ -684,5 +620,40 @@ public class DatabaseConnection {
 		}
 
 	}
+
+	public User getUserByEmail(String email){
+		Connection con;
+		User user = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
+
+			Statement stmt = con.createStatement();
+			String sql = "SELECT * FROM User where email='" + email + "'";
+			
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				//int Id = rs.getInt(1);
+				String emailID = rs.getString(1);
+				String password = rs.getString(2);
+				String roles = rs.getString(3);
+				//String screening = rs.getString(5);
+				//String type = rs.getString(6);
+				user = new User(emailID, password, roles);
+			
+			}
+
+			con.close();
+			
+
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return user;
+		
+	}
+
 }
 

@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
-
+import ulink.constructor.User;
+import ulink.dao.DatabaseConnection;
 import ulink.logic.Utility;
 
 
@@ -45,7 +45,7 @@ public class LoginServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		
+		DatabaseConnection connection = new DatabaseConnection();
 		
 		Utility utility = new Utility();
 		boolean isValid = utility.loginValidatation(username, password);
@@ -53,8 +53,8 @@ public class LoginServlet extends HttpServlet {
 		
 		PrintWriter out = response.getWriter();
 		if (isValid){		
-			
-			session.setAttribute("admin", username);
+			User user = connection.getUserByEmail(username);
+			session.setAttribute("admin", user.getRoles());
 			System.out.print("Test");
 			String jsonInString = "success";
 			out.write(jsonInString);
