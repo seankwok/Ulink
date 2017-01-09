@@ -27,6 +27,7 @@
 		$(document).ready(function() {
 
 			displayAll();
+			
 		});
 
 		function directToClientProfile(clickedID) {
@@ -40,7 +41,7 @@
 				data : sendData,
 				dataType : "json",
 				success : function(data) {
-					
+					window.location="clientInfo.html";
 				}
 
 			});
@@ -54,24 +55,27 @@
 				type: "get",
 			    dataType : "json",
 			    complete: function(data){
-			    	console.log(data);
-			    	var json = jQuery.parseJSON(JSON.stringify(data));
-			    	console.log(data.responseJSON[10].accountID);
-			    	table += "<thead><tr><th>Client Name</th><th>Client Type</th><th>Visa/Medical</th></tr></thead>";
-			    	$.each(json,function(key, value) {
-			    		table += "<tbody><tr><td>"
-		    				+ value["clientName"]
-		    				+ "</td>"
-		    				+ "<td>"
-		    				+ value["clientType"]
-	    					+ "</td>"
-	    					+ "<td>"
-		    				+ value["gender"]
-	    					+ "</td></tr></tbody>"
-	    					
-			    	});
+			    	var json = jQuery.parseJSON(data.responseText);
+			    	table += "<thead><tr><th>Client Name</th><th>Client Type</th><th>Visa/Medical</th><th>View Profile</th></tr></thead>";
+					$.each(json, function(i, item){
+						table 	+= "<tbody><tr><td>"
+		    					+ item.clientName
+		    					+ "</td>"
+		    					+ "<td>"
+		    					+ item.clientType
+		    					+ "</td>"
+		    					+ "<td>"
+		    					+ item.clientType
+		    					+ "</td>"
+		    					+ "<td>"
+			    				+ "<a href='#' onClick=directToClientProfile(this.id) id= '"
+			    				+ item.clientName
+			    				+ "'>View</a>"
+		    					+ "</td></tr></tbody>"
+		    					
+					});
 			    	table += "</table>"
-			    		$("#table").html(table);
+			    	$("#table").html(table);
 			    	
 			    }	
 			    
