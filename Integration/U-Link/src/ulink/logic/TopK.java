@@ -21,7 +21,7 @@ public class TopK {
 
 		for (int i = 0; i < clientList.size(); i++) {
 			Client client = clientList.get(i);
-			String referralName = client.getReferredByPIC();
+			String referralName = client.getAccountID();
 			if (referralName != null) {
 				if (!referralList.containsKey(referralName)) {
 					referralList.put(referralName, 1);

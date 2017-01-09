@@ -28,7 +28,7 @@ public class DatabaseConnection {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
-			String sql = "select * from client";
+			String sql = "SELECT * FROM client group by clientName";
 			ResultSet rs = stmt.executeQuery(sql);
 			//Utility utility = new Utility();
 			
@@ -44,24 +44,26 @@ public class DatabaseConnection {
 				String email = rs.getString(9);
 				String medical = rs.getString(10);
 				String mainDiagnosis = rs.getString(11);
-				String referredByPIC = rs.getString(12);
-				String appointment = rs.getString(13);
-				String doctor = rs.getString(14);
-				String specialty = rs.getString(15);
-				String clinic = rs.getString(16);
-				String otherDoctor = rs.getString(17);
-				String followUpPerson = rs.getString(18);
-				String followUpPIC = rs.getString(19);
-				String hospitalAdmitted = rs.getString(20);
-				String log = rs.getString(21);
-				String claim = rs.getString(22);
-				String visa = rs.getString(23);
-				String visaType = rs.getString(24);
-				String visaType2 = rs.getString(25);
+				String referredBy = rs.getString(12);
+				String PIC = rs.getString(13);
+				String appointment = rs.getString(14);
+				String doctor = rs.getString(15);
+				String specialty = rs.getString(16);
+				String clinic = rs.getString(17);
+				String otherDoctor = rs.getString(18);
+				String followUpPerson = rs.getString(19);
+				String followUpPIC = rs.getString(20);
+				String hospitalAdmitted = rs.getString(21);
+				String log = rs.getString(22);
+				String claim = rs.getString(23);
+				String visaRequestBy = rs.getString(24);
+				String visa = rs.getString(25);
+				String visaType = rs.getString(26);
+				String visaType2 = rs.getString(27);
 				
 				clientList.add(new Client(accountID,clientOwner,clientName,clientType,company,nationality,gender,dateOfBirth,email,medical,
-						mainDiagnosis,referredByPIC,appointment,doctor,specialty,clinic,otherDoctor,followUpPerson,followUpPIC,hospitalAdmitted,
-						log,claim,visa,visaType,visaType2));
+						mainDiagnosis,referredBy,PIC,appointment,doctor,specialty,clinic,otherDoctor,followUpPerson,followUpPIC,hospitalAdmitted,
+						log,claim, visaRequestBy,visa,visaType,visaType2));
 			}
 				
 			con.close();
@@ -74,6 +76,63 @@ public class DatabaseConnection {
 		return clientList;
 	}
 	
+	
+	public ArrayList<Client> retrieveAllClientByName(String name) {
+
+		Connection con;
+		ArrayList<Client> clientList = new ArrayList<Client>();
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
+
+			Statement stmt = con.createStatement();
+			String sql = "select * from client where clientName='"+ name +"'";
+			ResultSet rs = stmt.executeQuery(sql);
+			//Utility utility = new Utility();
+			
+			while (rs.next()) {
+				String accountID = rs.getString(1);
+				String clientOwner = rs.getString(2);
+				String clientName = rs.getString(3); 
+				String clientType = rs.getString(4);
+				String company = rs.getString(5);
+				String nationality = rs.getString(6);
+				String gender = rs.getString(7);
+				String dateOfBirth = rs.getString(8);
+				String email = rs.getString(9);
+				String medical = rs.getString(10);
+				String mainDiagnosis = rs.getString(11);
+				String referredBy = rs.getString(12);
+				String PIC = rs.getString(13);
+				String appointment = rs.getString(14);
+				String doctor = rs.getString(15);
+				String specialty = rs.getString(16);
+				String clinic = rs.getString(17);
+				String otherDoctor = rs.getString(18);
+				String followUpPerson = rs.getString(19);
+				String followUpPIC = rs.getString(20);
+				String hospitalAdmitted = rs.getString(21);
+				String log = rs.getString(22);
+				String claim = rs.getString(23);
+				String visaRequestBy = rs.getString(24);
+				String visa = rs.getString(25);
+				String visaType = rs.getString(26);
+				String visaType2 = rs.getString(27);
+				
+				clientList.add(new Client(accountID,clientOwner,clientName,clientType,company,nationality,gender,dateOfBirth,email,medical,
+						mainDiagnosis,referredBy,PIC,appointment,doctor,specialty,clinic,otherDoctor,followUpPerson,followUpPIC,hospitalAdmitted,
+						log,claim, visaRequestBy,visa,visaType,visaType2));
+			}
+				
+			con.close();
+			
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return clientList;
+	}
 	
 	public ArrayList<Client> retrieveAllClient(String startDate, String endDate) {
 
@@ -100,24 +159,26 @@ public class DatabaseConnection {
 				String email = rs.getString(9);
 				String medical = rs.getString(10);
 				String mainDiagnosis = rs.getString(11);
-				String referredByPIC = rs.getString(12);
-				String appointment = rs.getString(13);
-				String doctor = rs.getString(14);
-				String specialty = rs.getString(15);
-				String clinic = rs.getString(16);
-				String otherDoctor = rs.getString(17);
-				String followUpPerson = rs.getString(18);
-				String followUpPIC = rs.getString(19);
-				String hospitalAdmitted = rs.getString(20);
-				String log = rs.getString(21);
-				String claim = rs.getString(22);
-				String visa = rs.getString(23);
-				String visaType = rs.getString(24);
-				String visaType2 = rs.getString(25);
+				String referredBy = rs.getString(12);
+				String PIC = rs.getString(13);
+				String appointment = rs.getString(14);
+				String doctor = rs.getString(15);
+				String specialty = rs.getString(16);
+				String clinic = rs.getString(17);
+				String otherDoctor = rs.getString(18);
+				String followUpPerson = rs.getString(19);
+				String followUpPIC = rs.getString(20);
+				String hospitalAdmitted = rs.getString(21);
+				String log = rs.getString(22);
+				String claim = rs.getString(23);
+				String visaRequestBy = rs.getString(24);
+				String visa = rs.getString(25);
+				String visaType = rs.getString(26);
+				String visaType2 = rs.getString(27);
 				
 				clientList.add(new Client(accountID,clientOwner,clientName,clientType,company,nationality,gender,dateOfBirth,email,medical,
-						mainDiagnosis,referredByPIC,appointment,doctor,specialty,clinic,otherDoctor,followUpPerson,followUpPIC,hospitalAdmitted,
-						log,claim,visa,visaType,visaType2));
+						mainDiagnosis,referredBy,PIC,appointment,doctor,specialty,clinic,otherDoctor,followUpPerson,followUpPIC,hospitalAdmitted,
+						log,claim, visaRequestBy,visa,visaType,visaType2));
 			}
 
 			con.close();
@@ -133,17 +194,17 @@ public class DatabaseConnection {
 	
 	public void createClient(String accountID, String clientOwner, String clientName, String clientType, String company,
 			String nationality, String gender, String dateOfBirth, String email, String medical, String mainDiagnosis,
-			String referredByPIC, String appointment, String doctor, String specialty, String clinic,
+			String referredBy, String PIC, String appointment, String doctor, String specialty, String clinic,
 			String otherDoctor, String followUpPerson, String followUpPIC, String hospitalAdmitted, String log,
-			String claim, String visa, String visaType, String visaType2) {
+			String claim,String visaRequestBy, String visa, String visaType, String visaType2) {
 
 		Connection con;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
-			String sql = "INSERT INTO client (accountID,clientOwner,clientName,clientType,company,nationality,gender,dateOfBirth,email,medical,mainDiagnosis,referredByPIC,appointment,doctor,specialty,clinic,otherDoctor,followUpPerson,followUpPIC,hospitalAdmitted,log,claim,visa,visaType,visaType2)"
-					+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			String sql = "INSERT INTO client (accountID,clientOwner,clientName,clientType,company,nationality,gender,dateOfBirth,email,medical,mainDiagnosis,referredBy,PIC,appointment,doctor,specialty,clinic,otherDoctor,followUpPerson,followUpPIC,hospitalAdmitted,log,claim, visaRequestBy,visa,visaType,visaType2)"
+					+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			Utility utility = new Utility();
 			PreparedStatement preparedStmt = con.prepareStatement(sql);
 			preparedStmt.setString(1, accountID);
@@ -157,20 +218,22 @@ public class DatabaseConnection {
 			preparedStmt.setString(9, email);
 			preparedStmt.setString(10, medical);
 			preparedStmt.setString(11, mainDiagnosis);
-			preparedStmt.setString(12, referredByPIC);
-			preparedStmt.setString(13, appointment);
-			preparedStmt.setString(14, doctor);
-			preparedStmt.setString(15, specialty);
-			preparedStmt.setString(16, clinic);
-			preparedStmt.setString(17, otherDoctor);
-			preparedStmt.setString(18, followUpPerson);
-			preparedStmt.setString(19, followUpPIC);
-			preparedStmt.setString(20, hospitalAdmitted);
-			preparedStmt.setString(21, log);
-			preparedStmt.setString(22, claim);
-			preparedStmt.setString(23, visa);
-			preparedStmt.setString(24, visaType);
-			preparedStmt.setString(25, visaType2);
+			preparedStmt.setString(12, referredBy);
+			preparedStmt.setString(13, PIC);
+			preparedStmt.setString(14, appointment);
+			preparedStmt.setString(15, doctor);
+			preparedStmt.setString(16, specialty);
+			preparedStmt.setString(17, clinic);
+			preparedStmt.setString(18, otherDoctor);
+			preparedStmt.setString(19, followUpPerson);
+			preparedStmt.setString(20, followUpPIC);
+			preparedStmt.setString(21, hospitalAdmitted);
+			preparedStmt.setString(22, log);
+			preparedStmt.setString(23, claim);
+			preparedStmt.setString(24, visaRequestBy);
+			preparedStmt.setString(25, visa);
+			preparedStmt.setString(26, visaType);
+			preparedStmt.setString(27, visaType2);
 			preparedStmt.execute();
 
 			con.close();

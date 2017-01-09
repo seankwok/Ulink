@@ -208,15 +208,17 @@ public class UploadServlet extends HttpServlet {
                  		HSSFCell clinic = (HSSFCell) cellIter.next();
                  		HSSFCell otherDoctor = (HSSFCell) cellIter.next();
                  		HSSFCell followUpPerson = (HSSFCell) cellIter.next();
-                 		HSSFCell followUpPIC = (HSSFCell) cellIter.next();
+                 		HSSFCell followUp = (HSSFCell) cellIter.next();
+                 		HSSFCell PIC = (HSSFCell) cellIter.next();
                  		HSSFCell hospitalAdmitted = (HSSFCell) cellIter.next();
                  		HSSFCell log = (HSSFCell) cellIter.next();
                  		HSSFCell claim = (HSSFCell) cellIter.next();
+                 		HSSFCell visaRequestBy = (HSSFCell) cellIter.next();
                  		HSSFCell visa = (HSSFCell) cellIter.next();
                  		HSSFCell visaType = (HSSFCell) cellIter.next();
                  		HSSFCell visaType2 = (HSSFCell) cellIter.next();
                  		System.out.println(clientName.toString().length());
-                 		connection.createClient(accountID.toString(), clientOwner.toString(), clientName.toString(), clientType.toString(), company.toString(), nationality.toString(), gender.toString(), dateOfBirth.toString(), email.toString(), medical.toString(), mainDiagnosis.toString(), referredByPIC.toString(), appointment.toString(), doctor.toString(), specialty.toString(), clinic.toString(), otherDoctor.toString(), followUpPerson.toString(), followUpPIC.toString(), hospitalAdmitted.toString(), log.toString(), claim.toString(), visa.toString(), visaType.toString(), visaType2.toString());
+                 		connection.createClient(accountID.toString(), clientOwner.toString(), clientName.toString(), clientType.toString(), company.toString(), nationality.toString(), gender.toString(), dateOfBirth.toString(), email.toString(), medical.toString(), mainDiagnosis.toString(), referredByPIC.toString(), appointment.toString(), doctor.toString(), specialty.toString(), clinic.toString(), otherDoctor.toString(), followUpPerson.toString(), followUp.toString(), PIC.toString(), hospitalAdmitted.toString(), log.toString(), claim.toString(), visaRequestBy.toString(), visa.toString(), visaType.toString(), visaType2.toString());
                  	    count++;
                      
             }
@@ -263,7 +265,8 @@ public class UploadServlet extends HttpServlet {
                 		XSSFCell email = (XSSFCell) cellIter.next();
                 		XSSFCell medical = (XSSFCell) cellIter.next();
                 		XSSFCell mainDiagnosis = (XSSFCell) cellIter.next();
-                		XSSFCell referredByPIC = (XSSFCell) cellIter.next();
+                		XSSFCell referredBy = (XSSFCell) cellIter.next();
+                		XSSFCell PIC = (XSSFCell) cellIter.next();
                 		XSSFCell appointment = (XSSFCell) cellIter.next();
                 		XSSFCell doctor = (XSSFCell) cellIter.next();
                 		XSSFCell specialty = (XSSFCell) cellIter.next();
@@ -274,11 +277,12 @@ public class UploadServlet extends HttpServlet {
                 		XSSFCell hospitalAdmitted = (XSSFCell) cellIter.next();
                 		XSSFCell log = (XSSFCell) cellIter.next();
                 		XSSFCell claim = (XSSFCell) cellIter.next();
+                		XSSFCell visaRequestBy = (XSSFCell) cellIter.next();
                 		XSSFCell visa = (XSSFCell) cellIter.next();
                 		XSSFCell visaType = (XSSFCell) cellIter.next();
                 		XSSFCell visaType2 = (XSSFCell) cellIter.next();
                 		System.out.println(clientName.toString().length());
-                		connection.createClient(accountID.toString(), clientOwner.toString(), clientName.toString(), clientType.toString(), company.toString(), nationality.toString(), gender.toString(), dateOfBirth.toString(), email.toString(), medical.toString(), mainDiagnosis.toString(), referredByPIC.toString(), appointment.toString(), doctor.toString(), specialty.toString(), clinic.toString(), otherDoctor.toString(), followUpPerson.toString(), followUpPIC.toString(), hospitalAdmitted.toString(), log.toString(), claim.toString(), visa.toString(), visaType.toString(), visaType2.toString());
+                		connection.createClient(accountID.toString(), clientOwner.toString(), clientName.toString(), clientType.toString(), company.toString(), nationality.toString(), gender.toString(), dateOfBirth.toString(), email.toString(), medical.toString(), mainDiagnosis.toString(), referredBy.toString(), PIC.toString(), appointment.toString(), doctor.toString(), specialty.toString(), clinic.toString(), otherDoctor.toString(), followUpPerson.toString(), followUpPIC.toString(), hospitalAdmitted.toString(), log.toString(), claim.toString(), visaRequestBy.toString(), visa.toString(), visaType.toString(), visaType2.toString());
                 	    count++;
                     
  
