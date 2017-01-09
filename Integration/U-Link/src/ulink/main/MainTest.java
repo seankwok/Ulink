@@ -42,7 +42,7 @@ public class MainTest {
 		 * "C:/Users/Sean/Desktop/test.xlsx"
 		 */
 		Utility utility = new Utility();
-		System.out.print(utility.hash("admin"));
+		System.out.print(utility.getAge("19/09/1991"));
 		
          
 
