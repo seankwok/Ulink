@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -41,9 +42,13 @@ public class DisplayAllClientByName extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+HttpSession session = request.getSession();
+		
+		String clientName =  (String) session.getAttribute("clientName");
 		DatabaseConnection connection = new DatabaseConnection();
-		String clientName = request.getParameter("clientName");
+		//String  = request.getParameter("clientName");
 		ArrayList<Client> clientList = connection.retrieveAllClientByName(clientName);
 		PrintWriter out = response.getWriter();
 		Gson gson = new Gson();
