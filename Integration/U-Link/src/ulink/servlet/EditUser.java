@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import ulink.dao.DatabaseConnection;
 import ulink.logic.Utility;
@@ -44,11 +45,14 @@ public class EditUser extends HttpServlet {
 		doGet(request, response);
 		DatabaseConnection connection = new DatabaseConnection();
 		Utility utility = new Utility();
+		HttpSession session = request.getSession();
+		String roles = (String) session.getAttribute("admin");
+		if (roles.equals("admin")){
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		System.out.println(email);
 		String hPassword = utility.hash(password);
-		System.out.println("TETETET" + hPassword);
+		//System.out.println("TETETET" + hPassword);
 		connection.editUser(email, hPassword);
 		
 		
@@ -57,6 +61,10 @@ public class EditUser extends HttpServlet {
 		out.write(jsonInString);
 		out.flush();
 		return;
+		} else {
+			response.sendRedirect("./index.html");
+			return;
+		}
 	}
 
 }

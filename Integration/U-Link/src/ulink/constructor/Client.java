@@ -28,13 +28,14 @@ public class Client {
 	private String visaRequestBy;
 	private String visaType;
 	private String visaType2;
+	private int age;
 	
 	
 	public Client(String accountID, String clientOwner, String clientName, String clientType, String company,
 			String nationality, String gender, String dateOfBirth, String email, String medical, String mainDiagnosis,
 			String referredBy, String PIC, String appointment, String doctor, String specialty, String clinic,
 			String otherDoctor, String followUpPerson, String followUpPIC, String hospitalAdmitted, String log,
-			String claim, String visa, String visaRequestBy, String visaType, String visaType2) {
+			String claim, String visa, String visaRequestBy, String visaType, String visaType2, int age) {
 		super();
 		this.accountID = accountID;
 		this.clientOwner = clientOwner;
@@ -63,7 +64,13 @@ public class Client {
 		this.visaRequestBy = visaRequestBy;
 		this.visaType = visaType;
 		this.visaType2 = visaType2;
+		this.age = age;
 	}
+	
+	public int getAge(){
+		return age;
+	}
+	
 	public String getAccountID() {
 		return accountID;
 	}

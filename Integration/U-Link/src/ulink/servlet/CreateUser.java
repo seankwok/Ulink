@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import ulink.constructor.Client;
 import ulink.constructor.User;
@@ -46,6 +47,10 @@ public class CreateUser extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		String role = (String) session.getAttribute("admin");
+		
+		if (role.equals("admin")){
 		DatabaseConnection connection = new DatabaseConnection();
 		Utility utility = new Utility();
 		PrintWriter out = response.getWriter();
@@ -74,6 +79,9 @@ public class CreateUser extends HttpServlet {
 			return;
 		}
 
+	}else {
+		response.sendRedirect("./index.html");
+		return;
 	}
-
+	}
 }

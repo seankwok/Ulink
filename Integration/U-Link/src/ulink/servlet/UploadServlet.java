@@ -34,6 +34,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import com.google.gson.JsonObject;
 
 import ulink.dao.DatabaseConnection;
+import ulink.logic.Utility;
 @WebServlet("/upload")
 public class UploadServlet extends HttpServlet {
  
@@ -182,6 +183,7 @@ public class UploadServlet extends HttpServlet {
     	    HSSFRow row;
     	    HSSFCell cell;
     	    int count = 0;
+    	    Utility utility = new Utility();
     	    DatabaseConnection connection = new DatabaseConnection();
     	    Iterator<Row> rowIter = sheet.rowIterator();
     	    rowIter.next();
@@ -218,7 +220,7 @@ public class UploadServlet extends HttpServlet {
                  		HSSFCell visaType = (HSSFCell) cellIter.next();
                  		HSSFCell visaType2 = (HSSFCell) cellIter.next();
                  		System.out.println(clientName.toString().length());
-                 		connection.createClient(accountID.toString(), clientOwner.toString(), clientName.toString(), clientType.toString(), company.toString(), nationality.toString(), gender.toString(), dateOfBirth.toString(), email.toString(), medical.toString(), mainDiagnosis.toString(), referredByPIC.toString(), appointment.toString(), doctor.toString(), specialty.toString(), clinic.toString(), otherDoctor.toString(), followUpPerson.toString(), followUp.toString(), PIC.toString(), hospitalAdmitted.toString(), log.toString(), claim.toString(), visaRequestBy.toString(), visa.toString(), visaType.toString(), visaType2.toString());
+                 		connection.createClient(accountID.toString(), clientOwner.toString(), clientName.toString(), clientType.toString(), company.toString(), nationality.toString(), gender.toString(), dateOfBirth.toString(), email.toString(), medical.toString(), mainDiagnosis.toString(), referredByPIC.toString(), appointment.toString(), doctor.toString(), specialty.toString(), clinic.toString(), otherDoctor.toString(), followUpPerson.toString(), followUp.toString(), PIC.toString(), hospitalAdmitted.toString(), log.toString(), claim.toString(), visaRequestBy.toString(), visa.toString(), visaType.toString(), visaType2.toString(), utility.getAge(dateOfBirth.toString()));
                  	    count++;
                      
             }
@@ -246,6 +248,7 @@ public class UploadServlet extends HttpServlet {
             Iterator<Row> rowIter = mySheet.rowIterator();
             rowIter.next();
             rowIter.next();
+            Utility utility = new Utility();
             while(rowIter.hasNext()){
             	
                 XSSFRow myRow = (XSSFRow) rowIter.next();
@@ -282,7 +285,7 @@ public class UploadServlet extends HttpServlet {
                 		XSSFCell visaType = (XSSFCell) cellIter.next();
                 		XSSFCell visaType2 = (XSSFCell) cellIter.next();
                 		System.out.println(clientName.toString().length());
-                		connection.createClient(accountID.toString(), clientOwner.toString(), clientName.toString(), clientType.toString(), company.toString(), nationality.toString(), gender.toString(), dateOfBirth.toString(), email.toString(), medical.toString(), mainDiagnosis.toString(), referredBy.toString(), PIC.toString(), appointment.toString(), doctor.toString(), specialty.toString(), clinic.toString(), otherDoctor.toString(), followUpPerson.toString(), followUpPIC.toString(), hospitalAdmitted.toString(), log.toString(), claim.toString(), visaRequestBy.toString(), visa.toString(), visaType.toString(), visaType2.toString());
+                		connection.createClient(accountID.toString(), clientOwner.toString(), clientName.toString(), clientType.toString(), company.toString(), nationality.toString(), gender.toString(), dateOfBirth.toString(), email.toString(), medical.toString(), mainDiagnosis.toString(), referredBy.toString(), PIC.toString(), appointment.toString(), doctor.toString(), specialty.toString(), clinic.toString(), otherDoctor.toString(), followUpPerson.toString(), followUpPIC.toString(), hospitalAdmitted.toString(), log.toString(), claim.toString(), visaRequestBy.toString(), visa.toString(), visaType.toString(), visaType2.toString(), utility.getAge(dateOfBirth.toString()));
                 	    count++;
                     
  

@@ -15,27 +15,7 @@ import ulink.dao.DatabaseConnection;
 public class TopK {
 	DatabaseConnection connection = new DatabaseConnection();
 
-	public HashMap<String, Integer> topReferral(String startDate, String endDate) {
-		ArrayList<Client> clientList = connection.retrieveAllClient(startDate, endDate);
-		HashMap<String, Integer> referralList = new HashMap<String, Integer>();
 
-		for (int i = 0; i < clientList.size(); i++) {
-			Client client = clientList.get(i);
-			String referralName = client.getAccountID();
-			if (referralName != null) {
-				if (!referralList.containsKey(referralName)) {
-					referralList.put(referralName, 1);
-				} else {
-					referralList.put(referralName, referralList.get(referralName) + 1);
-				}
-			}
-		}
-		
-		HashMap<String, Integer> sortedReferral = sortByValue(referralList);
-
-		return sortedReferral;
-
-	}
 
 	public HashMap<String, Integer> topSpeciality(String startDate, String endDate) {
 		ArrayList<String> specialityList = connection.retrieveAllSpeciality(startDate, endDate);

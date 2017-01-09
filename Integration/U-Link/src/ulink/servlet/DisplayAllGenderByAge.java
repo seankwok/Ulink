@@ -18,7 +18,7 @@ import com.google.gson.reflect.TypeToken;
 
 import ulink.constructor.Condition;
 import ulink.dao.DatabaseConnection;
-import ulink.logic.AgeGender;
+
 
 /**
  * Servlet implementation class DisplayAllGenderByAge
@@ -42,13 +42,13 @@ public class DisplayAllGenderByAge extends HttpServlet {
 		// TODO Auto-generated method stub
 		PrintWriter out = response.getWriter();
 		
-		AgeGender ageGender =new AgeGender();
-		TreeMap<String,Integer> ageByGenderList = ageGender.genderByAge();
+		//AgeGender ageGender =new AgeGender();
+		//TreeMap<String,Integer> ageByGenderList = ageGender.genderByAge();
 		
 		Gson gson = new Gson();
 		
 		//JsonArray result = (JsonArray) new Gson().toJsonTree(conditionList,new TypeToken<List<Condition>>() {}.getType());
-		  String arrayListToJson = gson.toJson(ageByGenderList);
+		  String arrayListToJson = gson.toJson("");
 		
 		
 		out.write(arrayListToJson);

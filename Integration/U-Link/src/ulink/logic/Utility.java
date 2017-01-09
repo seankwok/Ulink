@@ -87,11 +87,16 @@ public class Utility {
 		return date.substring(8,10)+ "-" + date.substring(5, 7) + "-"+date.substring(0,4);
 	}
 	
-	public int getAge(int year) {
+	public int getAge(String dob) {
+		if (dob != null){
+		int year = Integer.parseInt(dob.substring(5));
 		DateTime datetime = new DateTime();
 		int currentYear = datetime.getYear();
 
 		return currentYear - year;
+		} else {
+			return 0;
+		}
 	}
 	
 	public String hash(String password) {
