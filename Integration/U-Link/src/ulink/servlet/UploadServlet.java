@@ -132,10 +132,10 @@ public class UploadServlet extends HttpServlet {
             String extension = FilenameUtils.getExtension(fullName);
             if(extension.trim().equalsIgnoreCase("xlsx")){
                 count = processExcelFile(file);
-                System.out.print(count);
-        		out.write(count);
-        		out.flush();
-
+               // System.out.print(count);
+        		//out.write(count);
+        		//out.flush();
+                request.getRequestDispatcher("./upload.html").forward(request, response);
         		return;
         		
             }
@@ -143,10 +143,10 @@ public class UploadServlet extends HttpServlet {
                 //process your binary excel file
             	  count = test(file);
 
-          		out.write(count);
-          		out.flush();
+          		//out.write(count);
+          		//out.flush();
           		//response.sendRedirect("./upload.html");
-          		//request.getRequestDispatcher("./upload.html").forward(request, response);
+          		request.getRequestDispatcher("./upload.html").forward(request, response);
           		return;
             }
             
@@ -158,7 +158,7 @@ public class UploadServlet extends HttpServlet {
             //myObj.addProperty("success", false);
             //out.println(myObj.toString());
             
-            //request.getRequestDispatcher("./upload.html").forward(request, response);
+            request.getRequestDispatcher("./upload.html").forward(request, response);
             return;
         } catch(Exception ex) {
             log("Error encountered while uploading file",ex);
@@ -166,7 +166,7 @@ public class UploadServlet extends HttpServlet {
            
             // out.println(myObj.toString());
             
-            //request.getRequestDispatcher("./upload.html").forward(request, response);
+            request.getRequestDispatcher("./upload.html").forward(request, response);
             return;
         }
  

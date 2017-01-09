@@ -74,8 +74,9 @@ public class DisplayAllUser extends HttpServlet {
 			 * rd.forward(request, response);
 			 */
 
-			out.write(json);
-			out.flush();
+			//out.write(json);
+			//out.flush();
+			response.sendRedirect("./index.html");
 			return;
 		}
 	}

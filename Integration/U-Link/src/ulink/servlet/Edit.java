@@ -54,19 +54,12 @@ public class Edit extends HttpServlet {
 		for (int i = 0; i < type.length; i++) {
 			boolean check = true;
 			for (int k = 0; k < conditionList.size(); k++) {
-				Condition condition = conditionList.get(k);
-				if (condition.getConditionName().equals(illness) && condition.getType().equals(type[i])){
-					//System.out.print("in");
-					check = false;
-				}
+				//Condition condition = conditionList.get(k);
+				connection.editAllCondition(Integer.parseInt(conditionId),illness, years, age, screening, type[i]);
 			}
-			if (check) {
-				connection.addAllCondition(illness, years, age, screening, type[i]);
-			} else {
-				count++;
-			}
+			
 		}
-		connection.deleteAllCondition(Integer.parseInt(conditionId));
+		//connection.deleteAllCondition(Integer.parseInt(conditionId));
 		String jsonInString;
 		if (count == 0) {
 			jsonInString = "success";

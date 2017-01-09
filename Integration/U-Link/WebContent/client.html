@@ -56,7 +56,7 @@
 			    complete: function(data){
 			    	console.log(data);
 			    	var json = jQuery.parseJSON(JSON.stringify(data));
-			    	console.log(json);
+			    	console.log(data.responseJSON[10].accountID);
 			    	table += "<thead><tr><th>Client Name</th><th>Client Type</th><th>Visa/Medical</th></tr></thead>";
 			    	$.each(json,function(key, value) {
 			    		table += "<tbody><tr><td>"
