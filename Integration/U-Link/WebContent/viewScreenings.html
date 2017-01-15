@@ -16,11 +16,44 @@
  	
  	<style>
  	
- 	#table th, td {
-    padding: 10px;
-    text-align: center;
+	
+	#myInput {
+	    background-image: url('/css/searchicon.png'); /* Add a search icon to input */
+	    background-position: 10px 12px; /* Position the search icon */
+	    background-repeat: no-repeat; /* Do not repeat the icon image */
+	    width: 30%; /* Full-width */
+	    font-size: 16px; /* Increase font-size */
+	    padding: 12px 20px 12px 40px; /* Add some padding */
+	    border: 1px solid #ddd; /* Add a grey border */
+	    margin-bottom: 12px; /* Add some space below the input */
+	}
+	
+	#table {
+	    border-collapse: collapse; /* Collapse borders */
+	    width: 100%; /* Full-width */
+	    font-size: 18px; /* Increase font-size */
+	}
+	
+	#table th, #table td {
+	    text-align: left; /* Left-align text */
+	    padding: 10px; /* Add padding */
+	    
+	}
 
- 	}
+	#table tr {
+	    /* Add a bottom border to all table rows */
+	    border-bottom: 1px solid #ddd; 
+	     padding-bottom: 30px; /* Add padding */
+	}
+	
+	#table tr.header, #table tr:hover {
+	    /* Add background color to the table header and on hover */
+	    font-color: black;
+	     margin-bottom: 5px;
+	}
+	
+
+
  	</style>
  	
  	
@@ -28,9 +61,7 @@
 	
 	$(document).ready(function() {
 		displayAll();
-
-			
-		});
+	});
 		/* $("#generate").click(function(){
 			   var demo = $(':checkbox').map(function(){
 					return this.value;
@@ -56,7 +87,27 @@
 			    
 			  }); */
 			  
- 
+		function mySearch() {
+				  // Declare variables 
+		  var input, filter, table, tr, td, i;
+				  input = document.getElementById("myInput");
+				  filter = input.value.toUpperCase();
+				  table = document.getElementById("table");
+				  tr = table.getElementsByTagName("tr");
+
+				  // Loop through all table rows, and hide those who don't match the search query
+				  for (i = 0; i < tr.length; i++) {
+				    td = tr[i].getElementsByTagName("td")[2];
+				    if (td) {
+				      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+				        tr[i].style.display = "";
+				      } else {
+				        tr[i].style.display = "none";
+				      }
+				    } 
+		  }
+		}
+
 		
 	function deleteItem(clickedID){
 			
@@ -217,11 +268,15 @@
   </div><!-- /.container-fluid -->
 </nav>
 
-<div class="page-header" align="center">
-  <h1><b>View Screenings</b></h1>
-</div>
+	<div class="page-header" align="center">
+	  <h1><b>View Screenings</b></h1>
+	</div>
 
-<div class="container" id="display" >
+   	<div class="container">
+   		<input type="text" id="myInput" onkeyup="mySearch()" placeholder="Search Screenings by Name..">
+   	</div>
+   	
+	<div class="container" id="display" >
   
   
 </div>
