@@ -64,7 +64,7 @@
 		});
  
 	function mySearch() {
-		 var searchText = document.getElementById('myInput').value;
+		 var searchText = document.getElementById('myInput').value.toUpperCase();
 		    var targetTable = document.getElementById('table');
 		    var targetTableColCount;
 		            
@@ -80,7 +80,7 @@
 		                
 		        //Process data rows. (rowIndex >= 1)
 		        for (var colIndex = 0; colIndex < targetTableColCount; colIndex++) {
-		            rowData += targetTable.rows.item(rowIndex).cells.item(colIndex).textContent;
+		            rowData += targetTable.rows.item(rowIndex).cells.item(colIndex).textContent.toUpperCase();
 		        }
 
 		        //If search term is not found in row data
@@ -90,6 +90,18 @@
 		        else
 		            targetTable.rows.item(rowIndex).style.display = 'table-row';
 		    }
+	}
+	
+	function sortAsc(clickedID){
+		var sendData = {
+				
+		}
+	}
+	
+	function sortDesc(clickedID){
+		var sendData = {
+				
+		}
 	}
 	
 	function deleteItem(clickedID){
@@ -148,7 +160,7 @@
 		    success: function(data){
 		    	var json = jQuery.parseJSON(JSON.stringify(data));
 		    	console.log(json);
-		    	table += "<thead><tr><th>Starting Age</th><th>Common Illness</th><th>Vaccination/Screening</th><th>Regularity of screening</th><th>View Patients</th><th>Edit</th><th>Delete</th></tr></thead>";
+		    	table += "<thead><tr><th>Starting Age<a href='#' onClick=sortAsc(this.id) id='age'>&#9652</a><a href='#' onClick=sortDesc(this.id) id='age'> &#9662</a></th><th>Common Illness<a href='#' onClick=sortAsc(this.id) id='illness'> &#9652</a><a href='#' onClick=sortDesc(this.id) id='illness'> &#9662</a></th><th>Vaccination/Screening <a href='#' onClick=sortAsc(this.id) id='screening'> &#9652</a><a href='#' onClick=sortDesc(this.id) id='screening'> &#9662</a></th><th>Regularity of screening</th><th>View Patients</th><th>Edit</th><th>Delete</th></tr></thead>";
 		    	$.each(json,function(key, value) {
 		    		table += "<tbody><tr><td>"
 	    				+ value["ageRequired"]
