@@ -23,7 +23,6 @@
 <style>
  	
 	#myInput {
-	    background-image: url('/css/searchicon.png'); /* Add a search icon to input */
 	    background-position: 10px 12px; /* Position the search icon */
 	    background-repeat: no-repeat; /* Do not repeat the icon image */
 	    width: 30%; /* Full-width */
@@ -138,14 +137,26 @@
 				});
 		}
 		
-		function sortAsc(clickedID){
+		
+		function compareUp(el1, el2, index) {
+			  return el1[index] == el2[index] ? 0 : (el1[index] < el2[index] ? -1 : 1);
+		}
+		function compareDown(el1, el2, index) {
+			  return el1[index] == el2[index] ? 0 : (el1[index] > el2[index] ? -1 : 1);
+		}
+
+		function sortAscTeam(clickedID){
+			var table = "<table id='table' class=' table-hover'>";
 			$.ajax({
-				url: "sortAscending",
+				url: "DisplayAllClient",
 				type: "get",
 			    dataType : "json",
 			    complete: function(data){
 			    	var json = jQuery.parseJSON(data.responseText);
-			    	table += "<thead><tr><th>Client Name</th><th>Client Type</th><th width=30% >Visa/Medical</th></tr></thead><tbody>";
+			    	table += "<thead><tr><th>Client Name</th><th>Client Type<a href='#' onClick=sortAscClientType(this.id) id='clientType'> &#9652</a><a href='#' onClick=sortDescClientType(this.id) id='clientType'> &#9662</a> </th><th width=30% >Visa/Medical<a href='#' onClick=sortAscTeam(this.id) id='team'> &#9652</a><a href='#' onClick=sortDescTeam(this.id) id='team'> &#9662</a></th></tr></thead><tbody>";
+			    	json.sort(function(el1,el2){
+			    		  return compareUp(el1, el2, "medical")
+			    		});		
 					$.each(json, function(i, item){
 						table 	+= "<tr><td>"
 								+ "<a href='#' onClick=directToClientProfile(this.id) id= '"
@@ -167,10 +178,103 @@
 			});
 		}
 		
-		function sortDesc(clickedID){
-			var sendData = {
-					
-			}
+		function sortDescTeam(clickedID){
+			var table = "<table id='table' class=' table-hover'>";
+			$.ajax({
+				url: "DisplayAllClient",
+				type: "get",
+			    dataType : "json",
+			    complete: function(data){
+			    	var json = jQuery.parseJSON(data.responseText);
+			    	table += "<thead><tr><th>Client Name</th><th>Client Type<a href='#' onClick=sortAscClientType(this.id) id='clientType'> &#9652</a><a href='#' onClick=sortDescClientType(this.id) id='clientType'> &#9662</a> </th><th width=30% >Visa/Medical<a href='#' onClick=sortAscTeam(this.id) id='team'> &#9652</a><a href='#' onClick=sortDescTeam(this.id) id='team'> &#9662</a></th></tr></thead><tbody>";
+			    	json.sort(function(el1,el2){
+			    		  return compareDown(el1, el2, "medical")
+			    		});		
+					$.each(json, function(i, item){
+						table 	+= "<tr><td>"
+								+ "<a href='#' onClick=directToClientProfile(this.id) id= '"
+			    				+ item.clientName
+			    				+ "'>"+item.clientName +"</a>"
+		    					+ "</td>"
+		    					+ "<td width=30%>"
+		    					+ item.clientType
+		    					+ "</td>"
+		    					+ "<td>"
+		    					+ item.medical
+		    					+ "</td>"
+		    					+ "</tr>"
+		    					
+					});
+			    	table += "</tbody></table>"
+			    	$("#display").html(table);
+			    }
+			});
+		}
+		
+		function sortAscClientType(clickedID){
+			var table = "<table id='table' class=' table-hover'>";
+			$.ajax({
+				url: "DisplayAllClient",
+				type: "get",
+			    dataType : "json",
+			    complete: function(data){
+			    	var json = jQuery.parseJSON(data.responseText);
+			    	table += "<thead><tr><th>Client Name</th><th>Client Type<a href='#' onClick=sortAscClientType(this.id) id='clientType'> &#9652</a><a href='#' onClick=sortDescClientType(this.id) id='clientType'> &#9662</a> </th><th width=30% >Visa/Medical<a href='#' onClick=sortAscTeam(this.id) id='team'> &#9652</a><a href='#' onClick=sortDescTeam(this.id) id='team'> &#9662</a></th></tr></thead><tbody>";
+			    	json.sort(function(el1,el2){
+			    		  return compareUp(el1, el2, "clientType")
+			    		});		
+					$.each(json, function(i, item){
+						table 	+= "<tr><td>"
+								+ "<a href='#' onClick=directToClientProfile(this.id) id= '"
+			    				+ item.clientName
+			    				+ "'>"+item.clientName +"</a>"
+		    					+ "</td>"
+		    					+ "<td width=30%>"
+		    					+ item.clientType
+		    					+ "</td>"
+		    					+ "<td>"
+		    					+ item.medical
+		    					+ "</td>"
+		    					+ "</tr>"
+		    					
+					});
+			    	table += "</tbody></table>"
+			    	$("#display").html(table);
+			    }
+			});
+		}
+		
+		function sortDescClientType(clickedID){
+			var table = "<table id='table' class=' table-hover'>";
+			$.ajax({
+				url: "DisplayAllClient",
+				type: "get",
+			    dataType : "json",
+			    complete: function(data){
+			    	var json = jQuery.parseJSON(data.responseText);
+			    	table += "<thead><tr><th>Client Name</th><th>Client Type<a href='#' onClick=sortAscClientType(this.id) id='clientType'> &#9652</a><a href='#' onClick=sortDescClientType(this.id) id='clientType'> &#9662</a> </th><th width=30% >Visa/Medical<a href='#' onClick=sortAscTeam(this.id) id='team'> &#9652</a><a href='#' onClick=sortDescTeam(this.id) id='team'> &#9662</a></th></tr></thead><tbody>";
+			    	json.sort(function(el1,el2){
+			    		  return compareDown(el1, el2, "clientType")
+			    		});		
+					$.each(json, function(i, item){
+						table 	+= "<tr><td>"
+								+ "<a href='#' onClick=directToClientProfile(this.id) id= '"
+			    				+ item.clientName
+			    				+ "'>"+item.clientName +"</a>"
+		    					+ "</td>"
+		    					+ "<td width=30%>"
+		    					+ item.clientType
+		    					+ "</td>"
+		    					+ "<td>"
+		    					+ item.medical
+		    					+ "</td>"
+		    					+ "</tr>"
+		    					
+					});
+			    	table += "</tbody></table>"
+			    	$("#display").html(table);
+			    }
+			});
 		}
 		function displayAll() {
 			var table = "<table id='table' class=' table-hover'>";
@@ -181,7 +285,7 @@
 			    dataType : "json",
 			    complete: function(data){
 			    	var json = jQuery.parseJSON(data.responseText);
-			    	table += "<thead><tr><th>Client Name</th><th>Client Type<a href='#' onClick=sortAsc(this.id) id='clientType'> &#9652</a><a href='#' onClick=sortDesc(this.id) id='clientType'> &#9662</a> </th><th width=30% >Visa/Medical<a href='#' onClick=sortAsc(this.id) id='team'> &#9652</a><a href='#' onClick=sortDesc(this.id) id='team'> &#9662</a></th></tr></thead><tbody>";
+			    	table += "<thead><tr><th>Client Name</th><th>Client Type<a href='#' onClick=sortAscClientType(this.id) id='clientType'> &#9652</a><a href='#' onClick=sortDescClientType(this.id) id='clientType'> &#9662</a> </th><th width=30% >Visa/Medical<a href='#' onClick=sortAscTeam(this.id) id='team'> &#9652</a><a href='#' onClick=sortDescTeam(this.id) id='team'> &#9662</a></th></tr></thead><tbody>";
 					$.each(json, function(i, item){
 						table 	+= "<tr><td>"
 								+ "<a href='#' onClick=directToClientProfile(this.id) id= '"
@@ -274,7 +378,7 @@
     
     <!-- <div class="container" id="table" align="center"></div>  -->
     
-	<div id="display" class="display" ></div>
+	<div id="display"  ></div>
 
     
   </body>
