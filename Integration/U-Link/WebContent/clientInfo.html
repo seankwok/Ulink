@@ -14,22 +14,16 @@
     <script src="js/bootstrap.min.js"></script>
  <style>
  	
- 	#profile th {
-    padding: 10px;
-    text-align: left;
-    border: 1px;
-
- 	}
  	
- 	#profile td {
-    padding: 10px;
-    text-align: left;
-    border: 1px;
-
- 	}
- 	
- 	a:hover { 
-    	font color: "blue";
+	
+	.myHeader{
+		font-weight: bold;
+		font-size: 18px;
+		color: #092473;
+	}
+	
+	td {
+		font-size: 20px;
 	}
  	</style>
  
@@ -41,8 +35,8 @@
 
 
 		function displayAll() {
-			var profileTable = "<table>";
-		
+			var profileTable = "<table  width='70%'>";
+			var cName = "";
 			$.ajax({
 				url : "DisplayAllClientByName",
 				type : "post",
@@ -50,62 +44,49 @@
 				complete : function(data) {
 					var json = jQuery.parseJSON(data.responseText);
 					console.log(json);
-					profileTable += "<thead>"
+					profileTable += "<thead><th width='25%'></th><th width='40%'></th></thead>"
 				          $.each(json, function(i, item){
-				          profileTable   +="<tr>"
-				                +"<th>Client Name</th>"
-				                +"<td>"+item.clientName+"</td>"
+				       	  cName = item.clientName
+				          profileTable   +="<tbody>"
+				          		
+				          		+"<tr>"
+				                +"<td><span class='myHeader'>Age: </td>"
+				                +"<td><span class='myHeader'>Client Owner: </span>" +item.clientOwner+"</td>"
+				                +"</tr>"
+				                
+				                
+				                +"<tr>"
+				                +"<td><span class='myHeader'>Gender: </span>" +item.gender+"</td>"
+				                +"<td><span class='myHeader'>PIC: </span>"    +item.PIC+"</td>"
 				                +"</tr>"
 				                
 				                +"<tr>"
-				                +"<th>Client Type</th>"
-				                +"<td>"+item.clientType+"</td>"
-				                +"</tr>"                
-				                
-				                +"<tr>"
-				                +"<th>Company</th>"
-				                +"<td>"+item.company+"</td>"
+				                +"<td><span class='myHeader'>Nationality: </span>"+item.nationality+"</td>"
+				                +"<td><span class='myHeader'>Referred By: </span>"+item.referredBy+"</td>"
 				                +"</tr>"
 				                
 				                +"<tr>"
-				                +"<th>Nationality</th>"
-				                +"<td>"+item.nationality+"</td>"
+				                +"<td><span class='myHeader'>Date of Birth: </span>"+item.dateOfBirth+"</td>"
+				                +"<td><span class='myHeader'>Visa Requested By: </span></td>"
 				                +"</tr>"
 				                
 				                +"<tr>"
-				                +"<th>Gender</th>"
-				                +"<td>"+item.gender+"</td>"
+				                +"<td><span class='myHeader'>Company: </span>"+item.company+"</td>"
+				                +"<td><span class='myHeader'>Visa Type: </span></td>"
 				                +"</tr>"
 				                
 				                +"<tr>"
-				                +"<th>Date of Birth</th>"
-				                +"<td>"+item.dateOfBirth+"</td>"
+				                +"<td><span class='myHeader'>Email: </span>"+item.email+"</td>"
 				                +"</tr>"
 				                
-				                +"<tr>"
-				                +"<th>Email</th>"
-				                +"<td>"+item.email+"</td>"
-				                +"</tr>"
-				                
-				                +"<tr>"
-				                +"<th>Client Owner</th>"
-				                +"<td>"+item.clientOwner+"</td>"
-				                +"</tr>"
-				                
-				                +"<tr>"
-				                +"<th>PIC</th>"
-				                +"<td>"+item.PIC+"</td>"
-				                +"</tr>"
-				                
-				                +"<tr>"
-				                +"<th>Referred By</th>"
-				                +"<td>"+item.referredBy+"</td>"
-				                +"</tr>"
-				                  + "</tbody>"
+				                +"</tbody></table>"
+				                	               				             				               
+				               
 				 
 					});
 					profileTable += "</table>"
 			    	$("#profile").html(profileTable);
+					$("#name").html(cName);
 				}
 									
 				
@@ -173,18 +154,17 @@
 
 	
     <div class="page-header">
-       <h1 align="center"><b>Client Info</b></h1>
+       <h1 align="center" id="name"></h1>
     </div>
     
-    
-
-   <div class="container" align="center"id="profile"></div>
-
+   
+   <div align="right"id="profile"></div>
+   <br> <br> <br>
 
 	<div class="container" align="center">
 	<div class="col-md-6 col-md-offset-3">
-	<table class="table">
 	<b>Client Appointments</b> <br>
+	<table class="table">
 	<tr>
 	<th>#</th>
 	<th>Appointment Date and Time</th>
@@ -199,8 +179,8 @@
 	
 	<div class="container" align="center">
 	<div class="col-md-6 col-md-offset-3">
-	<table class="table">
 	<b>Recommended Screening and Time</b> <br>
+	<table class="table">
 	<tr>
 	<th>Common Illness</th>
 	<th>Screenings</th>
