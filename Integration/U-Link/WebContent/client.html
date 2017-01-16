@@ -7,12 +7,20 @@
    
     <title>Client</title>
 
+
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
+    
     <script src="js/bootstrap.min.js"></script>
- <style>
+	
+
+	
+	
+<style>
  	
 	#myInput {
 	    background-image: url('/css/searchicon.png'); /* Add a search icon to input */
@@ -47,19 +55,43 @@
 	    /* Add background color to the table header and on hover */
 	    font-color: black;
 	}
- 	</style>
+	
+	a:hover {
+    	text-decoration:none;
+	}
+	
+	/* unvisited link */
+	a:link {
+	    text-decoration:none;
+	}
+	
+	/* visited link */
+	a:visited {
+	    text-decoration:none;
+	}
+	
+	/* mouse over link */
+	a:hover {
+	    text-decoration:none;
+	}
+	
+	/* selected link */
+	a:active {
+	    text-decoration:none;
+	}
+	
+	
+</style>
  
  <script type="text/javascript">
 
 		$(document).ready(function() {
-
-			displayAll();
-			
-			
-		});
+			displayAll();	
+		} );
+	
 		
 		function mySearch() {
-			 var searchText = document.getElementById('myInput').value;
+			 var searchText = document.getElementById('myInput').value.toUpperCase();
 			    var targetTable = document.getElementById('table');
 			    var targetTableColCount;
 			            
@@ -75,7 +107,7 @@
 			                
 			        //Process data rows. (rowIndex >= 1)
 			        for (var colIndex = 0; colIndex < targetTableColCount; colIndex++) {
-			            rowData += targetTable.rows.item(rowIndex).cells.item(colIndex).textContent;
+			            rowData += targetTable.rows.item(rowIndex).cells.item(colIndex).textContent.toUpperCase();
 			        }
 
 			        //If search term is not found in row data
@@ -106,20 +138,16 @@
 				});
 		}
 		
-		
-
-		function displayAll() {
-			var table = "<table class=' table-hover'>";
-			var isEmpty = false;
+		function sortAsc(clickedID){
 			$.ajax({
-				url: "DisplayAllClient",
+				url: "sortAscending",
 				type: "get",
 			    dataType : "json",
 			    complete: function(data){
 			    	var json = jQuery.parseJSON(data.responseText);
-			    	table += "<thead><tr><th>Client Name</th><th>Client Type</th><th width=30%>Visa/Medical</th></tr></thead>";
+			    	table += "<thead><tr><th>Client Name</th><th>Client Type</th><th width=30% >Visa/Medical</th></tr></thead><tbody>";
 					$.each(json, function(i, item){
-						table 	+= "<tbody><tr><td>"
+						table 	+= "<tr><td>"
 								+ "<a href='#' onClick=directToClientProfile(this.id) id= '"
 			    				+ item.clientName
 			    				+ "'>"+item.clientName +"</a>"
@@ -130,11 +158,45 @@
 		    					+ "<td>"
 		    					+ item.medical
 		    					+ "</td>"
-		    					+ "</tr></tbody>"
+		    					+ "</tr>"
 		    					
 					});
-			    	table += "</table>"
-			    	$("#table").html(table);
+			    	table += "</tbody></table>"
+			    	$("#display").html(table);
+			    }
+			});
+		}
+		
+		
+
+		function displayAll() {
+			var table = "<table id='table' class=' table-hover'>";
+			var isEmpty = false;
+			$.ajax({
+				url: "DisplayAllClient",
+				type: "get",
+			    dataType : "json",
+			    complete: function(data){
+			    	var json = jQuery.parseJSON(data.responseText);
+			    	table += "<thead><tr><th>Client Name</th><th>Client Type<a href='#' onClick=sortAsc(this.id) id='clientType'> &#9652</a><a href='#' onClick=sortAsc(this.id) id='clientType'> &#9662</a> </th><th width=30% >Visa/Medical<a href='#' onClick=sortAsc(this.id) id='team'> &#9652</a><a href='#' onClick=sortAsc(this.id) id='team'> &#9662</a></th></tr></thead><tbody>";
+					$.each(json, function(i, item){
+						table 	+= "<tr><td>"
+								+ "<a href='#' onClick=directToClientProfile(this.id) id= '"
+			    				+ item.clientName
+			    				+ "'>"+item.clientName +"</a>"
+		    					+ "</td>"
+		    					+ "<td width=30%>"
+		    					+ item.clientType
+		    					+ "</td>"
+		    					+ "<td>"
+		    					+ item.medical
+		    					+ "</td>"
+		    					+ "</tr>"
+		    					
+					});
+			    	table += "</tbody></table>"
+			    	$("#display").html(table);
+			    	
 			    	
 			    }	
 			    
@@ -207,10 +269,9 @@
    	
 	<div align="center"><input type="text" id="myInput" onkeyup="mySearch()" placeholder="Search Client by Name.."></div>
     
-    <div class="container" id="table" align="center"></div>
-    <div class="container" id="profile" align="center"></div>
+    <!-- <div class="container" id="table" align="center"></div>  -->
     
-
+	<div id="display" class="display" ></div>
 
     
   </body>
