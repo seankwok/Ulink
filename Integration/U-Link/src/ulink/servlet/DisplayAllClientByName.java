@@ -44,7 +44,7 @@ public class DisplayAllClientByName extends HttpServlet {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		
-HttpSession session = request.getSession();
+		HttpSession session = request.getSession();
 		
 		String clientName =  (String) session.getAttribute("clientName");
 		DatabaseConnection connection = new DatabaseConnection();

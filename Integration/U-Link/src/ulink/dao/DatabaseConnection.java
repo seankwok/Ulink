@@ -77,6 +77,63 @@ public class DatabaseConnection {
 	}
 	
 	
+	public ArrayList<Client> retrieveAllClientListByOrder(String name, String order) {
+
+		Connection con;
+		ArrayList<Client> clientList = new ArrayList<Client>();
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
+
+			Statement stmt = con.createStatement();
+			String sql = "SELECT * FROM client group by clientName ORDER BY "+  name + " "+ order;
+			ResultSet rs = stmt.executeQuery(sql);
+			Utility utility = new Utility();
+			
+			while (rs.next()) {
+				String accountID = rs.getString(1);
+				String clientOwner = rs.getString(2);
+				String clientName = rs.getString(3); 
+				String clientType = rs.getString(4);
+				String company = rs.getString(5);
+				String nationality = rs.getString(6);
+				String gender = rs.getString(7);
+				String dateOfBirth = rs.getString(8);
+				String email = rs.getString(9);
+				String medical = rs.getString(10);
+				String mainDiagnosis = rs.getString(11);
+				String referredBy = rs.getString(12);
+				String PIC = rs.getString(13);
+				String appointment = rs.getString(14);
+				String doctor = rs.getString(15);
+				String specialty = rs.getString(16);
+				String clinic = rs.getString(17);
+				String otherDoctor = rs.getString(18);
+				String followUpPerson = rs.getString(19);
+				String followUpPIC = rs.getString(20);
+				String hospitalAdmitted = rs.getString(21);
+				String log = rs.getString(22);
+				String claim = rs.getString(23);
+				String visaRequestBy = rs.getString(24);
+				String visa = rs.getString(25);
+				String visaType = rs.getString(26);
+				String visaType2 = rs.getString(27);
+				int age = utility.getAge(dateOfBirth);
+				clientList.add(new Client(accountID,clientOwner,clientName,clientType,company,nationality,gender,dateOfBirth,email,medical,
+						mainDiagnosis,referredBy,PIC,appointment,doctor,specialty,clinic,otherDoctor,followUpPerson,followUpPIC,hospitalAdmitted,
+						log,claim, visaRequestBy,visa,visaType,visaType2, age));
+			}
+				
+			con.close();
+			
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return clientList;
+	}
+	
 	public ArrayList<Client> retrieveAllClientByName(String name) {
 
 		Connection con;
@@ -198,7 +255,7 @@ public class DatabaseConnection {
 
 	}
 	
-
+	//SELECT * FROM `allcondition` ORDER BY conditionName DESC
 	
 
 	public ArrayList<Consultation> retrieveAllConsultation(String startDate, String endDate) {
@@ -331,6 +388,130 @@ public class DatabaseConnection {
 		return allconditionList;
 	}
 
+	
+	
+	public ArrayList<Condition> retrieveAllConditionBySort(String name, String order) {
+
+		Connection con;
+		ArrayList<Condition> allconditionList = new ArrayList<Condition>();
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
+			//con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "");
+
+			Statement stmt = con.createStatement();
+			String sql = "SELECT * FROM `allcondition` ORDER BY "+  name + " "+ order;
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				int ID = rs.getInt(1);
+				String conditionName = rs.getString(2);
+				String numOfYears = rs.getString(3);
+				int ageRequired = rs.getInt(4);
+				String screening = rs.getString(5);
+				String type = rs.getString(6);
+				Condition condition = new Condition(ID,conditionName, numOfYears, ageRequired, screening, type);
+				allconditionList.add(condition);
+			}
+
+			con.close();
+
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return allconditionList;
+	}
+	public ArrayList<Condition> retrieveAllConditionInfant() {
+
+		Connection con;
+		ArrayList<Condition> allconditionList = new ArrayList<Condition>();
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
+			//con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "");
+
+			Statement stmt = con.createStatement();
+			String sql = "SELECT * FROM allcondition where type = 'infant'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				int ID = rs.getInt(1);
+				String conditionName = rs.getString(2);
+				String numOfYears = rs.getString(3);
+				int ageRequired = rs.getInt(4);
+				String screening = rs.getString(5);
+				String type = rs.getString(6);
+				Condition condition = new Condition(ID,conditionName, numOfYears, ageRequired, screening, type);
+				allconditionList.add(condition);
+			}
+
+			con.close();
+
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return allconditionList;
+	}
+
+	
+	public String getDateTime(){
+		
+		Connection con;
+		String dateTime = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
+
+			Statement stmt = con.createStatement();
+			String sql = "SELECT LAST(dateTime) FROM uploadtime";
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			dateTime =  rs.getString(2);
+			
+			con.close();
+
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+
+			e.printStackTrace();
+
+		}
+		return dateTime;
+		
+	}
+	
+	
+	
+	public void addDateTime(String datetime){
+		
+		Connection con;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
+
+			String sql = "INSERT INTO uploadtime (dateTime)"
+					+ "VALUES (?)";
+			PreparedStatement preparedStmt = con.prepareStatement(sql);
+			preparedStmt.setString(1, datetime);
+			preparedStmt.execute();
+
+			con.close();
+
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+
+			e.printStackTrace();
+
+		}
+		
+	}
+	
 	public boolean addAllCondition(String conditionName, String numberOfYears, int ageRequired, String screening, String type) {
 
 		Connection con;

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,17 +19,16 @@ import ulink.constructor.Condition;
 import ulink.dao.DatabaseConnection;
 
 /**
- * Servlet implementation class DisplayAll
+ * Servlet implementation class DisplayAllConditionInfant
  */
-@WebServlet("/DisplayAll")
-
-public class DisplayAll extends HttpServlet {
+@WebServlet("/DisplayAllInfant")
+public class DisplayAllConditionInfant extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DisplayAll() {
+    public DisplayAllConditionInfant() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -42,20 +40,9 @@ public class DisplayAll extends HttpServlet {
 		// TODO Auto-generated method stub
 		PrintWriter out = response.getWriter();
 		
-		String headerName = request.getParameter("headerName");
-		String order = request.getParameter("order");
 		DatabaseConnection database = new DatabaseConnection();
-		ArrayList<Condition> conditionList; 
-		if (headerName.length() == 0 && order.length() == 0){
-			conditionList = database.retrieveAllCondition();
-		} else if (headerName.length() == 0){
-			conditionList = database.retrieveAllConditionBySort(headerName, "ASC");
-		} else {
-			conditionList = database.retrieveAllConditionBySort(headerName, order);
-		}
-	
-		 
-		
+		ArrayList<Condition> conditionList = database.retrieveAllConditionInfant();
+		System.out.print(conditionList);
 		
 		Gson gson = new Gson();
 		
@@ -66,8 +53,6 @@ public class DisplayAll extends HttpServlet {
 		out.write(arrayListToJson);
 		out.flush();
 		return;
-		
-		
 		
 	}
 
