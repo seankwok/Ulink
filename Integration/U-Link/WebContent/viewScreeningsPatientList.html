@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+    <title>View Screening - Adult</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="js/jquery-1.12.0.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/jquery.tablesorter.js"></script>
+	
+ 	
+ 	<style>
+ 	#myInput {
+		    background-image: url('/css/searchicon.png'); /* Add a search icon to input */
+		    background-position: 10px 12px; /* Position the search icon */
+		    background-repeat: no-repeat; /* Do not repeat the icon image */
+		    width: 30%; /* Full-width */
+		    font-size: 16px; /* Increase font-size */
+		    padding: 12px 20px 12px 40px; /* Add some padding */
+		    border: 1px solid #ddd; /* Add a grey border */
+		    margin-bottom: 12px; /* Add some space below the input */
+		}
+		
+		#table {
+		    border-collapse: collapse; /* Collapse borders */
+		    width: 100%; /* Full-width */
+		    font-size: 14px; /* Increase font-size */
+		}
+		
+		#table th, #table td {
+		    text-align: left; /* Left-align text */
+		    padding: 10px; /* Add padding */
+		    
+		}
+		
+		#table tr:hover {background-color: #f5f5f5}
+
+		#table tr {
+		    /* Add a bottom border to all table rows */
+		    border-bottom: 1px solid #ddd; 
+		     padding-bottom: 30px; /* Add padding */
+		}
+		
+		#table tr.header, #table tr:hover {
+		    /* Add background color to the table header and on hover */
+		    font-color: black;
+		     margin-bottom: 5px;
+		}
+ 	</style>
+ 	
+ 	
+ 	<script type="text/javascript">
+	
+	$(document).ready(function() {
+		
+		displayAll();
+		$("#send").onClick(){
+			//
+		}
+		});
+	
+	
+	function mySearch() {
+		  
+		  var searchText = document.getElementById('myInput').value.toUpperCase();
+		    var targetTable = document.getElementById('table');
+		    var targetTableColCount;
+		            
+		    //Loop through table rows
+		    for (var rowIndex = 0; rowIndex < targetTable.rows.length; rowIndex++) {
+		        var rowData = '';
+
+		        //Get column count from header row
+		        if (rowIndex == 0) {
+		           targetTableColCount = targetTable.rows.item(rowIndex).cells.length;
+		           continue; //do not execute further code for header row.
+		        }
+		                
+		        //Process data rows. (rowIndex >= 1)
+		        for (var colIndex = 0; colIndex < targetTableColCount; colIndex++) {
+		            rowData += targetTable.rows.item(rowIndex).cells.item(colIndex).textContent.toUpperCase();
+		        }
+
+		        //If search term is not found in row data
+		        //then hide the row, else show
+		        if (rowData.indexOf(searchText) == -1)
+		            targetTable.rows.item(rowIndex).style.display = 'none';
+		        else
+		            targetTable.rows.item(rowIndex).style.display = 'table-row';
+		    }
+	}
+ 
+	
+	function logout(){
+		$.ajax({
+			url: "Logout",
+			type: "post",
+			
+		});
+	}
+	
+	
+	function displayAll(){
+		var table = "<table id='table'  class='display' cellspacing='0' width='100%'>";
+		var isEmpty = false;
+		$.ajax({
+			url: "",
+			type: "get",
+		    dataType : "json",
+		    success: function(data){
+		    	var json = jQuery.parseJSON(JSON.stringify(data));
+		    	console.log(json);
+		    	table += "<thead><tr><th>Age</th><th>Client Name</th><th>Select</th></tr></thead>";
+		    	$.each(json,function(key,value) {
+		    		table += "<tbody><tr><td>"
+	    				+ value[""]
+	    				+ "</td>"
+	    				+ "<td>"
+	    				+ value[""]
+    					+ "</td>"
+    					+ "<td>"
+	    				+ "<input type='checkbox' name='selectClients'/>"		    				
+						+ "</td></tr></tbody>"
+		    	});
+		    	table += "</table>"
+		    		$("#display").html(table);
+		    	
+		    }	
+		    
+		});	
+		}
+		
+	
+	
+	
+		
+ </script>
+  </head>
+  
+  <body>
+    
+   <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Ulink Assist</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">Home<span class="sr-only"></span></a></li>
+        <li><a href="upload.html">Upload Patient Data</a></li>
+         <li><a href="client.html">Client</a></li>
+        <li class="dropdown">
+          <a href="#" class="active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Screenings <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="addScreening.html">Add Screenings</a></li>
+            <li><a href="viewScreenings.html">View Screenings</a></li>
+          </ul>
+        </li> 
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Analysis <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">KPI</a></li>
+              <li><a href="#">Ranking</a></li>
+            <li><a href="#">Gender and Age Report</a></li>
+          </ul>
+        </li>
+        
+      </ul>
+      <u1>
+      <form class="navbar-form navbar-right">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+      </u1>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="login.html" onClick=logout()>Logout</a></li>
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="accountManagement.html">Account Management</a></li>
+        
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+<div class="page-header">
+  <h1 align="center"><b>View Client List</b></h1>
+  <div align="center">
+  Condition Name: <div id="conditionName"></div> <br>
+  Recommended Screening: <div id="screening"></div>
+	</div>
+</div>
+
+
+<div class="container" id="display"></div>
+
+<div class="container" align="center">
+<button type="submit" value="Submit" class="btn btn-default" id="send">Send selected clients to own email</button>
+</div>
+
+  </body>
+</html>
