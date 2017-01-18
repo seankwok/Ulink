@@ -479,6 +479,8 @@
 				"ID" : clickedID
 			};
 		var table = "<table id='table'  class='display' cellspacing='0' width='100%'>";
+    	var condition="";
+    	var screeningName="";
 			console.log(clickedID);
 			$.ajax({
 				url : "DisplayAllClientByCondition",
@@ -490,6 +492,9 @@
 			    	console.log(json);
 			    	table += "<thead><tr><th>Age</th><th>Client Name</th><th>Select</th></tr></thead>";
 			    	$.each(json,function(key,value) {
+				    	 condition = value["conditionName"];
+				    	 screeningName =value["screening"];
+				    	 console.log(condition);
 			    		table += "<tbody><tr><td>"
 		    				+ value["age"]
 		    				+ "</td>"
@@ -504,6 +509,8 @@
 			    		
 			    	table += "<div class='container' align='center'><button type='submit' value='Submit' class='btn btn-default' id='send'>Send selected clients to own email</button></div>"
 			    		$("#display").html(table);
+			    		$("#displayCondition").html(condition);
+			    		$("#screening").html(screeningName);
 				}	
 
 			});
@@ -560,7 +567,7 @@
 	}
 	
 	function displayAll(){
-		var table = "<table id='patientList'  class='display' cellspacing='0' width='100%'>";
+		var table = "<table id='table'  class='display' cellspacing='0' width='100%'>";
 		var isEmpty = false;
 		$.ajax({
 			url: "DisplayAll",
@@ -695,6 +702,9 @@
   </div>
 </div>
 </div>
+
+<div id='displayCondition'></div>
+<div id='screening'></div>
 
 <div class="container" id="display">
   

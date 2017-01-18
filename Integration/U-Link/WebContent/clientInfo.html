@@ -22,41 +22,69 @@
 		color: #092473;
 	}
 	
+	
 	td {
 		font-size: 20px;
 	}
+	.appTd{
+		font-size: 14px;
+	}
+	
+	table{
+		margin-bottom: 100px;
+	}
+	
+	.tableHeader{
+		font-weight: bold;
+		font-size: 16px;
+		color: black;
+	}
+	
+	.tableName{
+		font-weight: bold;
+		font-size: 20px;
+		color: #092473;
+	}
+
  	</style>
  
  <script type="text/javascript">
 
 		$(document).ready(function() {
 			displayAll();
+			displayAppointment();
 		});
 
 		function displayAppointment() {
-			var appTable = "<table  width='75%'>";
+			var appTable = "<table  width='75%' border='1'>";
 			$.ajax({
 				url : "DisplayAllClientByName",
-				type : "post",
+				type : "get",
 				dataType : "json",
 				complete : function(data) {
 					var json = jQuery.parseJSON(data.responseText);
 					console.log(json);
-					appTable += "<thead><th>Appointment Date & Time</th><th>Doctor</th><th>Clinic</th><th>Hospital Admitted</th></thead>"
-				          $.each(json, function(i, item){
+					appTable += "<thead>"
+									+"<th class='tableHeader'>Appointment Date & Time</th>"
+									+"<th class='tableHeader'>Doctor</th>"
+									+"<th class='tableHeader'>Clinic</th>"
+									+"<th class='tableHeader'>Hospital Admitted</th>"
+								+"</thead>"
+				          $.each(json, function(key, value){
 				       	  appTable   +="<tbody>"
 				          		
 				          		+"<tr>"
-				                +"<td>A</td>"
-				                +"<td>B</td>"
-				                +"<td>C</td>"
-				                +"<td>D</td>"
+					                +"<td class='appTd'>"+value["appointment"]+"</td>"
+					                +"<td class='appTd'>"+value["doctor"]+"</td>"
+					                +"<td class='appTd'>"+value["clinic"]+"</td>"
+					                +"<td class='appTd'>"+value["hospitalAdmitted"]+"</td>"
 				                +"</tr>"
 
-				                +"</tbody></table>"
+				                
 				                	               				             				                
 							});
-			    	$("#appTable").html(appTable);
+								appTable	+="</tbody></table>"
+			    	$("#aTable").html(appTable);
 				}
 									
 				
@@ -68,51 +96,51 @@
 			var cName = "";
 			$.ajax({
 				url : "DisplayAllClientByName",
-				type : "post",
+				type : "get",
 				dataType : "json",
 				complete : function(data) {
 					var json = jQuery.parseJSON(data.responseText);
 					console.log(json);
-					profileTable += "<thead><th width='50%'></th><th width='50%'></th></thead>"
-				          $.each(json, function(i, item){
-				       	  cName = item.clientName
+					var profile=json[0];
+					profileTable += "<thead><th width='50%'></th><th width='50%'></th></thead>"		
+				       	 cName = profile.clientName
 				          profileTable   +="<tbody>"
 				          		
 				          		+"<tr>"
-				                +"<td><span class='myHeader'>Age: </span>" +item.age+"</td>"
-				                +"<td><span class='myHeader'>Client Owner: </span>" +item.clientOwner+"</td>"
+				                +"<td><span class='myHeader'>Age: </span>" +profile["age"]+"</td>"
+				                +"<td><span class='myHeader'>Client Owner: </span>" +profile["clientOwner"]+"</td>"
 				                +"</tr>"
 				                
 				                
 				                +"<tr>"
-				                +"<td><span class='myHeader'>Gender: </span>" +item.gender+"</td>"
-				                +"<td><span class='myHeader'>PIC: </span>"    +item.PIC+"</td>"
+				                +"<td><span class='myHeader'>Gender: </span>" +profile["gender"]+"</td>"
+				                +"<td><span class='myHeader'>PIC: </span>"    +profile["PIC"]+"</td>"
 				                +"</tr>"
 				                
 				                +"<tr>"
-				                +"<td><span class='myHeader'>Nationality: </span>"+item.nationality+"</td>"
-				                +"<td><span class='myHeader'>Referred By: </span>"+item.referredBy+"</td>"
+				                +"<td><span class='myHeader'>Nationality: </span>"+profile["nationality"]+"</td>"
+				                +"<td><span class='myHeader'>Referred By: </span>"+profile["referredBy"]+"</td>"
 				                +"</tr>"
 				                
 				                +"<tr>"
-				                +"<td><span class='myHeader'>Date of Birth: </span>"+item.dateOfBirth+"</td>"
-				                +"<td><span class='myHeader'>Ulink Can Claim: </span>"+item.claim+"</td>"
+				                +"<td><span class='myHeader'>Date of Birth: </span>"+profile["dateOfBirth"]+"</td>"
+				                +"<td><span class='myHeader'>Ulink Can Claim: </span>"+profile["claim"]+"</td>"
 				                +"</tr>"
 				                
 				                +"<tr>"
-				                +"<td><span class='myHeader'>Company: </span>"+item.company+"</td>"	
-				                +"<td><span class='myHeader'>Visa Requested By: </span>"+item.visaRequestBy+"</td>"
+				                +"<td><span class='myHeader'>Company: </span>"+profile["company"]+"</td>"	
+				                +"<td><span class='myHeader'>Visa Requested By: </span>"+profile["visaRequestBy"]+"</td>"
 				                +"</tr>"
 				                
 				                +"<tr>"
-				                +"<td><span class='myHeader'>Email: </span>"+item.email+"</td>"
-				                +"<td><span class='myHeader'>Visa Type: </span>"+item.visaType+"</td>"	
+				                +"<td><span class='myHeader'>Email: </span>"+profile["email"]+"</td>"
+				                +"<td><span class='myHeader'>Visa Type: </span>"+profile["visaType"]+"</td>"	
 				                +"</tr>"
 				                
 				                +"</tbody></table>"
 				                	               				             				                
 				 
-					});
+					
 			    	$("#myTable").html(profileTable);
 					$("#name").html(cName);
 				}
@@ -185,45 +213,22 @@
        <h1 align="center" id="name"></h1>
     </div>
     
-   
-   <div align="right"id="myTable"></div>
-   
-   <br> <br> <br>
-   
- 
-   <br> <br> <br>
+    <div align="right"id="myTable"></div>  
+    
+   <div>
+   		<div align="center" class='tableName'>Appointment Date & Time</div><br> 
+ 		<div align="center" id="aTable"> </div>
+   </div>
 
-	<div class="container" align="center">
-	<div class="col-md-6 col-md-offset-3">
-	<b>Client Appointments</b> <br>
-	<table class="table">
-	<tr>
-	<th>#</th>
-	<th>Appointment Date and Time</th>
-	</tr>
-	<tr>
-	<td>1</td>
-	<td>Tuesday</td>
-	</tr>
-	</table>
-	</div>
-	</div>
+   <div>
+   		<div align="center" class='tableName'>Screenings</div>
+		<div align="center" ></div>
+   </div>
 	
-	<div class="container" align="center">
-	<div class="col-md-6 col-md-offset-3">
-	<b>Recommended Screening and Time</b> <br>
-	<table class="table">
-	<tr>
-	<th>Common Illness</th>
-	<th>Screenings</th>
-	</tr>
-	<tr>
-	<td>Breast Cancer</td>
-	<td>Mammogram</td>
-	</tr>
-	</table>
-	</div>
-	</div>
+	
+	
+	
+
 	    
   </body>
 </html>
