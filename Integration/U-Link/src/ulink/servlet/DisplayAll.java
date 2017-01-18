@@ -46,9 +46,9 @@ public class DisplayAll extends HttpServlet {
 		String order = request.getParameter("order");
 		DatabaseConnection database = new DatabaseConnection();
 		ArrayList<Condition> conditionList; 
-		if (headerName.length() == 0 && order.length() == 0){
+		if (headerName == null && order == null){
 			conditionList = database.retrieveAllCondition();
-		} else if (headerName.length() == 0){
+		} else if (order == null){
 			conditionList = database.retrieveAllConditionBySort(headerName, "ASC");
 		} else {
 			conditionList = database.retrieveAllConditionBySort(headerName, order);

@@ -363,7 +363,7 @@ public class DatabaseConnection {
 			//con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "");
 
 			Statement stmt = con.createStatement();
-			String sql = "SELECT * FROM allcondition";
+			String sql = "SELECT * FROM allcondition where type != 'infant'";
 
 			ResultSet rs = stmt.executeQuery(sql);
 

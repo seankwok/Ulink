@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 10, 2017 at 04:59 AM
+-- Generation Time: Jan 18, 2017 at 05:22 AM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -103,6 +103,17 @@ INSERT INTO `client` (`accountID`, `clientOwner`, `clientName`, `clientType`, `c
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `uploadtime`
+--
+
+CREATE TABLE `uploadtime` (
+  `ID` int(5) NOT NULL,
+  `dateTime` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user`
 --
 
@@ -138,6 +149,12 @@ ALTER TABLE `client`
   ADD PRIMARY KEY (`accountID`);
 
 --
+-- Indexes for table `uploadtime`
+--
+ALTER TABLE `uploadtime`
+  ADD PRIMARY KEY (`ID`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -152,6 +169,11 @@ ALTER TABLE `user`
 --
 ALTER TABLE `allcondition`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+--
+-- AUTO_INCREMENT for table `uploadtime`
+--
+ALTER TABLE `uploadtime`
+  MODIFY `ID` int(5) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
