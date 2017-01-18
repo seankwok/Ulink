@@ -35,7 +35,7 @@
 
 
 		function displayAll() {
-			var profileTable = "<table  width='70%'>";
+			var profileTable = "<table  width='75%'>";
 			var cName = "";
 			$.ajax({
 				url : "DisplayAllClientByName",
@@ -44,7 +44,7 @@
 				complete : function(data) {
 					var json = jQuery.parseJSON(data.responseText);
 					console.log(json);
-					profileTable += "<thead><th width='25%'></th><th width='40%'></th></thead>"
+					profileTable += "<thead><th width='50%'></th><th width='50%'></th></thead>"
 				          $.each(json, function(i, item){
 				       	  cName = item.clientName
 				          profileTable   +="<tbody>"
@@ -67,12 +67,12 @@
 				                
 				                +"<tr>"
 				                +"<td><span class='myHeader'>Date of Birth: </span>"+item.dateOfBirth+"</td>"
-				                +"<td><span class='myHeader'>Visa Requested By: </span></td>"
+				                +"<td><span class='myHeader'>Visa Requested By: </span>"+item.visaRequestBy+"</td>"
 				                +"</tr>"
 				                
 				                +"<tr>"
 				                +"<td><span class='myHeader'>Company: </span>"+item.company+"</td>"
-				                +"<td><span class='myHeader'>Visa Type: </span></td>"
+				                +"<td><span class='myHeader'>Visa Type: </span>"+item.visaType+"</td>"				
 				                +"</tr>"
 				                
 				                +"<tr>"
@@ -80,12 +80,10 @@
 				                +"</tr>"
 				                
 				                +"</tbody></table>"
-				                	               				             				               
-				               
+				                	               				             				                
 				 
 					});
-					profileTable += "</table>"
-			    	$("#profile").html(profileTable);
+			    	$("#myTable").html(profileTable);
 					$("#name").html(cName);
 				}
 									
@@ -158,7 +156,7 @@
     </div>
     
    
-   <div align="right"id="profile"></div>
+   <div align="right"id="myTable"></div>
    <br> <br> <br>
 
 	<div class="container" align="center">
