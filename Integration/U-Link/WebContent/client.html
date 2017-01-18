@@ -53,11 +53,7 @@
 	#table tr.header, #table tr:hover {
 	    /* Add background color to the table header and on hover */
 	    font-color: black;
-	}
-	
-	a:hover {
-    	text-decoration:none;
-	}
+	}	
 	
 	/* unvisited link */
 	a:link {
@@ -96,13 +92,11 @@
 		$(document).ready(function() {
 			displayAll();	
 		} );
-	
 		
 		function mySearch() {
 			 var searchText = document.getElementById('myInput').value.toUpperCase();
 			    var targetTable = document.getElementById('table');
-			    var targetTableColCount;
-			            
+			    var targetTableColCount;			            
 			    //Loop through table rows
 			    for (var rowIndex = 0; rowIndex < targetTable.rows.length; rowIndex++) {
 			        var rowData = '';
@@ -139,10 +133,8 @@
 					dataType : "json",
 					complete : function(data) {
 						displayAll();
-							window.location="clientInfo.html";
-						
+							window.location="clientInfo.html";						
 					}
-
 				});
 		}
 			
@@ -157,22 +149,33 @@
 			    dataType : "json",
 			    complete: function(data){
 			    	var json = jQuery.parseJSON(data.responseText);
-			    	//table += "<thead><tr><th>Client Name</th><th>Client Type<a href='#' onClick=sortAscClientType(this.id) id='clientType'> &#9652</a><a href='#' onClick=sortDescClientType(this.id) id='clientType'> &#9662</a> </th><th width=30% >Visa/Medical<a href='#' onClick=sortAscTeam(this.id) id='team'> &#9652</a><a href='#' onClick=sortDescTeam(this.id) id='team'> &#9662</a></th></tr></thead><tbody>";
-				    table += "<thead><tr><th>Client Name</th>"			    	
-				    	+"<th><select>"
+			    	//table += "<thead>"
+			    	//		+"<tr><th>Client Name</th>"
+			    	//		+"<th>Client Type"
+			    	//				+"<a href='#' onClick=sortAscClientType(this.id) id='clientType'> &#9652</a>"
+			    	//				+"<a href='#' onClick=sortDescClientType(this.id) id='clientType'> &#9662</a>"
+	    			//		+" </th>"
+	    			//		
+	    			//		+"<th width=30% >Visa/Medical"
+			    	//				+"<a href='#' onClick=sortAscTeam(this.id) id='team'> &#9652</a>"
+			    	//				+"<a href='#' onClick=sortDescTeam(this.id) id='team'> &#9662</a>"
+	    			//		+"</th>"
+	    			//		+"</tr></thead>";
+	    					
+	    					
+				    table += "<thead></thead><tbody><tr><th>Client Name</th>"			    	
+				    	+"<th><select id='type'>"
 						    	+"<option value='Company'>Company</option>"
 						    	+"<option value='Employee'>Employee</option>"
 						    	+"<option value='Individual'>Individual</option>"
 						    	+"<option value='All' selected='selected'>All Client Type</option>"
 				    	+"</select></th>"
 				    	
-				    	+"<th width=30% ><select class='team'>"
+				    	+"<th width=30% ><select id='team' class='team'>"
 						    	+"<option value='Visa'>Visa</option>"
 						    	+"<option value='Medical'>Medical</option>"
 							    +"<option value='All' selected='selected'>Team</option>"		    	
-		    			+"</select></th>"
-				    	
-				    	+"</thead><tbody>";		
+		    			+"</select></th>"	
 
 			    	$.each(json, function(i, item){
 						table 	+= "<tr><td>"
@@ -226,7 +229,7 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Screenings <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="addScreening.html">Add Screenings</a></li>
-            <li><a href="viewScreeningsAdult.html">View Screenings</a></li>
+            <li><a href="viewScreenings.html">View Screenings</a></li>
           </ul>
         </li> 
         <li class="dropdown">
@@ -263,8 +266,6 @@
     </div>
    	
 	<div align="center"><input type="text" id="myInput" onkeyup="mySearch()" placeholder="Search Client by Name.."></div>
-    
-    <!-- <div class="container" id="table" align="center"></div>  -->
     
 	<div id="display" class="container"  ></div>
 

@@ -33,7 +33,36 @@
 			displayAll();
 		});
 
+		function displayAppointment() {
+			var appTable = "<table  width='75%'>";
+			$.ajax({
+				url : "DisplayAllClientByName",
+				type : "post",
+				dataType : "json",
+				complete : function(data) {
+					var json = jQuery.parseJSON(data.responseText);
+					console.log(json);
+					appTable += "<thead><th>Appointment Date & Time</th><th>Doctor</th><th>Clinic</th><th>Hospital Admitted</th></thead>"
+				          $.each(json, function(i, item){
+				       	  appTable   +="<tbody>"
+				          		
+				          		+"<tr>"
+				                +"<td>A</td>"
+				                +"<td>B</td>"
+				                +"<td>C</td>"
+				                +"<td>D</td>"
+				                +"</tr>"
 
+				                +"</tbody></table>"
+				                	               				             				                
+							});
+			    	$("#appTable").html(appTable);
+				}
+									
+				
+
+			});
+		}
 		function displayAll() {
 			var profileTable = "<table  width='75%'>";
 			var cName = "";
@@ -50,7 +79,7 @@
 				          profileTable   +="<tbody>"
 				          		
 				          		+"<tr>"
-				                +"<td><span class='myHeader'>Age: </td>"
+				                +"<td><span class='myHeader'>Age: </span>" +item.age+"</td>"
 				                +"<td><span class='myHeader'>Client Owner: </span>" +item.clientOwner+"</td>"
 				                +"</tr>"
 				                
@@ -67,16 +96,17 @@
 				                
 				                +"<tr>"
 				                +"<td><span class='myHeader'>Date of Birth: </span>"+item.dateOfBirth+"</td>"
+				                +"<td><span class='myHeader'>Ulink Can Claim: </span>"+item.claim+"</td>"
+				                +"</tr>"
+				                
+				                +"<tr>"
+				                +"<td><span class='myHeader'>Company: </span>"+item.company+"</td>"	
 				                +"<td><span class='myHeader'>Visa Requested By: </span>"+item.visaRequestBy+"</td>"
 				                +"</tr>"
 				                
 				                +"<tr>"
-				                +"<td><span class='myHeader'>Company: </span>"+item.company+"</td>"
-				                +"<td><span class='myHeader'>Visa Type: </span>"+item.visaType+"</td>"				
-				                +"</tr>"
-				                
-				                +"<tr>"
 				                +"<td><span class='myHeader'>Email: </span>"+item.email+"</td>"
+				                +"<td><span class='myHeader'>Visa Type: </span>"+item.visaType+"</td>"	
 				                +"</tr>"
 				                
 				                +"</tbody></table>"
@@ -119,7 +149,7 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Screenings <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="addScreening.html">Add Screenings</a></li>
-            <li><a href="viewScreeningsAdult.html">View Screenings</a></li>
+            <li><a href="viewScreenings.html">View Screenings</a></li>
           </ul>
         </li> 
         <li class="dropdown">
@@ -157,6 +187,10 @@
     
    
    <div align="right"id="myTable"></div>
+   
+   <br> <br> <br>
+   
+ 
    <br> <br> <br>
 
 	<div class="container" align="center">
