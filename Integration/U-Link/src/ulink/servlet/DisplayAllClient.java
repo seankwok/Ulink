@@ -48,8 +48,10 @@ public class DisplayAllClient extends HttpServlet {
 			
 		if (headerName == null && order == null){
 			clientList = database.retrieveAllClientList();
-		} else if (order == null){
-			clientList = database.retrieveAllClientListByOrder(headerName, "ASC");
+		} else if (order == null || order.equals("All")){
+			clientList = database.retrieveAllClientListByOrder(headerName, "All");
+		} else if (headerName == null || headerName.equals("All")) {
+			clientList = database.retrieveAllClientListByOrder("All", order);
 		} else {
 			clientList = database.retrieveAllClientListByOrder(headerName, order);
 		}
