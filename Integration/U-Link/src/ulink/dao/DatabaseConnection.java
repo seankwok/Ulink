@@ -60,7 +60,7 @@ public class DatabaseConnection {
 				String visa = rs.getString(25);
 				String visaType = rs.getString(26);
 				String visaType2 = rs.getString(27);
-				int age = utility.getAge(dateOfBirth);
+				int age = rs.getInt(28);
 				clientList.add(new Client(accountID,clientOwner,clientName,clientType,company,nationality,gender,dateOfBirth,email,medical,
 						mainDiagnosis,referredBy,PIC,appointment,doctor,specialty,clinic,otherDoctor,followUpPerson,followUpPIC,hospitalAdmitted,
 						log,claim, visaRequestBy,visa,visaType,visaType2, age));
@@ -403,7 +403,7 @@ public class DatabaseConnection {
 
 			ResultSet rs = stmt.executeQuery(sql);
 
-			
+			while (rs.next()){
 				int ID = rs.getInt(1);
 				String conditionName = rs.getString(2);
 				String numOfYears = rs.getString(3);
@@ -412,7 +412,7 @@ public class DatabaseConnection {
 				String type = rs.getString(6);
 				condition = new Condition(ID,conditionName, numOfYears, ageRequired, screening, type);
 				//allconditionList.add(condition);
-			
+			}
 
 			con.close();
 

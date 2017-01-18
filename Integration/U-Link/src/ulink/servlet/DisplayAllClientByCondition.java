@@ -42,16 +42,20 @@ public class DisplayAllClientByCondition extends HttpServlet {
 		DatabaseConnection connection = new DatabaseConnection();
 		ArrayList<Client> clientList = connection.retrieveAllClientList();
 		int ID = Integer.parseInt(request.getParameter("ID"));
+		System.out.println(ID);
 		Condition condition = connection.retrieveAllConditionByID(ID);
 		ArrayList<Client> newClientList = new ArrayList<>();
-		
+		System.out.println(condition);
 		for (int i =0; i<clientList.size(); i++){
 			Client client = clientList.get(i);
+			System.out.println(client.getAge());
 			if (client.getAge() > condition.getAgeRequired()){
 				newClientList.add(client);
 				}
 		}
 		
+		
+		System.out.println(newClientList.size());
 		Gson gson = new Gson();
 		PrintWriter out = response.getWriter();
 		JsonArray result = (JsonArray) new Gson().toJsonTree(newClientList, new TypeToken<List<Client>>() {

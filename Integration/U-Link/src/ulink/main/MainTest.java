@@ -21,9 +21,9 @@ public class MainTest {
 		// TODO Auto-generated method stub
 		DatabaseConnection connection = new DatabaseConnection();
 		
-		ArrayList<Condition> conditionList = connection.retrieveAllConditionBySort("conditionName", "DESC");
+		//ArrayList<Condition> conditionList = connection.retrieveAllConditionBySort("conditionName", "DESC");
 		
-		System.out.print(conditionList.size());
+	//	System.out.print(conditionList.size());
          
 
 	}
