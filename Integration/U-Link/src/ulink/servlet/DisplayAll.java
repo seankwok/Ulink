@@ -42,16 +42,16 @@ public class DisplayAll extends HttpServlet {
 		// TODO Auto-generated method stub
 		PrintWriter out = response.getWriter();
 		
-		String headerName = request.getParameter("headerName");
-		String order = request.getParameter("order");
+		String gender = request.getParameter("gender");
+		//String order = request.getParameter("order");
 		DatabaseConnection database = new DatabaseConnection();
 		ArrayList<Condition> conditionList; 
-		if (headerName == null && order == null){
+		if (gender.equals("All")){
 			conditionList = database.retrieveAllCondition();
-		} else if (order == null){
-			conditionList = database.retrieveAllConditionBySort(headerName, "ASC");
+		} else if (gender.equals("Female")){
+			conditionList = database.retrieveAllConditionBySort(gender);
 		} else {
-			conditionList = database.retrieveAllConditionBySort(headerName, order);
+			conditionList = database.retrieveAllConditionBySort(gender);
 		}
 	
 		 

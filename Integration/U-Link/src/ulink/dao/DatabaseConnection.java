@@ -390,7 +390,7 @@ public class DatabaseConnection {
 
 	
 	
-	public ArrayList<Condition> retrieveAllConditionBySort(String name, String order) {
+	public ArrayList<Condition> retrieveAllConditionBySort(String name) {
 
 		Connection con;
 		ArrayList<Condition> allconditionList = new ArrayList<Condition>();
@@ -400,7 +400,7 @@ public class DatabaseConnection {
 			//con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "");
 
 			Statement stmt = con.createStatement();
-			String sql = "SELECT * FROM `allcondition` ORDER BY "+  name + " "+ order;
+			String sql = "SELECT * FROM `allcondition` where type ='"+  name + "'";
 
 			ResultSet rs = stmt.executeQuery(sql);
 
