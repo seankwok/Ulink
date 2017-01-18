@@ -387,6 +387,42 @@ public class DatabaseConnection {
 
 		return allconditionList;
 	}
+	
+	public Condition retrieveAllConditionByID(int cID) {
+
+		Connection con;
+		//ArrayList<Condition> allconditionList = new ArrayList<Condition>();
+		Condition condition = null; 
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
+			//con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "");
+
+			Statement stmt = con.createStatement();
+			String sql = "SELECT * FROM allcondition where ID = '" + cID + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			
+				int ID = rs.getInt(1);
+				String conditionName = rs.getString(2);
+				String numOfYears = rs.getString(3);
+				int ageRequired = rs.getInt(4);
+				String screening = rs.getString(5);
+				String type = rs.getString(6);
+				condition = new Condition(ID,conditionName, numOfYears, ageRequired, screening, type);
+				//allconditionList.add(condition);
+			
+
+			con.close();
+
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return condition;
+	}
 
 	
 	
