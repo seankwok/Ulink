@@ -8,14 +8,134 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import ulink.constructor.AgeAndGender;
 import ulink.constructor.Client;
 import ulink.constructor.Consultation;
+import ulink.constructor.KPI;
 import ulink.dao.DatabaseConnection;
 
 public class TopK {
 	DatabaseConnection connection = new DatabaseConnection();
 
+	public ArrayList<AgeAndGender> getAgeGenderReport(){
+		ArrayList<AgeAndGender> ageGenderReport = new ArrayList<>();
+		ArrayList<Client>clientList = connection.retrieveAllClientList();
+		int m10 =0;
+		int f10 = 0;
+		int m20 = 0;
+		int f20 = 0;
+		int m30 = 0;
+		int f30 = 0;
+		int m40 = 0;
+		int f40 = 0;
+		int m50 =0;
+		int f50=0;
+		int m60 =0;
+		int f60=0;
+		int m70=0;
+		int f70=0;
+		int m80=0;
+		int f80=0;
+		
+		for (int i=1; i< clientList.size();i++){
+			Client client = clientList.get(i);
+			if(client.getGender() != null){
+				if (client.getGender().equals("Male")){
+					if (client.getAge() <= 10){
+						m10++;
+					} else if (client.getAge() <=20){
+						m20++;
+					} else if (client.getAge() <= 30){
+						m30++;
+					} else if (client.getAge() <= 40){
+						m40++;
+					} else if (client.getAge() <= 50){
+						m50++;
+					} else if (client.getAge() <= 60){
+						m60++;
+					} else if (client.getAge() <= 70){
+						m70++;
+					} else {
+						m80++;
+					}
+				}else {
+					if (client.getAge() <= 10){
+						f10++;
+					} else if (client.getAge() <=20){
+						f20++;
+					} else if (client.getAge() <= 30){
+						f30++;
+					} else if (client.getAge() <= 40){
+						f40++;
+					} else if (client.getAge() <= 50){
+						f50++;
+					} else if (client.getAge() <= 60){
+						f60++;
+					} else if (client.getAge() <= 70){
+						f70++;
+					} else {
+						f80++;
+					}
+				}
+			}
+			
+		}
+				
+		ageGenderReport.add(new AgeAndGender("10",m10/(m10+f10),f10/(m10+f10)));
+		ageGenderReport.add(new AgeAndGender("20",m20/(m20+f20),f20/(m20+f20)));
+		ageGenderReport.add(new AgeAndGender("30",m30/(m30+f30),f30/(m30+f30)));
+		ageGenderReport.add(new AgeAndGender("40",m40/(m40+f40),f40/(m40+f40)));
+		ageGenderReport.add(new AgeAndGender("50",m50/(m50+f50),f50/(m50+f50)));
+		ageGenderReport.add(new AgeAndGender("60",m60/(m60+f60),f60/(m60+f60)));
+		ageGenderReport.add(new AgeAndGender("70",m70/(m70+f70),f70/(m70+f70)));
+		ageGenderReport.add(new AgeAndGender("80",m80/(m80+f80),f80/(m80+f80)));
+		
+		
+		
+		return ageGenderReport;
+	}
+	
+	
+	public KPI getKPI(String type, String date){
+		//ArrayList<KPI> kpiList = new ArrayList<>();
+		ArrayList<Client> clientList = connection.retrieveAllClientByType(type);
+		int in = 0;
+		int out = 0;
+		
+		for (int i =1; i< clientList.size(); i++){
+			Client client = clientList.get(i);
+			if(client.getCreatedtime().contains(date) && client.getHospitalAdmitted() != null){
+				in++;
+			} else if(client.getCreatedtime().contains(date) && client.getHospitalAdmitted() == null){
+				out++;
+			}
+		}
+		
+		
+		
+		return new KPI(date,in,out);
+	}
 
+	
+	public KPI getKPIVisa(String type, String date){
+		//ArrayList<KPI> kpiList = new ArrayList<>();
+		ArrayList<Client> clientList = connection.retrieveAllClientByType(type);
+		int in = 0;
+		int out = 0;
+		
+		for (int i =1; i< clientList.size(); i++){
+			Client client = clientList.get(i);
+			if(client.getCreatedtime().contains(date) && client.getVisaType().contains("Indonesia")){
+				in++;
+			} else if(client.getCreatedtime().contains(date)){
+				out++;
+			}
+		}
+		
+		
+		
+		return new KPI(date,in,out);
+	}
 
 	public HashMap<String, Integer> topSpeciality(String startDate, String endDate) {
 		ArrayList<String> specialityList = connection.retrieveAllSpeciality(startDate, endDate);

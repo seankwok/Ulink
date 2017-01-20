@@ -1,6 +1,7 @@
 package ulink.constructor;
 
 public class Client {
+	private int ID;
 	private String accountID;
 	private String clientOwner;
 	private String clientName;
@@ -29,14 +30,25 @@ public class Client {
 	private String visaType;
 	private String visaType2;
 	private int age;
+	private String billingCity;
+	private String billingCode; 
+	private String billingCountry;
+	private String billingState;
+	private String billingStreet;
+	private String createdtime;
+	private String phone;
 	
 	
-	public Client(String accountID, String clientOwner, String clientName, String clientType, String company,
+	
+	public Client(int ID, String accountID, String clientOwner, String clientName, String clientType, String company,
 			String nationality, String gender, String dateOfBirth, String email, String medical, String mainDiagnosis,
 			String referredBy, String PIC, String appointment, String doctor, String specialty, String clinic,
 			String otherDoctor, String followUpPerson, String followUpPIC, String hospitalAdmitted, String log,
-			String claim, String visa, String visaRequestBy, String visaType, String visaType2, int age) {
+			String claim, String visa, String visaRequestBy, String visaType, String visaType2, int age,
+			String billingCity, String billingCode, String billingCountry, String billingState, String billingStreet,
+			String createdtime,String phone) {
 		super();
+		this.ID = ID;
 		this.accountID = accountID;
 		this.clientOwner = clientOwner;
 		this.clientName = clientName;
@@ -65,12 +77,22 @@ public class Client {
 		this.visaType = visaType;
 		this.visaType2 = visaType2;
 		this.age = age;
+		this.billingCity = billingCity;
+		this.billingCode = billingCode;
+		this.billingCountry = billingCountry;
+		this.billingState = billingState;
+		this.billingStreet = billingStreet;
+		this.createdtime = createdtime;
+		this.phone = phone;
 	}
 	
-	public int getAge(){
-		return age;
+	public String getPhone(){
+		return phone;
 	}
 	
+	public int getID(){
+		return ID;
+	}
 	public String getAccountID() {
 		return accountID;
 	}
@@ -233,7 +255,49 @@ public class Client {
 	public void setVisaType2(String visaType2) {
 		this.visaType2 = visaType2;
 	}
-	
-	
-	
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
+	public String getBillingCity() {
+		return billingCity;
+	}
+	public void setBillingCity(String billingCity) {
+		this.billingCity = billingCity;
+	}
+	public String getBillingCode() {
+		return billingCode;
+	}
+	public void setBillingCode(String billingCode) {
+		this.billingCode = billingCode;
+	}
+	public String getBillingCountry() {
+		return billingCountry;
+	}
+	public void setBillingCountry(String billingCountry) {
+		this.billingCountry = billingCountry;
+	}
+	public String getBillingState() {
+		return billingState;
+	}
+	public void setBillingState(String billingState) {
+		this.billingState = billingState;
+	}
+	public String getBillingStreet() {
+		return billingStreet;
+	}
+	public void setBillingStreet(String billingStreet) {
+		this.billingStreet = billingStreet;
+	}
+	public String getCreatedtime() {
+		return createdtime;
+	}
+	public void setCreatedtime(String createdtime) {
+		this.createdtime = createdtime;
+	}
+
+
+
 }

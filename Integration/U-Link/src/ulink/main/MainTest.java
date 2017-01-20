@@ -24,7 +24,9 @@ public class MainTest {
 		//ArrayList<Condition> conditionList = connection.retrieveAllConditionBySort("conditionName", "DESC");
 		
 	//	System.out.print(conditionList.size());
-         
+		
+		String test = "05-05-2016";
+         System.out.println(test.contains("05-2016"));
 
 	}
 
