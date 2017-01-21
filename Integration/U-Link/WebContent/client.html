@@ -88,6 +88,23 @@
 		$(document).ready(function() {
 			displayAll();
 		} );
+		
+		function jsFunction1(value){
+			   // set search box value as client type
+			   var txt =  document.getElementById('myInput');
+			   txt.value = value;
+			   document.getElementById('team').value = '';
+			   mySearch();
+		}
+		
+		function jsFunction2(value){
+			   // set search box value as Team
+			   var txt =  document.getElementById('myInput');
+			   txt.value = value;
+			   document.getElementById('type').value = '';
+			   mySearch();
+			  
+		}
 
 		function mySearch() {
 			 var searchText = document.getElementById('myInput').value.toUpperCase();
@@ -146,32 +163,39 @@
 			    complete: function(data){
 			    	var json = jQuery.parseJSON(data.responseText);
 	    					
-				    table += "<thead></thead><tbody><tr><th>Client Name</th>"			    	
-				    	+"<th><select id='type'>"
-						    	+"<option value='Company'>Company</option>"
-						    	+"<option value='Employee'>Employee</option>"
-						    	+"<option value='Individual'>Individual</option>"
-						    	+"<option value='All' selected='selected'>All Client Type</option>"
-				    	+"</select></th>"
-				    	
-				    	+"<th width=30% ><select id='team' class='team'>"
-						    	+"<option value='Visa'>Visa</option>"
-						    	+"<option value='Medical'>Medical</option>"
-							    +"<option value='All' selected='selected'>Team</option>"		    	
-		    			+"</select></th>"	
-
+				    table += "<thead>"
+					    	   +"<th>Client Name</th>"			    	
+					    	   +"<th>"
+					    		+"<select onchange='jsFunction1(value)' id='type'>"
+							    	+"<option value='Company' onclick='if (!document.getElementById('searchInput').onchange()) mySearch();'>Company</option>"
+							    	+"<option value='Employee'>Employee</option>"
+							    	+"<option value='Individual'>Individual</option>"
+							    	+"<option value='' selected='selected' >All Client Type</option>"
+					    		 +"</select>"
+						    	+"</th>"
+						    	+"<th width=30% >"
+				    			 +"<select class='team' onchange='jsFunction2(value)' id='team'>"
+							    	+"<option value='Visa'>Visa</option>"
+							    	+"<option value='Medical'>Medical</option>"
+								    +"<option value='' selected='selected'>Team</option>"		    	
+		    					 +"</select>"
+				    			+"</th>"
+				    			+"</thead>"
+				    			
+				    			+"<body>"
 			    	$.each(json, function(i, item){
-						table 	+= "<tr><td>"
-								+ "<a href='#' onClick=directToClientProfile(this.id) id= '"
-			    				+ item.clientName
-			    				+ "'>"+item.clientName +"</a>"
-		    					+ "</td>"
-		    					+ "<td width=30%>"
-		    					+ item.clientType
-		    					+ "</td>"
-		    					+ "<td>"
-		    					+ item.medical
-		    					+ "</td>"
+						table 	+= "<tr>"
+									+"<td>"
+										+ "<a href='#' onClick=directToClientProfile(this.id) id= '"
+					    				+ item.clientName
+					    				+ "'>"+item.clientName +"</a>"
+		    						+ "</td>"
+		    						+ "<td width=30%>"
+		    							+ item.clientType
+		    						+ "</td>"
+			    					+ "<td>"
+			    						+ item.medical
+			    					+ "</td>"
 		    					+ "</tr>"
 		    					
 					});
