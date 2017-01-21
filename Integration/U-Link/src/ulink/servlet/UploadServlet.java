@@ -135,10 +135,12 @@ public class UploadServlet extends HttpServlet {
 			int count = 0;
 			String extension = FilenameUtils.getExtension(fullName);
 			if (extension.trim().equalsIgnoreCase("xlsx")) {
+				System.out.println("test1");
 				count = processExcelFile(file);
 				// System.out.print(count);
 				// out.write(count);
 				// out.flush();
+
 				connection.addDateTime(uploadedTime);
 
 				request.getRequestDispatcher("./upload.html").forward(request, response);
@@ -146,11 +148,13 @@ public class UploadServlet extends HttpServlet {
 
 			} else if (extension.trim().equalsIgnoreCase("xls")) {
 				// process your binary excel file
+				System.out.println("test2");
 				count = test(file);
 				connection.addDateTime(uploadedTime);
 				// out.write(count);
 				// out.flush();
 				// response.sendRedirect("./upload.html");
+
 				request.getRequestDispatcher("./upload.html").forward(request, response);
 				return;
 			}
@@ -187,10 +191,9 @@ public class UploadServlet extends HttpServlet {
 		DatabaseConnection connection = new DatabaseConnection();
 		Iterator<Row> rowIter = sheet.rowIterator();
 		rowIter.next();
-	
+
 		ArrayList<Client> clientList = new ArrayList<>();
-	
-		
+
 		int ID = 0;
 		int accountIDRow = 0;
 		int clientOwnerRow = 0;
@@ -260,132 +263,158 @@ public class UploadServlet extends HttpServlet {
 		String billingStreet = null;
 		String createdTime = null;
 		String phone = null;
-		
+
 		while (rowIter.hasNext()) {
 			ID++;
-			
+
 			HSSFRow myRow = (HSSFRow) rowIter.next();
 			Iterator<Cell> cellIter = myRow.cellIterator();
+
+	
+			int numberOfRow = myRow.getPhysicalNumberOfCells();
+			if (numberOfRow == 35) {
+				for (int i = 0; i < numberOfRow; i++) {
+
+					HSSFCell temp = (HSSFCell) cellIter.next();
+					// System.out.println(temp.toString());
+					//int row = myRow.getRowNum();
+					// System.out.println(temp.toString() + " " +
+					// temp.getColumnIndex() + " ROW");
+					if (temp.toString().equals("ACCOUNTID") || temp.getColumnIndex() == accountIDRow) {
+
+						accountIDRow = temp.getColumnIndex();
+						accountID = temp.toString();
+					} else if (temp.toString().equals("Client Name") || temp.getColumnIndex() == clientNameRow) {
+						clientNameRow = temp.getColumnIndex();
+						clientName = temp.toString();
+					} else if (temp.toString().contains("Appointment") || temp.getColumnIndex() == appointmentRow) {
+
+						appointmentRow = temp.getColumnIndex();
+						appointment = temp.toString();
+					} else if (temp.toString().equals("Billing City") || temp.getColumnIndex() == billingCityRow) {
+						billingCityRow = temp.getColumnIndex();
+						billingCity = temp.toString();
+					} else if (temp.toString().equals("Billing Code") || temp.getColumnIndex() == billingCodeRow) {
+						billingCodeRow = temp.getColumnIndex();
+						billingCode = temp.toString();
+					} else if (temp.toString().equals("Billing Country")
+							|| temp.getColumnIndex() == billingCountryRow) {
+						billingCountryRow = temp.getColumnIndex();
+						billingCountry = temp.toString();
+					} else if (temp.toString().equals("Billing State")
+							|| temp.getColumnIndex() == billingStateRow) {
+						billingStateRow = temp.getColumnIndex();
+						billingState = temp.toString();
+					} else if (temp.toString().equals("Billing Street")
+							|| temp.getColumnIndex() == billingStreetRow) {
+						billingStreetRow = temp.getColumnIndex();
+						billingStreet = temp.toString();
+					} else if (temp.toString().equals("Client Owner") || temp.getColumnIndex() == clientOwnerRow) {
+						clientOwnerRow = temp.getColumnIndex();
+						clientOwner = temp.toString();
+					} else if (temp.toString().equals("Client type") || temp.getColumnIndex() == clientTypeRow) {
+						clientTypeRow = temp.getColumnIndex();
+						clientType = temp.toString();
+					} else if (temp.toString().equals("Clinic") || temp.getColumnIndex() == clinicRow) {
+						clinicRow = temp.getColumnIndex();
+						clinic = temp.toString();
+					} else if (temp.toString().equals("Company (for employee only)")
+							|| temp.getColumnIndex() == companyRow) {
+						companyRow = temp.getColumnIndex();
+						company = temp.toString();
+					} else if (temp.toString().equals("Created Time") || temp.getColumnIndex() == createdTimeRow) {
+						createdTimeRow = temp.getColumnIndex();
+						createdTime = temp.toString();
+					} else if (temp.toString().equals("Date of birth") || temp.getColumnIndex() == dateOfBirthRow) {
+						dateOfBirthRow = temp.getColumnIndex();
+						if (temp.toString().equals("Date of birth")){
+							dateOfBirth = "10/10/2000";
+							} else {
+								dateOfBirth = temp.toString();
+							}
+						
+						// System.out.println(dateOfBirth);
+					} else if (temp.toString().equals("Doctor") || temp.getColumnIndex() == doctorRow) {
+						doctorRow = temp.getColumnIndex();
+						doctor = temp.toString();
+					} else if (temp.toString().equals("Email") || temp.getColumnIndex() == emailRow) {
+						emailRow = temp.getColumnIndex();
+						email = temp.toString();
+					} else if (temp.toString().equals("Follow up person")
+							|| temp.getColumnIndex() == followUpPersonRow) {
+						followUpPersonRow = temp.getColumnIndex();
+						followUpPerson = temp.toString();
+					} else if (temp.toString().equals("Follow up PIC") || temp.getColumnIndex() == followUpPICRow) {
+						followUpPICRow = temp.getColumnIndex();
+						followUpPIC = temp.toString();
+					} else if (temp.toString().equals("Gender") || temp.getColumnIndex() == genderRow) {
+						genderRow = temp.getColumnIndex();
+						gender = temp.toString();
+					} else if (temp.toString().equals("Hospital admitted")
+							|| temp.getColumnIndex() == hospitalAdmittedRow) {
+						hospitalAdmittedRow = temp.getColumnIndex();
+						hospitalAdmitted = temp.toString();
+					} else if (temp.toString().equals("LOG - If yes, please tick")
+							|| temp.getColumnIndex() == logRow) {
+						logRow = temp.getColumnIndex();
+						log = temp.toString();
+					} else if (temp.toString().equals("Medical - If yes, please tick")
+							|| temp.getColumnIndex() == medicalRow) {
+						medicalRow = temp.getColumnIndex();
+						medical = temp.toString();
+					} else if (temp.toString().equals("Nationality") || temp.getColumnIndex() == nationalityRow) {
+						nationalityRow = temp.getColumnIndex();
+						nationality = temp.toString();
+					} else if (temp.toString().equals("Other doctor") || temp.getColumnIndex() == otherDoctorRow) {
+						otherDoctorRow = temp.getColumnIndex();
+						otherDoctor = temp.toString();
+					} else if (temp.toString().equals("Phone") || temp.getColumnIndex() == phoneRow) {
+						phoneRow = temp.getColumnIndex();
+						phone = temp.toString();
+					} else if (temp.toString().equals("PIC") || temp.getColumnIndex() == PICRow) {
+						PICRow = temp.getColumnIndex();
+						PIC = temp.toString();
+					} else if (temp.toString().equals("Referred by") || temp.getColumnIndex() == referredByRow) {
+						referredByRow = temp.getColumnIndex();
+						referredBy = temp.toString();
+					} else if (temp.toString().equals("Specialty") || temp.getColumnIndex() == specialtyRow) {
+						specialtyRow = temp.getColumnIndex();
+						specialty = temp.toString();
+					} else if (temp.toString().equals("Ulink Can Claim") || temp.getColumnIndex() == claimRow) {
+						claimRow = temp.getColumnIndex();
+						claim = temp.toString();
+					} else if (temp.toString().equals("Visa - If yes, please tick-")
+							|| temp.getColumnIndex() == visaRow) {
+						visaRow = temp.getColumnIndex();
+						visa = temp.toString();
+					} else if (temp.toString().equals("Visa requested by")
+							|| temp.getColumnIndex() == visaRequestByRow) {
+						visaRequestByRow = temp.getColumnIndex();
+						visaRequestBy = temp.toString();
+					} else if (temp.toString().equals("Visa type") || temp.getColumnIndex() == visaTypeRow) {
+						visaTypeRow = temp.getColumnIndex();
+						visaType = temp.toString();
+					} else if (temp.toString().equals("Visa type 2") || temp.getColumnIndex() == visaType2Row) {
+						visaType2Row = temp.getColumnIndex();
+						visaType2 = temp.toString();
+					} else if (temp.toString().equals("Main Diagnosis")
+							|| temp.getColumnIndex() == mainDiagnosisRow) {
+						mainDiagnosisRow = temp.getColumnIndex();
+						mainDiagnosis = temp.toString();
+					}
+
+				}
+
+				//System.out.print(clientName);
 			
-			XSSFCell temp = (XSSFCell) cellIter.next();
-			int row = temp.getRowIndex();
-			
-			if (temp.toString().equals("ACCOUNTID") || temp.getRowIndex() == accountIDRow){
-				accountIDRow = temp.getRowIndex();
-				accountID = temp.toString();
-			} else if (temp.toString().equals("Client Name") || temp.getRowIndex() == clientNameRow){
-				clientNameRow = temp.getRowIndex();
-				clientName = temp.toString();
-			}else if (temp.toString().equals("Appointment date and time") || temp.getRowIndex() == appointmentRow){
-				appointmentRow = temp.getRowIndex();
-				appointment = temp.toString();
-			}else if (temp.toString().equals("Billing City") || temp.getRowIndex() == billingCityRow){
-				billingCityRow = temp.getRowIndex();
-				billingCity = temp.toString();
-			}else if (temp.toString().equals("Billing Code") || temp.getRowIndex() == billingCodeRow){
-				billingCodeRow = temp.getRowIndex();
-				billingCode = temp.toString();
-			}else if (temp.toString().equals("Billing Country") || temp.getRowIndex() == billingCountryRow){
-				billingCountryRow = temp.getRowIndex();
-				billingCountry = temp.toString();
-			}else if (temp.toString().equals("Billing State") || temp.getRowIndex() == billingStateRow){
-				billingStateRow = temp.getRowIndex();
-				billingState = temp.toString();
-			}else if (temp.toString().equals("Billing Street") || temp.getRowIndex() == billingStreetRow){
-				billingStreetRow = temp.getRowIndex();
-				billingStreet = temp.toString();
-			}else if (temp.toString().equals("Client Owner") || temp.getRowIndex() == clientOwnerRow){
-				clientOwnerRow = temp.getRowIndex();
-				clientOwner = temp.toString();
-			}else if (temp.toString().equals("Client type") || temp.getRowIndex() == clientTypeRow){
-				clientTypeRow = temp.getRowIndex();
-				clientType = temp.toString();
-			}else if (temp.toString().equals("Clinic") || temp.getRowIndex() == clinicRow){
-				clinicRow = temp.getRowIndex();
-				clinic = temp.toString();
-			}else if (temp.toString().equals("Company (for employee only)") || temp.getRowIndex() == companyRow){
-				companyRow = temp.getRowIndex();
-				company = temp.toString();
-			}else if (temp.toString().equals("Created Time") || temp.getRowIndex() == createdTimeRow){
-				createdTimeRow = temp.getRowIndex();
-				createdTime = temp.toString();
-			}else if (temp.toString().equals("Date of birth") || temp.getRowIndex() == dateOfBirthRow){
-				dateOfBirthRow = temp.getRowIndex();
-				dateOfBirth = temp.toString();
-			}else if (temp.toString().equals("Doctor") || temp.getRowIndex() == doctorRow){
-				doctorRow = temp.getRowIndex();
-				doctor = temp.toString();
-			}else if (temp.toString().equals("Email") || temp.getRowIndex() == emailRow){
-				emailRow = temp.getRowIndex();
-				email = temp.toString();
-			}else if (temp.toString().equals("Follow up person") || temp.getRowIndex() == followUpPersonRow){
-				followUpPersonRow = temp.getRowIndex();
-				followUpPerson = temp.toString();
-			}else if (temp.toString().equals("Follow up PIC") || temp.getRowIndex() == followUpPICRow){
-				followUpPICRow = temp.getRowIndex();
-				followUpPIC = temp.toString();
-			}else if (temp.toString().equals("Gender") || temp.getRowIndex() == genderRow){
-				genderRow = temp.getRowIndex();
-				gender = temp.toString();
-			}else if (temp.toString().equals("Hospital admitted") || temp.getRowIndex() == hospitalAdmittedRow){
-				hospitalAdmittedRow = temp.getRowIndex();
-				hospitalAdmitted = temp.toString();
-			}else if (temp.toString().equals("LOG - If yes, please tick") || temp.getRowIndex() == logRow){
-				logRow = temp.getRowIndex();
-				log = temp.toString();
-			}else if (temp.toString().equals("Medical - If yes, please tick") || temp.getRowIndex() == medicalRow){
-				medicalRow = temp.getRowIndex();
-				medical = temp.toString();
-			}else if (temp.toString().equals("Nationality") || temp.getRowIndex() == nationalityRow){
-				nationalityRow = temp.getRowIndex();
-				nationality = temp.toString();
-			}else if (temp.toString().equals("Other doctor") || temp.getRowIndex() == otherDoctorRow){
-				otherDoctorRow = temp.getRowIndex();
-				otherDoctor = temp.toString();
-			}else if (temp.toString().equals("Phone") || temp.getRowIndex() == phoneRow){
-				phoneRow = temp.getRowIndex();
-				phone = temp.toString();
-			}else if (temp.toString().equals("PIC") || temp.getRowIndex() == PICRow){
-				PICRow = temp.getRowIndex();
-				PIC = temp.toString();
-			}else if (temp.toString().equals("Referred by") || temp.getRowIndex() == referredByRow){
-				referredByRow = temp.getRowIndex();
-				referredBy = temp.toString();
-			}else if (temp.toString().equals("Specialty") || temp.getRowIndex() == specialtyRow){
-				specialtyRow = temp.getRowIndex();
-				specialty = temp.toString();
-			}else if (temp.toString().equals("Ulink Can Claim") || temp.getRowIndex() == claimRow){
-				claimRow = temp.getRowIndex();
-				claim = temp.toString();
-			}else if (temp.toString().equals("Visa - If yes, please tick-") || temp.getRowIndex() == visaRow){
-				visaRow = temp.getRowIndex();
-				visa = temp.toString();
-			}else if (temp.toString().equals("Visa requested by") || temp.getRowIndex() == visaRequestByRow){
-				visaRequestByRow = temp.getRowIndex();
-				visaRequestBy = temp.toString();
-			}else if (temp.toString().equals("Visa type") || temp.getRowIndex() == visaTypeRow){
-				visaTypeRow = temp.getRowIndex();
-				visaType = temp.toString();
-			}else if (temp.toString().equals("Visa type 2") || temp.getRowIndex() == visaType2Row){
-				visaType2Row = temp.getRowIndex();
-				visaType2 = temp.toString();
-			}else if (temp.toString().equals("Main Diagnosis") || temp.getRowIndex() == mainDiagnosisRow){
-				mainDiagnosisRow = temp.getRowIndex();
-				mainDiagnosis = temp.toString();
+				clientList.add(new Client(ID, accountID, clientOwner, clientName, clientType, company, nationality,
+						gender, dateOfBirth, email, medical, mainDiagnosis, referredBy, PIC, appointment, doctor,
+						specialty, clinic, otherDoctor, followUpPerson, followUpPIC, hospitalAdmitted, log,
+						claim,  visa, visaRequestBy, visaType, visaType2, utility.getAge(dateOfBirth), billingCity, billingCode,
+						billingCountry, billingState, billingStreet, createdTime, phone));
+				//System.out.println(clientList.get(clientList.size() - 1).getClientName());
+				count++;
 			}
-
-
-			clientList.add(new Client(ID, accountID, clientOwner, clientName,
-					clientType, company, nationality, gender,
-					dateOfBirth, email, medical, mainDiagnosis,
-					referredBy, appointment, doctor, specialty,
-					clinic, otherDoctor, followUpPerson, followUpPIC,
-					PIC, hospitalAdmitted, log, claim,
-					visaRequestBy, visa, visaType, visaType2,
-					utility.getAge(dateOfBirth), billingCity, billingCode, billingCountry, 
-					billingState, billingStreet, createdTime, phone));
-
-			count++;
 
 		}
 		connection.createClient(clientList);
@@ -411,9 +440,9 @@ public class UploadServlet extends HttpServlet {
 			/** We now need something to iterate through the cells. **/
 			Iterator<Row> rowIter = mySheet.rowIterator();
 			rowIter.next();
-			
+
 			Utility utility = new Utility();
-			
+
 			int ID = 0;
 			int accountIDRow = 0;
 			int clientOwnerRow = 0;
@@ -483,137 +512,162 @@ public class UploadServlet extends HttpServlet {
 			String billingStreet = null;
 			String createdTime = null;
 			String phone = null;
-			
+			// System.out.print("abc");
 			while (rowIter.hasNext()) {
 				ID++;
 				XSSFRow myRow = (XSSFRow) rowIter.next();
+				int numberOfRow = myRow.getPhysicalNumberOfCells();
+				// System.out.println(numberOfRow);
 				Iterator<Cell> cellIter = myRow.cellIterator();
+				if (numberOfRow == 35) {
+					for (int i = 0; i < numberOfRow; i++) {
+
+						XSSFCell temp = (XSSFCell) cellIter.next();
+						// System.out.println(temp.toString());
+						//int row = myRow.getRowNum();
+						// System.out.println(temp.toString() + " " +
+						// temp.getColumnIndex() + " ROW");
+						if (temp.toString().equals("ACCOUNTID") || temp.getColumnIndex() == accountIDRow) {
+
+							accountIDRow = temp.getColumnIndex();
+							accountID = temp.toString();
+						} else if (temp.toString().equals("Client Name") || temp.getColumnIndex() == clientNameRow) {
+							clientNameRow = temp.getColumnIndex();
+							clientName = temp.toString();
+						} else if (temp.toString().contains("Appointment") || temp.getColumnIndex() == appointmentRow) {
+
+							appointmentRow = temp.getColumnIndex();
+							appointment = temp.toString();
+						} else if (temp.toString().equals("Billing City") || temp.getColumnIndex() == billingCityRow) {
+							billingCityRow = temp.getColumnIndex();
+							billingCity = temp.toString();
+						} else if (temp.toString().equals("Billing Code") || temp.getColumnIndex() == billingCodeRow) {
+							billingCodeRow = temp.getColumnIndex();
+							billingCode = temp.toString();
+						} else if (temp.toString().equals("Billing Country")
+								|| temp.getColumnIndex() == billingCountryRow) {
+							billingCountryRow = temp.getColumnIndex();
+							billingCountry = temp.toString();
+						} else if (temp.toString().equals("Billing State")
+								|| temp.getColumnIndex() == billingStateRow) {
+							billingStateRow = temp.getColumnIndex();
+							billingState = temp.toString();
+						} else if (temp.toString().equals("Billing Street")
+								|| temp.getColumnIndex() == billingStreetRow) {
+							billingStreetRow = temp.getColumnIndex();
+							billingStreet = temp.toString();
+						} else if (temp.toString().equals("Client Owner") || temp.getColumnIndex() == clientOwnerRow) {
+							clientOwnerRow = temp.getColumnIndex();
+							clientOwner = temp.toString();
+						} else if (temp.toString().equals("Client type") || temp.getColumnIndex() == clientTypeRow) {
+							clientTypeRow = temp.getColumnIndex();
+							clientType = temp.toString();
+						} else if (temp.toString().equals("Clinic") || temp.getColumnIndex() == clinicRow) {
+							clinicRow = temp.getColumnIndex();
+							clinic = temp.toString();
+						} else if (temp.toString().equals("Company (for employee only)")
+								|| temp.getColumnIndex() == companyRow) {
+							companyRow = temp.getColumnIndex();
+							company = temp.toString();
+						} else if (temp.toString().equals("Created Time") || temp.getColumnIndex() == createdTimeRow) {
+							createdTimeRow = temp.getColumnIndex();
+							createdTime = temp.toString();
+						} else if (temp.toString().equals("Date of birth") || temp.getColumnIndex() == dateOfBirthRow) {
+							dateOfBirthRow = temp.getColumnIndex();
+							if (temp.toString().equals("Date of birth")){
+								dateOfBirth = "10/10/2000";
+								} else {
+									dateOfBirth = temp.toString();
+								}
+							
+							// System.out.println(dateOfBirth);
+						} else if (temp.toString().equals("Doctor") || temp.getColumnIndex() == doctorRow) {
+							doctorRow = temp.getColumnIndex();
+							doctor = temp.toString();
+						} else if (temp.toString().equals("Email") || temp.getColumnIndex() == emailRow) {
+							emailRow = temp.getColumnIndex();
+							email = temp.toString();
+						} else if (temp.toString().equals("Follow up person")
+								|| temp.getColumnIndex() == followUpPersonRow) {
+							followUpPersonRow = temp.getColumnIndex();
+							followUpPerson = temp.toString();
+						} else if (temp.toString().equals("Follow up PIC") || temp.getColumnIndex() == followUpPICRow) {
+							followUpPICRow = temp.getColumnIndex();
+							followUpPIC = temp.toString();
+						} else if (temp.toString().equals("Gender") || temp.getColumnIndex() == genderRow) {
+							genderRow = temp.getColumnIndex();
+							gender = temp.toString();
+						} else if (temp.toString().equals("Hospital admitted")
+								|| temp.getColumnIndex() == hospitalAdmittedRow) {
+							hospitalAdmittedRow = temp.getColumnIndex();
+							hospitalAdmitted = temp.toString();
+						} else if (temp.toString().equals("LOG - If yes, please tick")
+								|| temp.getColumnIndex() == logRow) {
+							logRow = temp.getColumnIndex();
+							log = temp.toString();
+						} else if (temp.toString().equals("Medical - If yes, please tick")
+								|| temp.getColumnIndex() == medicalRow) {
+							medicalRow = temp.getColumnIndex();
+							medical = temp.toString();
+						} else if (temp.toString().equals("Nationality") || temp.getColumnIndex() == nationalityRow) {
+							nationalityRow = temp.getColumnIndex();
+							nationality = temp.toString();
+						} else if (temp.toString().equals("Other doctor") || temp.getColumnIndex() == otherDoctorRow) {
+							otherDoctorRow = temp.getColumnIndex();
+							otherDoctor = temp.toString();
+						} else if (temp.toString().equals("Phone") || temp.getColumnIndex() == phoneRow) {
+							phoneRow = temp.getColumnIndex();
+							phone = temp.toString();
+						} else if (temp.toString().equals("PIC") || temp.getColumnIndex() == PICRow) {
+							PICRow = temp.getColumnIndex();
+							PIC = temp.toString();
+						} else if (temp.toString().equals("Referred by") || temp.getColumnIndex() == referredByRow) {
+							referredByRow = temp.getColumnIndex();
+							referredBy = temp.toString();
+						} else if (temp.toString().equals("Specialty") || temp.getColumnIndex() == specialtyRow) {
+							specialtyRow = temp.getColumnIndex();
+							specialty = temp.toString();
+						} else if (temp.toString().equals("Ulink Can Claim") || temp.getColumnIndex() == claimRow) {
+							claimRow = temp.getColumnIndex();
+							claim = temp.toString();
+						} else if (temp.toString().equals("Visa - If yes, please tick-")
+								|| temp.getColumnIndex() == visaRow) {
+							visaRow = temp.getColumnIndex();
+							visa = temp.toString();
+						} else if (temp.toString().equals("Visa requested by")
+								|| temp.getColumnIndex() == visaRequestByRow) {
+							visaRequestByRow = temp.getColumnIndex();
+							visaRequestBy = temp.toString();
+						} else if (temp.toString().equals("Visa type") || temp.getColumnIndex() == visaTypeRow) {
+							visaTypeRow = temp.getColumnIndex();
+							visaType = temp.toString();
+						} else if (temp.toString().equals("Visa type 2") || temp.getColumnIndex() == visaType2Row) {
+							visaType2Row = temp.getColumnIndex();
+							visaType2 = temp.toString();
+						} else if (temp.toString().equals("Main Diagnosis")
+								|| temp.getColumnIndex() == mainDiagnosisRow) {
+							mainDiagnosisRow = temp.getColumnIndex();
+							mainDiagnosis = temp.toString();
+						}
+
+					}
+
+					//System.out.print(clientName);
 				
-				XSSFCell temp = (XSSFCell) cellIter.next();
-				int row = temp.getRowIndex();
-				
-				if (temp.toString().equals("ACCOUNTID") || temp.getRowIndex() == accountIDRow){
-					accountIDRow = temp.getRowIndex();
-					accountID = temp.toString();
-				} else if (temp.toString().equals("Client Name") || temp.getRowIndex() == clientNameRow){
-					clientNameRow = temp.getRowIndex();
-					clientName = temp.toString();
-				}else if (temp.toString().equals("Appointment date and time") || temp.getRowIndex() == appointmentRow){
-					appointmentRow = temp.getRowIndex();
-					appointment = temp.toString();
-				}else if (temp.toString().equals("Billing City") || temp.getRowIndex() == billingCityRow){
-					billingCityRow = temp.getRowIndex();
-					billingCity = temp.toString();
-				}else if (temp.toString().equals("Billing Code") || temp.getRowIndex() == billingCodeRow){
-					billingCodeRow = temp.getRowIndex();
-					billingCode = temp.toString();
-				}else if (temp.toString().equals("Billing Country") || temp.getRowIndex() == billingCountryRow){
-					billingCountryRow = temp.getRowIndex();
-					billingCountry = temp.toString();
-				}else if (temp.toString().equals("Billing State") || temp.getRowIndex() == billingStateRow){
-					billingStateRow = temp.getRowIndex();
-					billingState = temp.toString();
-				}else if (temp.toString().equals("Billing Street") || temp.getRowIndex() == billingStreetRow){
-					billingStreetRow = temp.getRowIndex();
-					billingStreet = temp.toString();
-				}else if (temp.toString().equals("Client Owner") || temp.getRowIndex() == clientOwnerRow){
-					clientOwnerRow = temp.getRowIndex();
-					clientOwner = temp.toString();
-				}else if (temp.toString().equals("Client type") || temp.getRowIndex() == clientTypeRow){
-					clientTypeRow = temp.getRowIndex();
-					clientType = temp.toString();
-				}else if (temp.toString().equals("Clinic") || temp.getRowIndex() == clinicRow){
-					clinicRow = temp.getRowIndex();
-					clinic = temp.toString();
-				}else if (temp.toString().equals("Company (for employee only)") || temp.getRowIndex() == companyRow){
-					companyRow = temp.getRowIndex();
-					company = temp.toString();
-				}else if (temp.toString().equals("Created Time") || temp.getRowIndex() == createdTimeRow){
-					createdTimeRow = temp.getRowIndex();
-					createdTime = temp.toString();
-				}else if (temp.toString().equals("Date of birth") || temp.getRowIndex() == dateOfBirthRow){
-					dateOfBirthRow = temp.getRowIndex();
-					dateOfBirth = temp.toString();
-				}else if (temp.toString().equals("Doctor") || temp.getRowIndex() == doctorRow){
-					doctorRow = temp.getRowIndex();
-					doctor = temp.toString();
-				}else if (temp.toString().equals("Email") || temp.getRowIndex() == emailRow){
-					emailRow = temp.getRowIndex();
-					email = temp.toString();
-				}else if (temp.toString().equals("Follow up person") || temp.getRowIndex() == followUpPersonRow){
-					followUpPersonRow = temp.getRowIndex();
-					followUpPerson = temp.toString();
-				}else if (temp.toString().equals("Follow up PIC") || temp.getRowIndex() == followUpPICRow){
-					followUpPICRow = temp.getRowIndex();
-					followUpPIC = temp.toString();
-				}else if (temp.toString().equals("Gender") || temp.getRowIndex() == genderRow){
-					genderRow = temp.getRowIndex();
-					gender = temp.toString();
-				}else if (temp.toString().equals("Hospital admitted") || temp.getRowIndex() == hospitalAdmittedRow){
-					hospitalAdmittedRow = temp.getRowIndex();
-					hospitalAdmitted = temp.toString();
-				}else if (temp.toString().equals("LOG - If yes, please tick") || temp.getRowIndex() == logRow){
-					logRow = temp.getRowIndex();
-					log = temp.toString();
-				}else if (temp.toString().equals("Medical - If yes, please tick") || temp.getRowIndex() == medicalRow){
-					medicalRow = temp.getRowIndex();
-					medical = temp.toString();
-				}else if (temp.toString().equals("Nationality") || temp.getRowIndex() == nationalityRow){
-					nationalityRow = temp.getRowIndex();
-					nationality = temp.toString();
-				}else if (temp.toString().equals("Other doctor") || temp.getRowIndex() == otherDoctorRow){
-					otherDoctorRow = temp.getRowIndex();
-					otherDoctor = temp.toString();
-				}else if (temp.toString().equals("Phone") || temp.getRowIndex() == phoneRow){
-					phoneRow = temp.getRowIndex();
-					phone = temp.toString();
-				}else if (temp.toString().equals("PIC") || temp.getRowIndex() == PICRow){
-					PICRow = temp.getRowIndex();
-					PIC = temp.toString();
-				}else if (temp.toString().equals("Referred by") || temp.getRowIndex() == referredByRow){
-					referredByRow = temp.getRowIndex();
-					referredBy = temp.toString();
-				}else if (temp.toString().equals("Specialty") || temp.getRowIndex() == specialtyRow){
-					specialtyRow = temp.getRowIndex();
-					specialty = temp.toString();
-				}else if (temp.toString().equals("Ulink Can Claim") || temp.getRowIndex() == claimRow){
-					claimRow = temp.getRowIndex();
-					claim = temp.toString();
-				}else if (temp.toString().equals("Visa - If yes, please tick-") || temp.getRowIndex() == visaRow){
-					visaRow = temp.getRowIndex();
-					visa = temp.toString();
-				}else if (temp.toString().equals("Visa requested by") || temp.getRowIndex() == visaRequestByRow){
-					visaRequestByRow = temp.getRowIndex();
-					visaRequestBy = temp.toString();
-				}else if (temp.toString().equals("Visa type") || temp.getRowIndex() == visaTypeRow){
-					visaTypeRow = temp.getRowIndex();
-					visaType = temp.toString();
-				}else if (temp.toString().equals("Visa type 2") || temp.getRowIndex() == visaType2Row){
-					visaType2Row = temp.getRowIndex();
-					visaType2 = temp.toString();
-				}else if (temp.toString().equals("Main Diagnosis") || temp.getRowIndex() == mainDiagnosisRow){
-					mainDiagnosisRow = temp.getRowIndex();
-					mainDiagnosis = temp.toString();
+					clientList.add(new Client(ID, accountID, clientOwner, clientName, clientType, company, nationality,
+							gender, dateOfBirth, email, medical, mainDiagnosis, referredBy, PIC, appointment, doctor,
+							specialty, clinic, otherDoctor, followUpPerson, followUpPIC, hospitalAdmitted, log,
+							claim,  visa, visaRequestBy, visaType, visaType2, utility.getAge(dateOfBirth), billingCity, billingCode,
+							billingCountry, billingState, billingStreet, createdTime, phone));
+					//System.out.println(clientList.get(clientList.size() - 1).getClientName());
+					count++;
 				}
-
-
-				clientList.add(new Client(ID, accountID, clientOwner, clientName,
-						clientType, company, nationality, gender,
-						dateOfBirth, email, medical, mainDiagnosis,
-						referredBy, appointment, doctor, specialty,
-						clinic, otherDoctor, followUpPerson, followUpPIC,
-						PIC, hospitalAdmitted, log, claim,
-						visaRequestBy, visa, visaType, visaType2,
-						utility.getAge(dateOfBirth), billingCity, billingCode, billingCountry, 
-						billingState, billingStreet, createdTime, phone));
-
-				count++;
-
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		//System.out.print(clientList.size());
 		connection.createClient(clientList);
 		return count;
 

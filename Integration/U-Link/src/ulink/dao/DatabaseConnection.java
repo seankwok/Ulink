@@ -2,6 +2,7 @@ package ulink.dao;
 
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -393,7 +394,7 @@ public class DatabaseConnection {
 			String sql = "INSERT INTO client (accountID,clientOwner,clientName,clientType,company,nationality,gender,dateOfBirth,email,medical,"
 					+ "mainDiagnosis,referredBy,PIC,appointment,doctor,specialty,clinic,otherDoctor,followUpPerson,followUpPIC,hospitalAdmitted,"
 					+ "log,claim, visaRequestBy,visa,visaType,visaType2, age,billingCity,billingCode,billingCountry,billingState,billingStreet,createdTime,phone)"
-					+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+					+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			Utility utility = new Utility();
 			PreparedStatement preparedStmt = con.prepareStatement(sql);
 
@@ -439,12 +440,21 @@ public class DatabaseConnection {
 				preparedStmt.setString(31, client.getBillingCountry());
 				preparedStmt.setString(32, client.getBillingState());
 				preparedStmt.setString(33, client.getBillingStreet());
-				preparedStmt.setDate(34,java.sql.Date.valueOf(client.getCreatedtime().substring(0,10)));
+				try {
+					Integer.parseInt(client.getCreatedtime().substring(0,2));
+				} catch(NumberFormatException e){
+					client.setCreatedtime("0"+client.getCreatedtime());
+				}
+				//System.out.print(client.getCreatedtime());
+				String date = client.getCreatedtime().substring(6, 10) + "-" + client.getCreatedtime().substring(3, 5) + "-" + client.getCreatedtime().substring(0, 2) ;
+				
+				preparedStmt.setDate(34,java.sql.Date.valueOf(date));
 				preparedStmt.setString(35, client.getPhone());
-				preparedStmt.addBatch();
+				preparedStmt.execute();
+				//preparedStmt.addBatch();
 				
 			}
-			preparedStmt.execute();
+			
 			con.close();
 
 		} catch (SQLException | ClassNotFoundException e) {
