@@ -46,14 +46,17 @@ public class ReportKPI extends HttpServlet {
 		//DatabaseConnection connection = new DatabaseConnection();
 		String type = request.getParameter("type");
 		String date = request.getParameter("date");
+		String thisYearLastMonth = request.getParameter("thisYearLastMonth");
+		String lastYearThisMonth = request.getParameter("lastYearThisMonth");
+		String lastYearLastMonth = request.getParameter("lastYearLastMonth");
 		TopK topk = new TopK();
 		int year = Integer.parseInt(date.substring(0, 5));
 		int month = Integer.parseInt(date.substring(5));
 		
 		KPI kpi = topk.getKPI(type, date);
-		KPI lastMonth = topk.getKPI(type, month-1+"-"+year);
-		KPI lastyear = topk.getKPI(type, month+"-"+(year-1));
-		KPI LMLY = topk.getKPI(type, month-1+"-"+(year-1));
+		KPI lastMonth = topk.getKPI(type, thisYearLastMonth);
+		KPI lastyear = topk.getKPI(type,lastYearThisMonth);
+		KPI LMLY = topk.getKPI(type,lastYearLastMonth);
 		
 		ArrayList<KPI> kpiList = new ArrayList<>();
 		kpiList.add(kpi);
