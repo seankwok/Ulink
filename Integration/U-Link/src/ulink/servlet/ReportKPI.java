@@ -2,6 +2,7 @@ package ulink.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -16,6 +17,7 @@ import com.google.gson.reflect.TypeToken;
 
 import ulink.constructor.Condition;
 import ulink.constructor.KPI;
+import ulink.constructor.RankingSpecialty;
 import ulink.dao.DatabaseConnection;
 import ulink.logic.TopK;
 
@@ -45,14 +47,27 @@ public class ReportKPI extends HttpServlet {
 		String type = request.getParameter("type");
 		String date = request.getParameter("date");
 		TopK topk = new TopK();
+		int year = Integer.parseInt(date.substring(0, 5));
+		int month = Integer.parseInt(date.substring(5));
+		
 		KPI kpi = topk.getKPI(type, date);
+		KPI lastMonth = topk.getKPI(type, month-1+"-"+year);
+		KPI lastyear = topk.getKPI(type, month+"-"+(year-1));
+		KPI LMLY = topk.getKPI(type, month-1+"-"+(year-1));
+		
+		ArrayList<KPI> kpiList = new ArrayList<>();
+		kpiList.add(kpi);
+		kpiList.add(lastMonth);
+		kpiList.add(new KPI("Increase\\Decrease",(kpi.getInPatient()-lastMonth.getInPatient())/lastMonth.getInPatient(),(kpi.getOutPatient()-lastMonth.getOutPatient())/lastMonth.getOutPatient()));
+		kpiList.add(lastyear);
+		kpiList.add(LMLY);
+		kpiList.add(new KPI("Increase\\Decrease",(lastyear.getInPatient()-LMLY.getInPatient())/LMLY.getInPatient(),(lastyear.getOutPatient()-LMLY.getOutPatient())/LMLY.getOutPatient()));
 		PrintWriter out = response.getWriter();
-
 		Gson gson = new Gson();
 
-		String arrayListToJson = gson.toJson(kpi);
-		//System.out.print(arrayListToJson);
-
+		JsonArray result = (JsonArray) new Gson().toJsonTree(kpiList, new TypeToken<List<KPI>>() {
+		}.getType());
+		String arrayListToJson = gson.toJson(result);
 		out.write(arrayListToJson);
 		out.flush();
 		return;

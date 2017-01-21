@@ -44,7 +44,7 @@ public class DisplayDoctorRanking extends HttpServlet {
 		ArrayList<RankingDoctor> doctorList;
 		String startDate = request.getParameter("startDate");
 		String endDate = request.getParameter("endDate");
-
+		
 		doctorList = database.retrieveAllRankingDoctor(startDate, endDate);
 		
 

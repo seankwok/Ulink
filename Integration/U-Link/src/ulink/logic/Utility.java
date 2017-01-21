@@ -19,7 +19,7 @@ import org.joda.time.DateTime;
 import ulink.constructor.Condition;
 import ulink.constructor.User;
 import ulink.dao.DatabaseConnection;
-
+import java.text.DateFormatSymbols;
 public class Utility {
 
 	public boolean sendMail(String emailTo, String emailFrom, String host) {
@@ -99,6 +99,11 @@ public class Utility {
 		} else {
 			return 0;
 		}
+	}
+	
+	
+	public String getMonth(int month) {
+	    return new DateFormatSymbols().getMonths()[month-1];
 	}
 	
 	public String hash(String password) {
