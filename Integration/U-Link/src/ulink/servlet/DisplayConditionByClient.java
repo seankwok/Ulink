@@ -54,7 +54,7 @@ public class DisplayConditionByClient extends HttpServlet {
 
 		for (int i = 0; i < conditionList.size(); i++) {
 			Condition condition = conditionList.get(i);
-			if (condition.getAgeRequired() <= client.getAge() && condition.getType().equals(client.getGender())) {
+			if (condition.getAgeRequired() <= client.getAge() && condition.getType().toUpperCase().equals(client.getGender().toUpperCase())) {
 				newConditionList.add(condition);
 			}
 		}
