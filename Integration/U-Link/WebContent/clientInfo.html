@@ -27,10 +27,10 @@
 	
 	
 	td {
-		font-size: 20px;
+		font-size: 18px;
 	}
 	.appTd{
-		font-size: 14px;
+		font-size: 15px;
 	}
 	
 	table{
@@ -62,7 +62,7 @@
 		});
 		
 		function displayAppointment() {
-			var appTable = "<table  width='75%' border='1'>";
+			var appTable = "<table  width='90%' border='1'>";
 			$.ajax({
 				url : "DisplayAllClientByName",
 				type : "get",
@@ -71,11 +71,11 @@
 					var json = jQuery.parseJSON(data.responseText);
 					console.log(json);
 					appTable += "<thead>"
-									+"<th class='tableHeader'>Appointment Date & Time</th>"
-									+"<th class='tableHeader'>Doctor</th>"
-									+"<th class='tableHeader'>Other Doctor</th>"
-									+"<th class='tableHeader'>Clinic</th>"
-									+"<th class='tableHeader'>Hospital Admitted</th>"
+									+"<th class='tableHeader' width='25%'>Appointment Date & Time</th>"
+									+"<th class='tableHeader'width='15%'>Doctor</th>"
+									+"<th class='tableHeader'width='10%'>Other Doctor</th>"
+									+"<th class='tableHeader'width='20%'>Clinic</th>"
+									+"<th class='tableHeader'width='20%'>Hospital Admitted</th>"
 								+"</thead>"
 				          $.each(json, function(key, value){
 				       	  appTable   +="<tbody>"				      
@@ -95,7 +95,7 @@
 		}
 		
 		function displayScreening() {
-			var screenTable = "<table  width='75%' border='1'>";
+			var screenTable = "<table  width='90%' border='1'>";
 			$.ajax({
 				url : "DisplayConditionByClient",
 				type : "get",
@@ -104,8 +104,8 @@
 					var json = jQuery.parseJSON(data.responseText);
 					console.log(json);
 					screenTable += "<thead>"
-									+"<th class='tableHeader'>Common Illness</th>"
-									+"<th class='tableHeader'>Recommended Screening</th>"
+									+"<th class='tableHeader' width='50%'>Common Illness</th>"
+									+"<th class='tableHeader'width='50%'>Recommended Screening</th>"
 								+"</thead>"
 				          $.each(json, function(key, value){
 			        	  screenTable   +="<tbody>"
@@ -123,7 +123,7 @@
 		}
 		
 		function displayAll() {
-			var profileTable = "<table  width='75%'>";
+			var profileTable = "<table  width='90%'>";
 			var cName = "";
 			$.ajax({
 				url : "DisplayAllClientByName",
