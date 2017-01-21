@@ -7,19 +7,15 @@
    
     <title>Client</title>
 
-
     <link href="css/bootstrap.min.css" rel="stylesheet">
     
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
     
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-	
+	<script src="http://www.w3schools.com/lib/w3data.js"></script>
 
-	
-	
 <style>
  	
 	#myInput {
@@ -90,9 +86,9 @@
  <script type="text/javascript">
 
 		$(document).ready(function() {
-			displayAll();	
+			displayAll();
 		} );
-		
+
 		function mySearch() {
 			 var searchText = document.getElementById('myInput').value.toUpperCase();
 			    var targetTable = document.getElementById('table');
@@ -149,19 +145,6 @@
 			    dataType : "json",
 			    complete: function(data){
 			    	var json = jQuery.parseJSON(data.responseText);
-			    	//table += "<thead>"
-			    	//		+"<tr><th>Client Name</th>"
-			    	//		+"<th>Client Type"
-			    	//				+"<a href='#' onClick=sortAscClientType(this.id) id='clientType'> &#9652</a>"
-			    	//				+"<a href='#' onClick=sortDescClientType(this.id) id='clientType'> &#9662</a>"
-	    			//		+" </th>"
-	    			//		
-	    			//		+"<th width=30% >Visa/Medical"
-			    	//				+"<a href='#' onClick=sortAscTeam(this.id) id='team'> &#9652</a>"
-			    	//				+"<a href='#' onClick=sortDescTeam(this.id) id='team'> &#9662</a>"
-	    			//		+"</th>"
-	    			//		+"</tr></thead>";
-	    					
 	    					
 				    table += "<thead></thead><tbody><tr><th>Client Name</th>"			    	
 				    	+"<th><select id='type'>"
@@ -193,84 +176,30 @@
 		    					
 					});
 			    	table += "</tbody></table>"
-			    	$("#display").html(table);
-			    	
-			    	
-			    }	
-			    
-			});	
-		
+			    	$("#display").html(table);				    	
+			    }				    
+			});			
 		}
+	  
 	</script>
  
   </head>
+  
   <body>
-    
-  <nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">Ulink Assist</a>
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-      <li><a href="index.html">Home</a></li>
-        <li><a href="upload.html">Upload Patient Data</a></li>
-        <li><a href="client.html">Client</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Screenings <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="addScreening.html">Add Screenings</a></li>
-            <li><a href="viewScreenings.html">View Screenings</a></li>
-          </ul>
-        </li> 
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Analysis <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">KPI</a></li>
-              <li><a href="#">Ranking</a></li>
-            <li><a href="#">Gender and Age Report</a></li>
-          </ul>
-        </li>
-        
-        
-      </ul>
-      <form class="navbar-form navbar-right">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="login.html" onClick=logout()>Logout</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-      	<li><a href="accountManagement.html">Account Management <span class="sr-only">(current)</span></a></li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-
-
+  
+  	<div w3-include-html="navBar.html"></div> 
 	
     <div class="page-header">
        <h1 align="center"><b>Client List</b></h1>
     </div>
-   	
+
 	<div align="center"><input type="text" id="myInput" onkeyup="mySearch()" placeholder="Search Client by Name.."></div>
     
 	<div id="display" class="container"  ></div>
 
-
-
+	<script>
+		w3IncludeHTML();
+	</script>
 
   </body>
 </html>
