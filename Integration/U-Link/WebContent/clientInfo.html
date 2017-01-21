@@ -73,15 +73,16 @@
 					appTable += "<thead>"
 									+"<th class='tableHeader'>Appointment Date & Time</th>"
 									+"<th class='tableHeader'>Doctor</th>"
+									+"<th class='tableHeader'>Other Doctor</th>"
 									+"<th class='tableHeader'>Clinic</th>"
 									+"<th class='tableHeader'>Hospital Admitted</th>"
 								+"</thead>"
 				          $.each(json, function(key, value){
-				       	  appTable   +="<tbody>"
-				          		
+				       	  appTable   +="<tbody>"				      
 				          		+"<tr>"
 					                +"<td class='appTd'>"+value["appointment"]+"</td>"
 					                +"<td class='appTd'>"+value["doctor"]+"</td>"
+					                +"<td class='appTd'>"+value["otherDoctor"]+"</td>"
 					                +"<td class='appTd'>"+value["clinic"]+"</td>"
 					                +"<td class='appTd'>"+value["hospitalAdmitted"]+"</td>"
 				                +"</tr>"
