@@ -34,7 +34,7 @@
 	}
 	
 	table{
-		margin-bottom: 100px;
+		margin-bottom: 60px;
 	}
 	
 	.tableHeader{
@@ -56,11 +56,12 @@
 		$(document).ready(function() {
 			displayAll();
 			displayAppointment();
+			displayScreening();
 			
 		});
-
+		
 		function displayAppointment() {
-			var appTable = "<table  width='75%' border='1' id='aID'>";
+			var appTable = "<table  width='75%' border='1'>";
 			$.ajax({
 				url : "DisplayAllClientByName",
 				type : "get",
@@ -87,12 +88,38 @@
 							});
 								appTable	+="</tbody></table>"
 			    	$("#aTable").html(appTable);
-				}
-									
-			var numRows = document.getElementById("aID").rows.length;
-
+				}							
 			});
 		}
+		
+		function displayScreening() {
+			var screenTable = "<table  width='75%' border='1'>";
+			$.ajax({
+				url : "DisplayConditionByClient",
+				type : "get",
+				dataType : "json",
+				complete : function(data) {
+					var json = jQuery.parseJSON(data.responseText);
+					console.log(json);
+					screenTable += "<thead>"
+									+"<th class='tableHeader'>Common Illness</th>"
+									+"<th class='tableHeader'>Recommended Screeings</th>"
+								+"</thead>"
+				          $.each(json, function(key, value){
+			        	  screenTable   +="<tbody>"
+				          		
+				          		+"<tr>"
+					                +"<td class='appTd'>"+value["appointment"]+"</td>"
+					                +"<td class='appTd'>"+value["doctor"]+"</td>"
+				                +"</tr>"
+	               				             				                
+							});
+								screenTable	+="</tbody></table>"
+			    	$("#sTable").html(screenTable);
+				}							
+			});
+		}
+		
 		function displayAll() {
 			var profileTable = "<table  width='75%'>";
 			var cName = "";
@@ -174,11 +201,12 @@
    <div>
    		<div align="center" class='tableName'>Appointment Date & Time</div><br> 
  		<div align="center" id="aTable"> </div>
+
    </div>
 
    <div>
    		<div align="center" class='tableName'>Screenings</div>
-		<div align="center" ></div>
+		<div align="center"  id="sTable"></div>
    </div>
 	
 	
