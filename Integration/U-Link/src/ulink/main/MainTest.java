@@ -26,8 +26,10 @@ public class MainTest {
 	//	System.out.print(conditionList.size());
 		
 		String test = "2016-01";
-         System.out.println(test.substring(5));
-
+        // System.out.println(test.substring(5));
+		
+         Utility utility = new Utility();
+        System.out.print(utility.getMonth(1));
 	}
 
 }

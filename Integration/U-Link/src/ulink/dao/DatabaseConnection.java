@@ -33,7 +33,7 @@ public class DatabaseConnection {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
-			String sql = "select  referredBy, count(referredBy) from client where `CreatedTime` between'" + startDate +  "'and'" + endDate +"'group by referredBy";
+			String sql = "select  referredBy, count(referredBy) from client where `CreatedTime` between'" + startDate +  "'and'" + endDate +"'group by referredBy ORDER BY COUNT(referredBy) DESC";
 			ResultSet rs = stmt.executeQuery(sql);
 			Utility utility = new Utility();
 
@@ -62,7 +62,7 @@ public class DatabaseConnection {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
-			String sql = "select specialty, count(appointment) from client where `CreatedTime` between'" + startDate +  "'and'" + endDate +"'group by specialty";
+			String sql = "select specialty, count(appointment) from client where `CreatedTime` between'" + startDate +  "'and'" + endDate +"'group by specialty ORDER BY COUNT(appointment) DESC";
 			ResultSet rs = stmt.executeQuery(sql);
 			Utility utility = new Utility();
 
@@ -91,7 +91,7 @@ public class DatabaseConnection {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
-			String sql = "select doctor, clinic, specialty, count(appointment) from client where `CreatedTime` between'" + startDate +  "'and'" + endDate +"'group by doctor";
+			String sql = "select doctor, clinic, specialty, count(appointment) from client where `CreatedTime` between'" + startDate +  "'and'" + endDate +"'group by doctor ORDER BY COUNT(appointment) DESC";
 			ResultSet rs = stmt.executeQuery(sql);
 			Utility utility = new Utility();
 

@@ -115,7 +115,7 @@ public class TopK {
 		
 		String month = utility.getMonth(Integer.parseInt(date.substring(5)));
 		
-		return new KPI(month+" "+date.substring(0, 5),in,out);
+		return new KPI(month+"-"+date.substring(0, 4),in,out);
 	}
 
 	
