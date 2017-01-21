@@ -41,6 +41,7 @@
 		font-weight: bold;
 		font-size: 16px;
 		color: black;
+		text-align: center;
 	}
 	
 	.tableName{
@@ -103,14 +104,14 @@
 					console.log(json);
 					screenTable += "<thead>"
 									+"<th class='tableHeader'>Common Illness</th>"
-									+"<th class='tableHeader'>Recommended Screeings</th>"
+									+"<th class='tableHeader'>Recommended Screening</th>"
 								+"</thead>"
 				          $.each(json, function(key, value){
 			        	  screenTable   +="<tbody>"
 				          		
 				          		+"<tr>"
-					                +"<td class='appTd'>"+value["appointment"]+"</td>"
-					                +"<td class='appTd'>"+value["doctor"]+"</td>"
+					                +"<td class='appTd'>"+value["conditionName"]+"</td>"
+					                +"<td class='appTd'>"+value["screening"]+"</td>"
 				                +"</tr>"
 	               				             				                
 							});
