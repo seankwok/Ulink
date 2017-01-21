@@ -50,7 +50,7 @@ public class ReportKPI extends HttpServlet {
 		String lastYearThisMonth = request.getParameter("lastYearThisMonth");
 		String lastYearLastMonth = request.getParameter("lastYearLastMonth");
 		TopK topk = new TopK();
-		int year = Integer.parseInt(date.substring(0, 5));
+		int year = Integer.parseInt(date.substring(0, 4));
 		int month = Integer.parseInt(date.substring(5));
 		
 		KPI kpi = topk.getKPI(type, date);
