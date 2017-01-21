@@ -19,52 +19,81 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="http://www.w3schools.com/lib/w3data.js"></script>
 
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 
 <script type="text/javascript">
 
 $(document).ready(function() {
 	
+	$("#datepicker1").datepicker({ 
+		dateFormat: 'yy/mm/dd' 
+	});
+	$("#datepicker2").datepicker({ 
+		dateFormat: 'yy/mm/dd' 
+	});
+	
 	$("#submit").click (
-			function(){
+		function(){
+			var criteria = $("#criteria").val();	
 			
-		var kValue = $('#kValue').val();
-		var startDate = $("#startDate").val();
-		var endDate = $("#endDate").val();
-		var type = $("#type").val();
-		var count =0;
-		var previous;
-		var table = "<tr><th>Ranking</th><th>Name</th><th>Number of times "+ type +" was engaged</th>";
-		$.ajax({
-			url : "TopResult",
+			var startDate = $("#datepicker1").val();
+			
+			var endDate = $("#datepicker2").val();
+			var count = 0;
+			var previous;
+			var url="";
+			var table = "<table>"
+			if (criteria=="Doctor"){
+					table += "<thead>"
+							  +"<th>Ranking</th>"
+							  +"<th>"+criteria+"</th>"
+							  +"<th>Clinic</th>"
+							  +"<th>Specialty</th>"
+							  +"<th>Number of Appointments</th>"
+						  +"</thead>";
+					url="DisplayDoctorRanking";
+			
+		   }else if(criteria=="Referral"){
+				table += "<thead>"
+						  +"<th>Ranking</th>"
+						  +"<th>Referred By</th>"
+						  +"<th>Number of Referred Cases</th>"
+				  	  +"</thead>";
+				url="DisplayAllRankingReferredBy";
+			
+		   }else{//criteria== specialty
+				table += "<thead>"
+						  +"<th>Ranking</th>"
+						  +"<th>"+criteria+"</th>"
+						  +"<th>Number of Engagements</th>"
+						  +"<th>List of Doctors</th>"
+			  		  +"</thead>";
+				url="DisplayAllRankingSpecialty";
+		}				
+			$.ajax({
+			url : url,
 			type : "get",
-			data : 'kValue=' + kValue + '&' + 'startDate=' + startDate + '&' + 'endDate=' + endDate + '&' + 'type=' + type,
+			data : 'startDate=' + startDate + '&' + 'endDate=' + endDate,
 			dataType : "json",
 			success : function(data) {
-				var json = jQuery.parseJSON(JSON.stringify(data));
-				
-				$
-				.each(
-						json,
-						function(key, value) {
-							
+				var json = jQuery.parseJSON(JSON.stringify(data));	
+				console.log(json)
+				table += "<tbody>"
+				$.each(json,function(key, value) {							
 						if(previous != value){
 							count += 1;	
 						}
-							table += '<tr>'
-									+ '<td>'
-									+ count
-									+ '</td>'
-									+ '<td>'
-									+ key
-									+ '</td>'
-									+ '<td>'
-									+ value
-									+ '</td></tr>';
-							
-							previous = value;	
-							
-
+							table += "<tr>" 
+								  +"<td>"+count+"</td>"
+								  +"<td>"+value["name"]+"</td>"
+								  +"<td>"+value["clinic"]+"</td>"
+								  +"<td>"+value["speciality"]+"</td>"
+								  +"<td>"+value["numAppointment"]+"</td>"	
+								  +"</tr>"							
 						});
+				table += "</body></table>"
 				$('#topK').html(table);  
 			}
 		});
@@ -84,55 +113,28 @@ $(document).ready(function() {
 	</script>
 
 	<div class="page-header">
-		<h1 align="center">Analysis - Ranking</h1>
+		<h1 align="center">Ranking</h1>
 	</div>
 
 	<div class="container">
-
-		<div class="col-md-4">
 			<div class="form-group">
-				<label>Select Criteria </label> <select class="form-control"
-					id="type">
-					<option value="doctor">Doctor</option>
+				<label>Select Criteria </label> <select class="form-control" id="criteria">
+					<option value="Doctor">Doctor</option>
 					<option value="Referral">Referral</option>
 					<option value="Speciality">Specialty</option>
 				</select>
 			</div>
-		</div>
 
-		<div class="col-md-4">
 			<div class="form-group">
 				<label> Select Start Date </label>
-				<div class='input-group date' id='datetimepicker1'>
-					<input type='text' class="form-control" id="startDate"/> <span
-						class="input-group-addon"> <span
-						class="glyphicon glyphicon-calendar"></span>
-					</span>
-				</div>
-				<script type="text/javascript">
-					$(function() {
-						$('#datetimepicker1').datetimepicker();
-					});
-				</script>
+					 <input id="datepicker1" />
 			</div>
-		</div>
 
-		<div class="col-md-4">
 			<div class="form-group">
 				<label> Select End Date </label>
-				<div class='input-group date' id='datetimepicker2'>
-					<input type='text' class="form-control" id="endDate"/> <span
-						class="input-group-addon"> <span
-						class="glyphicon glyphicon-calendar"></span>
-					</span>
-				</div>
-				<script type="text/javascript">
-					$(function() {
-						$('#datetimepicker2').datetimepicker();
-					});
-				</script>
+					 <input  id="datepicker2" />
 			</div>
-		</div>
+		
 	</div>
 	<div class="container" align="center">
 		  <button type="submit" value="Submit" class="btn btn-primary" id="submit">Generate</button>
