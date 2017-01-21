@@ -397,7 +397,7 @@ public class DatabaseConnection {
 			Utility utility = new Utility();
 			PreparedStatement preparedStmt = con.prepareStatement(sql);
 
-			for (int i = 0; i < clientList.size(); i++) {
+			for (int i = 1; i < clientList.size(); i++) {
 				Client client = clientList.get(i);
 				
 				//preparedStmt.setInt(1, client.getID());
