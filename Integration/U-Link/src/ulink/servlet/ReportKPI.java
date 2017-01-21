@@ -58,10 +58,32 @@ public class ReportKPI extends HttpServlet {
 		ArrayList<KPI> kpiList = new ArrayList<>();
 		kpiList.add(kpi);
 		kpiList.add(lastMonth);
-		kpiList.add(new KPI("Increase\\Decrease",(kpi.getInPatient()-lastMonth.getInPatient())/lastMonth.getInPatient(),(kpi.getOutPatient()-lastMonth.getOutPatient())/lastMonth.getOutPatient()));
+		int outChange = 0;
+		int inChange = 0;
+		
+		if (lastMonth.getInPatient() != 0){
+			inChange = (kpi.getInPatient()-lastMonth.getInPatient())/lastMonth.getInPatient();
+		}
+		
+		if (lastMonth.getOutPatient() != 0){
+			outChange = (kpi.getOutPatient()-lastMonth.getOutPatient())/lastMonth.getOutPatient();
+		}
+		kpiList.add(new KPI("Increase\\Decrease",inChange,outChange));
 		kpiList.add(lastyear);
 		kpiList.add(LMLY);
-		kpiList.add(new KPI("Increase\\Decrease",(lastyear.getInPatient()-LMLY.getInPatient())/LMLY.getInPatient(),(lastyear.getOutPatient()-LMLY.getOutPatient())/LMLY.getOutPatient()));
+		
+		if (LMLY.getInPatient() != 0){
+			inChange = (lastyear.getInPatient()-LMLY.getInPatient())/LMLY.getInPatient();
+		} else {
+			inChange = 0;
+		}
+		
+		if (lastMonth.getOutPatient() != 0){
+			outChange = (lastyear.getOutPatient()-LMLY.getOutPatient())/LMLY.getOutPatient();
+		} else {
+			outChange = 0;
+		}
+		kpiList.add(new KPI("Increase\\Decrease",inChange,outChange));
 		PrintWriter out = response.getWriter();
 		Gson gson = new Gson();
 

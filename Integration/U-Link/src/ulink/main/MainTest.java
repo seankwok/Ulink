@@ -25,8 +25,8 @@ public class MainTest {
 		
 	//	System.out.print(conditionList.size());
 		
-		String test = "17/05/2016 12:33";
-         System.out.println(test.substring(6,10) +"-" +  test.substring(3,5) + " "+ test.substring(0,2));
+		String test = "2016-01";
+         System.out.println(test.substring(5));
 
 	}
 
