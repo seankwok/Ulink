@@ -27,12 +27,15 @@
 
 $(document).ready(function() {
 	
+
 	$("#datepicker1").datepicker({ 
 		dateFormat: 'yy/mm/dd' 
 	});
 	$("#datepicker2").datepicker({ 
 		dateFormat: 'yy/mm/dd' 
 	});
+	
+	
 	
 	$("#submit").click (
 		function(){
@@ -116,26 +119,58 @@ $(document).ready(function() {
 							  +"<td>"+count+"</td>"
 							  +"<td>"+value["Specialty"]+"</td>"
 							  +"<td>"+value["count"]+"</td>"
-							  +"<td><a href='rankingDoctors.html'>View Doctors</a></td>"
-							  +"</tr>"	
-							  
-						  previous = value["count"];
-						
-					}
-					
-						
+							  +"<td>"
+							  	+"<a href='#' onClick=viewDoctors(this.id) id= '"
+			    				+ value['Specialty']
+			    				+ "'>View Doctors</a>"
+							  +"</td>"
+						  +"</tr>"	
+						  	previous = value["count"];						
+						}
+					});
+					table += "</body></table>"
+					$('#result').html(table);  
+				}
+			});
 
-						});
-				table += "</body></table>"
-				$('#result').html(table);  
-			}
+
 		});
-
-
-	});
  	
-});
- 	</script>
+	});
+	
+	
+function viewDoctors(clickedID){
+	var sendData = {
+			"Specialty" :clickedID
+		};
+	var table = "<table id='table' width='80%'>";
+		$.ajax({
+			url : "DisplayAllRankingSpecialty",
+			type : "get",
+			data : sendData,
+			dataType : "json",
+			success: function(data){
+		    	var json = jQuery.parseJSON(JSON.stringify(data));
+		    	console.log("json= " + json);
+		    	table += "<thead>"
+			    			+"<th>Ranking</th>"
+			    			+"<th>Doctor</th>"
+			    			+"<th>Number of Engagement</th>"
+		    			+"</thead>";
+		    	$.each(json,function(key,value) {
+		    		table += "<tbody>"
+	    				+"<tr>"
+	    				  +"<td>"+value["rank"]+"</td>"
+	    				  +"<td>"+value["name"]+"</td>"	 
+	    				  +"<td>"+value["count"]+"</td>"
+						+ "</tr>"
+		    	});
+		    	table += "</tbody></table>"
+		    		$("#result").html(table);
+			}	
+		});
+}
+</script>
 
 </head>
 <body>
@@ -170,13 +205,11 @@ $(document).ready(function() {
 		
 	</div>
 	
-	<div class="container" align="center">
+    <div class="container" align="center">
 		  <button type="submit" value="Submit" class="btn btn-primary" id="submit">Generate</button>
 	</div>
-		<br>
-		<div class="container">
-
-		<table class="table table-striped" id="result"></table>
-	</div>
+	<br>
+	<table class="table table-striped" id="result"></table>
+		
 </body>
 </html>
