@@ -24,71 +24,167 @@
 
 $(document).ready(function() {
 	
-	$("#submit").click (
-			function(){
-		var table;
+	$("#submit").click (function(){
 		var teamName = $('#teamName').val();
-		var startDate = $("#startDate").val();
-		var endDate = $("#endDate").val();
-		console.log(teamName);
-		console.log(startDate);
+		var thisMonth = $("#month").val();
+		var thisYear = $("#year").val();
+		var value = thisYear + "-" + thisMonth;
+		var lastYear = thisYear - 1;
+		
+		if (thisMonth == 1){ // if choose jan then last month is dec
+			lastMonth = 12;
+			thisYear = lastYear;
+		}else{
+			lastMonth = thisMonth -1;
+		}
+		
+		var thisYearThisMonth = thisYear + "-" + thisMonth;
+		var thisYearLastMonth = thisYear + "-" + lastMonth;	
+		var lastYearThisMonth = lastYear + "-" + thisMonth;
+		var lastYearLastMonth = lastYear + "-" + lastMonth;
+		
+		console.log("thisYearThisMonth="+ thisYearThisMonth);
+		console.log("thisYearLastMonth=" + thisYearLastMonth);
+		console.log("lastYearThisMonth" +lastYearThisMonth);
+		console.log("lastYearLastMonth" + lastYearLastMonth);
+		
+		
+		var table1 = "<table id='table1'  class='table table-striped' cellspacing='0' width='100%'>";
+		var table2 = "<table id='table2'  class='table table-striped' cellspacing='0' width='100%'>";
+
 		$.ajax({
-			url : "Analysis",
+			url : "ReportKPI",
 			type : "get",
-			data : 'teamName=' + teamName + '&' + 'startDate=' + startDate + '&' + 'endDate=' + endDate,
+			data : 'type=' + teamName + '&' +'date=' + value + '&thisYearLastMonth=' + thisYearLastMonth + '&lastYearThisMonth=' + lastYearThisMonth + '&lastYearLastMonth=' + lastYearLastMonth,
 			dataType : "json",
-			success : function(data) {
+			complete : function(data) {
 				var json = jQuery.parseJSON(JSON.stringify(data));
-	
 				console.log(json);
 				if (teamName == "Medical") {
-					table ="<tr><th>Number of in Patient</th><th>Number of out Patient</th>";
-		
-			      
-			                table += '<tr>'
-			                      + '<td>'
-			                      + json.inPatient
-			                      + '</td>'
-			                      + '<td>'
-			                      + json.outPatient
-			                      + '</td></tr>';
-
-			    
-
-				} else {
+					table1 += "<h4><b>Comparison against previous month</b></h4>"
+					table1 += "<tr><th>Month</th>"
+						  +  "<th>Inpatient</th>"
+						  +  "<th>Outpatient</th></tr>"
+						  +  "<tr><td>"
+						  +  json.responseJSON[0].date
+						  +	 "<td>"
+						  +  json.responseJSON[0].inPatient
+						  +  "<td>"
+						  +  json.responseJSON[0].outPatient
+						  +  "</td></tr>"
+						  +  "<tr><td>"
+						  +  json.responseJSON[1].date
+						  +	 "<td>"
+						  +  json.responseJSON[1].inPatient
+						  +  "<td>"
+						  +  json.responseJSON[1].outPatient
+						  +  "</td></tr>"
+						  +  "<tr><td>"
+						  +  json.responseJSON[2].date
+						  +	 "<td>"
+						  +  json.responseJSON[2].inPatient
+						  +  "<td>"
+						  +  json.responseJSON[2].outPatient
+						  +  "</td></tr>";
+					table2 += "<h4><b>Comparison against previous year</b></h4>"
+					table2 += "<tr><th>Month</th>"
+						  +  "<th>Inpatient</th>"
+						  +  "<th>Outpatient</th></tr>"
+						  +  "<tr><td>"
+						  +  json.responseJSON[3].date
+						  +	 "<td>"
+						  +  json.responseJSON[3].inPatient
+						  +  "<td>"
+						  +  json.responseJSON[3].outPatient
+						  +  "</td></tr>"
+						  +  "<tr><td>"
+						  +  json.responseJSON[4].date
+						  +	 "<td>"
+						  +  json.responseJSON[4].inPatient
+						  +  "<td>"
+						  +  json.responseJSON[4].outPatient
+						  +  "</td></tr>"
+						  +  "<tr><td>"
+						  +  json.responseJSON[5].date
+						  +	 "<td>"
+						  +  json.responseJSON[5].inPatient
+						  +  "<td>"
+						  +  json.responseJSON[5].outPatient
+						  +  "</td></tr>";
 					
-					table ="<tr><th>Number of Indonesian Patients</th><th>Number of Non-Indonesian Patients</th>";
-		
-			      
-			                table += '<tr>'
-			                      + '<td>'
-			                      + json.indo
-			                      + '</td>'
-			                      + '<td>'
-			                      + json.nonIndo
-			                      + '</td></tr>';
-				}
-
-        $('#kpi').html(table);
-
-
-
-        /* sean's quotes
-				console.log(json);
-
-				if (teamName == "Medical") {
-					$('#green').html("Number of in Patient " + json.inPatient);
-					$('#red').html("Number of out Patient " + json.outPatient);
+					   
 				} else {
-					$('#green').html("Number of Indonesian Patients " + json.indo);
-					$('#red').html("Number of Non-Indonesian Patients " + json.nonIndo);
+					table1 += "<h4><b>Comparison against previous month</b></h4>"
+						table1 += "<tr><th>Month</th>"
+							  +  "<th>Inpatient</th>"
+							  +  "<th>Outpatient</th></tr>"
+							  +  "<tr><td>"
+							  +  json.responseJSON[0].date
+							  +	 "<td>"
+							  +  json.responseJSON[0].inPatient
+							  +  "<td>"
+							  +  json.responseJSON[0].outPatient
+							  +  "</td></tr>"
+							  +  "<tr><td>"
+							  +  json.responseJSON[1].date
+							  +	 "<td>"
+							  +  json.responseJSON[1].inPatient
+							  +  "<td>"
+							  +  json.responseJSON[1].outPatient
+							  +  "</td></tr>"
+							  +  "<tr><td>"
+							  +  json.responseJSON[2].date
+							  +	 "<td>"
+							  +  json.responseJSON[2].inPatient
+							  +  "<td>"
+							  +  json.responseJSON[2].outPatient
+							  +  "</td></tr>";
+						table2 += "<h4><b>Comparison against previous year</b></h4>"
+						table2 += "<tr><th>Month</th>"
+							  +  "<th>Inpatient</th>"
+							  +  "<th>Outpatient</th></tr>"
+							  +  "<tr><td>"
+							  +  json.responseJSON[3].date
+							  +	 "<td>"
+							  +  json.responseJSON[3].inPatient
+							  +  "<td>"
+							  +  json.responseJSON[3].outPatient
+							  +  "</td></tr>"
+							  +  "<tr><td>"
+							  +  json.responseJSON[4].date
+							  +	 "<td>"
+							  +  json.responseJSON[4].inPatient
+							  +  "<td>"
+							  +  json.responseJSON[4].outPatient
+							  +  "</td></tr>"
+							  +  "<tr><td>"
+							  +  json.responseJSON[5].date
+							  +	 "<td>"
+							  +  json.responseJSON[5].inPatient
+							  +  "<td>"
+							  +  json.responseJSON[5].outPatient
+							  +  "</td></tr>";
 				}
-  */
+
+				 $('#table1').html(table1);
+				 $('#table2').html(table2);
+
+
+
+       
 			
 			} });
 
 
 	});
+	
+	var start = 2015;
+	var end = new Date().getFullYear();
+	var options = "";
+	for(var year = start ; year <=end; year++){
+	  options += "<option>"+ year +"</option>";
+	}
+	document.getElementById("year").innerHTML = options;
  	
 });
  	</script>
@@ -101,7 +197,7 @@ $(document).ready(function() {
 	</script>
 
     <div class="page-header">
-       <h1 align ="center">Analysis - KPI</h1>
+       <h1 align ="center"><b>KPI</b></h1>
     </div>
 
       
@@ -122,58 +218,50 @@ $(document).ready(function() {
 
           <div class="col-md-4">
           <div class="form-group">
-          <label> Select Start Date </label>
-          <div class='input-group date' id='datetimepicker1'>
-            <input type='text' class="form-control" id="startDate" />
-            <span class="input-group-addon">
-            <span class="glyphicon glyphicon-calendar"></span>
-            </span>
+          <label> Select Month </label>
+          <select class="form-control" id="month">
+              <option value="01">January</option>
+              <option value="02">February</option>
+              <option value="03">March</option>
+              <option value="04">April</option>
+              <option value="05">May</option>
+              <option value="06">June</option>
+              <option value="07">July</option>
+              <option value="08">August</option>
+              <option value="09">September</option>
+              <option value="10">October</option>
+              <option value="11">November</option>
+              <option value="12">December</option>
+            </select>
+          </div>
+          </div>
+          
+          <div class="col-md-4">
+          <div class="form-group">
+          <label> Select Year </label>
+          <select class="form-control" id="year">
+          
+            </select>
           </div>
 
-          <script type="text/javascript">
-          $(function () {
-            $('#datetimepicker1').datetimepicker();
-         });
-          </script>
-        </div>
         </div>
 
-        <div class="col-md-4">
-          <div class="form-group">
-          <label> Select End Date </label>
-          <div class='input-group date' id='datetimepicker2'>
-            <input type='text' class="form-control" id="endDate" />
-            <span class="input-group-addon">
-            <span class="glyphicon glyphicon-calendar"></span>
-            </span>
-        </div>
-
-          <script type="text/javascript">
-          $(function () {
-            $('#datetimepicker2').datetimepicker();
-         });
-          </script>
-        </div>
-        </div>
+        
 
 
       </div>
     <div class="container" align="center">
-        <button type="submit" value="Submit" class="btn btn-primary" id="submit">Generate</button>
+        <button type="submit" value="Submit" class="btn btn-default" id="submit">Generate Results</button>
     </div>
     
 
     <br>
-    <div class="container">
-
-    <table class="table table-striped" id="kpi">
-    
-    </table>
-  </div>
+    <div class="container" align="left" id="table1"></div>
+  
+  <div class="container" align="left" id="table2"></div>
     </div>
-    <!-- sean's codes
-    <div align="center" id="green"></div>
-    <div align="center" id="red"></div>
-    -->
+    
+    
+   
   </body>
 </html>
