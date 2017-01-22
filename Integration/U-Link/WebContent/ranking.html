@@ -23,6 +23,14 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 
+<style>
+	.errorMsg{
+	 font-size: 15px; 
+	 text-align: center;
+	}
+
+</style>
+
 <script type="text/javascript">
 
 $(document).ready(function() {
@@ -30,9 +38,11 @@ $(document).ready(function() {
 
 	$("#datepicker1").datepicker({ 
 		dateFormat: 'yy/mm/dd' 
+		//dateFormat: 'dd/mm/yy' 
 	});
 	$("#datepicker2").datepicker({ 
 		dateFormat: 'yy/mm/dd' 
+		//dateFormat: 'dd/mm/yy' 
 	});
 	
 	
@@ -42,6 +52,12 @@ $(document).ready(function() {
 			var criteria = $("#criteria").val();	
 			var startDate = $("#datepicker1").val();
 			var endDate = $("#datepicker2").val();
+			if(startDate>endDate){
+				$('#error').html("Start Date should be before End Date!"); 
+				$("#result").html("");
+				 return;
+			}
+			
 			var count = 0;
 			var previous;
 			var url="";
@@ -129,6 +145,7 @@ $(document).ready(function() {
 						}
 					});
 					table += "</body></table>"
+					$('#error').html("");
 					$('#result').html(table);  
 				}
 			});
@@ -205,10 +222,13 @@ function viewDoctors(clickedID){
 		
 	</div>
 	
+	<div style='color:red' id='error' class='errorMsg'> </div><br><br>
+		
     <div class="container" align="center">
 		  <button type="submit" value="Submit" class="btn btn-primary" id="submit">Generate</button>
 	</div>
 	<br>
+
 	<table class="table table-striped" id="result"></table>
 		
 </body>
