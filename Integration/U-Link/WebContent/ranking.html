@@ -174,12 +174,12 @@ function viewDoctors(clickedID){
 			    			+"<th>Doctor</th>"
 			    			+"<th>Number of Engagement</th>"
 		    			+"</thead>";
-		    	$.each(json,function(key,value) {
+		    	$.each(json.responseJSON,function(key,value) {
 		    		table += "<tbody>"
 	    				+"<tr>"
-	    				  +"<td></td>"
-	    				  +"<td>"+value["name"]+"</td>"	 
-	    				  +"<td>"+value["count"]+"</td>"
+	    				  +"<td>x</td>"
+	    				  +"<td>"+value["Specialty"]+"</td>"	 
+	    				  +"<td>"+value["engagement"]+"</td>"
 						+ "</tr>"
 		    	});
 		    	table += "</tbody></table>"
