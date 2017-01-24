@@ -1,12 +1,22 @@
 package ulink.servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.reflect.TypeToken;
+
+import ulink.constructor.RankingDoctor;
+import ulink.constructor.RankingDoctorSpecialty;
 import ulink.dao.DatabaseConnection;
 
 /**
@@ -31,8 +41,18 @@ public class DisplayDoctorBySpecialty extends HttpServlet {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		String specialty = request.getParameter("Specialty");
+		PrintWriter out = response.getWriter();
 		DatabaseConnection connection = new DatabaseConnection();
+		ArrayList<RankingDoctorSpecialty> doctorList = connection.retrieveAllDoctorBySpecialty(specialty);
 		
+		Gson gson = new Gson();
+
+		JsonArray result = (JsonArray) new Gson().toJsonTree(doctorList, new TypeToken<List<RankingDoctorSpecialty>>() {
+		}.getType());
+		String arrayListToJson = gson.toJson(result);
+		out.write(arrayListToJson);
+		out.flush();
+		return;
 		
 	}
 
