@@ -124,7 +124,7 @@ public class DatabaseConnection {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
-			String sql = "select doctor, count(appointment) from client where specialty!= '"+ specialty +"' group by doctor ORDER BY COUNT(appointment) DESC";
+			String sql = "select doctor, count(appointment) from client where specialty= '"+ specialty +"' group by doctor ORDER BY COUNT(appointment) DESC";
 			ResultSet rs = stmt.executeQuery(sql);
 			Utility utility = new Utility();
 
@@ -480,7 +480,7 @@ public class DatabaseConnection {
 				}
 				//System.out.print(client.getCreatedtime());
 				String date = client.getCreatedtime().substring(6, 10) + "-" + client.getCreatedtime().substring(3, 5) + "-" + client.getCreatedtime().substring(0, 2) ;
-				System.out.println(date);
+				//System.out.println(date);
 				preparedStmt.setDate(34,java.sql.Date.valueOf(date));
 				preparedStmt.setString(35, client.getPhone());
 				preparedStmt.execute();
