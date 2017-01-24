@@ -14,6 +14,7 @@ import ulink.constructor.Client;
 import ulink.constructor.Condition;
 import ulink.constructor.Consultation;
 import ulink.constructor.RankingDoctor;
+import ulink.constructor.RankingDoctorSpecialty;
 import ulink.constructor.RankingReferredBy;
 import ulink.constructor.RankingSpecialty;
 import ulink.constructor.Timeline;
@@ -114,6 +115,37 @@ public class DatabaseConnection {
 		
 	}
 
+
+	public ArrayList<RankingDoctorSpecialty> retrieveAllDoctorBySpecialty(String specialty){
+		Connection con;
+		ArrayList<RankingDoctorSpecialty> doctorList = new ArrayList<>();
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
+
+			Statement stmt = con.createStatement();
+			String sql = "select doctor, count(appointment) from client where specialty!= '"+ specialty +"' group by doctor ORDER BY COUNT(appointment) DESC";
+			ResultSet rs = stmt.executeQuery(sql);
+			Utility utility = new Utility();
+
+			while (rs.next()) {
+				String doctor = rs.getString(1);	
+				int count = rs.getInt(2);
+				doctorList.add(new RankingDoctorSpecialty(doctor,count));
+			}
+
+			con.close();
+
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return doctorList;
+		
+	}
+
+	
 	public ArrayList<Client> retrieveAllClientList() {
 
 		Connection con;
@@ -440,6 +472,7 @@ public class DatabaseConnection {
 				preparedStmt.setString(31, client.getBillingCountry());
 				preparedStmt.setString(32, client.getBillingState());
 				preparedStmt.setString(33, client.getBillingStreet());
+				//System.out.println(client.getBillingStreet());
 				try {
 					Integer.parseInt(client.getCreatedtime().substring(0,2));
 				} catch(NumberFormatException e){
@@ -447,7 +480,7 @@ public class DatabaseConnection {
 				}
 				//System.out.print(client.getCreatedtime());
 				String date = client.getCreatedtime().substring(6, 10) + "-" + client.getCreatedtime().substring(3, 5) + "-" + client.getCreatedtime().substring(0, 2) ;
-				
+				System.out.println(date);
 				preparedStmt.setDate(34,java.sql.Date.valueOf(date));
 				preparedStmt.setString(35, client.getPhone());
 				preparedStmt.execute();
