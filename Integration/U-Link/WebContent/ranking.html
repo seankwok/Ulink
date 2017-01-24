@@ -28,6 +28,11 @@
 	 font-size: 15px; 
 	 text-align: center;
 	}
+	
+	.subTitle{
+	 font-size: 20px; 
+	 text-align: center;
+	}
 
 </style>
 
@@ -37,12 +42,12 @@ $(document).ready(function() {
 	
 
 	$("#datepicker1").datepicker({ 
-		dateFormat: 'yy/mm/dd' 
-		//dateFormat: 'dd/mm/yy' 
+		//dateFormat: 'yy/mm/dd' 
+		dateFormat: 'dd/mm/yy' 
 	});
 	$("#datepicker2").datepicker({ 
-		dateFormat: 'yy/mm/dd' 
-		//dateFormat: 'dd/mm/yy' 
+		//dateFormat: 'yy/mm/dd' 
+		dateFormat: 'dd/mm/yy' 
 	});
 	
 	
@@ -146,6 +151,7 @@ $(document).ready(function() {
 					});
 					table += "</body></table>"
 					$('#error').html("");
+					$("#clickedSpeciality").html("");
 					$('#result').html(table);  
 				}
 			});
@@ -160,6 +166,9 @@ function viewDoctors(clickedID){
 	var sendData = {
 			"Specialty" :clickedID
 		};
+	var speciality = "";
+	var rank = 0;
+	var prev ="";
 	var table = "<table id='table' width='80%'>";
 		$.ajax({
 			url : "DisplayDoctorBySpecialty",
@@ -174,16 +183,22 @@ function viewDoctors(clickedID){
 			    			+"<th>Doctor</th>"
 			    			+"<th>Number of Engagement</th>"
 		    			+"</thead>";
+		    			+ "<tbody>"
 		    	$.each(json.responseJSON,function(key,value) {
-		    		table += "<tbody>"
-	    				+"<tr>"
-	    				  +"<td>x</td>"
+		    		speciality = value["Specialty"]
+		    		if(prev != value["engagement"]){
+						rank += 1;	
+					}
+	    		table +="<tr>"
+	    				  +"<td>"+rank+"</td>"
 	    				  +"<td>"+value["Specialty"]+"</td>"	 
 	    				  +"<td>"+value["engagement"]+"</td>"
 						+ "</tr>"
+					prev = value["engagement"];
 		    	});
 		    	table += "</tbody></table>"
 		    		$("#result").html(table);
+		    		$("#clickedSpeciality").html("Speciality: "+clickedID);
 			}	
 		});
 }
@@ -198,8 +213,10 @@ function viewDoctors(clickedID){
 	</script>
 
 	<div class="page-header">
+	<div align="center" id='title'> </div>
 		<h1 align="center">Ranking</h1>
 	</div>
+	
 
 	<div class="container">
 			<div class="form-group">
@@ -222,13 +239,14 @@ function viewDoctors(clickedID){
 		
 	</div>
 	
-	<div style='color:red' id='error' class='errorMsg'> </div><br><br>
+	<div style='color:red' id='error' class='errorMsg'> </div>
 		
     <div class="container" align="center">
 		  <button type="submit" value="Submit" class="btn btn-primary" id="submit">Generate</button>
 	</div>
-	<br>
+	<br><br>
 
+	<div id='clickedSpeciality' class='subTitle'> </div><br>
 	<table class="table table-striped" id="result"></table>
 		
 </body>
