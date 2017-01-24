@@ -51,6 +51,8 @@ $(document).ready(function() {
 		
 		var table1 = "<table id='table1'  class='table table-striped' cellspacing='0' width='100%'>";
 		var table2 = "<table id='table2'  class='table table-striped' cellspacing='0' width='100%'>";
+		var table3 = "<table id='table1'  class='table table-striped' cellspacing='0' width='100%'>";
+		var table4 = "<table id='table1'  class='table table-striped' cellspacing='0' width='100%'>";
 
 		$.ajax({
 			url : "ReportKPI",
@@ -59,7 +61,7 @@ $(document).ready(function() {
 			dataType : "json",
 			complete : function(data) {
 				var json = jQuery.parseJSON(JSON.stringify(data));
-				console.log(json);
+				console.log(json.responseJSON);
 				if (teamName == "Medical") {
 					table1 += "<h4><b>Comparison against previous month</b></h4>"
 					table1 += "<tr><th>Month</th>"
@@ -111,63 +113,80 @@ $(document).ready(function() {
 						  +  "<td>"
 						  +  json.responseJSON[5].outPatient
 						  +  "</td></tr>";
-					
+						
+					$('#table1').html(table1);
+					$('#table2').html(table2);
+					 
 					   
 				} else {
-					table1 += "<h4><b>Comparison against previous month</b></h4>"
-						table1 += "<tr><th>Month</th>"
-							  +  "<th>Inpatient</th>"
-							  +  "<th>Outpatient</th></tr>"
-							  +  "<tr><td>"
-							  +  json.responseJSON[0].date
-							  +	 "<td>"
-							  +  json.responseJSON[0].inPatient
-							  +  "<td>"
-							  +  json.responseJSON[0].outPatient
-							  +  "</td></tr>"
-							  +  "<tr><td>"
-							  +  json.responseJSON[1].date
-							  +	 "<td>"
-							  +  json.responseJSON[1].inPatient
-							  +  "<td>"
-							  +  json.responseJSON[1].outPatient
-							  +  "</td></tr>"
-							  +  "<tr><td>"
-							  +  json.responseJSON[2].date
-							  +	 "<td>"
-							  +  json.responseJSON[2].inPatient
-							  +  "<td>"
-							  +  json.responseJSON[2].outPatient
-							  +  "</td></tr>";
-						table2 += "<h4><b>Comparison against previous year</b></h4>"
-						table2 += "<tr><th>Month</th>"
-							  +  "<th>Inpatient</th>"
-							  +  "<th>Outpatient</th></tr>"
-							  +  "<tr><td>"
-							  +  json.responseJSON[3].date
-							  +	 "<td>"
-							  +  json.responseJSON[3].inPatient
-							  +  "<td>"
-							  +  json.responseJSON[3].outPatient
-							  +  "</td></tr>"
-							  +  "<tr><td>"
-							  +  json.responseJSON[4].date
-							  +	 "<td>"
-							  +  json.responseJSON[4].inPatient
-							  +  "<td>"
-							  +  json.responseJSON[4].outPatient
-							  +  "</td></tr>"
-							  +  "<tr><td>"
-							  +  json.responseJSON[5].date
-							  +	 "<td>"
-							  +  json.responseJSON[5].inPatient
-							  +  "<td>"
-							  +  json.responseJSON[5].outPatient
-							  +  "</td></tr>";
+					$.ajax({
+						url : "KPIVisa",
+						type : "get",
+						data : 'type=' + teamName + '&' +'date=' + value + '&thisYearLastMonth=' + thisYearLastMonth + '&lastYearThisMonth=' + lastYearThisMonth + '&lastYearLastMonth=' + lastYearLastMonth,
+						dataType : "json",
+						complete : function(data) {
+						var json = jQuery.parseJSON(JSON.stringify(data));
+						console.log(json);
+						console.log("tets");
+							table3 += "<h4><b>Comparison against previous month</b></h4>"
+							table3 += "<tr><th>Month</th>"
+								  +  "<th>Indonesian Patients</th>"
+								  +  "<th>Non-Indonesian Patients</th></tr>"
+								  +  "<tr><td>"
+								  +  json.responseJSON[0].date
+								  +	 "<td>"
+								  +  json.responseJSON[0].inPatient
+								  +  "<td>"
+								  +  json.responseJSON[0].outPatient
+								  +  "</td></tr>"
+								  +  "<tr><td>"
+								  +  json.responseJSON[1].date
+								  +	 "<td>"
+								  +  json.responseJSON[1].inPatient
+								  +  "<td>"
+								  +  json.responseJSON[1].outPatient
+								  +  "</td></tr>"
+								  +  "<tr><td>"
+								  +  json.responseJSON[2].date
+								  +	 "<td>"
+								  +  json.responseJSON[2].inPatient
+								  +  "<td>"
+								  +  json.responseJSON[2].outPatient
+								  +  "</td></tr>";
+							table4 += "<h4><b>Comparison against previous year</b></h4>"
+							table4 += "<tr><th>Month</th>"
+								  +  "<th>Indonesian Patients</th>"
+								  +  "<th>Non-Indonesian Patients</th></tr>"
+								  +  "<tr><td>"
+								  +  json.responseJSON[3].date
+								  +	 "<td>"
+								  +  json.responseJSON[3].inPatient
+								  +  "<td>"
+								  +  json.responseJSON[3].outPatient
+								  +  "</td></tr>"
+								  +  "<tr><td>"
+								  +  json.responseJSON[4].date
+								  +	 "<td>"
+								  +  json.responseJSON[4].inPatient
+								  +  "<td>"
+								  +  json.responseJSON[4].outPatient
+								  +  "</td></tr>"
+								  +  "<tr><td>"
+								  +  json.responseJSON[5].date
+								  +	 "<td>"
+								  +  json.responseJSON[5].inPatient
+								  +  "<td>"
+								  +  json.responseJSON[5].outPatient
+								  +  "</td></tr>";
+								  
+							 $('#table1').html(table3);
+							 $('#table2').html(table4);
+						}
+					});
 				}
 
-				 $('#table1').html(table1);
-				 $('#table2').html(table2);
+				 
+				
 
 
 
