@@ -162,13 +162,13 @@ function viewDoctors(clickedID){
 		};
 	var table = "<table id='table' width='80%'>";
 		$.ajax({
-			url : "DisplayAllRankingSpecialty",
+			url : "DisplayDoctorBySpecialty",
 			type : "get",
 			data : sendData,
 			dataType : "json",
-			success: function(data){
+			complete: function(data){
 		    	var json = jQuery.parseJSON(JSON.stringify(data));
-		    	console.log("json= " + json);
+		    	console.log(json);
 		    	table += "<thead>"
 			    			+"<th>Ranking</th>"
 			    			+"<th>Doctor</th>"
@@ -177,7 +177,7 @@ function viewDoctors(clickedID){
 		    	$.each(json,function(key,value) {
 		    		table += "<tbody>"
 	    				+"<tr>"
-	    				  +"<td>"+value["rank"]+"</td>"
+	    				  +"<td></td>"
 	    				  +"<td>"+value["name"]+"</td>"	 
 	    				  +"<td>"+value["count"]+"</td>"
 						+ "</tr>"
