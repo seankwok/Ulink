@@ -86,6 +86,9 @@ public class Utility {
 	public String changeDisplayDateFormat(String date){
 		return date.substring(8,10)+ "-" + date.substring(5, 7) + "-"+date.substring(0,4);
 	}
+	public String changeDateFormatDatabase(String date){
+		return date.substring(6,10)+ "/" + date.substring(3, 5) + "/" + date.substring(0, 2);
+	}
 	
 	public int getAge(String dob) {
 		if (dob.length() > 0 && dob != null && dob != ""){

@@ -18,6 +18,7 @@ import com.google.gson.reflect.TypeToken;
 import ulink.constructor.RankingDoctor;
 import ulink.constructor.RankingSpecialty;
 import ulink.dao.DatabaseConnection;
+import ulink.logic.Utility;
 
 /**
  * Servlet implementation class DisplayAllRankingSpecialty
@@ -44,8 +45,8 @@ public class DisplayAllRankingSpecialty extends HttpServlet {
 		ArrayList<RankingSpecialty> SpecialtyList;
 		String startDate = request.getParameter("startDate");
 		String endDate = request.getParameter("endDate");
-
-		SpecialtyList = database.retrieveAllRankingSpecialty(startDate, endDate);
+		Utility utility = new Utility();
+		SpecialtyList = database.retrieveAllRankingSpecialty(utility.changeDateFormatDatabase(startDate), utility.changeDateFormatDatabase(endDate));
 		
 
 		Gson gson = new Gson();

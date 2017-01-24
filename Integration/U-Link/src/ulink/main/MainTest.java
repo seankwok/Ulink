@@ -29,7 +29,7 @@ public class MainTest {
         // System.out.println(test.substring(5));
 		
          Utility utility = new Utility();
-        System.out.print(utility.getMonth(1));
+        System.out.print(utility.changeDateFormatDatabase("05/06/2015"));
 	}
 
 }
