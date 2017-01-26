@@ -42,15 +42,11 @@ $(document).ready(function() {
 	
 
 	$("#datepicker1").datepicker({ 
-		//dateFormat: 'yy/mm/dd' 
 		dateFormat: 'dd/mm/yy' 
 	});
 	$("#datepicker2").datepicker({ 
-		//dateFormat: 'yy/mm/dd' 
 		dateFormat: 'dd/mm/yy' 
 	});
-	
-	
 	
 	$("#submit").click (
 		function(){
@@ -60,7 +56,7 @@ $(document).ready(function() {
 			if(startDate>endDate){
 				$('#error').html("Start Date should be before End Date!"); 
 				$("#result").html("");
-				 return;
+				return;
 			}
 			
 			var count = 0;
@@ -160,8 +156,7 @@ $(document).ready(function() {
 		});
  	
 	});
-	
-	
+		
 function viewDoctors(clickedID){
 	var sendData = {
 			"Specialty" :clickedID
@@ -220,7 +215,8 @@ function viewDoctors(clickedID){
 
 	<div class="container">
 			<div class="form-group">
-				<label>Select Criteria </label> <select class="form-control" id="criteria">
+				<label>Select Criteria </label> 
+				<select class="form-control" id="criteria">
 					<option value="Doctor">Doctor</option>
 					<option value="Referral">Referral</option>
 					<option value="Speciality">Specialty</option>
@@ -247,10 +243,13 @@ function viewDoctors(clickedID){
 	
 	<br><br>
 
-	<div id='clickedSpeciality' class='subTitle'> </div><br>
+	<div id='clickedSpeciality' class='subTitle'> </div>
+	
+	<br>
 	
 	<div class="container" >
 		<table class="table table-striped" id="result"></table>
 	</div>
+	
 </body>
 </html>
