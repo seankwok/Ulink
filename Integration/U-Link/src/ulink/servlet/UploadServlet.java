@@ -285,7 +285,7 @@ public class UploadServlet extends HttpServlet {
 
 							accountIDRow = temp.getColumnIndex();
 							accountID = temp.toString();
-							System.out.println(accountID + "  qweqw ");
+						
 						} else if (temp.toString().equals("Client Name") || temp.getColumnIndex() == clientNameRow) {
 							clientNameRow = temp.getColumnIndex();
 							clientName = temp.toString();
@@ -521,21 +521,18 @@ public class UploadServlet extends HttpServlet {
 				ID++;
 				XSSFRow myRow = (XSSFRow) rowIter.next();
 				int numberOfRow = myRow.getPhysicalNumberOfCells();
-				// System.out.println(numberOfRow);
+				
 				Iterator<Cell> cellIter = myRow.cellIterator();
 				if (numberOfRow == 35) {
 					for (int i = 0; i < numberOfRow; i++) {
 
 						XSSFCell temp = (XSSFCell) cellIter.next();
-						// System.out.println(temp.toString());
-						// int row = myRow.getRowNum();
-						// System.out.println(temp.toString() + " " +
-						// temp.getColumnIndex() + " ROW");
 						if (!temp.toString().equals("")) {
 							if (temp.toString().equals("ACCOUNTID") || temp.getColumnIndex() == accountIDRow) {
-
+								
 								accountIDRow = temp.getColumnIndex();
 								accountID = temp.toString();
+								//System.out.println(accountID);
 							} else if (temp.toString().equals("Client Name")
 									|| temp.getColumnIndex() == clientNameRow) {
 								clientNameRow = temp.getColumnIndex();
@@ -593,7 +590,7 @@ public class UploadServlet extends HttpServlet {
 									dateOfBirth = temp.toString();
 								}
 
-								// System.out.println(dateOfBirth);
+								
 							} else if (temp.toString().equals("Doctor") || temp.getColumnIndex() == doctorRow) {
 								doctorRow = temp.getColumnIndex();
 								doctor = temp.toString();
@@ -608,6 +605,7 @@ public class UploadServlet extends HttpServlet {
 									|| temp.getColumnIndex() == followUpPICRow) {
 								followUpPICRow = temp.getColumnIndex();
 								followUpPIC = temp.toString();
+								
 							} else if (temp.toString().equals("Gender") || temp.getColumnIndex() == genderRow) {
 								genderRow = temp.getColumnIndex();
 								gender = temp.toString();
@@ -626,7 +624,7 @@ public class UploadServlet extends HttpServlet {
 							} else if (temp.toString().equals("Nationality")
 									|| temp.getColumnIndex() == nationalityRow) {
 								nationalityRow = temp.getColumnIndex();
-								nationality = temp.toString();
+								nationality = temp.toString();								
 							} else if (temp.toString().equals("Other doctor")
 									|| temp.getColumnIndex() == otherDoctorRow) {
 								otherDoctorRow = temp.getColumnIndex();
@@ -671,7 +669,7 @@ public class UploadServlet extends HttpServlet {
 					}
 
 					// System.out.print(clientName);
-					if (accountID.equals("")) {
+					if (!accountID.equals("")) {
 						clientList.add(new Client(ID, accountID, clientOwner, clientName, clientType, company,
 								nationality, gender, dateOfBirth, email, medical, mainDiagnosis, referredBy, PIC,
 								appointment, doctor, specialty, clinic, otherDoctor, followUpPerson, followUpPIC,
@@ -688,7 +686,7 @@ public class UploadServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		// System.out.print(clientList.size());
+		//System.out.print(clientList.size());
 		connection.createClient(clientList);
 		return count;
 

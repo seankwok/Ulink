@@ -15,8 +15,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 
-import ulink.constructor.RankingDoctor;
-import ulink.constructor.RankingDoctorSpecialty;
+
+import ulink.constructor.*;
 import ulink.dao.DatabaseConnection;
 
 /**

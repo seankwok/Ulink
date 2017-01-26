@@ -10,15 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import ulink.constructor.Client;
-import ulink.constructor.Condition;
-import ulink.constructor.Consultation;
-import ulink.constructor.RankingDoctor;
-import ulink.constructor.RankingDoctorSpecialty;
-import ulink.constructor.RankingReferredBy;
-import ulink.constructor.RankingSpecialty;
-import ulink.constructor.Timeline;
-import ulink.constructor.User;
+import ulink.constructor.*;
 import ulink.logic.Utility;
 
 public class DatabaseConnection {
@@ -430,7 +422,7 @@ public class DatabaseConnection {
 			Utility utility = new Utility();
 			PreparedStatement preparedStmt = con.prepareStatement(sql);
 
-			for (int i = 1; i < clientList.size(); i++) {
+			for (int i = 1; i < clientList.size()-3; i++) {
 				Client client = clientList.get(i);
 				
 				//preparedStmt.setInt(1, client.getID());
@@ -480,7 +472,7 @@ public class DatabaseConnection {
 				}
 				//System.out.print(client.getCreatedtime());
 				String date = client.getCreatedtime().substring(6, 10) + "-" + client.getCreatedtime().substring(3, 5) + "-" + client.getCreatedtime().substring(0, 2) ;
-				//System.out.println(date);
+				System.out.println(date);
 				preparedStmt.setDate(34,java.sql.Date.valueOf(date));
 				preparedStmt.setString(35, client.getPhone());
 				preparedStmt.execute();

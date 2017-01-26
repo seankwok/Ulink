@@ -94,7 +94,7 @@ public class Utility {
 		if (dob.length() > 0 && dob != null && dob != ""){
 			dob = dob.replace('/', '-');
 		int year = Integer.parseInt(dob.substring(6));
-		System.out.println(year);
+		
 		DateTime datetime = new DateTime();
 		int currentYear = datetime.getYear();
 
