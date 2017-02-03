@@ -18,7 +18,8 @@
     <script src="js/bootstrap.min.js"></script>
 	<script src="http://www.w3schools.com/lib/w3data.js"></script>
 
-
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
 
 <script type="text/javascript">
 
@@ -117,7 +118,102 @@ $(document).ready(function() {
 					$('#table1').html(table1);
 					$('#table2').html(table2);
 					 
+					Highcharts.chart('container', {
+					    chart: {
+					        type: 'column'
+					    },
+					    title: {
+					        text: 'Comparison with previous month'
+					    },
+					    
+					    xAxis: {
+					        categories: [
+					            'Inpatient',
+					            'Outpatient'
+					        ],
+					        crosshair: true
+					    },
+					    yAxis: {
+					        min: 0,
+					        title: {
+					            text: 'Number of patients'
+					        }
+					    },
+					    tooltip: {
+					        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+					        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+					            '<td style="padding:0"><b>{point.y:.1f} patients</b></td></tr>',
+					        footerFormat: '</table>',
+					        shared: true,
+					        useHTML: true
+					    },
+					    plotOptions: {
+					        column: {
+					            pointPadding: 0.2,
+					            borderWidth: 0
+					        }
+					    },
+					    series: [{
+					        name: json.responseJSON[0].date,
+					        data: [json.responseJSON[0].inPatient,json.responseJSON[1].inPatient]
+
+					    }, {
+					        name: json.responseJSON[1].date,
+					        data: [json.responseJSON[0].outPatient,json.responseJSON[1].outPatient]
+
+					    }]
+					
 					   
+					});
+					
+					Highcharts.chart('container2', {
+					    chart: {
+					        type: 'column'
+					    },
+					    title: {
+					        text: 'Comparison with previous year'
+					    },
+					    
+					    xAxis: {
+					        categories: [
+					            'Inpatient',
+					            'Outpatient'
+					        ],
+					        crosshair: true
+					    },
+					    yAxis: {
+					        min: 0,
+					        title: {
+					            text: 'Number of patients'
+					        }
+					    },
+					    tooltip: {
+					        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+					        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+					            '<td style="padding:0"><b>{point.y:.1f} patients</b></td></tr>',
+					        footerFormat: '</table>',
+					        shared: true,
+					        useHTML: true
+					    },
+					    plotOptions: {
+					        column: {
+					            pointPadding: 0.2,
+					            borderWidth: 0
+					        }
+					    },
+					    series: [{
+					        name: json.responseJSON[3].date,
+					        data: [json.responseJSON[3].inPatient,json.responseJSON[4].inPatient]
+
+					    }, {
+					        name: json.responseJSON[4].date,
+					        data: [json.responseJSON[3].outPatient,json.responseJSON[4].outPatient]
+
+					    }]
+					});
+					   
+					   
+					
 				} else {
 					$.ajax({
 						url : "KPIVisa",
@@ -181,6 +277,100 @@ $(document).ready(function() {
 								  
 							 $('#table1').html(table3);
 							 $('#table2').html(table4);
+							 
+							 Highcharts.chart('container', {
+								    chart: {
+								        type: 'column'
+								    },
+								    title: {
+								        text: 'Comparison with previous month'
+								    },
+								    
+								    xAxis: {
+								        categories: [
+								            'Indonesian',
+								            'Non-Indonesian'
+								        ],
+								        crosshair: true
+								    },
+								    yAxis: {
+								        min: 0,
+								        title: {
+								            text: 'Number of clients'
+								        }
+								    },
+								    tooltip: {
+								        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+								        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+								            '<td style="padding:0"><b>{point.y:.1f} clients</b></td></tr>',
+								        footerFormat: '</table>',
+								        shared: true,
+								        useHTML: true
+								    },
+								    plotOptions: {
+								        column: {
+								            pointPadding: 0.2,
+								            borderWidth: 0
+								        }
+								    },
+								    series: [{
+								        name: json.responseJSON[0].date,
+								        data: [json.responseJSON[0].inPatient,json.responseJSON[1].inPatient]
+
+								    }, {
+								        name: json.responseJSON[1].date,
+								        data: [json.responseJSON[0].outPatient,json.responseJSON[1].outPatient]
+
+								    }]
+								
+								   
+								});
+								
+								Highcharts.chart('container2', {
+								    chart: {
+								        type: 'column'
+								    },
+								    title: {
+								        text: 'Comparison with previous year'
+								    },
+								    
+								    xAxis: {
+								        categories: [
+								        	'Indonesian',
+								            'Non-Indonesian'
+								        ],
+								        crosshair: true
+								    },
+								    yAxis: {
+								        min: 0,
+								        title: {
+								            text: 'Number of patients'
+								        }
+								    },
+								    tooltip: {
+								        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+								        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+								            '<td style="padding:0"><b>{point.y:.1f} clients</b></td></tr>',
+								        footerFormat: '</table>',
+								        shared: true,
+								        useHTML: true
+								    },
+								    plotOptions: {
+								        column: {
+								            pointPadding: 0.2,
+								            borderWidth: 0
+								        }
+								    },
+								    series: [{
+								        name: json.responseJSON[3].date,
+								        data: [json.responseJSON[3].inPatient,json.responseJSON[4].inPatient]
+
+								    }, {
+								        name: json.responseJSON[4].date,
+								        data: [json.responseJSON[3].outPatient,json.responseJSON[4].outPatient]
+
+								    }]
+								});
 						}
 					});
 				}
@@ -273,14 +463,14 @@ $(document).ready(function() {
         <button type="submit" value="Submit" class="btn btn-default" id="submit">Generate Results</button>
     </div>
     
-
     <br>
     <div class="container" align="left" id="table1"></div>
   
   <div class="container" align="left" id="table2"></div>
     </div>
     
-    
-   
+    <div id="container" align="right" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    <div id="container2" align="right" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+	   
   </body>
 </html>
