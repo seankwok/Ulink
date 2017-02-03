@@ -4,11 +4,14 @@ public class AgeAndGender {
 	private String Age;
 	private int male;
 	private int female;
-	public AgeAndGender(String age, int male, int female) {
+	private int total;
+	
+	public AgeAndGender(String age, int male, int female, int total) {
 		super();
 		Age = age;
 		this.male = male;
 		this.female = female;
+		this.total = total;
 	}
 	public String getAge() {
 		return Age;
@@ -29,6 +32,13 @@ public class AgeAndGender {
 		this.female = female;
 	}
 	
+	public int getTotal(){
+		return total;
+	}
+	
+	public void setTotal(int total){
+		this.total = total;
+	}
 	
 	
 }

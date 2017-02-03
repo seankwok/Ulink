@@ -81,14 +81,14 @@ public class TopK {
 			
 		}
 				
-		ageGenderReport.add(new AgeAndGender("10",m10/(m10+f10),f10/(m10+f10)));
-		ageGenderReport.add(new AgeAndGender("20",m20/(m20+f20),f20/(m20+f20)));
-		ageGenderReport.add(new AgeAndGender("30",m30/(m30+f30),f30/(m30+f30)));
-		ageGenderReport.add(new AgeAndGender("40",m40/(m40+f40),f40/(m40+f40)));
-		ageGenderReport.add(new AgeAndGender("50",m50/(m50+f50),f50/(m50+f50)));
-		ageGenderReport.add(new AgeAndGender("60",m60/(m60+f60),f60/(m60+f60)));
-		ageGenderReport.add(new AgeAndGender("70",m70/(m70+f70),f70/(m70+f70)));
-		ageGenderReport.add(new AgeAndGender("80",m80/(m80+f80),f80/(m80+f80)));
+		ageGenderReport.add(new AgeAndGender("10",m10/(m10+f10),f10/(m10+f10),(m10+f10)/clientList.size()));
+		ageGenderReport.add(new AgeAndGender("20",m20/(m20+f20),f20/(m20+f20),(m20+f20)/clientList.size()));
+		ageGenderReport.add(new AgeAndGender("30",m30/(m30+f30),f30/(m30+f30),(m30+f30)/clientList.size()));
+		ageGenderReport.add(new AgeAndGender("40",m40/(m40+f40),f40/(m40+f40),(m40+f40)/clientList.size()));
+		ageGenderReport.add(new AgeAndGender("50",m50/(m50+f50),f50/(m50+f50),(m50+f50)/clientList.size()));
+		ageGenderReport.add(new AgeAndGender("60",m60/(m60+f60),f60/(m60+f60),(m60+f60)/clientList.size()));
+		ageGenderReport.add(new AgeAndGender("70",m70/(m70+f70),f70/(m70+f70),(m70+f70)/clientList.size()));
+		ageGenderReport.add(new AgeAndGender("80",m80/(m80+f80),f80/(m80+f80),(m80+f80)/clientList.size()));
 		
 		
 		

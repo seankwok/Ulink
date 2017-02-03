@@ -11,6 +11,8 @@ public class RankingDoctorSpecialty {
 		Specialty = specialty;
 		this.engagement = engagement;
 	}
+	
+	
 	public String getSpecialty() {
 		return Specialty;
 	}
