@@ -12,7 +12,6 @@
     
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
- 	<script src="jquery.js"></script> 
     <script> 
 	    $(function(){
 	      $("#includedContent").load("navBar.html"); 
@@ -82,7 +81,6 @@
  	    },
  	    series: [{
  	        name: 'As of this month',
- 	        color:'#13B6CE',
  	        data: [1052, 954, 4250, 740, 38]
  	    }]
  	});
@@ -200,7 +198,8 @@
 			    	console.log(json);
 			  
 			    	$.each(json,function(key, value) {
-			    	
+			    		console.log(key);
+			    		console.log(value);
 			    	});
 			    	
 			    	
