@@ -90,13 +90,13 @@ public class TopK {
 		int total80 = 0;
 		if (clientList.size() != 0) {
 			total10 = (m10 + f10) / clientList.size();
-			total20 = (m10 + f10) / clientList.size();
-			total30 = (m10 + f10) / clientList.size();
-			total40 = (m10 + f10) / clientList.size();
-			total50 = (m10 + f10) / clientList.size();
-			total60 = (m10 + f10) / clientList.size();
-			total70 = (m10 + f10) / clientList.size();
-			total80 = (m10 + f10) / clientList.size();
+			total20 = (m20 + f20) / clientList.size();
+			total30 = (m30 + f30) / clientList.size();
+			total40 = (m40 + f40) / clientList.size();
+			total50 = (m50 + f50) / clientList.size();
+			total60 = (m60 + f60) / clientList.size();
+			total70 = (m70 + f70) / clientList.size();
+			total80 = (m80 + f80) / clientList.size();
 		}
 		
 		int totalm10 = 0;
