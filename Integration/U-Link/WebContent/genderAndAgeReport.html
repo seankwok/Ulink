@@ -25,7 +25,7 @@
 	});
 
 	function displayAll() {
-		var ageList = "<table><thead><th>Age range</th><th>Male %</th><th>Female %</th></thead><tbody>"
+		var ageList = "<table>";
 		var completedTask;
 		var isEmpty = false;
 		var completeIsEmpty = false;
@@ -34,22 +34,27 @@
 			type : "GET",
 			dataType : "json",
 			complete : function(data) {
-				var json = jQuery.parseJSON(JSON.stringify(data));
-				console.log(json);
-				$.each(
-					json,
-					function(key, value) {	
-						ageList += '<tr>'
-									+ '<td>'
-									+ key
-									+ '</td>'
+			var json = jQuery.parseJSON(JSON.stringify(data));
+			console.log(json);
+				
+			 ageList	+= "<thead>"
+						+"<th>Age range</th>"
+						+"<th>Male %</th>"
+						+"<th>Female %</th>"
+					+"</thead>"
+					+"<tbody>"
+				$.each(json,function(key, value) {	
+					ageList += '<tr>'
+						+ '<td>'
+						+ key
+						+ '</td>'
 									
-									+ '<td>'
-									+ value
-									+ '</td>'
-								+'</tr>'
-								+'</tbody></table>'
+						+ '<td>'
+						+ value
+						+ '</td>'
+					+'</tr>'
 				   });		
+					ageList += "</tbody></table>"
 						$("#ageList").html(ageList);
 				}
 			});
