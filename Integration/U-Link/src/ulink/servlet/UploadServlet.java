@@ -231,40 +231,40 @@ public class UploadServlet extends HttpServlet {
 		int phoneRow = 0;
 
 		while (rowIter.hasNext()) {
-			String accountID = null;
-			String clientOwner = null;
-			String clientName = null;
-			String clientType = null;
-			String company = null;
-			String nationality = null;
-			String gender = null;
-			String dateOfBirth = null;
-			String email = null;
-			String medical = null;
-			String mainDiagnosis = null;
-			String referredBy = null;
-			String PIC = null;
-			String appointment = null;
-			String doctor = null;
-			String specialty = null;
-			String clinic = null;
-			String otherDoctor = null;
-			String followUpPerson = null;
-			String followUpPIC = null;
-			String hospitalAdmitted = null;
-			String log = null;
-			String claim = null;
-			String visaRequestBy = null;
-			String visa = null;
-			String visaType = null;
-			String visaType2 = null;
-			String billingCity = null;
-			String billingCode = null;
-			String billingCountry = null;
-			String billingState = null;
-			String billingStreet = null;
-			String createdTime = null;
-			String phone = null;
+			String accountID = "";
+			String clientOwner = "";
+			String clientName = "";
+			String clientType = "";
+			String company = "";
+			String nationality = "";
+			String gender = "";
+			String dateOfBirth = "";
+			String email = "";
+			String medical = "";
+			String mainDiagnosis = "";
+			String referredBy = "";
+			String PIC = "";
+			String appointment = "";
+			String doctor = "";
+			String specialty = "";
+			String clinic = "";
+			String otherDoctor = "";
+			String followUpPerson = "";
+			String followUpPIC = "";
+			String hospitalAdmitted = "";
+			String log = "";
+			String claim = "";
+			String visaRequestBy = "";
+			String visa = "";
+			String visaType = "";
+			String visaType2 = "";
+			String billingCity = "";
+			String billingCode = "";
+			String billingCountry = "";
+			String billingState = "";
+			String billingStreet = "";
+			String createdTime = "";
+			String phone = "";
 
 			
 			
@@ -411,7 +411,7 @@ public class UploadServlet extends HttpServlet {
 					}
 				}
 				// System.out.print(clientName);
-				if (!accountID.equals("")) {
+				if (!accountID.equals("") && dateOfBirth != null) {
 					clientList.add(new Client(ID, accountID, clientOwner, clientName, clientType, company, nationality,
 							gender, dateOfBirth, email, medical, mainDiagnosis, referredBy, PIC, appointment, doctor,
 							specialty, clinic, otherDoctor, followUpPerson, followUpPIC, hospitalAdmitted, log, claim,
@@ -487,40 +487,40 @@ public class UploadServlet extends HttpServlet {
 			int phoneRow = 0;
 			
 			while (rowIter.hasNext()) {
-				String accountID = null;
-				String clientOwner = null;
-				String clientName = null;
-				String clientType = null;
-				String company = null;
-				String nationality = null;
-				String gender = null;
-				String dateOfBirth = null;
-				String email = null;
-				String medical = null;
-				String mainDiagnosis = null;
-				String referredBy = null;
-				String PIC = null;
-				String appointment = null;
-				String doctor = null;
-				String specialty = null;
-				String clinic = null;
-				String otherDoctor = null;
-				String followUpPerson = null;
-				String followUpPIC = null;
-				String hospitalAdmitted = null;
-				String log = null;
-				String claim = null;
-				String visaRequestBy = null;
-				String visa = null;
-				String visaType = null;
-				String visaType2 = null;
-				String billingCity = null;
-				String billingCode = null;
-				String billingCountry = null;
-				String billingState = null;
-				String billingStreet = null;
-				String createdTime = null;
-				String phone = null;
+				String accountID = "";
+				String clientOwner = "";
+				String clientName = "";
+				String clientType = "";
+				String company = "";
+				String nationality = "";
+				String gender = "";
+				String dateOfBirth = "";
+				String email = "";
+				String medical = "";
+				String mainDiagnosis = "";
+				String referredBy = "";
+				String PIC = "";
+				String appointment = "";
+				String doctor = "";
+				String specialty = "";
+				String clinic = "";
+				String otherDoctor = "";
+				String followUpPerson = "";
+				String followUpPIC = "";
+				String hospitalAdmitted = "";
+				String log = "";
+				String claim = "";
+				String visaRequestBy = "";
+				String visa = "";
+				String visaType = "";
+				String visaType2 = "";
+				String billingCity = "";
+				String billingCode = "";
+				String billingCountry = "";
+				String billingState = "";
+				String billingStreet = "";
+				String createdTime = "";
+				String phone = "";
 
 				ID++;
 				XSSFRow myRow = (XSSFRow) rowIter.next();
@@ -673,7 +673,7 @@ public class UploadServlet extends HttpServlet {
 					}
 
 					// System.out.print(clientName);
-					if (!accountID.equals("")) {
+					if (!accountID.equals("") && dateOfBirth != null) {
 						clientList.add(new Client(ID, accountID, clientOwner, clientName, clientType, company,
 								nationality, gender, dateOfBirth, email, medical, mainDiagnosis, referredBy, PIC,
 								appointment, doctor, specialty, clinic, otherDoctor, followUpPerson, followUpPIC,

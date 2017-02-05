@@ -15,6 +15,68 @@ import ulink.logic.Utility;
 
 public class DatabaseConnection {
 	
+	public ArrayList<RankingReferredBy> retrieveAllRankingReferredByDashBoard(String date){
+		Connection con;
+		ArrayList<RankingReferredBy> referredByList = new ArrayList<>();
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
+
+			Statement stmt = con.createStatement();
+			String sql = "select  referredBy, count(referredBy) from client where  CreatedTime >= DATE_SUB('"+ date +"', INTERVAL 1 MONTH) and referredBy != '' group by referredBy ORDER BY COUNT(referredBy) DESC";
+			ResultSet rs = stmt.executeQuery(sql);
+			Utility utility = new Utility();
+
+			while (rs.next()) {
+				String referredBy = rs.getString(1);
+				int count = rs.getInt(2);
+				referredByList.add(new RankingReferredBy(referredBy,count));
+			}
+
+			con.close();
+
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return referredByList;
+		
+	}
+	
+	public ArrayList<RankingDoctor> retrieveAllRankingDoctorDashBoard(String date){
+		Connection con;
+		ArrayList<RankingDoctor> doctorList = new ArrayList<>();
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
+
+			Statement stmt = con.createStatement();
+			String sql = "select doctor, clinic, specialty, count(appointment) from client where  CreatedTime >= DATE_SUB('"+ date +"', INTERVAL 1 MONTH) and doctor != '' group by doctor ORDER BY COUNT(appointment) DESC";
+			ResultSet rs = stmt.executeQuery(sql);
+			Utility utility = new Utility();
+
+			while (rs.next()) {
+				String doctor = rs.getString(1);
+				String clinic = rs.getString(2);
+				String specialty = rs.getString(3);
+				int count = rs.getInt(4);
+				doctorList.add(new RankingDoctor(doctor,clinic,specialty,count));
+			}
+
+			con.close();
+
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return doctorList;
+		
+	}
+	
+	
+	
 	
 	public String retrieveLatestDate(){
 		
@@ -483,7 +545,7 @@ public class DatabaseConnection {
 			Utility utility = new Utility();
 			PreparedStatement preparedStmt = con.prepareStatement(sql);
 
-			for (int i = 1; i < clientList.size()-3; i++) {
+			for (int i = 1; i < clientList.size(); i++) {
 				Client client = clientList.get(i);
 				
 				//preparedStmt.setInt(1, client.getID());
