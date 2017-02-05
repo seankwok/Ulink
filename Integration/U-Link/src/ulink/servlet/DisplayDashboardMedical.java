@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.TreeMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -39,7 +41,7 @@ public class DisplayDashboardMedical extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		DatabaseConnection connection = new DatabaseConnection();
 		ArrayList<String> list = connection.retrievePastSixMonthRecord("Medical", connection.retrieveLatestDate());
-		HashMap<String,Integer> pastSixMonth = new HashMap<>();
+		LinkedHashMap<String,Integer> pastSixMonth = new LinkedHashMap<>();
 		
 		Utility utility = new Utility();
 		

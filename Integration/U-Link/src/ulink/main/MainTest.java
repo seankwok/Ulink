@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.TreeMap;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -30,7 +32,7 @@ public class MainTest {
 	//	System.out.print(conditionList.size());
 		
 		ArrayList<String> list = connection.retrievePastSixMonthRecord("Medical", connection.retrieveLatestDate());
-		HashMap<String,Integer> pastSixMonth = new HashMap<>();
+		LinkedHashMap<String,Integer> pastSixMonth = new LinkedHashMap<>();
 		
 		Utility utility = new Utility();
 		
@@ -46,7 +48,7 @@ public class MainTest {
 			}
 		}
 	
-		System.out.println(pastSixMonth.values());
+		System.out.println(pastSixMonth.keySet());
 		System.out.println(connection.retrieveLatestDate());
 			
 		}

@@ -187,14 +187,14 @@ public class TopK {
 		
 		 DecimalFormat two = new DecimalFormat("0.00");
 
-		ageGenderReport.add(new AgeAndGender("10", two.format(totalm10), two.format(totalf10), two.format(total10)));
-		ageGenderReport.add(new AgeAndGender("20", two.format(totalm20), two.format(totalf20), two.format(total20)));
-		ageGenderReport.add(new AgeAndGender("30", two.format(totalm30), two.format(totalf30), two.format(total30)));
-		ageGenderReport.add(new AgeAndGender("40", two.format(totalm40), two.format(totalf40), two.format(total40)));
-		ageGenderReport.add(new AgeAndGender("50", two.format(totalm50), two.format(totalf50), two.format(total50)));
-		ageGenderReport.add(new AgeAndGender("60", two.format(totalm60), two.format(totalf60), two.format(total60)));
-		ageGenderReport.add(new AgeAndGender("70", two.format(totalm70), two.format(totalf70), two.format(total70)));
-		ageGenderReport.add(new AgeAndGender("80", two.format(totalm80), two.format(totalf80), two.format(total80)));
+		ageGenderReport.add(new AgeAndGender("10", Double.parseDouble(two.format(totalm10)), Double.parseDouble(two.format(totalf10)), Double.parseDouble(two.format(total10))));
+		ageGenderReport.add(new AgeAndGender("20", Double.parseDouble(two.format(totalm20)), Double.parseDouble(two.format(totalf20)), Double.parseDouble(two.format(total20))));
+		ageGenderReport.add(new AgeAndGender("30", Double.parseDouble(two.format(totalm30)), Double.parseDouble(two.format(totalf30)), Double.parseDouble(two.format(total30))));
+		ageGenderReport.add(new AgeAndGender("40", Double.parseDouble(two.format(totalm40)), Double.parseDouble(two.format(totalf40)), Double.parseDouble(two.format(total40))));
+		ageGenderReport.add(new AgeAndGender("50", Double.parseDouble(two.format(totalm50)), Double.parseDouble(two.format(totalf50)), Double.parseDouble(two.format(total50))));
+		ageGenderReport.add(new AgeAndGender("60", Double.parseDouble(two.format(totalm60)), Double.parseDouble(two.format(totalf60)), Double.parseDouble(two.format(total60))));
+		ageGenderReport.add(new AgeAndGender("70", Double.parseDouble(two.format(totalm70)), Double.parseDouble(two.format(totalf70)), Double.parseDouble(two.format(total70))));
+		ageGenderReport.add(new AgeAndGender("80", Double.parseDouble(two.format(totalm80)), Double.parseDouble(two.format(totalf80)), Double.parseDouble(two.format(total80))));
 
 		return ageGenderReport;
 	}
