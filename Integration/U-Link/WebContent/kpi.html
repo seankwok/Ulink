@@ -16,7 +16,12 @@
     <script src="js/bootstrap-datetimepicker.min.js"></script>
     <script src="js/bootstrap-datetimepicker.js"></script>
     <script src="js/bootstrap.min.js"></script>
-	<script src="http://www.w3schools.com/lib/w3data.js"></script>
+ 	<script src="jquery.js"></script> 
+    <script> 
+	    $(function(){
+	      $("#includedContent").load("navBar.html"); 
+	    });
+    </script> 
 
 	<script src="https://code.highcharts.com/highcharts.js"></script>
 	<script src="https://code.highcharts.com/modules/exporting.js"></script>
@@ -139,6 +144,9 @@ $(document).ready(function() {
 					            text: 'Number of patients'
 					        }
 					    },
+					    credits: {
+				 	        enabled: false
+				 	    },
 					    tooltip: {
 					        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
 					        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
@@ -187,6 +195,9 @@ $(document).ready(function() {
 					            text: 'Number of patients'
 					        }
 					    },
+					    credits: {
+				 	        enabled: false
+				 	    },
 					    tooltip: {
 					        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
 					        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
@@ -293,6 +304,7 @@ $(document).ready(function() {
 								        ],
 								        crosshair: true
 								    },
+								    
 								    yAxis: {
 								        min: 0,
 								        title: {
@@ -313,6 +325,9 @@ $(document).ready(function() {
 								            borderWidth: 0
 								        }
 								    },
+								    credits: {
+							 	        enabled: false
+							 	    },
 								    series: [{
 								        name: json.responseJSON[0].date,
 								        data: [json.responseJSON[0].inPatient,json.responseJSON[1].inPatient]
@@ -333,6 +348,9 @@ $(document).ready(function() {
 								    title: {
 								        text: 'Comparison with previous year'
 								    },
+								    credits: {
+							 	        enabled: false
+							 	    },
 								    
 								    xAxis: {
 								        categories: [
@@ -400,10 +418,7 @@ $(document).ready(function() {
   </head>
   <body>
     
-   <div w3-include-html="navBar.html"></div> 
-	<script>
-		w3IncludeHTML();
-	</script>
+  	<div id="includedContent"></div>
 
     <div class="page-header">
        <h1 align ="center"><b>KPI</b></h1>

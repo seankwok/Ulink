@@ -14,7 +14,13 @@
     
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-	<script src="http://www.w3schools.com/lib/w3data.js"></script>
+    
+    <script src="jquery.js"></script> 
+    <script> 
+	    $(function(){
+	      $("#includedContent").load("navBar.html"); 
+	    });
+    </script> 
 
 <style>
  	
@@ -84,7 +90,6 @@
 </style>
  
  <script type="text/javascript">
-
 		$(document).ready(function() {
 			displayAll();
 		} );
@@ -206,13 +211,6 @@
 		}
 	  
 	</script>
-	
-	<script src="jquery.js"></script> 
-    <script> 
-    $(function(){
-      $("#includedContent").load("navBar.html"); 
-    });
-    </script> 
  
   </head>
   
@@ -228,9 +226,6 @@
     
 	<div id="display" class="container"  ></div>
 
-	<script>
-		w3IncludeHTML();
-	</script>
 
   </body>
 </html>

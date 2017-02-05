@@ -12,9 +12,13 @@
     
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-	<script src="http://www.w3schools.com/lib/w3data.js"></script>
  
- 	
+ 	<script src="jquery.js"></script> 
+    <script> 
+	    $(function(){
+	      $("#includedContent").load("navBar.html"); 
+	    });
+    </script> 
  	
  	<style>
  	
@@ -122,11 +126,9 @@
   <body>
   
 	
-	<div w3-include-html="navBar.html"></div> 
+	<div id="includedContent"></div>
 	<div  class="container" id="table" align="center"></div>
 	<div class='col-md-8 col-md-offset-2' id="message"></div>
-	<script>
-		w3IncludeHTML();
-	</script>
+
 	</body>
 </html>

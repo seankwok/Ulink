@@ -12,7 +12,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
- 	<script src="http://www.w3schools.com/lib/w3data.js"></script>
+ 	<script src="jquery.js"></script> 
+    <script> 
+	    $(function(){
+	      $("#includedContent").load("navBar.html"); 
+	    });
+    </script> 
  
  	<script type="text/javascript">
 	$(document).ready(function() {
@@ -63,10 +68,7 @@
   </head>
   <body>
     
-	<div w3-include-html="navBar.html"></div> 
-	<script>
-		w3IncludeHTML();
-	</script>
+  	<div id="includedContent"></div>
 
 	<div class="panel panel-default">
 	  <div class="panel-body">

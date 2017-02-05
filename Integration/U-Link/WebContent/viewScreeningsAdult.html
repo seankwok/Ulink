@@ -13,7 +13,12 @@
 	<script src="js/jquery-1.12.0.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/jquery.tablesorter.js"></script>
-	<script src="http://www.w3schools.com/lib/w3data.js"></script>
+ 	<script src="jquery.js"></script> 
+    <script> 
+	    $(function(){
+	      $("#includedContent").load("navBar.html"); 
+	    });
+    </script> 
 	
  	
  	<style>
@@ -105,7 +110,7 @@
 	}
 
 	function sortAscAge(clickedID){
-		var table = "<table id='table' class=' table-hover'>";
+		var table = "<table id='table' class=' table-hover' >";
 		$.ajax({
 			url: "DisplayAll",
 			type: "get",
@@ -622,7 +627,7 @@
 	
 	
 	function displayAll(){
-		var table = "<table id='table'  class='display' cellspacing='0' width='100%'>";
+		var table = "<table id='table'  class='display' cellspacing='0' >";
 		var isEmpty = false;
 		$.ajax({
 			url: "DisplayAll",
@@ -697,10 +702,7 @@
   
   <body>
     
-	<div w3-include-html="navBar.html"></div> 
-		<script>
-			w3IncludeHTML();
-	</script>
+  	<div id="includedContent"></div>
 
 	<div class="page-header"  align="center">
 	  <h1><b>View Screenings - Adult</b></h1>

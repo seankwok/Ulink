@@ -33,7 +33,7 @@
 					complete : function(data) {
 						console.log(data.responseText);
 						if (data.responseText == 'success') {
-							window.location = "index.html";
+							window.location = "dashboard.html";
 							console.log("PASS1");
 						}else{
 							$("#inputAlert").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Incorrect username/password</strong></div>");

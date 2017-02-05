@@ -12,85 +12,61 @@
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="js/jquery-1.12.0.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script src="http://www.w3schools.com/lib/w3data.js"></script>
+ 	<script src="jquery.js"></script> 
+    <script> 
+	    $(function(){
+	      $("#includedContent").load("navBar.html"); 
+	    });
+    </script> 
 
 <script type="text/javascript">
 	$(document).ready(function() {
-
 		displayAll();
 	});
 
 	function displayAll() {
-		var ageList = "<tr><th>Age range</th><th>Male %</th><th>Female %</th></tr>"
+		var ageList = "<table><thead><th>Age range</th><th>Male %</th><th>Female %</th></thead><tbody>"
 		var completedTask;
 		var isEmpty = false;
 		var completeIsEmpty = false;
-		$
-				.ajax({
-					url : "DisplayAllGenderByAge",
-					type : "GET",
-					dataType : "json",
-					success : function(data) {
-
-						var json = jQuery.parseJSON(JSON.stringify(data));
-						console.log(json);
-						$
-								.each(
-										json,
-										function(key, value) {
-											//	$('#toDoID').append($('<div></div>').html());
-											//  var list = $('<ul></ul>');
-
+		$.ajax({
+			url : "DisplayAgeGenderReport",
+			type : "GET",
+			dataType : "json",
+			complete : function(data) {
+				var json = jQuery.parseJSON(JSON.stringify(data));
+				console.log(json);
+				$.each(
+					json,
+					function(key, value) {	
+						ageList += '<tr>'
+									+ '<td>'
+									+ key
+									+ '</td>'
 									
-												ageList += '<tr>'
-
-														+ '<td>'
-														+ key
-														+ '</td>'
-														+ '<td>'
-														+ value
-														+ '</td></tr>';
-
-												
-											
-
-
-										});
-						//	$('#toDoList').append(toDoList);
-					
-							$("#ageList").html(ageList);
-					
-
-						//(toDoList);
-					}
-				});
-		//
-		//return data;
-
-	}
-</script>
+									+ '<td>'
+									+ value
+									+ '</td>'
+								+'</tr>'
+								+'</tbody></table>'
+				   });		
+						$("#ageList").html(ageList);
+				}
+			});
+  }
+  </script>
 
 </head>
+
 <body>
 
-	<div w3-include-html="navBar.html"></div> 
-	<script>
-		w3IncludeHTML();
-	</script>
-
+  	<div id="includedContent"></div>
 
 	<div class="page-header">
 		<h1 align="center">Gender And Age Report</h1>
 	</div>
 		<div class="container">
 
-		<table class="table table-striped" id="ageList">
-		
-			
-			
-
-			
-		</table>
 	</div>
 
 
