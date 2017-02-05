@@ -25,7 +25,7 @@
  
  	<script type="text/javascript">
  	$(document).ready(function() {
- 	
+	displayAll(); 	
  	Highcharts.chart('visaContainer', {
  	    chart: {
  	        type: 'bar'
@@ -82,6 +82,7 @@
  	    },
  	    series: [{
  	        name: 'As of this month',
+ 	        color:'#13B6CE',
  	        data: [1052, 954, 4250, 740, 38]
  	    }]
  	});
@@ -188,6 +189,26 @@
  	
  	});
  	
+ 	function displayAll(){
+			$.ajax({
+				url: "DisplayDashboardMedical",
+				type: "get",
+			    dataType : "json",
+			    
+			    success: function(data){
+			    	var json = jQuery.parseJSON(JSON.stringify(data));
+			    	console.log(json);
+			  
+			    	$.each(json,function(key, value) {
+			    	
+			    	});
+			    	
+			    	
+			    	
+			    }	
+			    
+			});	
+			}
  	
  	</script>
  	

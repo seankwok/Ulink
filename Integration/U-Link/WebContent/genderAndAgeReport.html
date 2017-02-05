@@ -12,53 +12,99 @@
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="js/jquery-1.12.0.js"></script>
 <script src="js/bootstrap.min.js"></script>
- 	<script src="jquery.js"></script> 
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+<script src="jquery.js"></script> 
     <script> 
 	    $(function(){
 	      $("#includedContent").load("navBar.html"); 
 	    });
-    </script> 
+  </script> 
+  
 
 <script type="text/javascript">
 	$(document).ready(function() {
 		displayAll();
+		
+		
+		
 	});
 
 	function displayAll() {
-		var ageList = "<table>";
 		var completedTask;
-		var isEmpty = false;
-		var completeIsEmpty = false;
 		$.ajax({
 			url : "DisplayAgeGenderReport",
 			type : "GET",
 			dataType : "json",
 			complete : function(data) {
-			var json = jQuery.parseJSON(JSON.stringify(data));
-			console.log(json);
-				
-			 ageList	+= "<thead>"
-						+"<th>Age range</th>"
-						+"<th>Male %</th>"
-						+"<th>Female %</th>"
-					+"</thead>"
-					+"<tbody>"
-				$.each(json,function(key, value) {	
-					ageList += '<tr>'
-						+ '<td>'
-						+ key
-						+ '</td>'
-									
-						+ '<td>'
-						+ value
-						+ '</td>'
-					+'</tr>'
-				   });		
-					ageList += "</tbody></table>"
-						$("#ageList").html(ageList);
-				}
-			});
-  }
+				var json = jQuery.parseJSON(JSON.stringify(data));
+				console.log(json.responseJSON);
+				Highcharts.chart('container', {
+				    chart: {
+				        type: 'column'
+				    },
+				    title: {
+				        text: ' '
+				    },
+				    xAxis: {
+				        categories: [
+				        	'0 - 10',
+				        	'11 - 20',
+				        	'21 - 30',
+				        	'31 - 40',
+				        	'41 - 50',
+				        	'51 - 60',
+				        	'61 - 70',
+				        	'71 - 80',
+				        	'Above 80',       	
+
+				      
+				        ],
+				        crosshair: true
+				    },
+				    yAxis: {
+				        min: 0,
+				        title: {
+				            text: 'Percentage per Age Group (%)'
+				        }
+				    },
+				    tooltip: {
+				        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+				        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+				            '<td style="padding:0"><b>{point.y:.1f} %</b></td></tr>',
+				        footerFormat: '</table>',
+				        shared: true,
+				        useHTML: true
+				    },
+				    plotOptions: {
+				        column: {
+				            pointPadding: 0.2,
+				            borderWidth: 0				
+				        }
+				    },  
+				    credits: {
+				 	        enabled: false
+				    },
+				    series: [{
+				        name: 'Male',
+				        color: '#314CE9',
+				        data: [json.responseJSON[0].male,json.responseJSON[1].male,json.responseJSON[2].male,json.responseJSON[3].male,
+				        	json.responseJSON[4].male,json.responseJSON[5].male,json.responseJSON[6].male,json.responseJSON[7].male,3]
+
+				    }, {
+				        name: 'Female',
+				        color: '#CE2121',
+				        data: [json.responseJSON[0].female,json.responseJSON[1].female,json.responseJSON[2].female,json.responseJSON[3].female,
+				        	json.responseJSON[4].female,json.responseJSON[5].female,json.responseJSON[6].female,json.responseJSON[7].female,4]
+
+				    } ]
+				});
+			}
+		});
+  	}
+	
+	
   </script>
 
 </head>
@@ -70,11 +116,8 @@
 	<div class="page-header">
 		<h1 align="center">Gender And Age Report</h1>
 	</div>
-		<div class="container">
 
-	</div>
-
-
+	<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
 
 
