@@ -3,6 +3,7 @@ package ulink.main;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -28,19 +29,27 @@ public class MainTest {
 		
 	//	System.out.print(conditionList.size());
 		
-		TopK topk = new TopK();
+		ArrayList<String> list = connection.retrievePastSixMonthRecord("Medical", connection.retrieveLatestDate());
+		HashMap<String,Integer> pastSixMonth = new HashMap<>();
 		
-		ArrayList<AgeAndGender> test = topk.getAgeGenderReport();
-		ArrayList<Client> clientList = connection.retrieveAllClientList();
-		for (int x =0; x < clientList.size(); x++){
-			System.out.println(clientList.get(x).getAge());
+		Utility utility = new Utility();
+		
+		for (int i =0; i < list.size(); i++){
+			
+			System.out.println(utility.getMonth(Integer.parseInt(list.get(i).substring(5, 7))));
+			String month = utility.getMonth(Integer.parseInt(list.get(i).substring(5, 7)));
+			if (pastSixMonth.containsKey(month)){
+				int temp = pastSixMonth.get(month);
+				pastSixMonth.put(month, temp+1);
+			} else {
+				pastSixMonth.put(month, 1);
+			}
 		}
-		System.out.println("size " + clientList.size());
-		
-		for(int i = 0 ; i <test.size(); i++){
-			System.out.println(test.get(i).getFemale() +" " + test.get(i).getMale() +" "+ test.get(i).getTotal());
+	
+		System.out.println(pastSixMonth.values());
+		System.out.println(connection.retrieveLatestDate());
 			
 		}
 	}
 
-}
+

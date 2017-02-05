@@ -16,6 +16,65 @@ import ulink.logic.Utility;
 public class DatabaseConnection {
 	
 	
+	public String retrieveLatestDate(){
+		
+		
+		Connection con;
+		String createTime = "";
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
+
+			Statement stmt = con.createStatement();
+			String sql = "SELECT CreatedTime FROM `client` order BY(CreatedTime) DESC limit 1";
+			ResultSet rs = stmt.executeQuery(sql);
+			Utility utility = new Utility();
+
+		while(rs.next()){
+				 createTime = rs.getString(1);
+		}
+
+			con.close();
+
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return createTime;
+		
+	}
+	
+	
+	public ArrayList<String> retrievePastSixMonthRecord(String type, String startDate){
+		Connection con;
+		ArrayList<String> dateList = new ArrayList<>();
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
+
+			Statement stmt = con.createStatement();
+			String sql = "SELECT CreatedTime FROM `client` WHERE CreatedTime >= DATE_SUB('" + startDate +"', INTERVAL 5 MONTH) and medical = '" + type + "'";
+			ResultSet rs = stmt.executeQuery(sql);
+			Utility utility = new Utility();
+
+			while (rs.next()) {
+				String createTime = rs.getString(1);
+				dateList.add(createTime);
+			}
+
+			con.close();
+
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return dateList;
+		
+	}
+	
+	
 	//select referredBy, count(referredBy) from client where `CreatedTime` between '2011/02/25' and '2011/02/27' group by referredBy
 	
 	public ArrayList<RankingReferredBy> retrieveAllRankingReferredBy(String startDate, String endDate){
@@ -106,7 +165,9 @@ public class DatabaseConnection {
 		return doctorList;
 		
 	}
-
+	
+	
+	
 
 	public ArrayList<RankingDoctorSpecialty> retrieveAllDoctorBySpecialty(String specialty){
 		Connection con;
