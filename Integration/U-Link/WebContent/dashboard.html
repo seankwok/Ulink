@@ -48,7 +48,7 @@
  	    yAxis: {
  	        min: 0,
  	        title: {
- 	            text: 'Number of VISA clients',
+ 	            text: null,
  	            align: 'high'
  	        },
  	        labels: {
@@ -65,22 +65,12 @@
  	            }
  	        }
  	    },
- 	    legend: {
- 	        layout: 'vertical',
- 	        align: 'right',
- 	        verticalAlign: 'top',
- 	        x: -40,
- 	        y: 80,
- 	        floating: true,
- 	        borderWidth: 1,
- 	        backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
- 	        shadow: true
- 	    },
  	    credits: {
  	        enabled: false
  	    },
  	    series: [{
- 	        name: 'As of this month',
+ 	        name: 'Number of Clients',
+ 	        color:'#2E66BC',
  	        data: [1052, 954, 4250, 740, 38]
  	    }]
  	});
@@ -129,7 +119,9 @@
  	        enabled: false
  	    },
 	    series: [{
-	    	 data: [5, 16, 31, 15, 38,55]
+	    	name: 'Visa Clients',
+	    	color:'#2758A1',
+	    	data: [5, 16, 31, 15, 38,55]
 	    }]
 	
 	   
@@ -178,6 +170,8 @@
 	        }
 	    },
 	    series: [{
+	    	name: 'Medical Clients',
+	    	color:'#214986',
 	    	 data: [5, 45, 31, 32, 81, 55]
 	    }]
 	

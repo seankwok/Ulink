@@ -29,6 +29,13 @@
 
 $(document).ready(function() {
 	
+	
+	$("#toggle").click(function()
+			{                     
+			   $(".text").toggle();
+			});
+	
+	
 	$("#submit").click (function(){
 		var teamName = $('#teamName').val();
 		var thisMonth = $("#month").val();
@@ -391,16 +398,8 @@ $(document).ready(function() {
 						}
 					});
 				}
-
-				 
-				
-
-
-
-       
 			
 			} });
-
 
 	});
 	
@@ -474,17 +473,28 @@ $(document).ready(function() {
 
       </div>
     <div class="container" align="center">
-        <button type="submit" value="Submit" class="btn btn-default" id="submit">Generate Results</button>
+        <button type="submit" value="Submit" class="btn btn-primary" id="submit">Generate Results</button>
     </div>
-    
+
     <br>
-    <div class="container" align="left" id="table1"></div>
-  
-  <div class="container" align="left" id="table2"></div>
     </div>
-    
-    <div id="container" align="right" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-    <div id="container2" align="right" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-	   
+        
+       <div align='center'>
+       	 <button type="button" id="toggle" class="btn btn-default" onclick="toggle();"><b>Table / Chart</b></button>   
+	      
+
+      
+       </div>
+       
+		 <div>
+		    <div class="text" >  
+		    	<div class="container" align="left" id="table1"></div>
+  				<div class="container" align="left" id="table2"></div>
+			</div>
+		    <div class="text" style="display:none">
+	    	    <div id="container" align="center" ></div>
+    			<div id="container2" align="center" ></div>
+    		</div>
+		</div>
   </body>
 </html>
