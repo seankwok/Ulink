@@ -11,8 +11,11 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import ulink.constructor.AgeAndGender;
+import ulink.constructor.Client;
 import ulink.constructor.Condition;
 import ulink.dao.DatabaseConnection;
+import ulink.logic.TopK;
 import ulink.logic.Utility;
 
 public class MainTest {
@@ -25,11 +28,19 @@ public class MainTest {
 		
 	//	System.out.print(conditionList.size());
 		
-		String test = "2016-01";
-        // System.out.println(test.substring(5));
+		TopK topk = new TopK();
 		
-         Utility utility = new Utility();
-        System.out.print(utility.changeDateFormatDatabase("05/06/2015"));
+		ArrayList<AgeAndGender> test = topk.getAgeGenderReport();
+		ArrayList<Client> clientList = connection.retrieveAllClientList();
+		for (int x =0; x < clientList.size(); x++){
+			System.out.println(clientList.get(x).getAge());
+		}
+		System.out.println("size " + clientList.size());
+		
+		for(int i = 0 ; i <test.size(); i++){
+			System.out.println(test.get(i).getFemale() +" " + test.get(i).getMale() +" "+ test.get(i).getTotal());
+			
+		}
 	}
 
 }

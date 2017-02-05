@@ -1,5 +1,6 @@
 package ulink.logic;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -20,24 +21,24 @@ public class TopK {
 	public ArrayList<AgeAndGender> getAgeGenderReport() {
 		ArrayList<AgeAndGender> ageGenderReport = new ArrayList<>();
 		ArrayList<Client> clientList = connection.retrieveAllClientList();
-		int m10 = 0;
-		int f10 = 0;
-		int m20 = 0;
-		int f20 = 0;
-		int m30 = 0;
-		int f30 = 0;
-		int m40 = 0;
-		int f40 = 0;
-		int m50 = 0;
-		int f50 = 0;
-		int m60 = 0;
-		int f60 = 0;
-		int m70 = 0;
-		int f70 = 0;
-		int m80 = 0;
-		int f80 = 0;
+		double m10 = 0;
+		double f10 = 0;
+		double m20 = 0;
+		double f20 = 0;
+		double m30 = 0;
+		double f30 = 0;
+		double m40 = 0;
+		double f40 = 0;
+		double m50 = 0;
+		double f50 = 0;
+		double m60 = 0;
+		double f60 = 0;
+		double m70 = 0;
+		double f70 = 0;
+		double m80 = 0;
+		double f80 = 0;
 
-		for (int i = 1; i < clientList.size(); i++) {
+		for (int i = 0; i < clientList.size(); i++) {
 			Client client = clientList.get(i);
 			if (client.getGender() != null) {
 				if (client.getGender().equals("Male")) {
@@ -80,117 +81,120 @@ public class TopK {
 			}
 
 		}
-		int total10 = 0;
-		int total20 = 0;
-		int total30 = 0;
-		int total40 = 0;
-		int total50 = 0;
-		int total60 = 0;
-		int total70 = 0;
-		int total80 = 0;
+		
+		
+		
+		double total10 = 0;
+		double total20 = 0;
+		double total30 = 0;
+		double total40 = 0;
+		double total50 = 0;
+		double total60 = 0;
+		double total70 = 0;
+		double total80 = 0;
 		if (clientList.size() != 0) {
-			total10 = (m10 + f10) / clientList.size();
-			total20 = (m20 + f20) / clientList.size();
-			total30 = (m30 + f30) / clientList.size();
-			total40 = (m40 + f40) / clientList.size();
-			total50 = (m50 + f50) / clientList.size();
-			total60 = (m60 + f60) / clientList.size();
-			total70 = (m70 + f70) / clientList.size();
-			total80 = (m80 + f80) / clientList.size();
+			total10 = 1.0 * (m10 + f10) / clientList.size() * 100;
+			total20 = 1.0 * (m20 + f20) / clientList.size() * 100;
+			total30 = 1.0 * (m30 + f30) / clientList.size() * 100;
+			total40 = 1.0 * (m40 + f40) / clientList.size() * 100;
+			total50 = 1.0 * (m50 + f50) / clientList.size() * 100;
+			total60 = 1.0 * (m60 + f60) / clientList.size() * 100;
+			total70 = 1.0 * (m70 + f70) / clientList.size() * 100;
+			total80 = 1.0 * (m80 + f80) / clientList.size() * 100;
 		}
 		
-		int totalm10 = 0;
-		int totalm20 = 0;
-		int totalm30 = 0;
-		int totalm40 = 0;
-		int totalm50 = 0;
-		int totalm60 = 0;
-		int totalm70 = 0;
-		int totalm80 = 0;
+		double totalm10 = 0;
+		double totalm20 = 0;
+		double totalm30 = 0;
+		double totalm40 = 0;
+		double totalm50 = 0;
+		double totalm60 = 0;
+		double totalm70 = 0;
+		double totalm80 = 0;
 		
 		if (m10+f10 != 0){
-			totalm10 = m10 / (m10 + f10);
+			totalm10 = 1.0 * m10 / (m10 + f10) * 100;
 		}
 		
 		if (m20+f20 != 0){
-			totalm20 = m20 / (m20 + f20);
+			totalm20 = 1.0 *  m20 / (m20 + f20) * 100;
 		}
 		
 		if (m30+f30 != 0){
-			totalm30 = m30 / (m30 + f30);
+			totalm30 = 1.0 * m30 / (m30 + f30) * 100;
 		}
 		
 		if (m40+f40 != 0){
-			totalm40 = m40 / (m40 + f40);
+			totalm40 = 1.0 * m40 / (m40 + f40) * 100;
 		}
 		
 		if (m50+f50 != 0){
-			totalm50 = m50 / (m50 + f50);
+			totalm50 = 1.0 * m50 / (m50 + f50) * 100;
 		}
 		
 		if (m60+f60 != 0){
-			totalm60 = m60 / (m60 + f60);
+			totalm60 = 1.0 * m60 / (m60 + f60) * 100;
 		}
 		
 		if (m70+f70 != 0){
-			totalm70 = m70 / (m70 + f70);
+			totalm70 = 1.0 * m70 / (m70 + f70) * 100;
 		}
 		
 		if (m80+f80 != 0){
-			totalm80 = m80 / (m80 + f80);
+			totalm80 = 1.0 * m80 / (m80 + f80) * 100;
 		}
 		
-		int totalf10 = 0;
-		int totalf20 = 0;
-		int totalf30 = 0;
-		int totalf40 = 0;
-		int totalf50 = 0;
-		int totalf60 = 0;
-		int totalf70 = 0;
-		int totalf80 = 0;
+		double totalf10 = 0;
+		double totalf20 = 0;
+		double totalf30 = 0;
+		double totalf40 = 0;
+		double totalf50 = 0;
+		double totalf60 = 0;
+		double totalf70 = 0;
+		double totalf80 = 0;
 		
 		if (m10+f10 != 0){
-			totalf10 = f10 / (m10 + f10);
+			totalf10 = 1.0 * f10 / (m10 + f10) * 100;
 		}
 		
 		if (m20+f20 != 0){
-			totalf20 = f20 / (m20 + f20);
+			totalf20 = 1.0 * f20 / (m20 + f20) * 100;
 		}
 		
 		if (m30+f30 != 0){
-			totalf30 = f30 / (m30 + f30);
+			totalf30 = 1.0 * f30 / (m30 + f30) * 100;
 		}
 		
 		if (m40+f40 != 0){
-			totalf40 = f40 / (m40 + f40);
+			totalf40 = 1.0 * f40 / (m40 + f40) * 100;
 		}
 		
 		if (m50+f50 != 0){
-			totalf50 = f50 / (m50 + f50);
+			totalf50 = 1.0 * f50 / (m50 + f50) * 100;
 		}
 		
 		if (m60+f60 != 0){
-			totalf60 = f60 / (m60 + f60);
+			totalf60 = 1.0 * f60 / (m60 + f60) * 100;
 		}
 		
 		if (m70+f70 != 0){
-			totalf70 = f70 / (m70 + f70);
+			totalf70 = 1.0 * f70 / (m70 + f70) * 100;
 		}
 		
 		if (m80+f80 != 0){
-			totalf80 = f80 / (m80 + f80);
+			totalf80 = 1.0 * f80 / (m80 + f80) * 100;
 		}
 		
+		 DecimalFormat two = new DecimalFormat("0.00");
 
-
-		ageGenderReport.add(new AgeAndGender("10", totalm10, totalf10, total10));
-		ageGenderReport.add(new AgeAndGender("20", totalm20, totalf20, total20));
-		ageGenderReport.add(new AgeAndGender("30", totalm30, totalf30, total30));
-		ageGenderReport.add(new AgeAndGender("40", totalm40, totalf40, total40));
-		ageGenderReport.add(new AgeAndGender("50", totalm50, totalf50, total50));
-		ageGenderReport.add(new AgeAndGender("60", totalm60, totalf60, total60));
-		ageGenderReport.add(new AgeAndGender("70", totalm70, totalf70, total70));
-		ageGenderReport.add(new AgeAndGender("80", totalm80, totalf80, total80));
+		ageGenderReport.add(new AgeAndGender("10", two.format(totalm10), two.format(totalf10), two.format(total10)));
+		ageGenderReport.add(new AgeAndGender("20", two.format(totalm20), two.format(totalf20), two.format(total20)));
+		ageGenderReport.add(new AgeAndGender("30", two.format(totalm30), two.format(totalf30), two.format(total30)));
+		ageGenderReport.add(new AgeAndGender("40", two.format(totalm40), two.format(totalf40), two.format(total40)));
+		ageGenderReport.add(new AgeAndGender("50", two.format(totalm50), two.format(totalf50), two.format(total50)));
+		ageGenderReport.add(new AgeAndGender("60", two.format(totalm60), two.format(totalf60), two.format(total60)));
+		ageGenderReport.add(new AgeAndGender("70", two.format(totalm70), two.format(totalf70), two.format(total70)));
+		ageGenderReport.add(new AgeAndGender("80", two.format(totalm80), two.format(totalf80), two.format(total80)));
 
 		return ageGenderReport;
 	}

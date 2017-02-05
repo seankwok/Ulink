@@ -2,11 +2,11 @@ package ulink.constructor;
 
 public class AgeAndGender {
 	private String Age;
-	private int male;
-	private int female;
-	private int total;
+	private String male;
+	private String female;
+	private String total;
 	
-	public AgeAndGender(String age, int male, int female, int total) {
+	public AgeAndGender(String age, String male, String female, String total) {
 		super();
 		Age = age;
 		this.male = male;
@@ -19,24 +19,24 @@ public class AgeAndGender {
 	public void setAge(String age) {
 		Age = age;
 	}
-	public int getMale() {
+	public String getMale() {
 		return male;
 	}
-	public void setMale(int male) {
+	public void setMale(String male) {
 		this.male = male;
 	}
-	public int getFemale() {
+	public String getFemale() {
 		return female;
 	}
-	public void setFemale(int female) {
+	public void setFemale(String female) {
 		this.female = female;
 	}
 	
-	public int getTotal(){
+	public String getTotal(){
 		return total;
 	}
 	
-	public void setTotal(int total){
+	public void setTotal(String total){
 		this.total = total;
 	}
 	
