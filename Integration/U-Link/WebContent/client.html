@@ -206,12 +206,19 @@
 		}
 	  
 	</script>
+	
+	<script src="jquery.js"></script> 
+    <script> 
+    $(function(){
+      $("#includedContent").load("navBar.html"); 
+    });
+    </script> 
  
   </head>
   
   <body>
   
-  	<div w3-include-html="navBar.html"></div> 
+  	<div id="includedContent"></div>
 	
     <div class="page-header">
        <h1 align="center"><b>Client List</b></h1>
