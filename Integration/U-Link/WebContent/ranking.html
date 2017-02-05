@@ -206,41 +206,58 @@ function viewDoctors(clickedID){
 </head>
 <body>
 
-  	<div id="includedContent"></div>
-
+	<div id="includedContent"></div>
 	<div class="page-header">
-	<div align="center" id='title'> </div>
 		<h1 align="center">Ranking</h1>
 	</div>
 	
-
-	<div class="container">
-			<div class="form-group">
-				<label>Select Criteria </label> 
+	
+    <div class="container">
+      <div class="row">
+          <div class="col-md-2">
+          <div class="caption">
+          <div class="form-group">
+               <label>Select Criteria </label> 
 				<select class="form-control" id="criteria">
 					<option value="Doctor">Doctor</option>
 					<option value="Referral">Referral</option>
 					<option value="Speciality">Specialty</option>
 				</select>
-			</div>
+          </div>          
+          </div>
+          </div>
 
-			<div class="form-group">
-				<label> Select Start Date </label>
-					 <input id="datepicker1" />
-			</div>
+          <div class="col-md-4">
+          <div class="caption">
+          <div class="form-group">
+          	 <label> Select Start Date </label><br>
+			 <input class="form-control" id="datepicker1" />
+          </div>          
+          </div>
+          </div>
+          
+          <div class="col-md-4">
+          <div class="caption">
+          <div class="form-group">
+          	 <label> Select End Date </label><br>
+			 <input  class="form-control" id="datepicker2" />
+          </div>          
+          </div>
+          </div>
 
-			<div class="form-group">
-				<label> Select End Date </label>
-					 <input  id="datepicker2" />
-			</div>
-		
-	</div>
+      </div>
+    <div class="container" align="center">
+        <button type="submit" value="Submit" class="btn btn-primary" id="submit">Generate Results</button>
+    </div>
+    
+    <br>
+    <div class="container" align="left" id="table1"></div>
+  
+  	<div class="container" align="left" id="table2"></div>
+    </div>
 	
 	<div style='color:red' id='error' class='errorMsg'> </div>
 		
-    <div class="container" align="center">
-		  <button type="submit" value="Submit" class="btn btn-primary" id="submit">Generate</button>
-	</div>
 	
 	<br><br>
 
