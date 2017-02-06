@@ -31,15 +31,13 @@ public class MainTest {
 		// TODO Auto-generated method stub
 		DatabaseConnection connection = new DatabaseConnection();
 
+		TopK t = new TopK();
 		
-		ArrayList<RankingDoctor> list = connection.retrieveAllRankingDoctorDashBoard(connection.retrieveLatestDate());
-		LinkedHashMap<String,Integer> visaTypeList = new LinkedHashMap<>();
+		ArrayList<AgeAndGender> tList = t.getAgeGenderReport();
 		
 		
+		System.out.println(tList.size());
 		
-		//Date date = new SimpleDateFormat("yyyy-MM-dd").parse("2014-02-14");
-		LocalDate myDate =LocalDate.parse("2014-02-14");
-			System.out.print(myDate.minusMonths(1).toString());
 			
 		}
 	}

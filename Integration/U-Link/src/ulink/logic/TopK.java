@@ -93,6 +93,7 @@ public class TopK {
 		double total70 = 0;
 		double total80 = 0;
 		if (clientList.size() != 0) {
+			System.out.println(clientList.size());
 			total10 = 1.0 * (m10 + f10) / clientList.size() * 100;
 			total20 = 1.0 * (m20 + f20) / clientList.size() * 100;
 			total30 = 1.0 * (m30 + f30) / clientList.size() * 100;
