@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="ISO-8859-1">
+<title>Draft Email</title>
+	<script src="https://use.fontawesome.com/aac5c45839.js"></script>
+<link rel=”stylesheet” href=”css/widgEditor.css” />
+<script src=”css/widgEditor.js”></script>
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="js/jquery-1.12.0.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	
+    <script> 
+	    $(function(){
+	      $("#includedContent").load("navBar.html"); 
+	    });
+    </script> 
+
+	<style>
+				/* Dropdown Button */
+			.dropbtn {
+			    background-color: brown;
+			    color: white;
+			    padding: 8px;
+			    font-size: 16px;
+			    border: none;
+			    cursor: pointer;
+			    border-radius: 25px;
+			}
+			
+			/* The container <div> - needed to position the dropdown content */
+			.dropdown {
+			    position: relative;
+			    display: inline-block;
+			}
+			
+			/* Dropdown Content (Hidden by Default) */
+			.dropdown-content {
+			    display: none;
+			    position: absolute;
+			    background-color: #f9f9f9;
+			    min-width: 160px;
+			    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+			    z-index: 1;
+			}
+			
+			/* Links inside the dropdown */
+			.dropdown-content a {
+			    color: black;
+			    padding: 12px 16px;
+			    text-decoration: none;
+			    display: block;
+			}
+			
+			/* Change color of dropdown links on hover */
+			.dropdown-content a:hover {background-color: #f1f1f1}
+			
+			/* Show the dropdown menu on hover */
+			.dropdown:hover .dropdown-content {
+			    display: block;
+			}
+			
+			/* Change the background color of the dropdown button when the dropdown content is shown */
+			.dropdown:hover .dropbtn {
+			    background-color: #3e8e41;
+			}
+	</style>
+	
+	
+	<script type="text/javascript">
+		function selectName(){
+		 	var cursorPos = $('#text').prop('selectionStart');
+            var v = $('#text').val();
+            var textBefore = v.substring(0,  cursorPos );
+            var textAfter  = v.substring( cursorPos, v.length );
+            $('#text').val( textBefore+ "<clientName>" +textAfter );
+		}
+		function selectScreening(){
+		 	var cursorPos = $('#text').prop('selectionStart');
+            var v = $('#text').val();
+            var textBefore = v.substring(0,  cursorPos );
+            var textAfter  = v.substring( cursorPos, v.length );
+            $('#text').val( textBefore+ "<screening>" +textAfter );
+		}
+		function selectEmail(){
+		 	var cursorPos = $('#text').prop('selectionStart');
+            var v = $('#text').val();
+            var textBefore = v.substring(0,  cursorPos );
+            var textAfter  = v.substring( cursorPos, v.length );
+            $('#text').val( textBefore+ "<email>" +textAfter );
+	}
+	
+	</script>
+</head>
+
+<body onload="enableEditMode();">
+		<div id="includedContent"></div>
+		<div>
+					<button onclick="execCmd('bold');"><i class="fa fa-bold"></i></button>
+					<button onclick="execCmd('italic');"><i class="fa fa-italic"></i></button>
+					<button onclick="execCmd('underline');"><i class="fa fa-underline"></i></button>
+					<button onclick="execCmd('strikeThrough');"><i class="fa fa-strikethrough"></i></button>
+					<button onclick="execCmd('justifyLeft');"><i class="fa fa-align-left"></i></button>
+					<button onclick="execCmd('justifyCenter');"><i class="fa fa-align-center"></i></button>
+					<button onclick="execCmd('justifyRight');"><i class="fa fa-align-right"></i></button>
+					<button onclick="execCmd('justifyFull');"><i class="fa fa-align-justify"></i></button>
+					<button onclick="execCmd('cut');"><i class="fa fa-cut"></i></button>
+					<button onclick="execCmd('copy');"><i class="fa fa-copy"></i></button>
+					<button onclick="execCmd('indent');"><i class="fa fa-indent"></i></button>
+					<button onclick="execCmd('outdent');"><i class="fa fa-dedent"></i></button>
+					<button onclick="execCmd('undo');"><i class="fa fa-undo"></i></button>
+					<button onclick="execCmd('redo');"><i class="fa fa-repeat"></i></button>
+					<button onclick="execCmd('insertUnorderedList');"><i class="fa fa-list-ul"></i></button>
+					<button onclick="execCmd('insertOrderedList');"><i class="fa fa-list-ol"></i></button>
+					<button onclick="execCmd('insertParagraph');"><i class="fa fa-paragraph"></i></button>
+					<button onclick="#">From Template</button>
+					
+					<br /> <br>
+					<select onchange="execCommandWithArg('fontName', this.value);">
+						<option value="Arial" selected="selected">Arial</option>
+						<option value="Comic Sans MS">Comic Sans MS</option>
+						<option value="Courier">Courier</option>
+						<option value="Georgia">Georgia</option>
+						<option value="Tahoma">Tahoma</option>
+						<option value="Times New Roman">Times New Roman</option>
+						<option value="Verdana">Verdana</option>
+					</select>
+					<select onchange="execCommandWithArg('fontSize', this.value);">
+						<option value="1">9</option>
+						<option value="2">10</option>
+						<option value="3">11</option>
+						<option value="4" selected="selected">12</option>
+						<option value="5">13</option>
+						<option value="6">14</option>
+						<option value="8">15</option>
+						<option value="9">16</option>
+						<option value="10">17</option>
+						<option value="11">18</option>
+					</select>
+					Font Color: <input type="color" onchange="execCommandWithArg('foreColor', this.value);">					
+					<div class="dropdown">
+					  <button class="dropbtn">Select Field</button>
+					  <div class="dropdown-content">
+					  <a id="name"  href="#" onclick="selectName();return false;">Client Name</a>
+					  <a id="screening"  href="#" onclick="selectScreening();return false;">Screening</a>
+					  <a id="email" href="#" onclick="selectEmail();return false;">Email</a>
+
+					  </div>
+					</div>
+		</div>
+				<form>
+   					<textarea  id="text" style=" width: 1000px; height: 500px;" ></textarea>
+				</form>
+				
+				<script type="text/javascript">
+		
+					var showingSourceCode = false;
+					var isInEditMode = true;
+		
+					function enableEditMode () {
+						richTextField.document.designMode = 'On';
+					}
+		
+					function execCmd (command) {
+						richTextField.document.execCommand(command, false, null);
+					}
+		
+					function execCommandWithArg (command, arg) {
+						richTextField.document.execCommand(command, false, arg);
+					}
+				</script>
+		
+		
+</body>
+</html>
