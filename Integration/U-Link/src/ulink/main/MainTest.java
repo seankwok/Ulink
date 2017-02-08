@@ -28,15 +28,24 @@ import ulink.logic.Utility;
 public class MainTest {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		DatabaseConnection connection = new DatabaseConnection();
-
-		TopK t = new TopK();
+		ArrayList<Client> list = connection.retrieveAllClientList();
+		LinkedHashMap<String,Integer> visaTypeList = new LinkedHashMap<>();
 		
-		ArrayList<AgeAndGender> tList = t.getAgeGenderReport();
+		Utility utility = new Utility();
 		
-		
-		System.out.println(tList.size());
+		for (int i=0; i <list.size(); i++){
+			Client c = list.get(i);
+			if(c.getVisaType().length() >= 1){
+			if (visaTypeList.containsKey(c.getVisaType())){
+				int temp = visaTypeList.get(c.getVisaType());
+				visaTypeList.put(c.getVisaType(), temp+1);
+			}else {
+				visaTypeList.put(c.getVisaType(), 1);
+			}
+			}
+			System.out.println(visaTypeList.keySet());
+		}
 		
 			
 		}
