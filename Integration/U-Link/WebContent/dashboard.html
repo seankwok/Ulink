@@ -25,55 +25,7 @@
  	<script type="text/javascript">
  	$(document).ready(function() {
 	displayAll(); 	
- 	Highcharts.chart('visaContainer', {
- 	    chart: {
- 	        type: 'bar'
- 	    },
- 	    title: {
- 	        text: 'Types of Visa requested'
- 	    },
- 	    
- 	    xAxis: {
- 	        categories: ['Maternity', 
- 	        			  'Indonesia - VTT 317 - Less than 6 months', 
- 	                      'Indonesia - VTT 312 - More than 6 months', 
- 	                      'Indonesia - VTT 312 - Less than 6 months', 
- 	                      'Indonesia - VKU 211',
- 	                      'Indonesia - VKBKP 212',
- 	                      'ICA STVP'],
- 	        title: {
- 	            text: null
- 	        }
- 	    },
- 	    yAxis: {
- 	        min: 0,
- 	        title: {
- 	            text: null,
- 	            align: 'high'
- 	        },
- 	        labels: {
- 	            overflow: 'justify'
- 	        }
- 	    },
- 	    tooltip: {
- 	        valueSuffix: ' clients'
- 	    },
- 	    plotOptions: {
- 	        bar: {
- 	            dataLabels: {
- 	                enabled: true
- 	            }
- 	        }
- 	    },
- 	    credits: {
- 	        enabled: false
- 	    },
- 	    series: [{
- 	        name: 'Number of Clients',
- 	        color:'#2E66BC',
- 	        data: [1052, 954, 4250, 740, 38]
- 	    }]
- 	});
+ 	
  	
  	
  	Highcharts.chart('numVisa', {
@@ -177,24 +129,78 @@
 	
 	   
 	});
- 	
+ 	Highcharts.chart('visaContainer', {
+ 	    chart: {
+ 	        type: 'bar'
+ 	    },
+ 	    title: {
+ 	        text: 'Types of Visa requested'
+ 	    },
+ 	    
+ 	    xAxis: {
+ 	        categories: ['Maternity', 
+ 	        			  'Indonesia - VTT 317 - Less than 6 months', 
+ 	                      'Indonesia - VTT 312 - More than 6 months', 
+ 	                      'Indonesia - VTT 312 - Less than 6 months', 
+ 	                      'Indonesia - VKU 211',
+ 	                      'Indonesia - VKBKP 212',
+ 	                      'ICA STVP'],
+ 	        title: {
+ 	            text: null
+ 	        }
+ 	    },
+ 	    yAxis: {
+ 	        min: 0,
+ 	        title: {
+ 	            text: null,
+ 	            align: 'high'
+ 	        },
+ 	        labels: {
+ 	            overflow: 'justify'
+ 	        }
+ 	    },
+ 	    tooltip: {
+ 	        valueSuffix: ' clients'
+ 	    },
+ 	    plotOptions: {
+ 	        bar: {
+ 	            dataLabels: {
+ 	                enabled: true
+ 	            }
+ 	        }
+ 	    },
+ 	    credits: {
+ 	        enabled: false
+ 	    },
+ 	    series: [{
+ 	        name: 'Number of Clients',
+ 	        color:'#2E66BC',
+ 	        data: [1052, 954, 4250, 740, 38]
+ 	    }]
+ 	});
  	
  	});
  	
  	function displayAll(){
+ 		var visaTypes = [];
+ 		var numVisa = [];
 			$.ajax({
-				url: "DisplayDashboardMedical",
+				url: "DisplayAllVisaType",
 				type: "get",
 			    dataType : "json",
 			    
-			    success: function(data){
+			    complete: function(data){
 			    	var json = jQuery.parseJSON(JSON.stringify(data));
 			    	console.log(json);
 			  
-			    	$.each(json,function(key, value) {
+			    	$.each(json.responseJSON,function(key, value) {
 			    		console.log(key);
-			    		console.log(value);
+			    		visaTypes.push(key);
+			    		numVisa.push(value)
+			    		
 			    	});
+			    	console.log(visaTypes);
+			    	console.log(numVisa);
 			    	
 			    	
 			    	
