@@ -494,7 +494,7 @@ public class UploadServlet extends HttpServlet {
 				String company = "";
 				String nationality = "";
 				String gender = "";
-				String dateOfBirth = "";
+				String dateOfBirth = "01/01/1000";
 				String email = "";
 				String medical = "";
 				String mainDiagnosis = "";
@@ -671,7 +671,7 @@ public class UploadServlet extends HttpServlet {
 
 						}
 					}
-
+				
 					// System.out.print(clientName);
 					if (!accountID.equals("") && dateOfBirth != null) {
 						clientList.add(new Client(ID, accountID, clientOwner, clientName, clientType, company,
