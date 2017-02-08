@@ -411,12 +411,23 @@ public class UploadServlet extends HttpServlet {
 					}
 				}
 				// System.out.print(clientName);
-				if (!accountID.equals("") && dateOfBirth != null) {
-					clientList.add(new Client(ID, accountID, clientOwner, clientName, clientType, company, nationality,
-							gender, dateOfBirth, email, medical, mainDiagnosis, referredBy, PIC, appointment, doctor,
-							specialty, clinic, otherDoctor, followUpPerson, followUpPIC, hospitalAdmitted, log, claim,
-							visa, visaRequestBy, visaType, visaType2, utility.getAge(dateOfBirth), billingCity,
-							billingCode, billingCountry, billingState, billingStreet, createdTime, phone));
+				if (!accountID.equals("") && !dateOfBirth.equals("")) {
+					clientList.add(new Client(ID, accountID, clientOwner, clientName, clientType, company,
+							nationality, gender, dateOfBirth, email, medical, mainDiagnosis, referredBy, PIC,
+							appointment, doctor, specialty, clinic, otherDoctor, followUpPerson, followUpPIC,
+							hospitalAdmitted, log, claim, visa, visaRequestBy, visaType, visaType2,
+							utility.getAge(dateOfBirth), billingCity, billingCode, billingCountry, billingState,
+							billingStreet, createdTime, phone));
+					// System.out.println(clientList.get(clientList.size() -
+					// 1).getClientName());
+					count++;
+				}else {
+					clientList.add(new Client(ID, accountID, clientOwner, clientName, clientType, company,
+							nationality, gender, dateOfBirth, email, medical, mainDiagnosis, referredBy, PIC,
+							appointment, doctor, specialty, clinic, otherDoctor, followUpPerson, followUpPIC,
+							hospitalAdmitted, log, claim, visa, visaRequestBy, visaType, visaType2,
+							0, billingCity, billingCode, billingCountry, billingState,
+							billingStreet, createdTime, phone));
 					// System.out.println(clientList.get(clientList.size() -
 					// 1).getClientName());
 					count++;
@@ -494,7 +505,7 @@ public class UploadServlet extends HttpServlet {
 				String company = "";
 				String nationality = "";
 				String gender = "";
-				String dateOfBirth = "01/01/1000";
+				String dateOfBirth = "";
 				String email = "";
 				String medical = "";
 				String mainDiagnosis = "";
@@ -671,14 +682,24 @@ public class UploadServlet extends HttpServlet {
 
 						}
 					}
-				
+
 					// System.out.print(clientName);
-					if (!accountID.equals("") && dateOfBirth != null) {
+					if (!accountID.equals("") && !dateOfBirth.equals("")) {
 						clientList.add(new Client(ID, accountID, clientOwner, clientName, clientType, company,
 								nationality, gender, dateOfBirth, email, medical, mainDiagnosis, referredBy, PIC,
 								appointment, doctor, specialty, clinic, otherDoctor, followUpPerson, followUpPIC,
 								hospitalAdmitted, log, claim, visa, visaRequestBy, visaType, visaType2,
 								utility.getAge(dateOfBirth), billingCity, billingCode, billingCountry, billingState,
+								billingStreet, createdTime, phone));
+						// System.out.println(clientList.get(clientList.size() -
+						// 1).getClientName());
+						count++;
+					}else {
+						clientList.add(new Client(ID, accountID, clientOwner, clientName, clientType, company,
+								nationality, gender, dateOfBirth, email, medical, mainDiagnosis, referredBy, PIC,
+								appointment, doctor, specialty, clinic, otherDoctor, followUpPerson, followUpPIC,
+								hospitalAdmitted, log, claim, visa, visaRequestBy, visaType, visaType2,
+								0, billingCity, billingCode, billingCountry, billingState,
 								billingStreet, createdTime, phone));
 						// System.out.println(clientList.get(clientList.size() -
 						// 1).getClientName());

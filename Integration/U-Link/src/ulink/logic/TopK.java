@@ -59,7 +59,7 @@ public class TopK {
 					} else {
 						m80++;
 					}
-				} else {
+				} else if (client.getGender().equals("Female")){
 					if (client.getAge() <= 10) {
 						f10++;
 					} else if (client.getAge() <= 20) {

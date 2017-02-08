@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.Properties;
 import java.util.TreeMap;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -24,31 +25,51 @@ import ulink.constructor.RankingDoctor;
 import ulink.dao.DatabaseConnection;
 import ulink.logic.TopK;
 import ulink.logic.Utility;
+import java.util.*;
+import javax.mail.*;
+import javax.mail.internet.*;
+import javax.activation.*;
 
 public class MainTest {
 
 	public static void main(String[] args) {
-		DatabaseConnection connection = new DatabaseConnection();
-		ArrayList<Client> list = connection.retrieveAllClientList();
-		LinkedHashMap<String,Integer> visaTypeList = new LinkedHashMap<>();
-		
-		Utility utility = new Utility();
-		
-		for (int i=0; i <list.size(); i++){
-			Client c = list.get(i);
-			if(c.getVisaType().length() >= 1){
-			if (visaTypeList.containsKey(c.getVisaType())){
-				int temp = visaTypeList.get(c.getVisaType());
-				visaTypeList.put(c.getVisaType(), temp+1);
-			}else {
-				visaTypeList.put(c.getVisaType(), 1);
-			}
-			}
-			System.out.println(visaTypeList.keySet());
+		final String username = "ulinkassist_executive@hotmail.com";
+		final String password = "UlinkAssist";
+
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.live.com");
+		props.put("mail.smtp.port", "25");
+
+		Session session = Session.getInstance(props,
+		  new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(username, password);
+			} 
+		  });
+
+		try {
+
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress("ulinkassist_executive@hotmail.com"));
+			message.setRecipients(Message.RecipientType.TO,
+				InternetAddress.parse("seankwok794@hotmail.com"));
+			message.setSubject("Testing Subject");
+			message.setText("Dear Mail Crawler,"
+				+ "\n\n No spam to my email, please!");
+
+			Transport.send(message);
+
+			System.out.println("Done");
+
+		} catch (MessagingException e) {
+			throw new RuntimeException(e);
 		}
+	   }
 		
 			
 		}
-	}
+	
 
 
