@@ -1,9 +1,7 @@
-package ulink.servlet.report;
+package ulink.servlet.email;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,25 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.reflect.TypeToken;
 
-
-import ulink.constructor.*;
 import ulink.dao.DatabaseConnection;
-import ulink.logic.Utility;
 
 /**
- * Servlet implementation class DisplayDoctorBySpecialty
+ * Servlet implementation class RetrieveEmailTemplate
  */
-@WebServlet("/DisplayDoctorBySpecialty")
-public class DisplayDoctorBySpecialty extends HttpServlet {
+@WebServlet("/RetrieveEmailTemplate")
+public class RetrieveEmailTemplate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DisplayDoctorBySpecialty() {
+    public RetrieveEmailTemplate() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -40,21 +33,13 @@ public class DisplayDoctorBySpecialty extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		String specialty = request.getParameter("Specialty");
-		String startDate = request.getParameter("startDate");
-		String endDate = request.getParameter("endDate");
-		PrintWriter out = response.getWriter();
+		String templateName = request.getParameter("templateName");
+		//String msg = request.getParameter("msg");
 		DatabaseConnection connection = new DatabaseConnection();
-		Utility utility = new Utility();
-		ArrayList<RankingDoctorSpecialty> doctorList = connection.retrieveAllDoctorBySpecialty(specialty,utility.changeDateFormatDatabase(startDate),utility.changeDateFormat(endDate));
-		
-		Gson gson = new Gson();
+		String msg = connection.retrieveEmailTemplate(templateName);
 
-		JsonArray result = (JsonArray) new Gson().toJsonTree(doctorList, new TypeToken<List<RankingDoctorSpecialty>>() {
-		}.getType());
-		String arrayListToJson = gson.toJson(result);
-		out.write(arrayListToJson);
+		PrintWriter out = response.getWriter();
+		out.write(msg);
 		out.flush();
 		return;
 		

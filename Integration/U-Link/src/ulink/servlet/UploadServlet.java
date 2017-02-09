@@ -5,7 +5,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -47,6 +50,8 @@ public class UploadServlet extends HttpServlet {
 	private File tmpDir;
 	private static final String DESTINATION_DIR_PATH = "/MySavedFiles";
 	private File destinationDir;
+	DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+	Date date = new Date();
 
 	public UploadServlet() {
 		super();
@@ -141,7 +146,7 @@ public class UploadServlet extends HttpServlet {
 				// out.write(count);
 				// out.flush();
 
-				connection.addDateTime(uploadedTime);
+				connection.addDateTime(dateFormat.format(date));
 
 				request.getRequestDispatcher("./upload.html").forward(request, response);
 				return;
@@ -150,7 +155,7 @@ public class UploadServlet extends HttpServlet {
 				// process your binary excel file
 				System.out.println("test2");
 				count = test(file);
-				connection.addDateTime(uploadedTime);
+				connection.addDateTime(dateFormat.format(date));
 				// out.write(count);
 				// out.flush();
 				// response.sendRedirect("./upload.html");

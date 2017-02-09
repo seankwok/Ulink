@@ -1,0 +1,5 @@
+For email function
+- Email address
+- subject
+- msg
+

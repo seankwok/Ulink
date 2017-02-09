@@ -47,7 +47,7 @@ public class DisplayDashboardMedical extends HttpServlet {
 		
 		for (int i =0; i < list.size(); i++){
 			
-			System.out.println(utility.getMonth(Integer.parseInt(list.get(i).substring(5, 7))));
+			//System.out.println(utility.getMonth(Integer.parseInt(list.get(i).substring(5, 7))));
 			String month = utility.getMonth(Integer.parseInt(list.get(i).substring(5, 7)));
 			if (pastSixMonth.containsKey(month)){
 				int temp = pastSixMonth.get(month);

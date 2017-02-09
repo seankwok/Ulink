@@ -1,4 +1,4 @@
-package ulink.servlet.accountManagement;
+package ulink.servlet;
 
 import java.io.IOException;
 import javax.servlet.Filter;
