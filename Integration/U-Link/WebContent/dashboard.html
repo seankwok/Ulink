@@ -24,174 +24,16 @@
  
  	<script type="text/javascript">
  	$(document).ready(function() {
-<<<<<<< HEAD
- 	displayAllVisaType(); 	
-=======
-	displayAll(); 	
->>>>>>> 92e3f80735f7be23802f27f65137038bb9eb3997
- 	
- 	
- 	
- 	Highcharts.chart('numVisa', {
-	    chart: {
-	        type: 'column'
-	    },
-	    title: {
-	        text: 'Number of VISA clients'
-	    },
-	    
-	    xAxis: {
-	        categories: [
-	            'Jan',
-	            'Feb',
-	            'Mar',
-	            'Apr',
-	            'May',
-	            'Jun',
-	        ],
-	        crosshair: true
-	    },
-	    yAxis: {
-	        min: 0,
-	        title: {
-	            text: 'Number of Clients'
-	        }
-	    },
-	    tooltip: {
-	        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-	        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-	            '<td style="padding:0"><b>{point.y:.1f} clients</b></td></tr>',
-	        footerFormat: '</table>',
-	        shared: true,
-	        useHTML: true
-	    },
-	    plotOptions: {
-	        column: {
-	            pointPadding: 0.2,
-	            borderWidth: 0
-	        }
-	    },
-	    credits: {
- 	        enabled: false
- 	    },
-	    series: [{
-	    	name: 'Visa Clients',
-	    	color:'#2758A1',
-	    	data: [5, 16, 31, 15, 38,55]
-	    }]
-	
-	   
-	});
- 	
- 	Highcharts.chart('numMedical', {
-	    chart: {
-	        type: 'column'
-	    },
-	    title: {
-	        text: 'Number of Medical clients'
-	    },
-	    
-	    xAxis: {
-	        categories: [
-	            'Jan',
-	            'Feb',
-	            'Mar',
-	            'Apr',
-	            'May',
-	            'Jun',
-	        ],
-	        crosshair: true
-	    },
-	    credits: {
- 	        enabled: false
- 	    },
-	    yAxis: {
-	        min: 0,
-	        title: {
-	            text: 'Number of Clients'
-	        }
-	    },
-	    tooltip: {
-	        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-	        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-	            '<td style="padding:0"><b>{point.y:.1f} clients</b></td></tr>',
-	        footerFormat: '</table>',
-	        shared: true,
-	        useHTML: true
-	    },
-	    plotOptions: {
-	        column: {
-	            pointPadding: 0.2,
-	            borderWidth: 0
-	        }
-	    },
-	    series: [{
-	    	name: 'Medical Clients',
-	    	color:'#214986',
-	    	 data: [5, 45, 31, 32, 81, 55]
-	    }]
-	
-	   
-	});
- 	Highcharts.chart('visaContainer', {
- 	    chart: {
- 	        type: 'bar'
- 	    },
- 	    title: {
- 	        text: 'Types of Visa requested'
- 	    },
- 	    
- 	    xAxis: {
- 	        categories: ['Maternity', 
- 	        			  'Indonesia - VTT 317 - Less than 6 months', 
- 	                      'Indonesia - VTT 312 - More than 6 months', 
- 	                      'Indonesia - VTT 312 - Less than 6 months', 
- 	                      'Indonesia - VKU 211',
- 	                      'Indonesia - VKBKP 212',
- 	                      'ICA STVP'],
- 	        title: {
- 	            text: null
- 	        }
- 	    },
- 	    yAxis: {
- 	        min: 0,
- 	        title: {
- 	            text: null,
- 	            align: 'high'
- 	        },
- 	        labels: {
- 	            overflow: 'justify'
- 	        }
- 	    },
- 	    tooltip: {
- 	        valueSuffix: ' clients'
- 	    },
- 	    plotOptions: {
- 	        bar: {
- 	            dataLabels: {
- 	                enabled: true
- 	            }
- 	        }
- 	    },
- 	    credits: {
- 	        enabled: false
- 	    },
- 	    series: [{
- 	        name: 'Number of Clients',
- 	        color:'#2E66BC',
- 	        data: [1052, 954, 4250, 740, 38]
- 	    }]
+
+	 	displayAllVisaType(); 	
+	 	displayNumVisa();
+	 	displayNumMedical();
+
  	});
  	
- 	});
- 	
-<<<<<<< HEAD
+
  	function displayAllVisaType(){
  		var type = [];
-=======
- 	function displayAll(){
- 		var visaTypes = [];
->>>>>>> 92e3f80735f7be23802f27f65137038bb9eb3997
  		var numVisa = [];
 			$.ajax({
 				url: "DisplayAllVisaType",
@@ -200,24 +42,15 @@
 			    
 			    complete: function(data){
 			    	var json = jQuery.parseJSON(JSON.stringify(data));
+			    	console.log("visa type: ");
 			    	console.log(json);
 			  
 			    	$.each(json.responseJSON,function(key, value) {
-<<<<<<< HEAD
 			    		type.push(key);
 			    		numVisa.push(value);
-=======
 			    		console.log(key);
-			    		visaTypes.push(key);
-			    		numVisa.push(value)
 			    		
->>>>>>> 92e3f80735f7be23802f27f65137038bb9eb3997
 			    	});
-			    	console.log(visaTypes);
-			    	console.log(numVisa);
-			    	
-			    	console.log(type);
-			    	console.log(numVisa);
 			    	
 			    	Highcharts.chart('visaContainer', {
 			     	    chart: {
@@ -265,7 +98,139 @@
 			    }	
 			    
 			});	
+		}
+ 	
+ 	
+ 	function displayNumVisa(){
+ 		var month = [];
+ 		var num = [];
+			$.ajax({
+				url: "DisplayDashboardVisa",
+				type: "get",
+			    dataType : "json",
+			    
+			    complete: function(data){
+			    	var json = jQuery.parseJSON(JSON.stringify(data));
+			    	console.log("numvisa: ");
+			    	console.log(json.responseJSON);
+			  
+			    	$.each(json.responseJSON,function(key, value) {
+			    		type.push(key);
+			    		numVisa.push(value);
+			    		console.log(key);
+			    		
+			    	});
+			    	
+			    	Highcharts.chart('numVisa', {
+			    	    chart: {
+			    	        type: 'column'
+			    	    },
+			    	    title: {
+			    	        text: 'Number of VISA clients'
+			    	    },
+			    	    xAxis: {
+			    	        categories:month,
+			    	        crosshair: true
+			    	    },
+			    	    yAxis: {
+			    	        min: 0,
+			    	        title: {
+			    	            text: 'Number of Clients'
+			    	        }
+			    	    },
+			    	    tooltip: {
+			    	        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+			    	        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+			    	            '<td style="padding:0"><b>{point.y:.1f} clients</b></td></tr>',
+			    	        footerFormat: '</table>',
+			    	        shared: true,
+			    	        useHTML: true
+			    	    },
+			    	    plotOptions: {
+			    	        column: {
+			    	            pointPadding: 0.2,
+			    	            borderWidth: 0
+			    	        }
+			    	    },
+			    	    credits: {
+			     	        enabled: false
+			     	    },
+			    	    series: [{
+			    	    	name: 'Visa Clients',
+			    	    	color:'#2758A1',
+			    	    	data: num
+			    	    }]
+			    	});
 			}
+		});
+	}
+ 	
+ 	function displayNumMedical(){
+ 		var month = [];
+ 		var num = [];
+			$.ajax({
+				url: "DisplayDashboardMedical",
+				type: "get",
+			    dataType : "json",
+			    
+			    complete: function(data){
+			    	var json = jQuery.parseJSON(JSON.stringify(data));
+			    	console.log("numvisa: ");
+			    	console.log(json.responseJSON);
+			  
+			    	$.each(json.responseJSON,function(key, value) {
+			    		type.push(key);
+			    		numVisa.push(value);
+			    		console.log(key);
+			    		
+			    	});
+			    	
+			    	Highcharts.chart('numMedical', {
+			    	    chart: {
+			    	        type: 'column'
+			    	    },
+			    	    title: {
+			    	        text: 'Number of Medical clients'
+			    	    },
+			    	    
+			    	    xAxis: {
+			    	        categories: month,
+			    	        crosshair: true
+			    	    },
+			    	    credits: {
+			     	        enabled: false
+			     	    },
+			    	    yAxis: {
+			    	        min: 0,
+			    	        title: {
+			    	            text: 'Number of Clients'
+			    	        }
+			    	    },
+			    	    tooltip: {
+			    	        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+			    	        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+			    	            '<td style="padding:0"><b>{point.y:.1f} clients</b></td></tr>',
+			    	        footerFormat: '</table>',
+			    	        shared: true,
+			    	        useHTML: true
+			    	    },
+			    	    plotOptions: {
+			    	        column: {
+			    	            pointPadding: 0.2,
+			    	            borderWidth: 0
+			    	        }
+			    	    },
+			    	    series: [{
+			    	    	name: 'Medical Clients',
+			    	    	color:'#214986',
+			    	    	data: num
+			    	    }]
+			    	
+			    	   
+			    	});
+			}
+		});
+	}
  	
  	</script>
  	
