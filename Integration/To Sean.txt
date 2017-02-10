@@ -1,6 +1,4 @@
 To sean:
 
-1. create a method that will only display infants, otherwise infants will display under adults tab for viewscreenings
-2. consolidate all appointments for 1 person
-3. retrieve screening based on client's age &  so that we can display the recommended screening
-4. sort asc and desc given header name
+1) Since you recently clean up your codes and put in folders, do we have to edit our URL thats calling ur method?
+2) For ranking.html, the "DisplayDoctorBySpecialty" we pass you 3 things(specialty, startdate,enddate), so u need return doctors with such specialty based on # of engagament based on the dates
