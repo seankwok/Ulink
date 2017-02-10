@@ -14,8 +14,43 @@ import ulink.constructor.*;
 import ulink.logic.Utility;
 
 public class DatabaseConnection {
-	
-	public ArrayList<RankingReferredBy> retrieveAllRankingReferredByDashBoard(String date){
+
+	public ArrayList<Index> retrieveAllIndex(String startDate, String endDate, String medicial) {
+		Connection con;
+		ArrayList<Index> IndexList = new ArrayList<>();
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
+
+			Statement stmt = con.createStatement();
+			String sql = "select billingCity, BillingCode, BillingCountry, BillingState, BillingStreet,phone,email from client where `CreatedTime` between'"
+					+ startDate + "'and'" + endDate + "' and medical = '" + medicial + "'";
+			ResultSet rs = stmt.executeQuery(sql);
+			Utility utility = new Utility();
+
+			while (rs.next()) {
+				String billing = rs.getString(1);
+				billing += rs.getString(2);
+				billing += rs.getString(3);
+				billing += rs.getString(4);
+				billing += rs.getString(5);
+				String phone = rs.getString(6);
+				String email = rs.getString(7);
+				IndexList.add(new Index(billing, phone,email));
+			}
+
+			con.close();
+
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return IndexList;
+
+	}
+
+	public ArrayList<RankingReferredBy> retrieveAllRankingReferredByDashBoard(String date) {
 		Connection con;
 		ArrayList<RankingReferredBy> referredByList = new ArrayList<>();
 		try {
@@ -23,14 +58,15 @@ public class DatabaseConnection {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
-			String sql = "select  referredBy, count(referredBy) from client where  CreatedTime >= DATE_SUB('"+ date +"', INTERVAL 1 MONTH) and referredBy != '' group by referredBy ORDER BY COUNT(referredBy) DESC";
+			String sql = "select  referredBy, count(referredBy) from client where  CreatedTime >= DATE_SUB('" + date
+					+ "', INTERVAL 1 MONTH) and referredBy != '' group by referredBy ORDER BY COUNT(referredBy) DESC";
 			ResultSet rs = stmt.executeQuery(sql);
 			Utility utility = new Utility();
 
 			while (rs.next()) {
 				String referredBy = rs.getString(1);
 				int count = rs.getInt(2);
-				referredByList.add(new RankingReferredBy(referredBy,count));
+				referredByList.add(new RankingReferredBy(referredBy, count));
 			}
 
 			con.close();
@@ -41,10 +77,10 @@ public class DatabaseConnection {
 		}
 
 		return referredByList;
-		
+
 	}
-	
-	public ArrayList<RankingDoctor> retrieveAllRankingDoctorDashBoard(String date){
+
+	public ArrayList<RankingDoctor> retrieveAllRankingDoctorDashBoard(String date) {
 		Connection con;
 		ArrayList<RankingDoctor> doctorList = new ArrayList<>();
 		try {
@@ -52,7 +88,8 @@ public class DatabaseConnection {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
-			String sql = "select doctor, clinic, specialty, count(appointment) from client where  CreatedTime >= DATE_SUB('"+ date +"', INTERVAL 1 MONTH) and doctor != '' group by doctor ORDER BY COUNT(appointment) DESC";
+			String sql = "select doctor, clinic, specialty, count(appointment) from client where  CreatedTime >= DATE_SUB('"
+					+ date + "', INTERVAL 1 MONTH) and doctor != '' group by doctor ORDER BY COUNT(appointment) DESC";
 			ResultSet rs = stmt.executeQuery(sql);
 			Utility utility = new Utility();
 
@@ -61,7 +98,7 @@ public class DatabaseConnection {
 				String clinic = rs.getString(2);
 				String specialty = rs.getString(3);
 				int count = rs.getInt(4);
-				doctorList.add(new RankingDoctor(doctor,clinic,specialty,count));
+				doctorList.add(new RankingDoctor(doctor, clinic, specialty, count));
 			}
 
 			con.close();
@@ -72,15 +109,11 @@ public class DatabaseConnection {
 		}
 
 		return doctorList;
-		
+
 	}
-	
-	
-	
-	
-	public String retrieveLatestDate(){
-		
-		
+
+	public String retrieveLatestDate() {
+
 		Connection con;
 		String createTime = "";
 		try {
@@ -92,9 +125,9 @@ public class DatabaseConnection {
 			ResultSet rs = stmt.executeQuery(sql);
 			Utility utility = new Utility();
 
-		while(rs.next()){
-				 createTime = rs.getString(1);
-		}
+			while (rs.next()) {
+				createTime = rs.getString(1);
+			}
 
 			con.close();
 
@@ -104,11 +137,10 @@ public class DatabaseConnection {
 		}
 
 		return createTime;
-		
+
 	}
-	
-	
-	public ArrayList<String> retrievePastSixMonthRecord(String type, String startDate){
+
+	public ArrayList<String> retrievePastSixMonthRecord(String type, String startDate) {
 		Connection con;
 		ArrayList<String> dateList = new ArrayList<>();
 		try {
@@ -116,7 +148,8 @@ public class DatabaseConnection {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
-			String sql = "SELECT CreatedTime FROM `client` WHERE CreatedTime >= DATE_SUB('" + startDate +"', INTERVAL 5 MONTH) and medical = '" + type + "'";
+			String sql = "SELECT CreatedTime FROM `client` WHERE CreatedTime >= DATE_SUB('" + startDate
+					+ "', INTERVAL 5 MONTH) and medical = '" + type + "'";
 			ResultSet rs = stmt.executeQuery(sql);
 			Utility utility = new Utility();
 
@@ -133,13 +166,13 @@ public class DatabaseConnection {
 		}
 
 		return dateList;
-		
+
 	}
-	
-	
-	//select referredBy, count(referredBy) from client where `CreatedTime` between '2011/02/25' and '2011/02/27' group by referredBy
-	
-	public ArrayList<RankingReferredBy> retrieveAllRankingReferredBy(String startDate, String endDate){
+
+	// select referredBy, count(referredBy) from client where `CreatedTime`
+	// between '2011/02/25' and '2011/02/27' group by referredBy
+
+	public ArrayList<RankingReferredBy> retrieveAllRankingReferredBy(String startDate, String endDate) {
 		Connection con;
 		ArrayList<RankingReferredBy> referredByList = new ArrayList<>();
 		try {
@@ -147,14 +180,15 @@ public class DatabaseConnection {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
-			String sql = "select  referredBy, count(referredBy) from client where `CreatedTime` between'" + startDate +  "'and'" + endDate +"' and referredBy != '' group by referredBy ORDER BY COUNT(referredBy) DESC";
+			String sql = "select  referredBy, count(referredBy) from client where `CreatedTime` between'" + startDate
+					+ "'and'" + endDate + "' and referredBy != '' group by referredBy ORDER BY COUNT(referredBy) DESC";
 			ResultSet rs = stmt.executeQuery(sql);
 			Utility utility = new Utility();
 
 			while (rs.next()) {
 				String referredBy = rs.getString(1);
 				int count = rs.getInt(2);
-				referredByList.add(new RankingReferredBy(referredBy,count));
+				referredByList.add(new RankingReferredBy(referredBy, count));
 			}
 
 			con.close();
@@ -165,10 +199,10 @@ public class DatabaseConnection {
 		}
 
 		return referredByList;
-		
+
 	}
-	
-	public ArrayList<RankingSpecialty> retrieveAllRankingSpecialty(String startDate, String endDate){
+
+	public ArrayList<RankingSpecialty> retrieveAllRankingSpecialty(String startDate, String endDate) {
 		Connection con;
 		ArrayList<RankingSpecialty> specialtyList = new ArrayList<>();
 		try {
@@ -176,14 +210,15 @@ public class DatabaseConnection {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
-			String sql = "select specialty, count(appointment) from client where `CreatedTime` between'" + startDate +  "'and'" + endDate +"' and specialty != '' group by specialty ORDER BY COUNT(appointment) DESC";
+			String sql = "select specialty, count(appointment) from client where `CreatedTime` between'" + startDate
+					+ "'and'" + endDate + "' and specialty != '' group by specialty ORDER BY COUNT(appointment) DESC";
 			ResultSet rs = stmt.executeQuery(sql);
 			Utility utility = new Utility();
 
 			while (rs.next()) {
 				String specialty = rs.getString(1);
 				int count = rs.getInt(2);
-				specialtyList.add(new RankingSpecialty(specialty,count));
+				specialtyList.add(new RankingSpecialty(specialty, count));
 			}
 
 			con.close();
@@ -194,10 +229,10 @@ public class DatabaseConnection {
 		}
 
 		return specialtyList;
-		
+
 	}
-	
-	public ArrayList<RankingDoctor> retrieveAllRankingDoctor(String startDate, String endDate){
+
+	public ArrayList<RankingDoctor> retrieveAllRankingDoctor(String startDate, String endDate) {
 		Connection con;
 		ArrayList<RankingDoctor> doctorList = new ArrayList<>();
 		try {
@@ -205,7 +240,9 @@ public class DatabaseConnection {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
-			String sql = "select doctor, clinic, specialty, count(appointment) from client where `CreatedTime` between'" + startDate +  "'and'" + endDate +"' and doctor != '' group by doctor ORDER BY COUNT(appointment) DESC";
+			String sql = "select doctor, clinic, specialty, count(appointment) from client where `CreatedTime` between'"
+					+ startDate + "'and'" + endDate
+					+ "' and doctor != '' group by doctor ORDER BY COUNT(appointment) DESC";
 			ResultSet rs = stmt.executeQuery(sql);
 			Utility utility = new Utility();
 
@@ -214,7 +251,7 @@ public class DatabaseConnection {
 				String clinic = rs.getString(2);
 				String specialty = rs.getString(3);
 				int count = rs.getInt(4);
-				doctorList.add(new RankingDoctor(doctor,clinic,specialty,count));
+				doctorList.add(new RankingDoctor(doctor, clinic, specialty, count));
 			}
 
 			con.close();
@@ -225,13 +262,11 @@ public class DatabaseConnection {
 		}
 
 		return doctorList;
-		
-	}
-	
-	
-	
 
-	public ArrayList<RankingDoctorSpecialty> retrieveAllDoctorBySpecialty(String specialty, String startDate, String endDate){
+	}
+
+	public ArrayList<RankingDoctorSpecialty> retrieveAllDoctorBySpecialty(String specialty, String startDate,
+			String endDate) {
 		Connection con;
 		ArrayList<RankingDoctorSpecialty> doctorList = new ArrayList<>();
 		try {
@@ -239,14 +274,16 @@ public class DatabaseConnection {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
-			String sql = "select doctor, count(appointment) from client where `CreatedTime` between'" + startDate +  "'and'" + endDate +"' and specialty= '"+ specialty +"' group by doctor ORDER BY COUNT(appointment) DESC";
+			String sql = "select doctor, count(appointment) from client where `CreatedTime` between'" + startDate
+					+ "'and'" + endDate + "' and specialty= '" + specialty
+					+ "' group by doctor ORDER BY COUNT(appointment) DESC";
 			ResultSet rs = stmt.executeQuery(sql);
 			Utility utility = new Utility();
 
 			while (rs.next()) {
-				String doctor = rs.getString(1);	
+				String doctor = rs.getString(1);
 				int count = rs.getInt(2);
-				doctorList.add(new RankingDoctorSpecialty(doctor,count));
+				doctorList.add(new RankingDoctorSpecialty(doctor, count));
 			}
 
 			con.close();
@@ -257,10 +294,9 @@ public class DatabaseConnection {
 		}
 
 		return doctorList;
-		
+
 	}
 
-	
 	public ArrayList<Client> retrieveAllClientList() {
 
 		Connection con;
@@ -309,14 +345,14 @@ public class DatabaseConnection {
 				String billingCountry = rs.getString(32);
 				String billingState = rs.getString(33);
 				String billingStreet = rs.getString(34);
-				String createdTime =""+ rs.getDate(35);
+				String createdTime = "" + rs.getDate(35);
 				String phone = rs.getString(36);
-				
+
 				clientList.add(new Client(ID, accountID, clientOwner, clientName, clientType, company, nationality,
 						gender, dateOfBirth, email, medical, mainDiagnosis, referredBy, PIC, appointment, doctor,
 						specialty, clinic, otherDoctor, followUpPerson, followUpPIC, hospitalAdmitted, log, claim,
 						visaRequestBy, visa, visaType, visaType2, age, billingCity, billingCode, billingCountry,
-						billingState, billingStreet, createdTime,phone));
+						billingState, billingStreet, createdTime, phone));
 			}
 
 			con.close();
@@ -377,14 +413,14 @@ public class DatabaseConnection {
 				String billingCountry = rs.getString(32);
 				String billingState = rs.getString(33);
 				String billingStreet = rs.getString(34);
-				String createdTime = ""+ rs.getDate(35);
+				String createdTime = "" + rs.getDate(35);
 				String phone = rs.getString(36);
-			
+
 				clientList.add(new Client(ID, accountID, clientOwner, clientName, clientType, company, nationality,
 						gender, dateOfBirth, email, medical, mainDiagnosis, referredBy, PIC, appointment, doctor,
 						specialty, clinic, otherDoctor, followUpPerson, followUpPIC, hospitalAdmitted, log, claim,
 						visaRequestBy, visa, visaType, visaType2, age, billingCity, billingCode, billingCountry,
-						billingState, billingStreet, createdTime,phone));
+						billingState, billingStreet, createdTime, phone));
 			}
 
 			con.close();
@@ -445,13 +481,13 @@ public class DatabaseConnection {
 				String billingCountry = rs.getString(32);
 				String billingState = rs.getString(33);
 				String billingStreet = rs.getString(34);
-				String createdTime = ""+ rs.getDate(35);
+				String createdTime = "" + rs.getDate(35);
 				String phone = rs.getString(36);
 				clientList.add(new Client(ID, accountID, clientOwner, clientName, clientType, company, nationality,
 						gender, dateOfBirth, email, medical, mainDiagnosis, referredBy, PIC, appointment, doctor,
 						specialty, clinic, otherDoctor, followUpPerson, followUpPIC, hospitalAdmitted, log, claim,
 						visaRequestBy, visa, visaType, visaType2, age, billingCity, billingCode, billingCountry,
-						billingState, billingStreet, createdTime,phone));
+						billingState, billingStreet, createdTime, phone));
 			}
 
 			con.close();
@@ -463,7 +499,7 @@ public class DatabaseConnection {
 
 		return clientList;
 	}
-	
+
 	public ArrayList<Client> retrieveAllClientByType(String type) {
 
 		Connection con;
@@ -512,13 +548,13 @@ public class DatabaseConnection {
 				String billingCountry = rs.getString(32);
 				String billingState = rs.getString(33);
 				String billingStreet = rs.getString(34);
-				String createdTime = ""+ rs.getDate(35);
+				String createdTime = "" + rs.getDate(35);
 				String phone = rs.getString(36);
 				clientList.add(new Client(ID, accountID, clientOwner, clientName, clientType, company, nationality,
 						gender, dateOfBirth, email, medical, mainDiagnosis, referredBy, PIC, appointment, doctor,
 						specialty, clinic, otherDoctor, followUpPerson, followUpPIC, hospitalAdmitted, log, claim,
 						visaRequestBy, visa, visaType, visaType2, age, billingCity, billingCode, billingCountry,
-						billingState, billingStreet, createdTime,phone));
+						billingState, billingStreet, createdTime, phone));
 			}
 
 			con.close();
@@ -547,8 +583,8 @@ public class DatabaseConnection {
 
 			for (int i = 1; i < clientList.size(); i++) {
 				Client client = clientList.get(i);
-				
-				//preparedStmt.setInt(1, client.getID());
+
+				// preparedStmt.setInt(1, client.getID());
 				preparedStmt.setString(1, client.getAccountID());
 				preparedStmt.setString(2, client.getClientOwner());
 				preparedStmt.setString(3, client.getClientName());
@@ -587,22 +623,23 @@ public class DatabaseConnection {
 				preparedStmt.setString(31, client.getBillingCountry());
 				preparedStmt.setString(32, client.getBillingState());
 				preparedStmt.setString(33, client.getBillingStreet());
-				//System.out.println(client.getBillingStreet());
+				// System.out.println(client.getBillingStreet());
 				try {
-					Integer.parseInt(client.getCreatedtime().substring(0,2));
-				} catch(NumberFormatException e){
-					client.setCreatedtime("0"+client.getCreatedtime());
+					Integer.parseInt(client.getCreatedtime().substring(0, 2));
+				} catch (NumberFormatException e) {
+					client.setCreatedtime("0" + client.getCreatedtime());
 				}
-				//System.out.print(client.getCreatedtime());
-				String date = client.getCreatedtime().substring(6, 10) + "-" + client.getCreatedtime().substring(3, 5) + "-" + client.getCreatedtime().substring(0, 2) ;
+				// System.out.print(client.getCreatedtime());
+				String date = client.getCreatedtime().substring(6, 10) + "-" + client.getCreatedtime().substring(3, 5)
+						+ "-" + client.getCreatedtime().substring(0, 2);
 				System.out.println(date);
-				preparedStmt.setDate(34,java.sql.Date.valueOf(date));
+				preparedStmt.setDate(34, java.sql.Date.valueOf(date));
 				preparedStmt.setString(35, client.getPhone());
 				preparedStmt.execute();
-				//preparedStmt.addBatch();
-				
+				// preparedStmt.addBatch();
+
 			}
-			
+
 			con.close();
 
 		} catch (SQLException | ClassNotFoundException e) {
@@ -1192,7 +1229,7 @@ public class DatabaseConnection {
 			PreparedStatement preparedStmt = con.prepareStatement(sql);
 			preparedStmt.setString(1, name);
 			preparedStmt.setString(2, details);
-			
+
 			preparedStmt.execute();
 
 			con.close();
@@ -1203,7 +1240,7 @@ public class DatabaseConnection {
 		}
 
 	}
-	
+
 	public String retrieveEmailTemplate(String name) {
 		Connection con;
 		String msg = null;
@@ -1214,10 +1251,10 @@ public class DatabaseConnection {
 			// "root", "");
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("select msg from emailtemplate where templateName='" + name +"'");
+			ResultSet rs = stmt.executeQuery("select msg from emailtemplate where templateName='" + name + "'");
 			while (rs.next()) {
-				  msg = rs.getString(1);
-				
+				msg = rs.getString(1);
+
 			}
 
 		} catch (SQLException | ClassNotFoundException e) {
@@ -1227,8 +1264,7 @@ public class DatabaseConnection {
 		return msg;
 
 	}
-	
-	
+
 	public void deleteEmailTemplate(String templateName) {
 		Connection con;
 		try {
@@ -1248,7 +1284,7 @@ public class DatabaseConnection {
 		}
 
 	}
-	
+
 	public ArrayList<User> getUser() {
 		ArrayList<User> userList = new ArrayList<User>();
 		Connection con;

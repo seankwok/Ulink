@@ -3,7 +3,8 @@ package ulink.logic;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Properties;
 import java.util.TreeMap;
 
@@ -17,9 +18,11 @@ import javax.mail.internet.MimeMessage;
 import org.joda.time.DateTime;
 
 import ulink.constructor.Condition;
+import ulink.constructor.Index;
 import ulink.constructor.User;
 import ulink.dao.DatabaseConnection;
 import java.text.DateFormatSymbols;
+import java.text.DecimalFormat;
 public class Utility {
 
 	public boolean sendMail(String emailTo, String emailFrom, String host) {
@@ -78,6 +81,62 @@ public class Utility {
 		}
 
 		return typeList;
+	}
+	
+	public String countMean(HashMap<Integer,Integer> values, int size){
+		double sum = 0.0;
+		for (int key : values.keySet()) {
+		    int value = values.get(key);
+		    sum += 1.0 * key * value;
+		}
+		DecimalFormat two = new DecimalFormat("0.00");
+		String mean = two.format(sum/size);
+		return mean;
+	}
+	
+	public String countSD(HashMap<Integer,Integer> values, int size){
+		double sum = 0.0;
+		for (int key : values.keySet()) {
+			int value = values.get(key);
+		    sum += 1.0 * key * value;
+		}
+		DecimalFormat two = new DecimalFormat("0.00");
+		String mean = two.format(sum/size);
+		
+        double temp = 0;
+        for (int key : values.keySet()) {
+        	int a = values.get(key);
+            temp += (a-sum/size)*(a-sum/size);
+        }
+        
+		return two.format(Math.sqrt(temp));
+	}
+	
+	public HashMap<Integer,Integer> getIndexCount(ArrayList<Index> indexList){
+		
+		HashMap<Integer, Integer> pointSystem = new HashMap<>();
+
+		for (int i = 0; i < indexList.size(); i++) {
+			int point = 0;
+			Index index = indexList.get(i);
+			if (index.getAddress().length() > 0) {
+				point++;
+			}
+			if (index.getEmail().length() > 0) {
+				point++;
+			}
+			if (index.getPhone().length() > 0) {
+				point++;
+			}
+			if (pointSystem.containsKey(point)){
+				int temp = pointSystem.get(point);
+				pointSystem.put(point, temp+1);
+			} else {
+				pointSystem.put(point, 0);
+			}
+		}
+		return pointSystem;
+		
 	}
 	
 	public String changeDateFormat(String date){
