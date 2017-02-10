@@ -231,7 +231,7 @@ public class DatabaseConnection {
 	
 	
 
-	public ArrayList<RankingDoctorSpecialty> retrieveAllDoctorBySpecialty(String specialty){
+	public ArrayList<RankingDoctorSpecialty> retrieveAllDoctorBySpecialty(String specialty, String startDate, String endDate){
 		Connection con;
 		ArrayList<RankingDoctorSpecialty> doctorList = new ArrayList<>();
 		try {
@@ -239,7 +239,7 @@ public class DatabaseConnection {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
-			String sql = "select doctor, count(appointment) from client where specialty= '"+ specialty +"' group by doctor ORDER BY COUNT(appointment) DESC";
+			String sql = "select doctor, count(appointment) from client where `CreatedTime` between'" + startDate +  "'and'" + endDate +"' and specialty= '"+ specialty +"' group by doctor ORDER BY COUNT(appointment) DESC";
 			ResultSet rs = stmt.executeQuery(sql);
 			Utility utility = new Utility();
 
@@ -1181,6 +1181,74 @@ public class DatabaseConnection {
 
 	}
 
+	public void createEmailTemplate(String name, String details) {
+		Connection con;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
+			Statement stmt = con.createStatement();
+
+			String sql = "INSERT INTO emailtemplate (templateName,msg) " + "VALUES (?,?)";
+			PreparedStatement preparedStmt = con.prepareStatement(sql);
+			preparedStmt.setString(1, name);
+			preparedStmt.setString(2, details);
+			
+			preparedStmt.execute();
+
+			con.close();
+
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
+	public String retrieveEmailTemplate(String name) {
+		Connection con;
+		String msg = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			// con =
+			// DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink",
+			// "root", "");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("select msg from emailtemplate where templateName='" + name +"'");
+			while (rs.next()) {
+				  msg = rs.getString(1);
+				
+			}
+
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return msg;
+
+	}
+	
+	
+	public void deleteEmailTemplate(String templateName) {
+		Connection con;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
+
+			String sql = "DELETE FROM emailtemplate WHERE templateName = ?";
+			PreparedStatement preparedStmt = con.prepareStatement(sql);
+			preparedStmt.setString(1, templateName);
+			preparedStmt.executeUpdate();
+
+			con.close();
+
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
 	public ArrayList<User> getUser() {
 		ArrayList<User> userList = new ArrayList<User>();
 		Connection con;

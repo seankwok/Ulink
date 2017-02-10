@@ -18,6 +18,7 @@ import com.google.gson.reflect.TypeToken;
 
 import ulink.constructor.*;
 import ulink.dao.DatabaseConnection;
+import ulink.logic.Utility;
 
 /**
  * Servlet implementation class DisplayDoctorBySpecialty
@@ -41,9 +42,12 @@ public class DisplayDoctorBySpecialty extends HttpServlet {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		String specialty = request.getParameter("Specialty");
+		String startDate = request.getParameter("startDate");
+		String endDate = request.getParameter("endDate");
 		PrintWriter out = response.getWriter();
 		DatabaseConnection connection = new DatabaseConnection();
-		ArrayList<RankingDoctorSpecialty> doctorList = connection.retrieveAllDoctorBySpecialty(specialty);
+		Utility utility = new Utility();
+		ArrayList<RankingDoctorSpecialty> doctorList = connection.retrieveAllDoctorBySpecialty(specialty,utility.changeDateFormatDatabase(startDate),utility.changeDateFormat(endDate));
 		
 		Gson gson = new Gson();
 

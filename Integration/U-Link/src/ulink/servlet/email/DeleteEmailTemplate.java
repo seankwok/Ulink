@@ -1,9 +1,7 @@
-package ulink.servlet;
+package ulink.servlet.email;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,25 +9,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.reflect.TypeToken;
-
-import ulink.constructor.RankingDoctor;
-import ulink.constructor.RankingReferredBy;
 import ulink.dao.DatabaseConnection;
 
 /**
- * Servlet implementation class DisplayAllLatestReferredbyDashboard
+ * Servlet implementation class DeleteEmailTemplate
  */
-@WebServlet("/DisplayAllLatestReferredbyDashboard")
-public class DisplayAllLatestReferredbyDashboard extends HttpServlet {
+@WebServlet("/DeleteEmailTemplate")
+public class DeleteEmailTemplate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DisplayAllLatestReferredbyDashboard() {
+    public DeleteEmailTemplate() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -39,19 +31,13 @@ public class DisplayAllLatestReferredbyDashboard extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
-		PrintWriter out = response.getWriter();
-
-		DatabaseConnection connection = new DatabaseConnection();
-
+		String templateName = request.getParameter("templateName");
 		
-		ArrayList<RankingReferredBy> list = connection.retrieveAllRankingReferredByDashBoard(connection.retrieveLatestDate());
-		Gson gson = new Gson();
-
-		JsonArray result = (JsonArray) new Gson().toJsonTree(list, new TypeToken<List<RankingReferredBy>>() {
-		}.getType());
-		String arrayListToJson = gson.toJson(result);
-		out.write(arrayListToJson);
+		DatabaseConnection connection = new DatabaseConnection();
+		connection.deleteEmailTemplate(templateName);
+		
+		PrintWriter out = response.getWriter();
+		out.write("success");
 		out.flush();
 		return;
 	}

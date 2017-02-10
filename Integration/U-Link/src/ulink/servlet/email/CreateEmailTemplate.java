@@ -1,4 +1,4 @@
-package ulink.servlet;
+package ulink.servlet.email;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -8,19 +8,20 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
+import ulink.dao.DatabaseConnection;
 
 /**
- * Servlet implementation class DisplayAllClientByName2
+ * Servlet implementation class CreateEmailTemplate
  */
-@WebServlet("/DisplayAllClientByName2")
-public class DisplayAllClientByName2 extends HttpServlet {
+@WebServlet("/CreateEmailTemplate")
+public class CreateEmailTemplate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DisplayAllClientByName2() {
+    public CreateEmailTemplate() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,7 +31,16 @@ public class DisplayAllClientByName2 extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		String templateName = request.getParameter("templateName");
+		String msg = request.getParameter("msg");
+		DatabaseConnection connection = new DatabaseConnection();
+		connection.createEmailTemplate(templateName, msg);
+		
+		PrintWriter out = response.getWriter();
+		out.write("success");
+		out.flush();
+		return;
+		
 	}
 
 	/**
@@ -39,18 +49,6 @@ public class DisplayAllClientByName2 extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-		HttpSession session = request.getSession();
-		String clientName = request.getParameter("clientName");
-		System.out.println(clientName + "        ");
-		session.setAttribute("clientName", clientName);
-		PrintWriter out = response.getWriter();
-		String jsonInString = "{\"status\":\"success\"}";
-		
-		
-		out.write(jsonInString);
-	
-		out.flush();
-		return;
 	}
 
 }

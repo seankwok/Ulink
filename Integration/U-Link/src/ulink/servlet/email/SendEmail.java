@@ -1,9 +1,8 @@
-package ulink.servlet;
+package ulink.servlet.email;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.TreeMap;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,22 +11,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.reflect.TypeToken;
 
-import ulink.constructor.Condition;
-import ulink.dao.DatabaseConnection;
-import ulink.logic.Utility;
+import ulink.constructor.RankingReferredBy;
+import ulink.logic.Email;
 
 /**
- * Servlet implementation class FemaleTimeline
+ * Servlet implementation class SendEmail
  */
-@WebServlet("/FemaleTimeline")
-public class FemaleTimeline extends HttpServlet {
+@WebServlet("/SendEmail")
+public class SendEmail extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FemaleTimeline() {
+    public SendEmail() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,19 +37,27 @@ public class FemaleTimeline extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		DatabaseConnection connection = new DatabaseConnection();
-		ArrayList<Condition> conditionList = connection.retrieveAllTypeCondition("Female");
-		Utility utility = new Utility();
-		TreeMap<Integer, ArrayList<String>> returnTypeList = utility.returnTypeList(conditionList);
-
-		Gson gson = new Gson();
-
+		Email emailServer = new Email();
+		String email = request.getParameter("email");
+		String subject = request.getParameter("subject");
+		String msg = request.getParameter("msg");
+		
+		boolean check = emailServer.sendEmail(email, subject, msg);
+		String status = "";
+		if (check){
+			status = "pass";
+		} else {
+			status = "fail";
+		}
+		
 		PrintWriter out = response.getWriter();
-		String arrayListToJson = gson.toJson(returnTypeList);
 
-		out.write(arrayListToJson);
+
+		out.write(status);
 		out.flush();
 		return;
+		
+		
 	}
 
 	/**
