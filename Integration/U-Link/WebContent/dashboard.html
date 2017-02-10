@@ -28,6 +28,11 @@
 	 	displayAllVisaType(); 	
 	 	displayNumVisa();
 	 	displayNumMedical();
+	 	displayTopDocThisMonth();
+	 	displayTopDocLastMonth();
+	 	displayTopReferralThisMonth();
+	 	displayTopReferralLastMonth();
+	 	
 
  	});
  	
@@ -232,6 +237,98 @@
 		});
 	}
  	
+ 	function displayTopDocThisMonth(){
+ 		var thisMonthDoc = "<table id='thisMonthDoc'  class='table table-striped' cellspacing='0' width='100%'>";
+ 	
+ 		$.ajax({
+			url: "",
+			type: "get",
+		    dataType : "json",
+		    complete: function(data){
+		    	var json = jQuery.parseJSON(JSON.stringify(data));
+		  		console.log(json);
+		  		thisMonthDoc += "<h4><b>MONTH</b></h4>"
+		  		thisMonthDoc += "<tr><th>Rank</th>"
+						  +  "<th>Doctor</th>"
+						  +  "<th>Clinic</th>"
+						  +  "<th>Speciality</th></tr>"
+						  +  "<tr><td>"
+						  +  json
+						  + "</td>"
+				$('#thisMonthDoc').html(thisMonthDoc);		  
+		    }
+ 		});
+		    	
+ 	}
+ 	
+ 	function displayTopDocLastMonth(){
+ 		var lastMonthDoc = "<table id='lastMonthDoc'  class='table table-striped' cellspacing='0' width='100%'>";
+ 	
+ 		$.ajax({
+			url: "",
+			type: "get",
+		    dataType : "json",
+		    complete: function(data){
+		    	var json = jQuery.parseJSON(JSON.stringify(data));
+		  		console.log(json);
+		  		lastMonthDoc += "<h4><b>MONTH</b></h4>"
+		  		lastMonthDoc += "<tr><th>Rank</th>"
+							  +  "<th>Doctor</th>"
+							  +  "<th>Clinic</th>"
+							  +  "<th>Speciality</th></tr>"
+							  +  "<tr><td>"
+							  +  json
+							  + "</td>"
+				$('#lastMonthDoc').html(lastMonthDoc);
+		    }
+ 		});
+		    	
+ 	}
+ 	
+ 	function displayTopReferralThisMonth(){
+ 		var thisMonthRef = "<table id='thisMonthRef'  class='table table-striped' cellspacing='0' width='100%'>";
+ 		$.ajax({
+			url: "",
+			type: "get",
+		    dataType : "json",
+		    complete: function(data){
+		    	var json = jQuery.parseJSON(JSON.stringify(data));
+		  		console.log(json);
+		  		thisMonthRef += "<h4><b>MONTH</b></h4>"
+		  		thisMonthRef += "<tr><th>Rank</th>"
+							  +  "<th>Referred By</th>"
+							  +  "<th>Number of cases referred</th></tr>"
+							  +  "<tr><td>"
+							  +  json
+							  + "</td>"
+				 $('#thisMonthRef').html(thisMonthRef);
+		    }
+ 		});
+ 	}
+ 	
+ 	function displayTopReferralLastMonth(){
+ 		var lastMonthRef = "<table id='lastMonthRef'  class='table table-striped' cellspacing='0' width='100%'>";
+ 		$.ajax({
+			url: "",
+			type: "get",
+		    dataType : "json",
+		    complete: function(data){
+		    	var json = jQuery.parseJSON(JSON.stringify(data));
+		  		console.log(json);
+		  		lastMonthRef += "<h4><b>MONTH</b></h4>"
+		  		lastMonthRef += "<tr><th>Rank</th>"
+							  +  "<th>Referred By</th>"
+							  +  "<th>Number of cases referred</th></tr>"
+							  +  "<tr><td>"
+							  +  json
+							  + "</td>"
+				$('#lastMonthRef').html(lastMonthRef);
+		    }
+ 		});
+ 	}
+ 	
+ 	
+ 	
  	</script>
  	
 </head>
@@ -257,6 +354,20 @@
 	
 	</div>
 	
+	</div>
+	
+	<div class="container" align="center">
+	
+		<div class="col-md-6" id="thisMonthDoc"></div>
+		
+		<div class="col-md-6" id="lastMonthDoc"></div>
+	</div>
+	
+	<div class="container" align="center">
+	
+		<div class="col-md-6" id="thisMonthRef"></div>
+		
+		<div class="col-md-6" id="lastMonthRef"></div>
 	</div>
 	
 	
