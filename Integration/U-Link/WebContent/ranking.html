@@ -172,7 +172,7 @@ function viewDoctors(clickedID){
 		$.ajax({
 			url : "DisplayDoctorBySpecialty",
 			type : "get",
-			data : sendData,
+			data : sendData +  'startDate=' + startDate + '&' + 'endDate=' + endDate,
 			dataType : "json",
 			complete: function(data){
 		    	var json = jQuery.parseJSON(JSON.stringify(data));
