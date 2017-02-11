@@ -41,7 +41,7 @@ public class DisplayAgeGenderReport extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		PrintWriter out = response.getWriter();
-		DatabaseConnection database = new DatabaseConnection();
+		//DatabaseConnection database = new DatabaseConnection();
 		ArrayList<AgeAndGender> ageGenderList;
 		TopK topk = new TopK();
 		ageGenderList = topk.getAgeGenderReport();

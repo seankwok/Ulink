@@ -45,7 +45,7 @@ public class TopK {
 		for (int i = 0; i < clientList.size(); i++) {
 			Client client = clientList.get(i);
 			if (client.getGender() != null) {
-				if (client.getGender().equals("Male")) {
+				if (client.getGender().equals("Male") && client.getAge() != -1) {
 					if (client.getAge() <= 10) {
 						m10++;
 					} else if (client.getAge() <= 20) {
@@ -65,7 +65,7 @@ public class TopK {
 					} else {
 						m90++;
 					}
-				} else if (client.getGender().equals("Female")) {
+				} else if (client.getGender().equals("Female") && client.getAge() != -1) {
 					if (client.getAge() <= 10) {
 						f10++;
 					} else if (client.getAge() <= 20) {
