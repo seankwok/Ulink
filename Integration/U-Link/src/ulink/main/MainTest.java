@@ -11,9 +11,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+import org.apache.poi.util.SystemOutLogger;
+
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.reflect.TypeToken;
 
 import ulink.constructor.AgeAndGender;
+import ulink.constructor.Client;
 import ulink.constructor.Index;
 import ulink.constructor.RankingReferredBy;
 import ulink.dao.DatabaseConnection;
@@ -27,14 +32,13 @@ public class MainTest {
 		//String endDate = request.getParameter("endDate");
 		//String team = request.getParameter("team");
 		DatabaseConnection connection = new DatabaseConnection();
+		ArrayList<Client> list = connection.retrieveAllClientList();
+		LinkedHashMap<String,Integer> visaTypeList = new LinkedHashMap<>();
+		
 		Utility utility = new Utility();
-		ArrayList<Index> indexList = connection.retrieveAllIndex("2015/01/01", "2017/01/01", "Visa");
-		LinkedHashMap<Integer,Integer> pointSystem = utility.getIndexCount(indexList);
-		Gson gson = new Gson();
-		System.out.println(indexList.size());
-		//PrintWriter out = response.getWriter();
-		System.out.println(pointSystem.toString());
-		System.out.println(utility.changeDateFormatDatabase("01/01/2016"));
+		
+		String startDate = "2015-05-05";
+		System.out.println(utility.getMonth(Integer.parseInt(startDate.substring(5,7))));
 	}
 
 }

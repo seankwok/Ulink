@@ -17,6 +17,7 @@ import com.google.gson.reflect.TypeToken;
 
 import ulink.constructor.KPI;
 import ulink.logic.TopK;
+import ulink.logic.Utility;
 
 /**
  * Servlet implementation class KPIVisa
@@ -44,42 +45,58 @@ public class KPIVisa extends HttpServlet {
 		String lastYearThisMonth = request.getParameter("lastYearThisMonth");
 		String lastYearLastMonth = request.getParameter("lastYearLastMonth");
 		TopK topk = new TopK();
-		KPI kpi = topk.getKPI(type, date);
-		KPI lastMonth = topk.getKPI(type, thisYearLastMonth);
-		KPI lastyear = topk.getKPI(type,lastYearThisMonth);
-		KPI LMLY = topk.getKPI(type,lastYearLastMonth);
-		PrintWriter out = response.getWriter();
-
+		int year = Integer.parseInt(date.substring(0, 4));
+		String month = date.substring(5);
+		System.out.println("TEST " + month);
+		Utility utility = new Utility();
+		String startDate = utility.getStartDateOfMonth(year+"-"+month+"-"+"01");
+		String endDate = utility.getEndDateOfMonth(year+"-"+month+"-"+"01");
+		int lastMonthDate = Integer.parseInt(thisYearLastMonth.substring(5));
+		int lastYearDate = Integer.parseInt(lastYearThisMonth.substring(0, 4));
+		String startDatelastMonth = utility.getStartDateOfMonth(year+"-"+lastMonthDate+"-"+"01");
+		String endDatelastMonth = utility.getEndDateOfMonth(year+"-"+lastMonthDate+"-"+"01");
+		String startDateLastYear = utility.getStartDateOfMonth(lastYearDate+"-"+month+"-"+"01");
+		String endDatelastYear = utility.getEndDateOfMonth(lastYearDate+"-"+month+"-"+"01");
+		
+		KPI kpi = topk.getKPI(type, startDate,endDate);
+		KPI lastMonth = topk.getKPI(type, startDatelastMonth,endDatelastMonth);
+		KPI lastyear = topk.getKPI(type,startDateLastYear,endDatelastYear);
+		//KPI LMLY = topk.getKPI(type,lastYearLastMonth);
+		
 		ArrayList<KPI> kpiList = new ArrayList<>();
 		kpiList.add(kpi);
 		kpiList.add(lastMonth);
-		int outChange = 0;
-		int inChange = 0;
+		double outChange = 0;
+		double inChange = 0;
 		
 		if (lastMonth.getInPatient() != 0){
-			inChange = (kpi.getInPatient()-lastMonth.getInPatient())/lastMonth.getInPatient();
+			inChange = (1.0*kpi.getInPatient()-lastMonth.getInPatient())/lastMonth.getInPatient()*100;
 		}
 		
 		if (lastMonth.getOutPatient() != 0){
-			outChange = (kpi.getOutPatient()-lastMonth.getOutPatient())/lastMonth.getOutPatient();
+			outChange = (1.0*kpi.getOutPatient()-lastMonth.getOutPatient())/lastMonth.getOutPatient()*100;
 		}
-		kpiList.add(new KPI("Increase\\Decrease",inChange,outChange));
+		kpiList.add(new KPI("Increase\\Decrease",Math.round(inChange),Math.round(outChange)));
+		kpiList.add(kpi);
 		kpiList.add(lastyear);
-		kpiList.add(LMLY);
 		
-		if (LMLY.getInPatient() != 0){
-			inChange = (lastyear.getInPatient()-LMLY.getInPatient())/LMLY.getInPatient();
+		
+		inChange = 0;
+		outChange = 0;
+		
+		if (lastyear.getInPatient() != 0){
+			inChange = (1.0*kpi.getInPatient()-lastyear.getInPatient())/lastyear.getInPatient()*100;
 		} else {
 			inChange = 0;
 		}
 		
-		if (lastMonth.getOutPatient() != 0){
-			outChange = (lastyear.getOutPatient()-LMLY.getOutPatient())/LMLY.getOutPatient();
+		if (lastyear.getOutPatient() != 0){
+			outChange = (1.0*kpi.getOutPatient()-lastyear.getOutPatient())/lastyear.getOutPatient()*100;
 		} else {
 			outChange = 0;
 		}
-		kpiList.add(new KPI("Increase\\Decrease",inChange,outChange));
-		//PrintWriter out = response.getWriter();
+		kpiList.add(new KPI("Increase\\Decrease",Math.round(inChange),Math.round(outChange)));
+		PrintWriter out = response.getWriter();
 		Gson gson = new Gson();
 
 		JsonArray result = (JsonArray) new Gson().toJsonTree(kpiList, new TypeToken<List<KPI>>() {
@@ -87,8 +104,7 @@ public class KPIVisa extends HttpServlet {
 		String arrayListToJson = gson.toJson(result);
 		out.write(arrayListToJson);
 		out.flush();
-		return;
-		
+		return;		
 	}
 
 	/**

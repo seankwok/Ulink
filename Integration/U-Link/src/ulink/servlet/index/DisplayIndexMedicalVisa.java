@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,8 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.reflect.TypeToken;
 
 import ulink.constructor.Index;
+import ulink.constructor.RankingReferredBy;
 import ulink.dao.DatabaseConnection;
 import ulink.logic.Utility;
 
@@ -48,8 +52,10 @@ public class DisplayIndexMedicalVisa extends HttpServlet {
 		ArrayList<Index> indexList = connection.retrieveAllIndex(utility.changeDateFormatDatabase(startDate), utility.changeDateFormatDatabase(endDate), team);
 		LinkedHashMap<Integer,Integer> pointSystem = utility.getIndexCount(indexList);
 		Gson gson = new Gson();
+		JsonArray result = (JsonArray) new Gson().toJsonTree(pointSystem, new TypeToken<LinkedHashMap<Integer,Integer>>() {
+		}.getType());
 		PrintWriter out = response.getWriter();
-		String arrayListToJson = gson.toJson(pointSystem);
+		String arrayListToJson = gson.toJson(result);
 	//	System.out.print(arrayListToJson);
 		out.write(arrayListToJson);
 		out.flush();

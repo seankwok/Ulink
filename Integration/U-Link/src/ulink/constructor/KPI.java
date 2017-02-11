@@ -2,10 +2,10 @@ package ulink.constructor;
 
 public class KPI {
 	private String date;
-	private int inPatient;
-	private int outPatient;
+	private double inPatient;
+	private double outPatient;
 		
-	public KPI(String date, int inPatient, int outPatient) {
+	public KPI(String date, double inPatient, double outPatient) {
 		super();
 		this.date = date;
 		this.inPatient = inPatient;
@@ -17,13 +17,13 @@ public class KPI {
 	public void setDate(String date) {
 		this.date = date;
 	}
-	public int getInPatient() {
+	public double getInPatient() {
 		return inPatient;
 	}
 	public void setInPatient(int inPatient) {
 		this.inPatient = inPatient;
 	}
-	public int getOutPatient() {
+	public double getOutPatient() {
 		return outPatient;
 	}
 	public void setOutPatient(int outPatient) {

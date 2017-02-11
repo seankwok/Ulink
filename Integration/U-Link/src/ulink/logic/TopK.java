@@ -227,44 +227,60 @@ public class TopK {
 		return ageGenderReport;
 	}
 
-	public KPI getKPI(String type, String date) {
+	public KPI getKPI(String type, String startDate, String endDate) {
 		// ArrayList<KPI> kpiList = new ArrayList<>();
-		ArrayList<Client> clientList = connection.retrieveAllClientByType(type);
+		ArrayList<Client> clientList = connection.retrieveAllClientByType(type, startDate, endDate);
 		int in = 0;
 		int out = 0;
 
 		for (int i = 1; i < clientList.size(); i++) {
 			Client client = clientList.get(i);
-			if (client.getCreatedtime().contains(date) && client.getHospitalAdmitted() != null) {
+			if (client.getHospitalAdmitted().length() > 0) {
 				in++;
-			} else if (client.getCreatedtime().contains(date) && client.getHospitalAdmitted() == null) {
+			} else if (client.getHospitalAdmitted().length() == 0) {
 				out++;
 			}
 		}
 
 		Utility utility = new Utility();
+		int temp;
+		try {
+		 temp = Integer.parseInt(startDate.substring(5,7));
+		} catch (NumberFormatException e){
+			temp = Integer.parseInt(startDate.substring(5,6));
+		}
+		
+		String month = utility.getMonth(temp);
 
-		String month = utility.getMonth(Integer.parseInt(date.substring(5)));
-
-		return new KPI(month + "-" + date.substring(0, 4), in, out);
+		return new KPI(month + "-" + startDate.substring(0, 4), in, out);
 	}
 
-	public KPI getKPIVisa(String type, String date) {
+	public KPI getKPIVisa(String type, String startDate, String endDate) {
 		// ArrayList<KPI> kpiList = new ArrayList<>();
-		ArrayList<Client> clientList = connection.retrieveAllClientByType(type);
+		ArrayList<Client> clientList = connection.retrieveAllClientByType(type, startDate, endDate);
 		int in = 0;
 		int out = 0;
 
 		for (int i = 1; i < clientList.size(); i++) {
 			Client client = clientList.get(i);
-			if (client.getCreatedtime().contains(date) && client.getVisaType().contains("Indonesia")) {
+			if (client.getVisaType().contains("Indonesia")) {
 				in++;
-			} else if (client.getCreatedtime().contains(date)) {
+			} else {
 				out++;
 			}
 		}
 
-		return new KPI(date, in, out);
+		Utility utility = new Utility();
+		int temp;
+		try {
+		 temp = Integer.parseInt(startDate.substring(5,7));
+		} catch (NumberFormatException e){
+			temp = Integer.parseInt(startDate.substring(5,6));
+		}
+		
+		String month = utility.getMonth(temp);
+
+		return new KPI(month + "-" + startDate.substring(0, 4), in, out);
 	}
 
 	public HashMap<String, Integer> topSpeciality(String startDate, String endDate) {
