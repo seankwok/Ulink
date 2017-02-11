@@ -39,6 +39,8 @@ public class DisplayDashboardVisa extends HttpServlet {
 		// TODO Auto-generated method stub
 		PrintWriter out = response.getWriter();
 		DatabaseConnection connection = new DatabaseConnection();
+		String date = connection.retrieveLatestDate();
+		
 		ArrayList<String> list = connection.retrievePastSixMonthRecord("Visa", connection.retrieveLatestDate());
 		LinkedHashMap<String,Integer> pastSixMonth = new LinkedHashMap<>();
 		

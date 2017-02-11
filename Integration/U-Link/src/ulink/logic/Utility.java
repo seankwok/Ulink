@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Properties;
 import java.util.TreeMap;
 
@@ -112,9 +113,14 @@ public class Utility {
 		return two.format(Math.sqrt(temp));
 	}
 	
-	public HashMap<Integer,Integer> getIndexCount(ArrayList<Index> indexList){
+	public LinkedHashMap<Integer,Integer> getIndexCount(ArrayList<Index> indexList){
 		
-		HashMap<Integer, Integer> pointSystem = new HashMap<>();
+		LinkedHashMap<Integer, Integer> pointSystem = new LinkedHashMap<>();
+		
+		pointSystem.put(0,0);
+		pointSystem.put(1,0);
+		pointSystem.put(2,0);
+		pointSystem.put(3,0);
 
 		for (int i = 0; i < indexList.size(); i++) {
 			int point = 0;
@@ -131,8 +137,6 @@ public class Utility {
 			if (pointSystem.containsKey(point)){
 				int temp = pointSystem.get(point);
 				pointSystem.put(point, temp+1);
-			} else {
-				pointSystem.put(point, 0);
 			}
 		}
 		return pointSystem;

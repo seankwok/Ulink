@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -45,11 +46,11 @@ public class DisplayIndexMedicalVisa extends HttpServlet {
 		String team = request.getParameter("team");
 		Utility utility = new Utility();
 		ArrayList<Index> indexList = connection.retrieveAllIndex(startDate, endDate, team);
-		HashMap<Integer,Integer> pointSystem = utility.getIndexCount(indexList);
+		LinkedHashMap<Integer,Integer> pointSystem = utility.getIndexCount(indexList);
 		Gson gson = new Gson();
 		PrintWriter out = response.getWriter();
 		String arrayListToJson = gson.toJson(pointSystem);
-		System.out.print(arrayListToJson);
+	//	System.out.print(arrayListToJson);
 		out.write(arrayListToJson);
 		out.flush();
 		return;
