@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+
+
+
+
 <html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -19,6 +23,10 @@
     </script> 
 
 	<style>
+			.errorMsg {
+			   font-size: 15px; 
+			   text-align: center;
+			}
 				/* Dropdown Button */
 			.dropbtn {
 			    background-color: brown;
@@ -71,13 +79,17 @@
 	
 	<script type="text/javascript">
 
-		function selectName(){
-		 	var cursorPos = $('#text').prop('selectionStart');
-            var v = $('#text').val();
-            var textBefore = v.substring(0,  cursorPos );
-            var textAfter  = v.substring( cursorPos, v.length );
-            $('#text').val( textBefore+ " <clientName> " +textAfter );
 
+		function showFields(){
+			return '<html><body><%clientName><br><%clientEmail><br><%screening></body></html>'
+		}
+		
+		function selectClientName(){
+			 var myIFrame = document.getElementById('iframe');
+		     var content = myIFrame.contentWindow.document.body.innerHTML;
+		     console.log("old: "+content);
+		     var newContent = '<clientName>';
+		     console.log("new: "+content);
 		}
 		function selectScreening(){
 			 var myIFrame = document.getElementById('iframe');
@@ -104,10 +116,31 @@
 	    	doc.write(frameContent);
 	    	doc.close();
 	    }
-	    function trySave(){
-	    	var doc = document.getElementById('iframe').contentWindow.document;
-	    	console.log(doc);
-	    }
+	    	    
+	    function save(){
+	    	var templateName = $('#template').val();
+	    	console.log("A: "+ templateName);
+	    	if (templateName == ""){
+	      		$('#errMsg').html("Template Name Required!");	 	    		  
+	    	}else{
+	    		console.log("IN ELSE");
+		    	var doc = document.getElementById('iframe').contentWindow.document;
+		    	$.ajax({
+					type: 'get',
+					url: "CreateEmailTemplate",
+					data: 'templateName=' + templateName
+						+ '&'
+						+ 'msg=' + doc,
+					complete: function(data){
+					console.log(data.responseText);			
+					}
+				});
+		    	$('#exampleModal').modal('hide');
+		    	$('#errMsg').html("");
+	    	}
+	    }	
+		
+
 
 	</script>
 </head>
@@ -116,7 +149,8 @@
 		
 <body onload="enableEditMode();">
 		<div id="includedContent"></div>
-		<div>
+	<div align="left" >
+		<div class='container'>
 			<button onclick="execCmd('bold');"><b>B</b><i class="fa fa-bold"></i></button>
 			<button onclick="execCmd('italic');"><i>I</i><i class="fa fa-italic"></i></button>
 			<button onclick="execCmd('underline');">U<i class="fa fa-underline"></i></button>
@@ -128,8 +162,6 @@
 			<button onclick="execCmd('redo');">Redo<i class="fa fa-repeat"></i></button>
 			<button onclick="execCmd('insertUnorderedList');">Bullets<i class="fa fa-list-ul"></i></button>
 			<button onclick="execCmd('insertOrderedList');">Number List<i class="fa fa-list-ol"></i></button>
-			
-			<br/>
 			<select onchange="execCommandWithArg('fontName', this.value);">
 				<option value="Arial">Arial</option>
 				<option value="Comic Sans MS">Comic Sans MS</option>
@@ -152,28 +184,45 @@
 				<option value="11">18</option>
 			</select>
 			Font Color: <input type="color" onchange="execCommandWithArg('foreColor', this.value);">
-			<button onclick="execCmd('selectAll');">Select All</button>
-			
-		</div>
-				<div>
-				
-			<button onclick='selectName()'>insert Name</button>
-			<button onclick='selectScreening()'>insert Screening</button>
-			<button onclick='selectEmail()'>insert Email</button>
-			
+			<button onclick="execCmd('selectAll');">Select All</button>	
+			<br><br>
 			<button onclick='copyContent()'>Get from Template</button>
-			<button onclick="trySave()">Save as template</button>					
-			<div class="dropdown">
-			  <button class="dropbtn">Select Field</button>
-			  <div class="dropdown-content">
-			  <a id="name"  href="#" onclick="selectName();return false;">Client Name</a>
-			  <a id="screening"  href="#" onclick="selectScreening();return false;">Screening</a>
-			  <a id="email" href="#" onclick="selectEmail();return false;">Email</a>
-			  </div>
-			</div>
-		</div>		
-		<iframe id="iframe"  name="richTextField" style="width: 1000px; height: 500px;"></iframe>
-		<div align='right'><button>Send to ...</button></div>
+			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Save as Template</button>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel"><b>Save Template As</b></h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="message-text" class="form-control-label">Template Name:</label>
+            <textarea class="form-control" id="template" ></textarea>
+	            <div class="modal-footer">
+	        		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        		<input type="button" class="btn btn-primary" onClick='save()' value='save'> 
+	     		 </div>
+          </div>
+        </form>
+        <div id='errMsg' style='color:red' class='errorMsg'></div>
+        
+      </div>
+    </div>
+  </div>
+</div>	
+		</div>
+		<br>
+	</div>				
+		
+		<br>
+		<div class='container' >
+			<iframe id="iframe"  src="javascript:parent.showFields()" name="richTextField" style="width: 1000px; height: 500px;"></iframe>
+			<br><div align='center'><button>Send to ...</button></div>
+		</div>	
+
 		<script type="text/javascript">
 
 			var showingSourceCode = false;
