@@ -43,6 +43,7 @@
  			var team = $("#teamName").val();
  			var startDate = $("#datepicker1").val();
 			var endDate = $("#datepicker2").val();
+<<<<<<< HEAD
 			
  			console.log(team);
  			
@@ -60,6 +61,16 @@
  					
  				}
  			});
+=======
+			if(startDate>endDate){
+				$('#error').html("Start Date should be before End Date!"); 
+				$("#result").html("");
+				return;
+			}
+ 			console.log(team);
+ 			
+ 			if (team == "medical"){
+>>>>>>> origin/master
  				Highcharts.chart('container', {
  				    chart: {
  				        type: 'column'
@@ -165,14 +176,39 @@
  				});
  			}
  			
+<<<<<<< HEAD
  			//displayMembers();
+=======
+ 			displayMembers();
+>>>>>>> origin/master
  			
  		});
  		
  	});
  	
 	function displayMembers(){
+<<<<<<< HEAD
 		
+=======
+		var name = "";
+		var data = [];
+	
+		$.ajax({
+			url : "",
+			type : "get",
+			data : "json",
+			complete : function(data) {
+				var json = jQuery.parseJSON(JSON.stringify(data));	
+				console.log(json);
+				
+				$.each(json.responseJSON,function(key, value) {
+		    		month.push(key);
+		    		num.push(value);
+		    		console.log(key);
+		    		
+		    	});
+			}
+>>>>>>> origin/master
 	}
  	
  	

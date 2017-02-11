@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="ISO-8859-1">
+	<title>Template</title>
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="js/jquery-1.12.0.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	 <script> 
+	    $(function(){
+	      $("#includedContent").load("navBar.html"); 
+	    });
+    </script> 
+    
+   	<script type="text/javascript">
+		function selectTemplate(){
+			var templateName = 'Test1'
+	    	$.ajax({	    	
+		    	url : "RetrieveEmailTemplate",
+				type : "post",
+				data: 'templateName=' + templateName,
+				complete : function(data) {
+					var json = jQuery.parseJSON(data.responseText);
+					console.log(json);
+			});
+		}
+		
+		
+	</script>
+</head>
+<body>
+	<div id="includedContent"></div>
+	
+	<table>
+		<tr><th width='10%'>#</th><th >Template Name</th><th>Option</th></tr>
+		<tr><td>1</td><td><a href="#" onclick="selectTemplate();return false;">Template 1</a></td><td>Delete</td></tr>
+		<tr><td>2</td><td>Template 2</td><td>Delete</td></tr>
+	</table>
+	
+	
+</body>
+</html>
