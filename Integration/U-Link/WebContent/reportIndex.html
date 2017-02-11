@@ -43,146 +43,138 @@
  			var team = $("#teamName").val();
  			var startDate = $("#datepicker1").val();
 			var endDate = $("#datepicker2").val();
-			if(startDate>endDate){
+			
+			if(startDate > endDate){
 				$('#error').html("Start Date should be before End Date!"); 
-				$("#result").html("");
 				return;
 			}
- 			console.log(team);
- 			
- 			if (team == "medical"){
- 				Highcharts.chart('container', {
- 				    chart: {
- 				        type: 'column'
- 				    },
- 				    title: {
- 				        text: 'Overall results for Medical Team'
- 				    },
- 				    
- 				    xAxis: {
- 				        categories: [
- 				            '0',
- 				            '1',
- 				            '2',
- 				            '3'
- 				        ],
- 				        title: {
- 				            text: 'Point of contact'
- 				        },
- 				        crosshair: true
- 				    },
- 				    
- 				    yAxis: {
- 				        min: 0,
- 				        title: {
- 				            text: 'Percentage of clients'
- 				        }
- 				    },
- 				    tooltip: {
- 				        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
- 				        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
- 				            '<td style="padding:0"><b>{point.y:.1f} clients</b></td></tr>',
- 				        footerFormat: '</table>',
- 				        shared: true,
- 				        useHTML: true
- 				    },
- 				    plotOptions: {
- 				        column: {
- 				            pointPadding: 0.2,
- 				            borderWidth: 0
- 				        }
- 				    },
- 				    credits: {
- 			 	        enabled: false
- 			 	    },
- 				    series: [{
- 				        data: [1,2,2,8]
+			
+			var points = [];
+			var val = [];
+			
+			
+			$.ajax({
+				url: "DisplayIndexMedicalVisa",
+				type: "get",
+			    data : 'team=' + team
+						+ '&'
+						+ 'startDate=' + startDate
+						+ '&'
+						+ 'endDate=' + endDate,
+			    complete: function(data){
+			    	var json = jQuery.parseJSON(JSON.stringify(data));	
+					console.log(json.responseText);
+					var response = JSON.parse(json.responseText);
+					console.log(response);
+					$.each(response, function(key, value){
+						points.push(key);
+						val.push(value);
+					});
+					if (team == "medical"){
+		 				Highcharts.chart('container', {
+		 				    chart: {
+		 				        type: 'column'
+		 				    },
+		 				    title: {
+		 				        text: 'Overall results for Medical Team'
+		 				    },
+		 				    
+		 				    xAxis: {
+		 				        categories: points,
+		 				        title: {
+		 				            text: 'Point of contact'
+		 				        },
+		 				        crosshair: true
+		 				    },
+		 				    
+		 				    yAxis: {
+		 				        min: 0,
+		 				        title: {
+		 				            text: 'Percentage of clients'
+		 				        }
+		 				    },
+		 				    tooltip: {
+		 				        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+		 				        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+		 				            '<td style="padding:0"><b>{point.y:.1f} clients</b></td></tr>',
+		 				        footerFormat: '</table>',
+		 				        shared: true,
+		 				        useHTML: true
+		 				    },
+		 				    plotOptions: {
+		 				        column: {
+		 				            pointPadding: 0.2,
+		 				            borderWidth: 0
+		 				        }
+		 				    },
+		 				    credits: {
+		 			 	        enabled: false
+		 			 	    },
+		 				    series: [{
+		 				    	name: "Percentage",
+		 				        data: val
 
- 				    }]
- 				
- 				   
- 				});
- 			} else{
- 				Highcharts.chart('container', {
- 				    chart: {
- 				        type: 'column'
- 				    },
- 				    title: {
- 				        text: 'Overall results for Visa Team'
- 				    },
- 				    
- 				    xAxis: {
- 				        categories: [
- 				            '0',
- 				            '1',
- 				            '2',
- 				            '3'
- 				        ],
- 				        title: {
- 				            text: 'Point of contact'
- 				        },
- 				        crosshair: true
- 				    },
- 				    
- 				    yAxis: {
- 				        min: 0,
- 				        title: {
- 				            text: 'Percentage of clients'
- 				        }
- 				    },
- 				    tooltip: {
- 				        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
- 				        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
- 				            '<td style="padding:0"><b>{point.y:.1f} clients</b></td></tr>',
- 				        footerFormat: '</table>',
- 				        shared: true,
- 				        useHTML: true
- 				    },
- 				    plotOptions: {
- 				        column: {
- 				            pointPadding: 0.2,
- 				            borderWidth: 0
- 				        }
- 				    },
- 				    credits: {
- 			 	        enabled: false
- 			 	    },
- 				    series: [{
- 				        data: [1,2,2,8]
-
- 				    }]
- 				
- 				   
- 				});
- 			}
- 			
- 			displayMembers();
- 			
- 		});
+		 				    }]
+		 				
+		 				});
+					}else{
+						Highcharts.chart('container', {
+		 				    chart: {
+		 				        type: 'column'
+		 				    },
+		 				    title: {
+		 				        text: 'Overall results for Visa Team'
+		 				    },
+		 				    
+		 				    xAxis: {
+		 				        categories: points,
+		 				        title: {
+		 				            text: 'Point of contact'
+		 				        },
+		 				        crosshair: true
+		 				    },
+		 				    
+		 				    yAxis: {
+		 				        min: 0,
+		 				        title: {
+		 				            text: 'Percentage of clients'
+		 				        }
+		 				    },
+		 				    tooltip: {
+		 				        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+		 				        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+		 				            '<td style="padding:0"><b>{point.y:.1f} clients</b></td></tr>',
+		 				        footerFormat: '</table>',
+		 				        shared: true,
+		 				        useHTML: true
+		 				    },
+		 				    plotOptions: {
+		 				        column: {
+		 				            pointPadding: 0.2,
+		 				            borderWidth: 0
+		 				        }
+		 				    },
+		 				    credits: {
+		 			 	        enabled: false
+		 			 	    },
+		 				    series: [{
+		 				    	name: "Percentage",
+		 				        data: val
+		 				    }]
+		 				
+		 				});
+					}
+		 				
+		 			
+		 			
+			    }
+			
+		 		});
+		 	  
+			  
+ 		});		
  		
  	});
- 	
-	function displayMembers(){
-		var name = "";
-		var data = [];
-	
-		$.ajax({
-			url : "",
-			type : "get",
-			data : "json",
-			complete : function(data) {
-				var json = jQuery.parseJSON(JSON.stringify(data));	
-				console.log(json);
-				
-				$.each(json.responseJSON,function(key, value) {
-		    		month.push(key);
-		    		num.push(value);
-		    		console.log(key);
-		    		
-		    	});
-			}
-	}
- 	
  	
  	
  	
@@ -232,14 +224,13 @@
 	<div class="container" align="center">
         <button type="submit" value="Submit" class="btn btn-default" id="submit">Generate Results</button>
     </div>
-     <div style='color:red' id='error' class='errorMsg'> </div> 
+     <div style='color:red' id='error' class='errorMsg'> </div>
 
 	</div>
 	</div>
 	
 	<div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
 	
-	<div id="member" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
      
 </body>
 </html>
