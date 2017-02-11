@@ -126,7 +126,7 @@
 	    		console.log("IN ELSE");
 		    	var doc = document.getElementById('iframe').contentWindow.document;
 		    	$.ajax({
-					type: 'get',
+					type: 'post',
 					url: "CreateEmailTemplate",
 					data: 'templateName=' + templateName
 						+ '&'
@@ -140,8 +140,6 @@
 	    	}
 	    }	
 		
-
-
 	</script>
 </head>
 
@@ -149,6 +147,9 @@
 		
 <body onload="enableEditMode();">
 		<div id="includedContent"></div>
+	<div class="page-header">
+		<h1 align="center">New Email</h1>
+	</div>
 	<div align="left" >
 		<div class='container'>
 			<button onclick="execCmd('bold');"><b>B</b><i class="fa fa-bold"></i></button>
@@ -186,7 +187,7 @@
 			Font Color: <input type="color" onchange="execCommandWithArg('foreColor', this.value);">
 			<button onclick="execCmd('selectAll');">Select All</button>	
 			<br><br>
-			<button onclick='copyContent()'>Get from Template</button>
+			<button class="btn btn-secondary" onclick='getTemplate()'>Choose Template</button>
 			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Save as Template</button>
 
 

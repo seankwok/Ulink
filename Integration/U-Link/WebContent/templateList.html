@@ -19,9 +19,16 @@
     </script> 
     
    	<script type="text/javascript">
-		function copyContent(){
-			window.location.href = "draftEmail.html";
-			document.getElementById("text").value = "Fifth Avenue, New York City";
+		function selectTemplate(){
+			var templateName = 'Test1'
+	    	$.ajax({	    	
+		    	url : "RetrieveEmailTemplate",
+				type : "post",
+				data: 'templateName=' + templateName,
+				complete : function(data) {
+					var json = jQuery.parseJSON(data.responseText);
+					console.log(json);
+			});
 		}
 		
 		
@@ -32,7 +39,7 @@
 	
 	<table>
 		<tr><th width='10%'>#</th><th >Template Name</th><th>Option</th></tr>
-		<tr><td>1</td><td><a href="#" onclick="copyContent();return false;">Template 1</a></td><td>Delete</td></tr>
+		<tr><td>1</td><td><a href="#" onclick="selectTemplate();return false;">Template 1</a></td><td>Delete</td></tr>
 		<tr><td>2</td><td>Template 2</td><td>Delete</td></tr>
 	</table>
 	
