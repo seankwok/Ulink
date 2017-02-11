@@ -3,3 +3,13 @@ For email function
 - subject
 - msg
 
+DashBoard
+- DisplayLastMonth method 
+to get the last month it will return you a String that display the month only
+- DisplayThisMotnh method 
+to get Latest month it will return you a String that display the month only
+
+
+Bootstrap
+- DisplayDateTime method 
+to get the latest upload and display it. Return the latest date in String 

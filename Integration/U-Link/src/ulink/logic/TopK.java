@@ -37,6 +37,10 @@ public class TopK {
 		double f70 = 0;
 		double m80 = 0;
 		double f80 = 0;
+		double m90 = 0;
+		double f90 = 0;
+		
+		
 
 		for (int i = 0; i < clientList.size(); i++) {
 			Client client = clientList.get(i);
@@ -56,10 +60,12 @@ public class TopK {
 						m60++;
 					} else if (client.getAge() <= 70) {
 						m70++;
-					} else {
+					} else if (client.getAge() <= 80) {
 						m80++;
+					} else {
+						m90++;
 					}
-				} else if (client.getGender().equals("Female")){
+				} else if (client.getGender().equals("Female")) {
 					if (client.getAge() <= 10) {
 						f10++;
 					} else if (client.getAge() <= 20) {
@@ -74,16 +80,16 @@ public class TopK {
 						f60++;
 					} else if (client.getAge() <= 70) {
 						f70++;
-					} else {
+					} else if (client.getAge() <= 80) {
 						f80++;
+					} else {
+						f90++;
 					}
 				}
 			}
 
 		}
-		
-		
-		
+
 		double total10 = 0;
 		double total20 = 0;
 		double total30 = 0;
@@ -92,18 +98,23 @@ public class TopK {
 		double total60 = 0;
 		double total70 = 0;
 		double total80 = 0;
+		double total90 = 0;
+		double sumOfClient = m10 + m20 + m30 + m40+ m50 + m60+ m70 +m80+ m90 +f10+f20+f30+f40+f50+f60+f70+f80+f90;
+		
+		
 		if (clientList.size() != 0) {
 			System.out.println(clientList.size());
-			total10 = 1.0 * (m10 + f10) / clientList.size() * 100;
-			total20 = 1.0 * (m20 + f20) / clientList.size() * 100;
-			total30 = 1.0 * (m30 + f30) / clientList.size() * 100;
-			total40 = 1.0 * (m40 + f40) / clientList.size() * 100;
-			total50 = 1.0 * (m50 + f50) / clientList.size() * 100;
-			total60 = 1.0 * (m60 + f60) / clientList.size() * 100;
-			total70 = 1.0 * (m70 + f70) / clientList.size() * 100;
-			total80 = 1.0 * (m80 + f80) / clientList.size() * 100;
+			total10 = 1.0 * (m10 + f10) / sumOfClient * 100;
+			total20 = 1.0 * (m20 + f20) / sumOfClient * 100;
+			total30 = 1.0 * (m30 + f30) / sumOfClient * 100;
+			total40 = 1.0 * (m40 + f40) / sumOfClient * 100;
+			total50 = 1.0 * (m50 + f50) / sumOfClient * 100;
+			total60 = 1.0 * (m60 + f60) / sumOfClient * 100;
+			total70 = 1.0 * (m70 + f70) / sumOfClient * 100;
+			total80 = 1.0 * (m80 + f80) / sumOfClient * 100;
+			total90 = 1.0 * (m90 + f90) / sumOfClient * 100;
 		}
-		
+
 		double totalm10 = 0;
 		double totalm20 = 0;
 		double totalm30 = 0;
@@ -112,39 +123,43 @@ public class TopK {
 		double totalm60 = 0;
 		double totalm70 = 0;
 		double totalm80 = 0;
-		
-		if (m10+f10 != 0){
+		double totalm90 = 0;
+
+		if (m10 + f10 != 0) {
 			totalm10 = 1.0 * m10 / (m10 + f10) * 100;
 		}
-		
-		if (m20+f20 != 0){
-			totalm20 = 1.0 *  m20 / (m20 + f20) * 100;
+
+		if (m20 + f20 != 0) {
+			totalm20 = 1.0 * m20 / (m20 + f20) * 100;
 		}
-		
-		if (m30+f30 != 0){
+
+		if (m30 + f30 != 0) {
 			totalm30 = 1.0 * m30 / (m30 + f30) * 100;
 		}
-		
-		if (m40+f40 != 0){
+
+		if (m40 + f40 != 0) {
 			totalm40 = 1.0 * m40 / (m40 + f40) * 100;
 		}
-		
-		if (m50+f50 != 0){
+
+		if (m50 + f50 != 0) {
 			totalm50 = 1.0 * m50 / (m50 + f50) * 100;
 		}
-		
-		if (m60+f60 != 0){
+
+		if (m60 + f60 != 0) {
 			totalm60 = 1.0 * m60 / (m60 + f60) * 100;
 		}
-		
-		if (m70+f70 != 0){
+
+		if (m70 + f70 != 0) {
 			totalm70 = 1.0 * m70 / (m70 + f70) * 100;
 		}
-		
-		if (m80+f80 != 0){
+
+		if (m80 + f80 != 0) {
 			totalm80 = 1.0 * m80 / (m80 + f80) * 100;
 		}
-		
+		if (m90 + f90 != 0) {
+			totalm90 = 1.0 * m90 / (m90 + f90) * 100;
+		}
+
 		double totalf10 = 0;
 		double totalf20 = 0;
 		double totalf30 = 0;
@@ -153,50 +168,62 @@ public class TopK {
 		double totalf60 = 0;
 		double totalf70 = 0;
 		double totalf80 = 0;
-		
-		if (m10+f10 != 0){
+		double totalf90 = 0;
+
+		if (m10 + f10 != 0) {
 			totalf10 = 1.0 * f10 / (m10 + f10) * 100;
 		}
-		
-		if (m20+f20 != 0){
+
+		if (m20 + f20 != 0) {
 			totalf20 = 1.0 * f20 / (m20 + f20) * 100;
 		}
-		
-		if (m30+f30 != 0){
+
+		if (m30 + f30 != 0) {
 			totalf30 = 1.0 * f30 / (m30 + f30) * 100;
 		}
-		
-		if (m40+f40 != 0){
+
+		if (m40 + f40 != 0) {
 			totalf40 = 1.0 * f40 / (m40 + f40) * 100;
 		}
-		
-		if (m50+f50 != 0){
+
+		if (m50 + f50 != 0) {
 			totalf50 = 1.0 * f50 / (m50 + f50) * 100;
 		}
-		
-		if (m60+f60 != 0){
+
+		if (m60 + f60 != 0) {
 			totalf60 = 1.0 * f60 / (m60 + f60) * 100;
 		}
-		
-		if (m70+f70 != 0){
+
+		if (m70 + f70 != 0) {
 			totalf70 = 1.0 * f70 / (m70 + f70) * 100;
 		}
-		
-		if (m80+f80 != 0){
+
+		if (m80 + f80 != 0) {
 			totalf80 = 1.0 * f80 / (m80 + f80) * 100;
 		}
-		
-		 DecimalFormat two = new DecimalFormat("0.00");
+		if (m90 + f90 != 0) {
+			totalf90 = 1.0 * f90 / (m90 + f90) * 100;
+		}
+		DecimalFormat two = new DecimalFormat("0.00");
 
-		ageGenderReport.add(new AgeAndGender("10", Double.parseDouble(two.format(totalm10)), Double.parseDouble(two.format(totalf10)), Double.parseDouble(two.format(total10))));
-		ageGenderReport.add(new AgeAndGender("20", Double.parseDouble(two.format(totalm20)), Double.parseDouble(two.format(totalf20)), Double.parseDouble(two.format(total20))));
-		ageGenderReport.add(new AgeAndGender("30", Double.parseDouble(two.format(totalm30)), Double.parseDouble(two.format(totalf30)), Double.parseDouble(two.format(total30))));
-		ageGenderReport.add(new AgeAndGender("40", Double.parseDouble(two.format(totalm40)), Double.parseDouble(two.format(totalf40)), Double.parseDouble(two.format(total40))));
-		ageGenderReport.add(new AgeAndGender("50", Double.parseDouble(two.format(totalm50)), Double.parseDouble(two.format(totalf50)), Double.parseDouble(two.format(total50))));
-		ageGenderReport.add(new AgeAndGender("60", Double.parseDouble(two.format(totalm60)), Double.parseDouble(two.format(totalf60)), Double.parseDouble(two.format(total60))));
-		ageGenderReport.add(new AgeAndGender("70", Double.parseDouble(two.format(totalm70)), Double.parseDouble(two.format(totalf70)), Double.parseDouble(two.format(total70))));
-		ageGenderReport.add(new AgeAndGender("80", Double.parseDouble(two.format(totalm80)), Double.parseDouble(two.format(totalf80)), Double.parseDouble(two.format(total80))));
-
+		ageGenderReport.add(new AgeAndGender("10", Double.parseDouble(two.format(totalm10)),
+				Double.parseDouble(two.format(totalf10)), Double.parseDouble(two.format(total10))));
+		ageGenderReport.add(new AgeAndGender("20", Double.parseDouble(two.format(totalm20)),
+				Double.parseDouble(two.format(totalf20)), Double.parseDouble(two.format(total20))));
+		ageGenderReport.add(new AgeAndGender("30", Double.parseDouble(two.format(totalm30)),
+				Double.parseDouble(two.format(totalf30)), Double.parseDouble(two.format(total30))));
+		ageGenderReport.add(new AgeAndGender("40", Double.parseDouble(two.format(totalm40)),
+				Double.parseDouble(two.format(totalf40)), Double.parseDouble(two.format(total40))));
+		ageGenderReport.add(new AgeAndGender("50", Double.parseDouble(two.format(totalm50)),
+				Double.parseDouble(two.format(totalf50)), Double.parseDouble(two.format(total50))));
+		ageGenderReport.add(new AgeAndGender("60", Double.parseDouble(two.format(totalm60)),
+				Double.parseDouble(two.format(totalf60)), Double.parseDouble(two.format(total60))));
+		ageGenderReport.add(new AgeAndGender("70", Double.parseDouble(two.format(totalm70)),
+				Double.parseDouble(two.format(totalf70)), Double.parseDouble(two.format(total70))));
+		ageGenderReport.add(new AgeAndGender("80", Double.parseDouble(two.format(totalm80)),
+				Double.parseDouble(two.format(totalf80)), Double.parseDouble(two.format(total80))));
+		ageGenderReport.add(new AgeAndGender("90", Double.parseDouble(two.format(totalm90)),
+				Double.parseDouble(two.format(totalf90)), Double.parseDouble(two.format(total90))));
 		return ageGenderReport;
 	}
 

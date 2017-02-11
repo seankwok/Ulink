@@ -46,7 +46,7 @@ public class DisplayAllVisaType extends HttpServlet {
 		
 		for (int i=0; i <list.size(); i++){
 			Client c = list.get(i);
-			if(c.getVisaType() != ""){
+			if(c.getVisaType().length() > 0){
 			if (visaTypeList.containsKey(c.getVisaType())){
 				int temp = visaTypeList.get(c.getVisaType());
 				visaTypeList.put(c.getVisaType(), temp+1);
@@ -54,7 +54,7 @@ public class DisplayAllVisaType extends HttpServlet {
 				visaTypeList.put(c.getVisaType(), 1);
 			}
 			}
-			System.out.println(visaTypeList.keySet());
+			//System.out.println(visaTypeList.keySet());
 		}
 		
 		Gson gson = new Gson();

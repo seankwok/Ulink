@@ -36,7 +36,7 @@ public class DatabaseConnection {
 				billing += rs.getString(5);
 				String phone = rs.getString(6);
 				String email = rs.getString(7);
-				IndexList.add(new Index(billing, phone,email));
+				IndexList.add(new Index(billing, phone, email));
 			}
 
 			con.close();
@@ -58,15 +58,28 @@ public class DatabaseConnection {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
-			String sql = "select  referredBy, count(referredBy) from client where  CreatedTime >= DATE_SUB('" + date
-					+ "', INTERVAL 1 MONTH) and referredBy != '' group by referredBy ORDER BY COUNT(referredBy) DESC";
+			String sql = "select referredBy, count(referredBy) from client where  CreatedTime >= DATE_SUB('" + date
+					+ "', INTERVAL 1 MONTH) and referredBy != '' group by referredBy ORDER BY COUNT(referredBy) DESC ";
 			ResultSet rs = stmt.executeQuery(sql);
 			Utility utility = new Utility();
-
+			int ranking = 0;
+			int previous = 0;
 			while (rs.next()) {
 				String referredBy = rs.getString(1);
 				int count = rs.getInt(2);
-				referredByList.add(new RankingReferredBy(referredBy, count));
+
+				if (previous == count) {
+					referredByList.add(new RankingReferredBy(ranking, referredBy, count));
+
+				} else {
+					if (ranking < 3) {
+						ranking++;
+						referredByList.add(new RankingReferredBy(ranking, referredBy, count));
+						previous = count;
+					}
+
+				}
+
 			}
 
 			con.close();
@@ -89,16 +102,29 @@ public class DatabaseConnection {
 
 			Statement stmt = con.createStatement();
 			String sql = "select doctor, clinic, specialty, count(appointment) from client where  CreatedTime >= DATE_SUB('"
-					+ date + "', INTERVAL 1 MONTH) and doctor != '' group by doctor ORDER BY COUNT(appointment) DESC";
+					+ date + "', INTERVAL 1 MONTH) and doctor != '' group by doctor ORDER BY COUNT(appointment) DESC ";
 			ResultSet rs = stmt.executeQuery(sql);
 			Utility utility = new Utility();
-
+			int ranking = 0;
+			int previous = 0;
 			while (rs.next()) {
 				String doctor = rs.getString(1);
 				String clinic = rs.getString(2);
 				String specialty = rs.getString(3);
 				int count = rs.getInt(4);
-				doctorList.add(new RankingDoctor(doctor, clinic, specialty, count));
+
+				if (previous == count) {
+					doctorList.add(new RankingDoctor(ranking, doctor, clinic, specialty, count));
+
+				} else {
+					if (ranking < 5) {
+						ranking++;
+						doctorList.add(new RankingDoctor(ranking, doctor, clinic, specialty, count));
+						previous = count;
+
+					}
+				}
+
 			}
 
 			con.close();
@@ -149,7 +175,7 @@ public class DatabaseConnection {
 
 			Statement stmt = con.createStatement();
 			String sql = "SELECT CreatedTime FROM `client` WHERE CreatedTime >= DATE_SUB('" + startDate
-					+ "', INTERVAL 5 MONTH) and medical = '" + type + "'";
+					+ "', INTERVAL 5 MONTH) and medical = '" + type + "'order by createdTime";
 			ResultSet rs = stmt.executeQuery(sql);
 			Utility utility = new Utility();
 
@@ -188,7 +214,7 @@ public class DatabaseConnection {
 			while (rs.next()) {
 				String referredBy = rs.getString(1);
 				int count = rs.getInt(2);
-				referredByList.add(new RankingReferredBy(referredBy, count));
+				referredByList.add(new RankingReferredBy(0, referredBy, count));
 			}
 
 			con.close();
@@ -251,7 +277,7 @@ public class DatabaseConnection {
 				String clinic = rs.getString(2);
 				String specialty = rs.getString(3);
 				int count = rs.getInt(4);
-				doctorList.add(new RankingDoctor(doctor, clinic, specialty, count));
+				doctorList.add(new RankingDoctor(0, doctor, clinic, specialty, count));
 			}
 
 			con.close();

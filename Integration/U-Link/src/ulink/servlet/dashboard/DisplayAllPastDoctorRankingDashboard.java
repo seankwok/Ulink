@@ -40,7 +40,7 @@ public class DisplayAllPastDoctorRankingDashboard extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
-		PrintWriter out = response.getWriter();
+		
 
 		DatabaseConnection connection = new DatabaseConnection();
 		LocalDate myDate =LocalDate.parse(connection.retrieveLatestDate());
@@ -51,7 +51,9 @@ public class DisplayAllPastDoctorRankingDashboard extends HttpServlet {
 
 		JsonArray result = (JsonArray) new Gson().toJsonTree(list, new TypeToken<List<RankingDoctor>>() {
 		}.getType());
+		
 		String arrayListToJson = gson.toJson(result);
+		PrintWriter out = response.getWriter();
 		out.write(arrayListToJson);
 		out.flush();
 		return;

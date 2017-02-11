@@ -2,9 +2,7 @@ package ulink.servlet.dashboard;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.time.LocalDate;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,22 +10,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
 import ulink.dao.DatabaseConnection;
 import ulink.logic.Utility;
 
 /**
- * Servlet implementation class DisplayDashboardVisa
+ * Servlet implementation class DisplayLastMonth
  */
-@WebServlet("/DisplayDashboardVisa")
-public class DisplayDashboardVisa extends HttpServlet {
+@WebServlet("/DisplayLastMonth")
+public class DisplayLastMonth extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DisplayDashboardVisa() {
+    public DisplayLastMonth() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,28 +33,16 @@ public class DisplayDashboardVisa extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		PrintWriter out = response.getWriter();
 		DatabaseConnection connection = new DatabaseConnection();
-		ArrayList<String> list = connection.retrievePastSixMonthRecord("Visa", connection.retrieveLatestDate());
-		LinkedHashMap<String,Integer> pastSixMonth = new LinkedHashMap<>();
 		
+		LocalDate myDate =LocalDate.parse(connection.retrieveLatestDate());
+		String date = myDate.minusMonths(1).toString();
 		Utility utility = new Utility();
+		String month = utility.getMonth(Integer.parseInt(date.substring(5, 7)));
 		
-		for (int i =0; i < list.size(); i++){
-			
-			//System.out.println(utility.getMonth(Integer.parseInt(list.get(i).substring(5, 7))));
-			String month = utility.getMonth(Integer.parseInt(list.get(i).substring(5, 7)));
-			if (pastSixMonth.containsKey(month)){
-				int temp = pastSixMonth.get(month);
-				pastSixMonth.put(month, temp+1);
-			} else {
-				pastSixMonth.put(month, 1);
-			}
-		}
 		
-		Gson gson = new Gson();
-		String arrayListToJson = gson.toJson(pastSixMonth);
-		out.write(arrayListToJson);
+		PrintWriter out = response.getWriter();
+		out.write(month);
 		out.flush();
 		return;
 	}

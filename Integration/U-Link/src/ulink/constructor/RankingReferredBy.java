@@ -3,11 +3,23 @@ package ulink.constructor;
 public class RankingReferredBy {
 	private String name;
 	private int count;
-	public RankingReferredBy(String name, int count) {
+	private int ranking; 
+	
+	public RankingReferredBy(int ranking, String name, int count) {
 		super();
+		this.ranking = ranking;
 		this.name = name;
 		this.count = count;
 	}
+	
+	public int getRanking(){
+		return ranking;
+	}
+	
+	public void setRanking(int ranking){
+		this.ranking = ranking;
+	}
+	
 	public String getName() {
 		return name;
 	}

@@ -2,42 +2,32 @@ package ulink.main;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
+import ulink.constructor.AgeAndGender;
 import ulink.constructor.Index;
+import ulink.constructor.RankingReferredBy;
 import ulink.dao.DatabaseConnection;
+import ulink.logic.TopK;
+import ulink.logic.Utility;
 
 public class MainTest {
 
 	public static void main(String[] args) {
-		DatabaseConnection connection = new DatabaseConnection();
-		ArrayList<Index> indexList = connection.retrieveAllIndex("2015-01-01", "2017-01-01", "Medical");
-		HashMap<Integer, Integer> pointSystem = new HashMap<>();
-
-		for (int i = 0; i < indexList.size(); i++) {
-			int point = 0;
-			Index index = indexList.get(i);
-			if (index.getAddress().length() > 0) {
-				point++;
-			}
-			if (index.getEmail().length() > 0) {
-				point++;
-			}
-			if (index.getPhone().length() > 0) {
-				point++;
-			}
-			if (pointSystem.containsKey(point)){
-				int temp = pointSystem.get(point);
-				pointSystem.put(point, temp+1);
-			} else {
-				pointSystem.put(point, 0);
-			}
-		}
+DatabaseConnection connection = new DatabaseConnection();
 		
-		System.out.println(pointSystem.values());
-
+		LocalDate myDate =LocalDate.parse(connection.retrieveLatestDate());
+		String date = myDate.minusMonths(1).toString();
+		Utility utility = new Utility();
+		String month = utility.getMonth(Integer.parseInt(date.substring(5, 7)));
+		
+		System.out.println(month);
+		
+	
 	}
 
 }
