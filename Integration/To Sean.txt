@@ -1,4 +1,4 @@
 To sean:
 
 1) create a method to validate startDate is earlier than endDate
-2) 
+2) Store the email message as string is ok but need the whole HTML structure store
