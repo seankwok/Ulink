@@ -79,7 +79,7 @@ public class DatabaseConnection {
 	}
 	
 	
-	public ArrayList<RankingReferredBy> retrieveAllRankingReferredByDashBoard(String date) {
+	public ArrayList<RankingReferredBy> retrieveAllRankingReferredByDashBoard(String startDate, String endDate) {
 		Connection con;
 		ArrayList<RankingReferredBy> referredByList = new ArrayList<>();
 		try {
@@ -87,8 +87,7 @@ public class DatabaseConnection {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
-			String sql = "select referredBy, count(referredBy) from client where  CreatedTime >= DATE_SUB('" + date
-					+ "', INTERVAL 1 MONTH) and referredBy != '' group by referredBy ORDER BY COUNT(referredBy) DESC ";
+			String sql = "select referredBy, count(referredBy) from client where  WHERE CreatedTime BETWEEN ('"+startDate+"' - INTERVAL 1 MONTH) AND '"+endDate+"' and referredBy != '' group by referredBy ORDER BY COUNT(referredBy) DESC ";
 			ResultSet rs = stmt.executeQuery(sql);
 			Utility utility = new Utility();
 			int ranking = 0;
@@ -122,7 +121,7 @@ public class DatabaseConnection {
 
 	}
 
-	public ArrayList<RankingDoctor> retrieveAllRankingDoctorDashBoard(String date) {
+	public ArrayList<RankingDoctor> retrieveAllRankingDoctorDashBoard(String startDate, String endDate) {
 		Connection con;
 		ArrayList<RankingDoctor> doctorList = new ArrayList<>();
 		try {
@@ -130,10 +129,9 @@ public class DatabaseConnection {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
-			String sql = "select doctor, clinic, specialty, count(appointment) from client where  CreatedTime >= DATE_SUB('"
-					+ date + "', INTERVAL 1 MONTH) and doctor != '' group by doctor ORDER BY COUNT(appointment) DESC ";
+			String sql = "select doctor, clinic, specialty, count(appointment) from client where  WHERE CreatedTime BETWEEN ('"+startDate+"' - INTERVAL 1 MONTH) AND '"+endDate+"' and doctor != '' group by doctor ORDER BY COUNT(appointment) DESC ";
 			ResultSet rs = stmt.executeQuery(sql);
-			Utility utility = new Utility();
+			//Utility utility = new Utility();
 			int ranking = 0;
 			int previous = 0;
 			while (rs.next()) {
@@ -195,7 +193,7 @@ public class DatabaseConnection {
 
 	}
 
-	public ArrayList<String> retrievePastSixMonthRecord(String type, String startDate) {
+	public ArrayList<String> retrievePastSixMonthRecord(String type, String startDate, String endDate) {
 		Connection con;
 		ArrayList<String> dateList = new ArrayList<>();
 		try {
@@ -203,8 +201,7 @@ public class DatabaseConnection {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
-			String sql = "SELECT CreatedTime FROM `client` WHERE CreatedTime >= DATE_SUB('" + startDate
-					+ "', INTERVAL 5 MONTH) and medical = '" + type + "'order by createdTime";
+			String sql = "SELECT CreatedTime FROM `client` WHERE CreatedTime BETWEEN ('"+startDate+"' - INTERVAL 5 MONTH) AND '"+endDate+"' and medical = '" + type + "'order by createdTime";
 			ResultSet rs = stmt.executeQuery(sql);
 			Utility utility = new Utility();
 

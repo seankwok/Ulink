@@ -23,21 +23,18 @@ import ulink.logic.Utility;
 public class MainTest {
 
 	public static void main(String[] args) throws ParseException {
-DatabaseConnection connection = new DatabaseConnection();
-//DatabaseConnection connection = new DatabaseConnection();
-	String date = connection.retrieveLatestDate();
-	
-	
-	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-	Date convertedDate = dateFormat.parse(date);
-	Calendar c = Calendar.getInstance();
-	c.setTime(convertedDate);
-	//c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DAY_OF_MONTH));
-	
-	
-	String temp = date.substring(0, 8) + c.getActualMaximum(Calendar.DAY_OF_MONTH);
-	System.out.println(temp);
-
+		//String startDate = request.getParameter("startDate");
+		//String endDate = request.getParameter("endDate");
+		//String team = request.getParameter("team");
+		DatabaseConnection connection = new DatabaseConnection();
+		Utility utility = new Utility();
+		ArrayList<Index> indexList = connection.retrieveAllIndex("2015/01/01", "2017/01/01", "Visa");
+		LinkedHashMap<Integer,Integer> pointSystem = utility.getIndexCount(indexList);
+		Gson gson = new Gson();
+		System.out.println(indexList.size());
+		//PrintWriter out = response.getWriter();
+		System.out.println(pointSystem.toString());
+		System.out.println(utility.changeDateFormatDatabase("01/01/2016"));
 	}
 
 }

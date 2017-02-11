@@ -3,6 +3,8 @@ package ulink.logic;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -24,6 +26,8 @@ import ulink.constructor.User;
 import ulink.dao.DatabaseConnection;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 public class Utility {
 
 	public boolean sendMail(String emailTo, String emailFrom, String host) {
@@ -61,6 +65,38 @@ public class Utility {
 			return false;
 		}
 
+	}
+	
+	public String getStartDateOfMonth(String date){
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date convertedDate = null;
+		try {
+			convertedDate = dateFormat.parse(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Calendar c = Calendar.getInstance();
+		c.setTime(convertedDate);
+		
+		
+		return date.substring(0, 8) + c.getActualMinimum(Calendar.DAY_OF_MONTH);
+	}
+	
+	public String getEndDateOfMonth(String date){
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date convertedDate = null;
+		try {
+			convertedDate = dateFormat.parse(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Calendar c = Calendar.getInstance();
+		c.setTime(convertedDate);
+		
+		return date.substring(0, 8) + c.getActualMaximum(Calendar.DAY_OF_MONTH);
 	}
 
 	public TreeMap<Integer, ArrayList<String>> returnTypeList(ArrayList<Condition> conditionList) {

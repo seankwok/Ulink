@@ -2,7 +2,11 @@ package ulink.servlet.dashboard;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -40,11 +44,14 @@ public class DisplayDashboardVisa extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		DatabaseConnection connection = new DatabaseConnection();
 		String date = connection.retrieveLatestDate();
+		Utility utility = new Utility();
+		String startDate = utility.getStartDateOfMonth(date);
+		String endDate = utility.getEndDateOfMonth(startDate);
 		
-		ArrayList<String> list = connection.retrievePastSixMonthRecord("Visa", connection.retrieveLatestDate());
+		ArrayList<String> list = connection.retrievePastSixMonthRecord("Visa", startDate, endDate);
 		LinkedHashMap<String,Integer> pastSixMonth = new LinkedHashMap<>();
 		
-		Utility utility = new Utility();
+		
 		
 		for (int i =0; i < list.size(); i++){
 			
