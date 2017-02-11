@@ -1,7 +1,8 @@
-package ulink.servlet.email;
+package ulink.servlet.dashboard;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,18 +11,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ulink.dao.DatabaseConnection;
+import ulink.logic.Utility;
 
 /**
- * Servlet implementation class DeleteEmailTemplate
+ * Servlet implementation class DisplayLastMonth
  */
-@WebServlet("/DeleteEmailTemplate")
-public class DeleteEmailTemplate extends HttpServlet {
+@WebServlet("/DisplayLastMonth")
+public class DisplayLastMonth extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeleteEmailTemplate() {
+    public DisplayLastMonth() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,7 +33,19 @@ public class DeleteEmailTemplate extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
+		DatabaseConnection connection = new DatabaseConnection();
+		
+		LocalDate myDate =LocalDate.parse(connection.retrieveLatestDate());
+		String date = myDate.minusMonths(1).toString();
+		Utility utility = new Utility();
+		String month = utility.getMonth(Integer.parseInt(date.substring(5, 7)));
+		
+		
+		PrintWriter out = response.getWriter();
+		System.out.print(month);
+		out.write(month);
+		out.flush();
+		return;
 	}
 
 	/**
@@ -40,15 +54,6 @@ public class DeleteEmailTemplate extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-		String templateName = request.getParameter("templateName");
-		
-		DatabaseConnection connection = new DatabaseConnection();
-		connection.deleteEmailTemplate(templateName);
-		
-		PrintWriter out = response.getWriter();
-		out.write("success");
-		out.flush();
-		return;
 	}
 
 }

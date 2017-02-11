@@ -2,7 +2,11 @@ package ulink.servlet.dashboard;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -39,14 +43,19 @@ public class DisplayDashboardVisa extends HttpServlet {
 		// TODO Auto-generated method stub
 		PrintWriter out = response.getWriter();
 		DatabaseConnection connection = new DatabaseConnection();
-		ArrayList<String> list = connection.retrievePastSixMonthRecord("Visa", connection.retrieveLatestDate());
+		String date = connection.retrieveLatestDate();
+		Utility utility = new Utility();
+		String startDate = utility.getStartDateOfMonth(date);
+		String endDate = utility.getEndDateOfMonth(startDate);
+		
+		ArrayList<String> list = connection.retrievePastSixMonthRecord("Visa", startDate, endDate);
 		LinkedHashMap<String,Integer> pastSixMonth = new LinkedHashMap<>();
 		
-		Utility utility = new Utility();
+		
 		
 		for (int i =0; i < list.size(); i++){
 			
-			System.out.println(utility.getMonth(Integer.parseInt(list.get(i).substring(5, 7))));
+			//System.out.println(utility.getMonth(Integer.parseInt(list.get(i).substring(5, 7))));
 			String month = utility.getMonth(Integer.parseInt(list.get(i).substring(5, 7)));
 			if (pastSixMonth.containsKey(month)){
 				int temp = pastSixMonth.get(month);

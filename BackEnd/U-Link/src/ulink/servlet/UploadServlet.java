@@ -431,7 +431,7 @@ public class UploadServlet extends HttpServlet {
 							nationality, gender, dateOfBirth, email, medical, mainDiagnosis, referredBy, PIC,
 							appointment, doctor, specialty, clinic, otherDoctor, followUpPerson, followUpPIC,
 							hospitalAdmitted, log, claim, visa, visaRequestBy, visaType, visaType2,
-							0, billingCity, billingCode, billingCountry, billingState,
+							-1, billingCity, billingCode, billingCountry, billingState,
 							billingStreet, createdTime, phone));
 					// System.out.println(clientList.get(clientList.size() -
 					// 1).getClientName());
@@ -704,7 +704,7 @@ public class UploadServlet extends HttpServlet {
 								nationality, gender, dateOfBirth, email, medical, mainDiagnosis, referredBy, PIC,
 								appointment, doctor, specialty, clinic, otherDoctor, followUpPerson, followUpPIC,
 								hospitalAdmitted, log, claim, visa, visaRequestBy, visaType, visaType2,
-								0, billingCity, billingCode, billingCountry, billingState,
+								-1, billingCity, billingCode, billingCountry, billingState,
 								billingStreet, createdTime, phone));
 						// System.out.println(clientList.get(clientList.size() -
 						// 1).getClientName());

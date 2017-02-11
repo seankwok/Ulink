@@ -18,6 +18,7 @@ import com.google.gson.reflect.TypeToken;
 import ulink.constructor.RankingDoctor;
 import ulink.constructor.RankingReferredBy;
 import ulink.dao.DatabaseConnection;
+import ulink.logic.Utility;
 
 /**
  * Servlet implementation class DisplayAllLatestReferredbyDashboard
@@ -43,9 +44,12 @@ public class DisplayAllLatestReferredbyDashboard extends HttpServlet {
 		PrintWriter out = response.getWriter();
 
 		DatabaseConnection connection = new DatabaseConnection();
-
+		String date =  connection.retrieveLatestDate();
+		Utility utility = new Utility();
+		String startDate = utility.getStartDateOfMonth(date);
+		String endDate = utility.getEndDateOfMonth(startDate);
 		
-		ArrayList<RankingReferredBy> list = connection.retrieveAllRankingReferredByDashBoard(connection.retrieveLatestDate());
+		ArrayList<RankingReferredBy> list = connection.retrieveAllRankingReferredByDashBoard(startDate,endDate);
 		Gson gson = new Gson();
 
 		JsonArray result = (JsonArray) new Gson().toJsonTree(list, new TypeToken<List<RankingReferredBy>>() {

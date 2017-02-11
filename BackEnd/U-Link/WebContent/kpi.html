@@ -24,16 +24,22 @@
 
 	<script src="https://code.highcharts.com/highcharts.js"></script>
 	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	
+	<style>
+	
+	.box2 {
+	  float: left;
+	}
+	
+	table.center {
+    	margin-left:auto; 
+    	margin-right:auto;
+  }
+	</style>
 
 <script type="text/javascript">
 
 $(document).ready(function() {
-	
-	
-	$("#toggle").click(function()
-			{                     
-			   $(".text").toggle();
-			});
 	
 	
 	$("#submit").click (function(){
@@ -229,8 +235,6 @@ $(document).ready(function() {
 					    }]
 					});
 					   
-					   
-					
 				} else {
 					$.ajax({
 						url : "KPIVisa",
@@ -479,22 +483,24 @@ $(document).ready(function() {
     <br>
     </div>
         
-       <div align='center'>
-       	 <button type="button" id="toggle" class="btn btn-default" onclick="toggle();"><b>Table / Chart</b></button>   
-	      
+        <table class="center">
+	        <tr> 
+	        	<td bgcolor="#ffffff" style="width:40%" align="center"><div class='box2'  id="table1"></div></td>
+	        	<td bgcolor="#ffffff" style="width:60%" align="center"><div  class='box2' id="container" ></div>    </td>
+	        </tr>
+	        <tr> 
+	        	<td bgcolor="#ffffff" style="width:40%" align="center"><div  class='box2' id="table2"></div></td>
+	        	<td bgcolor="#ffffff" style="width:60%" align="center"><div  class='box2'id="container2"  ></div></td>
+	        </tr>
+	        
+        </table>
 
-      
-       </div>
-       
-		 <div>
-		    <div class="text" >  
-		    	<div class="container" align="left" id="table1"></div>
-  				<div class="container" align="left" id="table2"></div>
-			</div>
-		    <div class="text" style="display:none">
-	    	    <div id="container" align="center" ></div>
-    			<div id="container2" align="center" ></div>
-    		</div>
-		</div>
+   
+   		    	
+   		    	
+    
+
+				
+    			
   </body>
 </html>

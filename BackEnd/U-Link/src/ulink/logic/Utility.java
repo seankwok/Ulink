@@ -3,8 +3,11 @@ package ulink.logic;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Properties;
 import java.util.TreeMap;
 
@@ -23,6 +26,8 @@ import ulink.constructor.User;
 import ulink.dao.DatabaseConnection;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 public class Utility {
 
 	public boolean sendMail(String emailTo, String emailFrom, String host) {
@@ -60,6 +65,38 @@ public class Utility {
 			return false;
 		}
 
+	}
+	
+	public String getStartDateOfMonth(String date){
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date convertedDate = null;
+		try {
+			convertedDate = dateFormat.parse(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Calendar c = Calendar.getInstance();
+		c.setTime(convertedDate);
+		
+		
+		return date.substring(0, 8) + c.getActualMinimum(Calendar.DAY_OF_MONTH);
+	}
+	
+	public String getEndDateOfMonth(String date){
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date convertedDate = null;
+		try {
+			convertedDate = dateFormat.parse(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Calendar c = Calendar.getInstance();
+		c.setTime(convertedDate);
+		
+		return date.substring(0, 8) + c.getActualMaximum(Calendar.DAY_OF_MONTH);
 	}
 
 	public TreeMap<Integer, ArrayList<String>> returnTypeList(ArrayList<Condition> conditionList) {
@@ -112,9 +149,14 @@ public class Utility {
 		return two.format(Math.sqrt(temp));
 	}
 	
-	public HashMap<Integer,Integer> getIndexCount(ArrayList<Index> indexList){
+	public LinkedHashMap<Integer,Integer> getIndexCount(ArrayList<Index> indexList){
 		
-		HashMap<Integer, Integer> pointSystem = new HashMap<>();
+		LinkedHashMap<Integer, Integer> pointSystem = new LinkedHashMap<>();
+		
+		pointSystem.put(0,0);
+		pointSystem.put(1,0);
+		pointSystem.put(2,0);
+		pointSystem.put(3,0);
 
 		for (int i = 0; i < indexList.size(); i++) {
 			int point = 0;
@@ -131,8 +173,6 @@ public class Utility {
 			if (pointSystem.containsKey(point)){
 				int temp = pointSystem.get(point);
 				pointSystem.put(point, temp+1);
-			} else {
-				pointSystem.put(point, 0);
 			}
 		}
 		return pointSystem;

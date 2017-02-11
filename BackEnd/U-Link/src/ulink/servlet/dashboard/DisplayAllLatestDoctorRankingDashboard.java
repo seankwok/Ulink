@@ -18,6 +18,7 @@ import com.google.gson.reflect.TypeToken;
 
 import ulink.constructor.RankingDoctor;
 import ulink.dao.DatabaseConnection;
+import ulink.logic.Utility;
 
 /**
  * Servlet implementation class DisplayAllLatestDoctorRankingDashboard
@@ -47,9 +48,12 @@ public class DisplayAllLatestDoctorRankingDashboard extends HttpServlet {
 		PrintWriter out = response.getWriter();
 
 		DatabaseConnection connection = new DatabaseConnection();
-
+		String date =  connection.retrieveLatestDate();
+		Utility utility = new Utility();
+		String startDate = utility.getStartDateOfMonth(date);
+		String endDate = utility.getEndDateOfMonth(startDate);
 		
-		ArrayList<RankingDoctor> list = connection.retrieveAllRankingDoctorDashBoard(connection.retrieveLatestDate());
+		ArrayList<RankingDoctor> list = connection.retrieveAllRankingDoctorDashBoard(startDate,endDate);
 		Gson gson = new Gson();
 
 		JsonArray result = (JsonArray) new Gson().toJsonTree(list, new TypeToken<List<RankingDoctor>>() {

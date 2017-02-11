@@ -24,184 +24,352 @@
  
  	<script type="text/javascript">
  	$(document).ready(function() {
-	displayAll(); 	
- 	Highcharts.chart('visaContainer', {
- 	    chart: {
- 	        type: 'bar'
- 	    },
- 	    title: {
- 	        text: 'Types of Visa requested'
- 	    },
- 	    
- 	    xAxis: {
- 	        categories: ['Maternity', 
- 	        			  'Indonesia - VTT 317 - Less than 6 months', 
- 	                      'Indonesia - VTT 312 - More than 6 months', 
- 	                      'Indonesia - VTT 312 - Less than 6 months', 
- 	                      'Indonesia - VKU 211',
- 	                      'Indonesia - VKBKP 212',
- 	                      'ICA STVP'],
- 	        title: {
- 	            text: null
- 	        }
- 	    },
- 	    yAxis: {
- 	        min: 0,
- 	        title: {
- 	            text: null,
- 	            align: 'high'
- 	        },
- 	        labels: {
- 	            overflow: 'justify'
- 	        }
- 	    },
- 	    tooltip: {
- 	        valueSuffix: ' clients'
- 	    },
- 	    plotOptions: {
- 	        bar: {
- 	            dataLabels: {
- 	                enabled: true
- 	            }
- 	        }
- 	    },
- 	    credits: {
- 	        enabled: false
- 	    },
- 	    series: [{
- 	        name: 'Number of Clients',
- 	        color:'#2E66BC',
- 	        data: [1052, 954, 4250, 740, 38]
- 	    }]
+
+	 	displayAllVisaType(); 	
+	 	displayNumVisa();
+	 	displayNumMedical();
+	 	displayTopDocThisMonth();
+	 	displayTopDocLastMonth();
+	 	displayTopReferralThisMonth();
+	 	displayTopReferralLastMonth();
+	 	
+
  	});
  	
- 	
- 	Highcharts.chart('numVisa', {
-	    chart: {
-	        type: 'column'
-	    },
-	    title: {
-	        text: 'Number of VISA clients'
-	    },
-	    
-	    xAxis: {
-	        categories: [
-	            'Jan',
-	            'Feb',
-	            'Mar',
-	            'Apr',
-	            'May',
-	            'Jun',
-	        ],
-	        crosshair: true
-	    },
-	    yAxis: {
-	        min: 0,
-	        title: {
-	            text: 'Number of Clients'
-	        }
-	    },
-	    tooltip: {
-	        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-	        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-	            '<td style="padding:0"><b>{point.y:.1f} clients</b></td></tr>',
-	        footerFormat: '</table>',
-	        shared: true,
-	        useHTML: true
-	    },
-	    plotOptions: {
-	        column: {
-	            pointPadding: 0.2,
-	            borderWidth: 0
-	        }
-	    },
-	    credits: {
- 	        enabled: false
- 	    },
-	    series: [{
-	    	name: 'Visa Clients',
-	    	color:'#2758A1',
-	    	data: [5, 16, 31, 15, 38,55]
-	    }]
-	
-	   
-	});
- 	
- 	Highcharts.chart('numMedical', {
-	    chart: {
-	        type: 'column'
-	    },
-	    title: {
-	        text: 'Number of Medical clients'
-	    },
-	    
-	    xAxis: {
-	        categories: [
-	            'Jan',
-	            'Feb',
-	            'Mar',
-	            'Apr',
-	            'May',
-	            'Jun',
-	        ],
-	        crosshair: true
-	    },
-	    credits: {
- 	        enabled: false
- 	    },
-	    yAxis: {
-	        min: 0,
-	        title: {
-	            text: 'Number of Clients'
-	        }
-	    },
-	    tooltip: {
-	        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-	        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-	            '<td style="padding:0"><b>{point.y:.1f} clients</b></td></tr>',
-	        footerFormat: '</table>',
-	        shared: true,
-	        useHTML: true
-	    },
-	    plotOptions: {
-	        column: {
-	            pointPadding: 0.2,
-	            borderWidth: 0
-	        }
-	    },
-	    series: [{
-	    	name: 'Medical Clients',
-	    	color:'#214986',
-	    	 data: [5, 45, 31, 32, 81, 55]
-	    }]
-	
-	   
-	});
+
+ 	function displayAllVisaType(){
+ 		var type = [];
+ 		var numVisa = [];
+			$.ajax({
+				url: "DisplayAllVisaType",
+				type: "get",
+			    dataType : "json",
+			    
+			    complete: function(data){
+			    	var json = jQuery.parseJSON(JSON.stringify(data));
+			    	console.log("visa type: ");
+			    	console.log(json);
+			  
+			    	$.each(json.responseJSON,function(key, value) {
+			    		type.push(key);
+			    		numVisa.push(value);
+			    		console.log(key);
+			    		
+			    	});
+			    	
+			    	Highcharts.chart('visaContainer', {
+			     	    chart: {
+			     	        type: 'bar'
+			     	    },
+			     	    title: {
+			     	        text: 'Types of Visa requested'
+			     	    },
+			     	    
+			     	    xAxis: {
+			     	        categories: type,
+			     	        title: {
+			     	            text: null
+			     	        }
+			     	    },
+			     	    yAxis: {
+			     	        min: 0,
+			     	        title: {
+			     	            text: null,
+			     	            align: 'high'
+			     	        },
+			     	        labels: {
+			     	            overflow: 'justify'
+			     	        }
+			     	    },
+			     	    tooltip: {
+			     	        valueSuffix: ' clients'
+			     	    },
+			     	    plotOptions: {
+			     	        bar: {
+			     	            dataLabels: {
+			     	                enabled: true
+			     	            }
+			     	        }
+			     	    },
+			     	    credits: {
+			     	        enabled: false
+			     	    },
+			     	    series: [{
+			     	        name: 'Number of Clients',
+			     	        color:'#2E66BC',
+			     	        data: numVisa
+			     	    }]
+			     	});
+			    }	
+			    
+			});	
+		}
  	
  	
- 	});
+ 	function displayNumVisa(){
+ 		var month = [];
+ 		var num = [];
+			$.ajax({
+				url: "DisplayDashboardVisa",
+				type: "get",
+			    dataType : "json",
+			    
+			    complete: function(data){
+			    	var json = jQuery.parseJSON(JSON.stringify(data));
+			    	console.log("numvisa: ");
+			    	console.log(json.responseJSON);
+			  
+			    	$.each(json.responseJSON,function(key, value) {
+			    		month.push(key);
+			    		num.push(value);
+			    		console.log(key);
+			    		
+			    	});
+			    	
+			    	Highcharts.chart('numVisa', {
+			    	    chart: {
+			    	        type: 'column'
+			    	    },
+			    	    title: {
+			    	        text: 'Number of VISA clients'
+			    	    },
+			    	    xAxis: {
+			    	        categories:month,
+			    	        crosshair: true
+			    	    },
+			    	    yAxis: {
+			    	        min: 0,
+			    	        title: {
+			    	            text: 'Number of Clients'
+			    	        }
+			    	    },
+			    	    tooltip: {
+			    	        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+			    	        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+			    	            '<td style="padding:0"><b>{point.y:.1f} clients</b></td></tr>',
+			    	        footerFormat: '</table>',
+			    	        shared: true,
+			    	        useHTML: true
+			    	    },
+			    	    plotOptions: {
+			    	        column: {
+			    	            pointPadding: 0.2,
+			    	            borderWidth: 0
+			    	        }
+			    	    },
+			    	    credits: {
+			     	        enabled: false
+			     	    },
+			    	    series: [{
+			    	    	name: 'Visa Clients',
+			    	    	color:'#2758A1',
+			    	    	data: num
+			    	    }]
+			    	});
+			}
+		});
+	}
  	
- 	function displayAll(){
+ 	function displayNumMedical(){
+ 		var month = [];
+ 		var num = [];
 			$.ajax({
 				url: "DisplayDashboardMedical",
 				type: "get",
 			    dataType : "json",
 			    
-			    success: function(data){
+			    complete: function(data){
 			    	var json = jQuery.parseJSON(JSON.stringify(data));
-			    	console.log(json);
+			    	console.log("numvisa: ");
+			    	console.log(json.responseJSON);
 			  
-			    	$.each(json,function(key, value) {
+			    	$.each(json.responseJSON,function(key, value) {
+			    		month.push(key);
+			    		num.push(value);
 			    		console.log(key);
-			    		console.log(value);
+			    		
 			    	});
 			    	
+			    	Highcharts.chart('numMedical', {
+			    	    chart: {
+			    	        type: 'column'
+			    	    },
+			    	    title: {
+			    	        text: 'Number of Medical clients'
+			    	    },
+			    	    
+			    	    xAxis: {
+			    	        categories: month,
+			    	        crosshair: true
+			    	    },
+			    	    credits: {
+			     	        enabled: false
+			     	    },
+			    	    yAxis: {
+			    	        min: 0,
+			    	        title: {
+			    	            text: 'Number of Clients'
+			    	        }
+			    	    },
+			    	    tooltip: {
+			    	        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+			    	        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+			    	            '<td style="padding:0"><b>{point.y:.1f} clients</b></td></tr>',
+			    	        footerFormat: '</table>',
+			    	        shared: true,
+			    	        useHTML: true
+			    	    },
+			    	    plotOptions: {
+			    	        column: {
+			    	            pointPadding: 0.2,
+			    	            borderWidth: 0
+			    	        }
+			    	    },
+			    	    series: [{
+			    	    	name: 'Medical Clients',
+			    	    	color:'#214986',
+			    	    	data: num
+			    	    }]
 			    	
-			    	
-			    }	
-			    
-			});	
+			    	   
+			    	});
 			}
+		});
+	}
+ 	
+ 	function displayTopDocThisMonth(){
+ 		var thisMonthDoc = "<table id='thisMonthDoc'  class='table table-striped' cellspacing='0' width='100%'>";
+ 		
+ 		$.ajax({
+			url: "DisplayAllLatestDoctorRankingDashboard",
+			type: "get",
+		    dataType : "json",
+		    complete: function(data){
+		    	var json = jQuery.parseJSON(JSON.stringify(data));
+		  		console.log(json);
+		  		thisMonthDoc += "<h4><b>This Month</b></h4>"
+		  		thisMonthDoc += "<tr><th>Rank</th>"
+						  +  "<th>Doctor</th>"
+						  +  "<th>Clinic</th>"
+						  +  "<th>Speciality</th></tr>"
+				$.each(json.responseJSON, function(key, value){
+					thisMonthDoc += "<tbody><tr><td>"
+	    				+ value["ranking"]
+	    				+ "</td>"
+	    				+ "<td>"
+	    				+ value["name"]
+    					+ "</td>"
+    					+ "<td>"
+	    				+ value["clinic"]
+    					+ "</td>"
+    					+ "<td>"
+	    				+ value["speciality"]
+    					+ "</td>"		    				
+						+ "</td></tr></tbody>"
+				});
+				$('#thisMonthDoc').html(thisMonthDoc);		  
+		    }
+ 		});
+		    	
+ 	}
+ 	
+ 	function displayTopDocLastMonth(){
+ 		var lastMonthDoc = "<table id='lastMonthDoc'  class='table table-striped' cellspacing='0' width='100%'>";
+ 	
+ 		$.ajax({
+			url: "DisplayAllPastDoctorRankingDashboard",
+			type: "get",
+		    dataType : "json",
+		    complete: function(data){
+		    	var json = jQuery.parseJSON(JSON.stringify(data));
+		  		console.log(json);
+		  		lastMonthDoc += "<h4><b>Last Month</b></h4>"
+		  		lastMonthDoc += "<tr><th>Rank</th>"
+							  +  "<th>Doctor</th>"
+							  +  "<th>Clinic</th>"
+							  +  "<th>Speciality</th></tr>"
+							  $.each(json.responseJSON, function(key, value){
+								  lastMonthDoc += "<tbody><tr><td>"
+					    				+ value["ranking"]
+					    				+ "</td>"
+					    				+ "<td>"
+					    				+ value["name"]
+				    					+ "</td>"
+				    					+ "<td>"
+					    				+ value["clinic"]
+				    					+ "</td>"
+				    					+ "<td>"
+					    				+ value["speciality"]
+				    					+ "</td>"		    				
+										+ "</td></tr></tbody>"
+								});
+				$('#lastMonthDoc').html(lastMonthDoc);
+		    }
+ 		});
+		    	
+ 	}
+ 	
+ 	function displayTopReferralThisMonth(){
+ 		var thisMonthRef = "<table id='thisMonthRef'  class='table table-striped' cellspacing='0' width='100%'>";
+ 		$.ajax({
+			url: "DisplayAllLatestReferredbyDashboard",
+			type: "get",
+		    dataType : "json",
+		    complete: function(data){
+		    	var json = jQuery.parseJSON(JSON.stringify(data));
+		  		console.log(json);
+		  		thisMonthRef += "<h4><b>This Month</b></h4>"
+		  		thisMonthRef += "<tr><th>Rank</th>"
+							  +  "<th>Referred By</th>"
+							  +  "<th>Number of cases referred</th></tr>"
+							  $.each(json.responseJSON, function(key, value){
+								  thisMonthRef += "<tbody><tr><td>"
+					    				+ value["ranking"]
+					    				+ "</td>"
+					    				+ "<td>"
+					    				+ value["name"]
+				    					+ "</td>"
+				    					+ "<td>"
+					    				+ value["count"]
+				    					+ "</td>"		    				
+										+ "</td></tr></tbody>"
+								});
+				 $('#thisMonthRef').html(thisMonthRef);
+		    }
+ 		});
+ 	}
+ 	
+ 	function displayTopReferralLastMonth(){
+ 		var lastMonthRef = "<table id='lastMonthRef'  class='table table-striped' cellspacing='0' width='100%'>";
+ 		$.ajax({
+			url: "DisplayAllPastReferredbyDashboard",
+			type: "get",
+		    dataType : "json",
+		    complete: function(data){
+		    	var json = jQuery.parseJSON(JSON.stringify(data));
+		  		console.log(json);
+		  		lastMonthRef += "<h4><b>Last Month</b></h4>"
+		  		lastMonthRef += "<tr><th>Rank</th>"
+							  +  "<th>Referred By</th>"
+							  +  "<th>Number of cases referred</th></tr>"
+							  $.each(json.responseJSON, function(key, value){
+								  lastMonthRef += "<tbody><tr><td>"
+					    				+ value["ranking"]
+					    				+ "</td>"
+					    				+ "<td>"
+					    				+ value["name"]
+				    					+ "</td>"
+				    					+ "<td>"
+					    				+ value["count"]
+				    					+ "</td>"		    				
+										+ "</td></tr></tbody>"
+								});
+				$('#lastMonthRef').html(lastMonthRef);
+		    }
+ 		});
+ 	}
+ 	
+ 	
  	
  	</script>
  	
@@ -228,6 +396,20 @@
 	
 	</div>
 	
+	</div>
+	
+	<div class="container" align="center">
+	
+		<div class="col-md-6" id="thisMonthDoc"></div>
+		
+		<div class="col-md-6" id="lastMonthDoc"></div>
+	</div>
+	
+	<div class="container" align="center">
+	
+		<div class="col-md-6" id="thisMonthRef"></div>
+		
+		<div class="col-md-6" id="lastMonthRef"></div>
 	</div>
 	
 	

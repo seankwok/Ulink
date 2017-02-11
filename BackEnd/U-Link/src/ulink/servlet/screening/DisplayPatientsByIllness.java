@@ -1,10 +1,8 @@
-package ulink.servlet.index;
+package ulink.servlet.screening;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -17,22 +15,21 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 
-import ulink.constructor.Index;
-import ulink.constructor.RankingReferredBy;
+import ulink.constructor.Client;
+import ulink.constructor.ClientByIllness;
 import ulink.dao.DatabaseConnection;
-import ulink.logic.Utility;
 
 /**
- * Servlet implementation class DisplayIndexMedicalVisa
+ * Servlet implementation class DisplayPatientsByIllness
  */
-@WebServlet("/DisplayIndexMedicalVisa")
-public class DisplayIndexMedicalVisa extends HttpServlet {
+@WebServlet("/DisplayPatientsByIllness")
+public class DisplayPatientsByIllness extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public DisplayIndexMedicalVisa() {
+	public DisplayPatientsByIllness() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -45,21 +42,38 @@ public class DisplayIndexMedicalVisa extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		DatabaseConnection connection = new DatabaseConnection();
-		String startDate = request.getParameter("startDate");
-		String endDate = request.getParameter("endDate");
-		String team = request.getParameter("team");
-		Utility utility = new Utility();
-		ArrayList<Index> indexList = connection.retrieveAllIndex(utility.changeDateFormatDatabase(startDate), utility.changeDateFormatDatabase(endDate), team);
-		LinkedHashMap<Integer,Integer> pointSystem = utility.getIndexCount(indexList);
+		int age = Integer.parseInt(request.getParameter("age"));
+		String gender = request.getParameter("gender");
+		String type = request.getParameter("type");
+		ArrayList<Client> clientList = connection.retrieveAllClientList();
+		ArrayList<ClientByIllness> clientByIllnessList = new ArrayList<>();
+		for (int i = 0; i < clientList.size(); i++) {
+			Client client = clientList.get(i);
+			if (type.equals("adult")) {
+				if (client.getAge() >= age && client.getGender().equals(gender)) {
+					clientByIllnessList.add(new ClientByIllness(client.getClientName(), client.getAge(),
+							client.getEmail(), client.getGender()));
+				}
+			} else {
+				if (client.getAge() >= age / 12 && client.getGender().equals(gender)) {
+					clientByIllnessList.add(new ClientByIllness(client.getClientName(), client.getAge(),
+							client.getEmail(), client.getGender()));
+
+				}
+			}
+		}
+		
 		Gson gson = new Gson();
-		JsonArray result = (JsonArray) new Gson().toJsonTree(pointSystem, new TypeToken<LinkedHashMap<Integer,Integer>>() {
-		}.getType());
 		PrintWriter out = response.getWriter();
+		JsonArray result = (JsonArray) new Gson().toJsonTree(clientByIllnessList, new TypeToken<List<ClientByIllness>>() {
+		}.getType());
 		String arrayListToJson = gson.toJson(result);
-	//	System.out.print(arrayListToJson);
+		//System.out.print(arrayListToJson);
+
 		out.write(arrayListToJson);
 		out.flush();
 		return;
+		
 	}
 
 	/**

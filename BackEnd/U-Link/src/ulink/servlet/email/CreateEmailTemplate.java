@@ -31,15 +31,7 @@ public class CreateEmailTemplate extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String templateName = request.getParameter("templateName");
-		String msg = request.getParameter("msg");
-		DatabaseConnection connection = new DatabaseConnection();
-		connection.createEmailTemplate(templateName, msg);
-		
-		PrintWriter out = response.getWriter();
-		out.write("success");
-		out.flush();
-		return;
+	
 		
 	}
 
@@ -49,6 +41,15 @@ public class CreateEmailTemplate extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+		String templateName = request.getParameter("templateName");
+		String msg = request.getParameter("msg");
+		DatabaseConnection connection = new DatabaseConnection();
+		connection.createEmailTemplate(templateName, msg);
+		
+		PrintWriter out = response.getWriter();
+		out.write("success");
+		out.flush();
+		return;
 	}
 
 }

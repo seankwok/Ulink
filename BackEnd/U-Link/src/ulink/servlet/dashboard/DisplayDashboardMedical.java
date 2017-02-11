@@ -2,7 +2,11 @@ package ulink.servlet.dashboard;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.TreeMap;
@@ -40,10 +44,15 @@ public class DisplayDashboardMedical extends HttpServlet {
 		// TODO Auto-generated method stub
 		PrintWriter out = response.getWriter();
 		DatabaseConnection connection = new DatabaseConnection();
-		ArrayList<String> list = connection.retrievePastSixMonthRecord("Medical", connection.retrieveLatestDate());
+		Utility utility = new Utility();
+		String date =  connection.retrieveLatestDate();
+		String startDate = utility.getStartDateOfMonth(date);
+		String endDate = utility.getEndDateOfMonth(startDate);
+		
+		ArrayList<String> list = connection.retrievePastSixMonthRecord("Medical", startDate, endDate);
 		LinkedHashMap<String,Integer> pastSixMonth = new LinkedHashMap<>();
 		
-		Utility utility = new Utility();
+		
 		
 		for (int i =0; i < list.size(); i++){
 			
