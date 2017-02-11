@@ -168,6 +168,8 @@ function viewDoctors(clickedID){
 	var speciality = "";
 	var rank = 0;
 	var prev ="";
+	var startDate = $("#datepicker1").val();
+	var endDate = $("#datepicker2").val();
 	var table = "<table id='table' width='80%'>";
 		$.ajax({
 			url : "DisplayDoctorBySpecialty",
