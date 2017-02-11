@@ -55,7 +55,7 @@ public class DisplayAllClientByCondition extends HttpServlet {
 		}
 		
 		
-		System.out.println(newClientList.size());
+		
 		Gson gson = new Gson();
 		PrintWriter out = response.getWriter();
 		JsonArray result = (JsonArray) new Gson().toJsonTree(newClientList, new TypeToken<List<Client>>() {

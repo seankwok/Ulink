@@ -775,6 +775,7 @@ public class DatabaseConnection {
 		return admissionList;
 	}
 
+	
 	public ArrayList<Condition> retrieveAllCondition() {
 
 		Connection con;

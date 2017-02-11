@@ -13,3 +13,11 @@ to get Latest month it will return you a String that display the month only
 Bootstrap
 - DisplayDateTime method 
 to get the latest upload and display it. Return the latest date in String 
+
+
+View Screening (View Patients)
+I would need the parameters (Age, Gender, type(infant or adult)) and return you all patients based on that parameters.
+
+-DisplayPatientsByIllness
+Call thsi method to display all by illness 
+
