@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+    <title>Dashboard</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="js/jquery-1.12.0.js"></script>
+    
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script> 
+	    $(function(){
+	      $("#includedContent").load("navBar.html"); 
+	    });
+    </script> 
+	
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	
+ 
+ 	<script type="text/javascript">
+ 	$(document).ready(function() {
+	displayAll(); 	
+ 	Highcharts.chart('visaContainer', {
+ 	    chart: {
+ 	        type: 'bar'
+ 	    },
+ 	    title: {
+ 	        text: 'Types of Visa requested'
+ 	    },
+ 	    
+ 	    xAxis: {
+ 	        categories: ['Maternity', 
+ 	        			  'Indonesia - VTT 317 - Less than 6 months', 
+ 	                      'Indonesia - VTT 312 - More than 6 months', 
+ 	                      'Indonesia - VTT 312 - Less than 6 months', 
+ 	                      'Indonesia - VKU 211',
+ 	                      'Indonesia - VKBKP 212',
+ 	                      'ICA STVP'],
+ 	        title: {
+ 	            text: null
+ 	        }
+ 	    },
+ 	    yAxis: {
+ 	        min: 0,
+ 	        title: {
+ 	            text: null,
+ 	            align: 'high'
+ 	        },
+ 	        labels: {
+ 	            overflow: 'justify'
+ 	        }
+ 	    },
+ 	    tooltip: {
+ 	        valueSuffix: ' clients'
+ 	    },
+ 	    plotOptions: {
+ 	        bar: {
+ 	            dataLabels: {
+ 	                enabled: true
+ 	            }
+ 	        }
+ 	    },
+ 	    credits: {
+ 	        enabled: false
+ 	    },
+ 	    series: [{
+ 	        name: 'Number of Clients',
+ 	        color:'#2E66BC',
+ 	        data: [1052, 954, 4250, 740, 38]
+ 	    }]
+ 	});
+ 	
+ 	
+ 	Highcharts.chart('numVisa', {
+	    chart: {
+	        type: 'column'
+	    },
+	    title: {
+	        text: 'Number of VISA clients'
+	    },
+	    
+	    xAxis: {
+	        categories: [
+	            'Jan',
+	            'Feb',
+	            'Mar',
+	            'Apr',
+	            'May',
+	            'Jun',
+	        ],
+	        crosshair: true
+	    },
+	    yAxis: {
+	        min: 0,
+	        title: {
+	            text: 'Number of Clients'
+	        }
+	    },
+	    tooltip: {
+	        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+	        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+	            '<td style="padding:0"><b>{point.y:.1f} clients</b></td></tr>',
+	        footerFormat: '</table>',
+	        shared: true,
+	        useHTML: true
+	    },
+	    plotOptions: {
+	        column: {
+	            pointPadding: 0.2,
+	            borderWidth: 0
+	        }
+	    },
+	    credits: {
+ 	        enabled: false
+ 	    },
+	    series: [{
+	    	name: 'Visa Clients',
+	    	color:'#2758A1',
+	    	data: [5, 16, 31, 15, 38,55]
+	    }]
+	
+	   
+	});
+ 	
+ 	Highcharts.chart('numMedical', {
+	    chart: {
+	        type: 'column'
+	    },
+	    title: {
+	        text: 'Number of Medical clients'
+	    },
+	    
+	    xAxis: {
+	        categories: [
+	            'Jan',
+	            'Feb',
+	            'Mar',
+	            'Apr',
+	            'May',
+	            'Jun',
+	        ],
+	        crosshair: true
+	    },
+	    credits: {
+ 	        enabled: false
+ 	    },
+	    yAxis: {
+	        min: 0,
+	        title: {
+	            text: 'Number of Clients'
+	        }
+	    },
+	    tooltip: {
+	        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+	        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+	            '<td style="padding:0"><b>{point.y:.1f} clients</b></td></tr>',
+	        footerFormat: '</table>',
+	        shared: true,
+	        useHTML: true
+	    },
+	    plotOptions: {
+	        column: {
+	            pointPadding: 0.2,
+	            borderWidth: 0
+	        }
+	    },
+	    series: [{
+	    	name: 'Medical Clients',
+	    	color:'#214986',
+	    	 data: [5, 45, 31, 32, 81, 55]
+	    }]
+	
+	   
+	});
+ 	
+ 	
+ 	});
+ 	
+ 	function displayAll(){
+			$.ajax({
+				url: "DisplayDashboardMedical",
+				type: "get",
+			    dataType : "json",
+			    
+			    success: function(data){
+			    	var json = jQuery.parseJSON(JSON.stringify(data));
+			    	console.log(json);
+			  
+			    	$.each(json,function(key, value) {
+			    		console.log(key);
+			    		console.log(value);
+			    	});
+			    	
+			    	
+			    	
+			    }	
+			    
+			});	
+			}
+ 	
+ 	</script>
+ 	
+</head>
+<body>
+  	<div id="includedContent"></div>
+
+	<div class="container">
+	<div class="col-md-4">
+	
+	<div id="visaContainer" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+	
+	</div>
+	
+	<div class="col-md-4">
+	
+	<div id="numVisa" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+	
+	</div>
+	
+	<div class="col-md-4">
+	
+	<div id="numMedical" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+	
+	</div>
+	
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</body>
+</html>

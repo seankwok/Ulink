@@ -16,149 +16,410 @@
     <script src="js/bootstrap-datetimepicker.min.js"></script>
     <script src="js/bootstrap-datetimepicker.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script> 
+	    $(function(){
+	      $("#includedContent").load("navBar.html"); 
+	    });
+    </script> 
 
-
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
 
 <script type="text/javascript">
 
 $(document).ready(function() {
 	
-	$("#submit").click (
-			function(){
-		var table;
-		var teamName = $('#teamName').val();
-		var startDate = $("#startDate").val();
-		var endDate = $("#endDate").val();
-		console.log(teamName);
-		console.log(startDate);
-		$.ajax({
-			url : "Analysis",
-			type : "get",
-			data : 'teamName=' + teamName + '&' + 'startDate=' + startDate + '&' + 'endDate=' + endDate,
-			dataType : "json",
-			success : function(data) {
-				var json = jQuery.parseJSON(JSON.stringify(data));
 	
-				console.log(json);
-				if (teamName == "Medical") {
-					table ="<tr><th>Number of in Patient</th><th>Number of out Patient</th>";
+	$("#toggle").click(function()
+			{                     
+			   $(".text").toggle();
+			});
+	
+	
+	$("#submit").click (function(){
+		var teamName = $('#teamName').val();
+		var thisMonth = $("#month").val();
+		var thisYear = $("#year").val();
+		var value = thisYear + "-" + thisMonth;
+		var lastYear = thisYear - 1;
 		
-			      
-			                table += '<tr>'
-			                      + '<td>'
-			                      + json.inPatient
-			                      + '</td>'
-			                      + '<td>'
-			                      + json.outPatient
-			                      + '</td></tr>';
+		if (thisMonth == 1){ // if choose jan then last month is dec
+			lastMonth = 12;
+			thisYear = lastYear;
+		}else{
+			lastMonth = thisMonth -1;
+		}
+		
+		var thisYearThisMonth = thisYear + "-" + thisMonth;
+		var thisYearLastMonth = thisYear + "-" + lastMonth;	
+		var lastYearThisMonth = lastYear + "-" + thisMonth;
+		var lastYearLastMonth = lastYear + "-" + lastMonth;
+		
+		console.log("thisYearThisMonth="+ thisYearThisMonth);
+		console.log("thisYearLastMonth=" + thisYearLastMonth);
+		console.log("lastYearThisMonth" +lastYearThisMonth);
+		console.log("lastYearLastMonth" + lastYearLastMonth);
+		
+		
+		var table1 = "<table id='table1'  class='table table-striped' cellspacing='0' width='100%'>";
+		var table2 = "<table id='table2'  class='table table-striped' cellspacing='0' width='100%'>";
+		var table3 = "<table id='table1'  class='table table-striped' cellspacing='0' width='100%'>";
+		var table4 = "<table id='table1'  class='table table-striped' cellspacing='0' width='100%'>";
 
-			    
+		$.ajax({
+			url : "ReportKPI",
+			type : "get",
+			data : 'type=' + teamName + '&' +'date=' + value + '&thisYearLastMonth=' + thisYearLastMonth + '&lastYearThisMonth=' + lastYearThisMonth + '&lastYearLastMonth=' + lastYearLastMonth,
+			dataType : "json",
+			complete : function(data) {
+				var json = jQuery.parseJSON(JSON.stringify(data));
+				console.log(json.responseJSON);
+				if (teamName == "Medical") {
+					table1 += "<h4><b>Comparison against previous month</b></h4>"
+					table1 += "<tr><th>Month</th>"
+						  +  "<th>Inpatient</th>"
+						  +  "<th>Outpatient</th></tr>"
+						  +  "<tr><td>"
+						  +  json.responseJSON[0].date
+						  +	 "<td>"
+						  +  json.responseJSON[0].inPatient
+						  +  "<td>"
+						  +  json.responseJSON[0].outPatient
+						  +  "</td></tr>"
+						  +  "<tr><td>"
+						  +  json.responseJSON[1].date
+						  +	 "<td>"
+						  +  json.responseJSON[1].inPatient
+						  +  "<td>"
+						  +  json.responseJSON[1].outPatient
+						  +  "</td></tr>"
+						  +  "<tr><td>"
+						  +  json.responseJSON[2].date
+						  +	 "<td>"
+						  +  json.responseJSON[2].inPatient
+						  +  "<td>"
+						  +  json.responseJSON[2].outPatient
+						  +  "</td></tr>";
+					table2 += "<h4><b>Comparison against previous year</b></h4>"
+					table2 += "<tr><th>Month</th>"
+						  +  "<th>Inpatient</th>"
+						  +  "<th>Outpatient</th></tr>"
+						  +  "<tr><td>"
+						  +  json.responseJSON[3].date
+						  +	 "<td>"
+						  +  json.responseJSON[3].inPatient
+						  +  "<td>"
+						  +  json.responseJSON[3].outPatient
+						  +  "</td></tr>"
+						  +  "<tr><td>"
+						  +  json.responseJSON[4].date
+						  +	 "<td>"
+						  +  json.responseJSON[4].inPatient
+						  +  "<td>"
+						  +  json.responseJSON[4].outPatient
+						  +  "</td></tr>"
+						  +  "<tr><td>"
+						  +  json.responseJSON[5].date
+						  +	 "<td>"
+						  +  json.responseJSON[5].inPatient
+						  +  "<td>"
+						  +  json.responseJSON[5].outPatient
+						  +  "</td></tr>";
+						
+					$('#table1').html(table1);
+					$('#table2').html(table2);
+					 
+					Highcharts.chart('container', {
+					    chart: {
+					        type: 'column'
+					    },
+					    title: {
+					        text: 'Comparison with previous month'
+					    },
+					    
+					    xAxis: {
+					        categories: [
+					            'Inpatient',
+					            'Outpatient'
+					        ],
+					        crosshair: true
+					    },
+					    yAxis: {
+					        min: 0,
+					        title: {
+					            text: 'Number of patients'
+					        }
+					    },
+					    credits: {
+				 	        enabled: false
+				 	    },
+					    tooltip: {
+					        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+					        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+					            '<td style="padding:0"><b>{point.y:.1f} patients</b></td></tr>',
+					        footerFormat: '</table>',
+					        shared: true,
+					        useHTML: true
+					    },
+					    plotOptions: {
+					        column: {
+					            pointPadding: 0.2,
+					            borderWidth: 0
+					        }
+					    },
+					    series: [{
+					        name: json.responseJSON[0].date,
+					        data: [json.responseJSON[0].inPatient,json.responseJSON[1].inPatient]
 
-				} else {
+					    }, {
+					        name: json.responseJSON[1].date,
+					        data: [json.responseJSON[0].outPatient,json.responseJSON[1].outPatient]
+
+					    }]
 					
-					table ="<tr><th>Number of Indonesian Patients</th><th>Number of Non-Indonesian Patients</th>";
-		
-			      
-			                table += '<tr>'
-			                      + '<td>'
-			                      + json.indo
-			                      + '</td>'
-			                      + '<td>'
-			                      + json.nonIndo
-			                      + '</td></tr>';
-				}
+					   
+					});
+					
+					Highcharts.chart('container2', {
+					    chart: {
+					        type: 'column'
+					    },
+					    title: {
+					        text: 'Comparison with previous year'
+					    },
+					    
+					    xAxis: {
+					        categories: [
+					            'Inpatient',
+					            'Outpatient'
+					        ],
+					        crosshair: true
+					    },
+					    yAxis: {
+					        min: 0,
+					        title: {
+					            text: 'Number of patients'
+					        }
+					    },
+					    credits: {
+				 	        enabled: false
+				 	    },
+					    tooltip: {
+					        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+					        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+					            '<td style="padding:0"><b>{point.y:.1f} patients</b></td></tr>',
+					        footerFormat: '</table>',
+					        shared: true,
+					        useHTML: true
+					    },
+					    plotOptions: {
+					        column: {
+					            pointPadding: 0.2,
+					            borderWidth: 0
+					        }
+					    },
+					    series: [{
+					        name: json.responseJSON[3].date,
+					        data: [json.responseJSON[3].inPatient,json.responseJSON[4].inPatient]
 
-        $('#kpi').html(table);
+					    }, {
+					        name: json.responseJSON[4].date,
+					        data: [json.responseJSON[3].outPatient,json.responseJSON[4].outPatient]
 
-
-
-        /* sean's quotes
-				console.log(json);
-
-				if (teamName == "Medical") {
-					$('#green').html("Number of in Patient " + json.inPatient);
-					$('#red').html("Number of out Patient " + json.outPatient);
+					    }]
+					});
+					   
+					   
+					
 				} else {
-					$('#green').html("Number of Indonesian Patients " + json.indo);
-					$('#red').html("Number of Non-Indonesian Patients " + json.nonIndo);
+					$.ajax({
+						url : "KPIVisa",
+						type : "get",
+						data : 'type=' + teamName + '&' +'date=' + value + '&thisYearLastMonth=' + thisYearLastMonth + '&lastYearThisMonth=' + lastYearThisMonth + '&lastYearLastMonth=' + lastYearLastMonth,
+						dataType : "json",
+						complete : function(data) {
+						var json = jQuery.parseJSON(JSON.stringify(data));
+						console.log(json);
+						console.log("tets");
+							table3 += "<h4><b>Comparison against previous month</b></h4>"
+							table3 += "<tr><th>Month</th>"
+								  +  "<th>Indonesian Patients</th>"
+								  +  "<th>Non-Indonesian Patients</th></tr>"
+								  +  "<tr><td>"
+								  +  json.responseJSON[0].date
+								  +	 "<td>"
+								  +  json.responseJSON[0].inPatient
+								  +  "<td>"
+								  +  json.responseJSON[0].outPatient
+								  +  "</td></tr>"
+								  +  "<tr><td>"
+								  +  json.responseJSON[1].date
+								  +	 "<td>"
+								  +  json.responseJSON[1].inPatient
+								  +  "<td>"
+								  +  json.responseJSON[1].outPatient
+								  +  "</td></tr>"
+								  +  "<tr><td>"
+								  +  json.responseJSON[2].date
+								  +	 "<td>"
+								  +  json.responseJSON[2].inPatient
+								  +  "<td>"
+								  +  json.responseJSON[2].outPatient
+								  +  "</td></tr>";
+							table4 += "<h4><b>Comparison against previous year</b></h4>"
+							table4 += "<tr><th>Month</th>"
+								  +  "<th>Indonesian Patients</th>"
+								  +  "<th>Non-Indonesian Patients</th></tr>"
+								  +  "<tr><td>"
+								  +  json.responseJSON[3].date
+								  +	 "<td>"
+								  +  json.responseJSON[3].inPatient
+								  +  "<td>"
+								  +  json.responseJSON[3].outPatient
+								  +  "</td></tr>"
+								  +  "<tr><td>"
+								  +  json.responseJSON[4].date
+								  +	 "<td>"
+								  +  json.responseJSON[4].inPatient
+								  +  "<td>"
+								  +  json.responseJSON[4].outPatient
+								  +  "</td></tr>"
+								  +  "<tr><td>"
+								  +  json.responseJSON[5].date
+								  +	 "<td>"
+								  +  json.responseJSON[5].inPatient
+								  +  "<td>"
+								  +  json.responseJSON[5].outPatient
+								  +  "</td></tr>";
+								  
+							 $('#table1').html(table3);
+							 $('#table2').html(table4);
+							 
+							 Highcharts.chart('container', {
+								    chart: {
+								        type: 'column'
+								    },
+								    title: {
+								        text: 'Comparison with previous month'
+								    },
+								    
+								    xAxis: {
+								        categories: [
+								            'Indonesian',
+								            'Non-Indonesian'
+								        ],
+								        crosshair: true
+								    },
+								    
+								    yAxis: {
+								        min: 0,
+								        title: {
+								            text: 'Number of clients'
+								        }
+								    },
+								    tooltip: {
+								        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+								        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+								            '<td style="padding:0"><b>{point.y:.1f} clients</b></td></tr>',
+								        footerFormat: '</table>',
+								        shared: true,
+								        useHTML: true
+								    },
+								    plotOptions: {
+								        column: {
+								            pointPadding: 0.2,
+								            borderWidth: 0
+								        }
+								    },
+								    credits: {
+							 	        enabled: false
+							 	    },
+								    series: [{
+								        name: json.responseJSON[0].date,
+								        data: [json.responseJSON[0].inPatient,json.responseJSON[1].inPatient]
+
+								    }, {
+								        name: json.responseJSON[1].date,
+								        data: [json.responseJSON[0].outPatient,json.responseJSON[1].outPatient]
+
+								    }]
+								
+								   
+								});
+								
+								Highcharts.chart('container2', {
+								    chart: {
+								        type: 'column'
+								    },
+								    title: {
+								        text: 'Comparison with previous year'
+								    },
+								    credits: {
+							 	        enabled: false
+							 	    },
+								    
+								    xAxis: {
+								        categories: [
+								        	'Indonesian',
+								            'Non-Indonesian'
+								        ],
+								        crosshair: true
+								    },
+								    yAxis: {
+								        min: 0,
+								        title: {
+								            text: 'Number of patients'
+								        }
+								    },
+								    tooltip: {
+								        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+								        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+								            '<td style="padding:0"><b>{point.y:.1f} clients</b></td></tr>',
+								        footerFormat: '</table>',
+								        shared: true,
+								        useHTML: true
+								    },
+								    plotOptions: {
+								        column: {
+								            pointPadding: 0.2,
+								            borderWidth: 0
+								        }
+								    },
+								    series: [{
+								        name: json.responseJSON[3].date,
+								        data: [json.responseJSON[3].inPatient,json.responseJSON[4].inPatient]
+
+								    }, {
+								        name: json.responseJSON[4].date,
+								        data: [json.responseJSON[3].outPatient,json.responseJSON[4].outPatient]
+
+								    }]
+								});
+						}
+					});
 				}
-  */
 			
 			} });
 
-
 	});
+	
+	var start = 2015;
+	var end = new Date().getFullYear();
+	var options = "";
+	for(var year = start ; year <=end; year++){
+	  options += "<option>"+ year +"</option>";
+	}
+	document.getElementById("year").innerHTML = options;
  	
 });
  	</script>
   </head>
   <body>
     
-   <nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">Ulink Assist</a>
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li><a href="#">Home<span class="sr-only">(current)</span></a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Client <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="client.html">Client List</a></li>
-            <li><a href="createClient.html">Create New Client</a></li>
-          </ul>
-        </li> 
-        <li><a href="#">Cases</a></li>
-        <li><a href="#">Invoice</a></li>
-        <li><a href="#">Services</a></li>
-        <li><a href="#">Report</a></li>
-        <li><a href="#">Doctor</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Timeline <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="infant.html">Infant</a></li>
-            <li><a href="female.html">Female</a></li>
-            <li><a href="male.html">Male</a></li>
-          </ul>
-        </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Analysis <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="kpi.html">KPI</a></li>
-              <li><a href="ranking.html">Ranking</a></li>
-            <li><a href="genderAndAgeReport.html">Gender and Age Report</a></li>
-          </ul>
-        </li>
-        <li><a href="#">Template</a></li>
-        
-        
-      </ul>
-      <form class="navbar-form navbar-right">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Logout</a></li>
-        
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
+  	<div id="includedContent"></div>
 
     <div class="page-header">
-       <h1 align ="center">Analysis - KPI</h1>
+       <h1 align ="center"><b>KPI</b></h1>
     </div>
 
       
@@ -179,58 +440,61 @@ $(document).ready(function() {
 
           <div class="col-md-4">
           <div class="form-group">
-          <label> Select Start Date </label>
-          <div class='input-group date' id='datetimepicker1'>
-            <input type='text' class="form-control" id="startDate" />
-            <span class="input-group-addon">
-            <span class="glyphicon glyphicon-calendar"></span>
-            </span>
+          <label> Select Month </label>
+          <select class="form-control" id="month">
+              <option value="01">January</option>
+              <option value="02">February</option>
+              <option value="03">March</option>
+              <option value="04">April</option>
+              <option value="05">May</option>
+              <option value="06">June</option>
+              <option value="07">July</option>
+              <option value="08">August</option>
+              <option value="09">September</option>
+              <option value="10">October</option>
+              <option value="11">November</option>
+              <option value="12">December</option>
+            </select>
+          </div>
+          </div>
+          
+          <div class="col-md-4">
+          <div class="form-group">
+          <label> Select Year </label>
+          <select class="form-control" id="year">
+          
+            </select>
           </div>
 
-          <script type="text/javascript">
-          $(function () {
-            $('#datetimepicker1').datetimepicker();
-         });
-          </script>
-        </div>
         </div>
 
-        <div class="col-md-4">
-          <div class="form-group">
-          <label> Select End Date </label>
-          <div class='input-group date' id='datetimepicker2'>
-            <input type='text' class="form-control" id="endDate" />
-            <span class="input-group-addon">
-            <span class="glyphicon glyphicon-calendar"></span>
-            </span>
-        </div>
-
-          <script type="text/javascript">
-          $(function () {
-            $('#datetimepicker2').datetimepicker();
-         });
-          </script>
-        </div>
-        </div>
+        
 
 
       </div>
     <div class="container" align="center">
-        <button type="submit" value="Submit" class="btn btn-primary" id="submit">Generate</button>
+        <button type="submit" value="Submit" class="btn btn-primary" id="submit">Generate Results</button>
     </div>
-    
 
     <br>
-    <div class="container">
-
-    <table class="table table-striped" id="kpi">
-    
-    </table>
-  </div>
     </div>
-    <!-- sean's codes
-    <div align="center" id="green"></div>
-    <div align="center" id="red"></div>
-    -->
+        
+       <div align='center'>
+       	 <button type="button" id="toggle" class="btn btn-default" onclick="toggle();"><b>Table / Chart</b></button>   
+	      
+
+      
+       </div>
+       
+		 <div>
+		    <div class="text" >  
+		    	<div class="container" align="left" id="table1"></div>
+  				<div class="container" align="left" id="table2"></div>
+			</div>
+		    <div class="text" style="display:none">
+	    	    <div id="container" align="center" ></div>
+    			<div id="container2" align="center" ></div>
+    		</div>
+		</div>
   </body>
 </html>

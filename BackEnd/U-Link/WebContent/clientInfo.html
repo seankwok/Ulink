@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+    <title>Client</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script> 
+	    $(function(){
+	      $("#includedContent").load("navBar.html"); 
+	    });
+    </script>     
+    
+ <style>
+ 	
+ 	
+	
+	.myHeader{
+		font-weight: bold;
+		font-size: 18px;
+		color: #092473;
+	}
+	
+	
+	td {
+		font-size: 18px;
+	}
+	.appTd{
+		font-size: 15px;
+	}
+	
+	table{
+		margin-bottom: 60px;
+	}
+	
+	.tableHeader{
+		font-weight: bold;
+		font-size: 16px;
+		color: black;
+		text-align: center;
+	}
+	
+	.tableName{
+		font-weight: bold;
+		font-size: 20px;
+		color: #092473;
+	}
+
+ 	</style>
+ 
+ <script type="text/javascript">
+
+		$(document).ready(function() {
+			displayAll();
+			displayAppointment();
+			displayScreening();
+			
+		});
+		
+		function displayAppointment() {
+			var appTable = "<table  width='90%' border='1'>";
+			$.ajax({
+				url : "DisplayAllClientByName",
+				type : "get",
+				dataType : "json",
+				complete : function(data) {
+					var json = jQuery.parseJSON(data.responseText);
+					console.log(json);
+					appTable += "<thead>"
+									+"<th class='tableHeader' width='25%'>Appointment Date & Time</th>"
+									+"<th class='tableHeader'width='15%'>Doctor</th>"
+									+"<th class='tableHeader'width='10%'>Other Doctor</th>"
+									+"<th class='tableHeader'width='20%'>Clinic</th>"
+									+"<th class='tableHeader'width='20%'>Hospital Admitted</th>"
+								+"</thead>"
+				          $.each(json, function(key, value){
+				       	  appTable   +="<tbody>"				      
+				          		+"<tr>"
+					                +"<td class='appTd'>"+value["appointment"]+"</td>"
+					                +"<td class='appTd'>"+value["doctor"]+"</td>"
+					                +"<td class='appTd'>"+value["otherDoctor"]+"</td>"
+					                +"<td class='appTd'>"+value["clinic"]+"</td>"
+					                +"<td class='appTd'>"+value["hospitalAdmitted"]+"</td>"
+				                +"</tr>"
+	               				             				                
+							});
+								appTable	+="</tbody></table>"
+			    	$("#aTable").html(appTable);
+				}							
+			});
+		}
+		
+		function displayScreening() {
+			var screenTable = "<table  width='90%' border='1'>";
+			$.ajax({
+				url : "DisplayConditionByClient",
+				type : "get",
+				dataType : "json",
+				complete : function(data) {
+					var json = jQuery.parseJSON(data.responseText);
+					console.log(json);
+					screenTable += "<thead>"
+									+"<th class='tableHeader' width='50%'>Common Illness</th>"
+									+"<th class='tableHeader'width='50%'>Recommended Screening</th>"
+								+"</thead>"
+				          $.each(json, function(key, value){
+			        	  screenTable   +="<tbody>"
+				          		
+				          		+"<tr>"
+					                +"<td class='appTd'>"+value["conditionName"]+"</td>"
+					                +"<td class='appTd'>"+value["screening"]+"</td>"
+				                +"</tr>"
+	               				             				                
+							});
+								screenTable	+="</tbody></table>"
+			    	$("#sTable").html(screenTable);
+				}							
+			});
+		}
+		
+		function displayAll() {
+			var profileTable = "<table  width='90%'>";
+			var cName = "";
+			$.ajax({
+				url : "DisplayAllClientByName",
+				type : "get",
+				dataType : "json",
+				complete : function(data) {
+					var json = jQuery.parseJSON(data.responseText);
+					console.log(json);
+					var profile=json[0];
+					profileTable += "<thead><th width='50%'></th><th width='50%'></th></thead>"		
+				       	 cName = profile.clientName
+				          profileTable   +="<tbody>"
+				          		
+				          		+"<tr>"
+				                +"<td><span class='myHeader'>Age: </span>" +profile["age"]+"</td>"
+				                +"<td><span class='myHeader'>Client Owner: </span>" +profile["clientOwner"]+"</td>"
+				                +"</tr>"
+				                
+				                
+				                +"<tr>"
+				                +"<td><span class='myHeader'>Gender: </span>" +profile["gender"]+"</td>"
+				                +"<td><span class='myHeader'>PIC: </span>"    +profile["PIC"]+"</td>"
+				                +"</tr>"
+				                
+				                +"<tr>"
+				                +"<td><span class='myHeader'>Nationality: </span>"+profile["nationality"]+"</td>"
+				                +"<td><span class='myHeader'>Referred By: </span>"+profile["referredBy"]+"</td>"
+				                +"</tr>"
+				                
+				                +"<tr>"
+				                +"<td><span class='myHeader'>Date of Birth: </span>"+profile["dateOfBirth"]+"</td>"
+				                +"<td><span class='myHeader'>Ulink Can Claim: </span>"+profile["claim"]+"</td>"
+				                +"</tr>"
+				                
+				                +"<tr>"
+				                +"<td><span class='myHeader'>Company: </span>"+profile["company"]+"</td>"	
+				                +"<td><span class='myHeader'>Visa Requested By: </span>"+profile["visaRequestBy"]+"</td>"
+				                +"</tr>"
+				                
+				                +"<tr>"
+				                +"<td><span class='myHeader'>Email: </span>"+profile["email"]+"</td>"
+				                +"<td><span class='myHeader'>Visa Type: </span>"+profile["visaType"]+"</td>"	
+				                +"</tr>"
+				                
+				                +"</tbody></table>"
+				                	               				             				                
+				 
+					
+			    	$("#myTable").html(profileTable);
+					$("#name").html(cName);
+				}
+									
+				
+
+			});
+		}
+	</script>
+ 
+  </head>
+  <body>
+    
+  	<div id="includedContent"></div>
+
+
+	
+    <div class="page-header">
+       <h1 align="center" id="name"></h1>
+    </div>
+    
+    <div align="right"id="myTable"></div>  
+    
+   <div>
+   		<div align="center" class='tableName'> Appointment Date & Time </div><br> 
+ 		<div align="center" id="aTable"> </div>
+
+   </div>
+
+   <div>
+   		<div align="center" class='tableName'>Screenings</div>
+		<div align="center"  id="sTable"></div>
+   </div>
+	
+	
+	
+	
+
+	    
+  </body>
+</html>

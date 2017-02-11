@@ -8,176 +8,223 @@
     <title>Client</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+    
+    <script> 
+	    $(function(){
+	      $("#includedContent").load("navBar.html"); 
+	    });
+    </script> 
+
+<style>
+ 	
+	#myInput {
+	    background-position: 10px 12px; /* Position the search icon */
+	    background-repeat: no-repeat; /* Do not repeat the icon image */
+	    width: 30%; /* Full-width */
+	    font-size: 16px; /* Increase font-size */
+	    padding: 12px 20px 12px 40px; /* Add some padding */
+	    border: 1px solid #ddd; /* Add a grey border */
+	    margin-bottom: 12px; /* Add some space below the input */
+	}
+	
+	#table {
+	    border-collapse: collapse; /* Collapse borders */
+	    width: 100%; /* Full-width */
+	    font-size: 18px; /* Increase font-size */
+
+	}
+	
+	#table th, #table td {
+	    text-align: left; /* Left-align text */
+	    padding: 10px; /* Add padding */
+	}
+
+	#table tr {
+	    /* Add a bottom border to all table rows */
+	    border-bottom: 1px solid #ddd; 
+	     padding-bottom: 30px; /* Add padding */
+	}
+	
+	#table tr.header, #table tr:hover {
+	    /* Add background color to the table header and on hover */
+	    font-color: black;
+	}	
+	
+	/* unvisited link */
+	a:link {
+	    text-decoration:none;
+	}
+	
+	/* visited link */
+	a:visited {
+	    text-decoration:none;
+	}
+	
+	/* mouse over link */
+	a:hover {
+	    text-decoration:none;
+	}
+	
+	/* selected link */
+	a:active {
+	    text-decoration:none;
+	}
+	
+ select
+    {
+        border:0px;
+        outline:0px;
+        width:150px;
+    }
+	.team{
+		width:90px;
+	}
+	
+</style>
  
  <script type="text/javascript">
-
 		$(document).ready(function() {
-
 			displayAll();
-		});
-
-		function deleteItem(clickedID) {
-			var sendData = {
-				"passportNumber" : clickedID
-			};
-			console.log(clickedID);
-			$.ajax({
-				url : "DeleteClient",
-				type : "post",
-				data : sendData,
-				dataType : "json",
-				success : function(data) {
-
-					displayAll();
-					$("#message").html("Client Deleted");
-					$("#message").css("color", "green");
-				}
-
-			});
+		} );
+		
+		function jsFunction1(value){
+			   // set search box value as client type
+			   var txt =  document.getElementById('myInput');
+			   txt.value = value;
+			   document.getElementById('team').value = '';
+			   mySearch();
 		}
+		
+		function jsFunction2(value){
+			   // set search box value as Team
+			   var txt =  document.getElementById('myInput');
+			   txt.value = value;
+			   document.getElementById('type').value = '';
+			   mySearch();
+			  
+		}
+
+		function mySearch() {
+			 var searchText = document.getElementById('myInput').value.toUpperCase();
+			    var targetTable = document.getElementById('table');
+			    var targetTableColCount;			            
+			    //Loop through table rows
+			    for (var rowIndex = 0; rowIndex < targetTable.rows.length; rowIndex++) {
+			        var rowData = '';
+
+			        //Get column count from header row
+			        if (rowIndex == 0) {
+			           targetTableColCount = targetTable.rows.item(rowIndex).cells.length;
+			           continue; //do not execute further code for header row.
+			        }
+			                
+			        //Process data rows. (rowIndex >= 1)
+			        for (var colIndex = 0; colIndex < targetTableColCount; colIndex++) {
+			            rowData += targetTable.rows.item(rowIndex).cells.item(colIndex).textContent.toUpperCase();
+			        }
+
+			        //If search term is not found in row data
+			        //then hide the row, else show
+			        if (rowData.indexOf(searchText) == -1)
+			            targetTable.rows.item(rowIndex).style.display = 'none';
+			        else
+			            targetTable.rows.item(rowIndex).style.display = 'table-row';
+			    }
+			}
+
+		function directToClientProfile(clickedID){
+			var sendData = {
+					"clientName" : clickedID
+				};
+				console.log(clickedID);
+				$.ajax({
+					url : "DisplayAllClientByName2",
+					type : "post",
+					data : sendData,
+					dataType : "json",
+					complete : function(data) {
+						displayAll();
+							window.location="clientInfo.html";						
+					}
+				});
+		}
+			
+		
 
 		function displayAll() {
-			var clientDetails = "<thead><tr><th>Client Name</th><th>Nationality</th><th>Gender</th><th>Date of Birth</th><th>Referred by</th><th>Action</th><th></th></tr></thead>";
+			var table = "<table id='table' class=' table-hover'>";
 			var isEmpty = false;
-			var completeIsEmpty = false;
-			$
-					.ajax({
-						url : "DisplayAllClient",
-						type : "GET",
-						dataType : "json",
-						success : function(data) {
-
-							var json = jQuery.parseJSON(JSON.stringify(data));
-							console.log(json);
-							$
-									.each(
-											json,
-											function(key, value) {
-												//	$('#toDoID').append($('<div></div>').html());
-												//  var list = $('<ul></ul>');
-
-												clientDetails += '<tr>'
-
-												+ '<td>'
-														+ value.clientName
-														+ '</td>'
-														+ '<td>'
-														+ value.nationality
-														+ '</td>'
-														+ '<td>'
-														+ value.gender
-														+ '</td>'
-														+ '<td>'
-														+ value.dateOfBirth
-														+ '</td>'
-														+ '<td>'
-														+ value.referralName
-														+ '</td>'
-														+ '<td><a href=updateClient.html onClick=editItem(this.id) id='
-														+ value.passportNumber
-														+ '>Edit</a></td>'
-														+ '<td><a href=# onClick=deleteItem(this.id) id='
-														+ value.passportNumber
-														+ '> Delete</a></td></tr>';
-
-											});
-							//	$('#toDoList').append(toDoList);
-
-							$("#clientDetails").html(clientDetails);
-
-							//(toDoList);
-						}
+			$.ajax({
+				url: "DisplayAllClient",
+				type: "get",
+			    dataType : "json",
+			    complete: function(data){
+			    	var json = jQuery.parseJSON(data.responseText);
+	    					
+				    table += "<thead>"
+					    	   +"<th>Client Name</th>"			    	
+					    	   +"<th>"
+					    		+"<select onchange='jsFunction1(value)' id='type'>"
+							    	+"<option value='Company' onclick='if (!document.getElementById('searchInput').onchange()) mySearch();'>Company</option>"
+							    	+"<option value='Employee'>Employee</option>"
+							    	+"<option value='Individual'>Individual</option>"
+							    	+"<option value='' selected='selected' >All Client Type</option>"
+					    		 +"</select>"
+						    	+"</th>"
+						    	+"<th width=30% >"
+				    			 +"<select class='team' onchange='jsFunction2(value)' id='team'>"
+							    	+"<option value='Visa'>Visa</option>"
+							    	+"<option value='Medical'>Medical</option>"
+								    +"<option value='' selected='selected'>Team</option>"		    	
+		    					 +"</select>"
+				    			+"</th>"
+			    			+"</thead>"
+				    			
+				    			+"<tbody>"
+			    	$.each(json, function(i, item){
+						table 	+= "<tr>"
+									+"<td>"
+										+ "<a href='#' onClick=directToClientProfile(this.id) id= '"
+					    				+ item.clientName
+					    				+ "'>"+item.clientName +"</a>"
+		    						+ "</td>"
+		    						+ "<td width=30%>"
+		    							+ item.clientType
+		    						+ "</td>"
+			    					+ "<td>"
+			    						+ item.medical
+			    					+ "</td>"
+		    					+ "</tr>"
+		    					
 					});
-			//
-			//return data;
-
+			    	table += "</tbody></table>"
+			    	$("#display").html(table);				    	
+			    }				    
+			});			
 		}
+	  
 	</script>
  
   </head>
+  
   <body>
-    
-   <nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">Ulink Assist</a>
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li><a href="index.html">Home</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Client <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="client.html">Client List</a></li>
-            <li><a href="createClient.html">Create New Client</a></li>
-          </ul>
-        </li>
-        <li><a href="#">Cases</a></li>       
-        <li><a href="#">Invoice</a></li>
-        <li><a href="#">Services</a></li>
-        <li><a href="#">Report</a></li>
-        <li><a href="#">Doctor</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Timeline <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="infant.html">Infant</a></li>
-            <li><a href="female.html">Female</a></li>
-            <li><a href="male.html">Male</a></li>
-          </ul>
-        </li>  
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Analysis <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="kpi.html">KPI</a></li>
-            <li><a href="ranking.html">Ranking</a></li>
-            <li><a href="genderAndAgeReport.html">Gender and Age Report</a></li>
-          </ul>
-        </li>
-        <li><a href="#">Template</a></li>
-        
-        
-      </ul>
-      <form class="navbar-form navbar-right">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Logout</a></li>
-        
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-
-    
+  
+  	<div id="includedContent"></div>
+	
     <div class="page-header">
-       <h1 align="center">Client - List</h1>
+       <h1 align="center"><b>Client List</b></h1>
     </div>
 
-    <div class="container">
-    <a href="createClient.html"><button type="button" class="btn btn-default" class="btn pull-right">Create new client</button></a>
-    <table class="table table-striped" id="clientDetails">
- 
-
-  </table>
-</div>
-
-
+	<div align="center"><input type="text" id="myInput" onkeyup="mySearch()" placeholder="Search Client by Name.."></div>
     
+	<div id="display" class="container"  ></div>
+
+
   </body>
 </html>

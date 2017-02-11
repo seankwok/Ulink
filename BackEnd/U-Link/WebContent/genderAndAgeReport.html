@@ -12,150 +12,110 @@
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="js/jquery-1.12.0.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script> 
+	    $(function(){
+	      $("#includedContent").load("navBar.html"); 
+	    });
+  </script> 
+  
 
 <script type="text/javascript">
 	$(document).ready(function() {
-
 		displayAll();
+		
+		
+		
 	});
 
 	function displayAll() {
-		var ageList = "<tr><th>Age range</th><th>Number of patients</th></tr>"
 		var completedTask;
-		var isEmpty = false;
-		var completeIsEmpty = false;
-		$
-				.ajax({
-					url : "DisplayAllGenderByAge",
-					type : "GET",
-					dataType : "json",
-					success : function(data) {
+		$.ajax({
+			url : "DisplayAgeGenderReport",
+			type : "GET",
+			dataType : "json",
+			complete : function(data) {
+				var json = jQuery.parseJSON(JSON.stringify(data));
+				console.log(json.responseJSON);
+				Highcharts.chart('container', {
+				    chart: {
+				        type: 'column'
+				    },
+				    title: {
+				        text: ' '
+				    },
+				    xAxis: {
+				        categories: [
+				        	'0 - 10',
+				        	'11 - 20',
+				        	'21 - 30',
+				        	'31 - 40',
+				        	'41 - 50',
+				        	'51 - 60',
+				        	'61 - 70',
+				        	'71 - 80',
+				        	'Above 80',       	
 
-						var json = jQuery.parseJSON(JSON.stringify(data));
-						console.log(json);
-						$
-								.each(
-										json,
-										function(key, value) {
-											//	$('#toDoID').append($('<div></div>').html());
-											//  var list = $('<ul></ul>');
+				      
+				        ],
+				        crosshair: true
+				    },
+				    yAxis: {
+				        min: 0,
+				        title: {
+				            text: 'Percentage per Age Group (%)'
+				        }
+				    },
+				    tooltip: {
+				        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+				        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+				            '<td style="padding:0"><b>{point.y:.1f} %</b></td></tr>',
+				        footerFormat: '</table>',
+				        shared: true,
+				        useHTML: true
+				    },
+				    plotOptions: {
+				        column: {
+				            pointPadding: 0.2,
+				            borderWidth: 0				
+				        }
+				    },  
+				    credits: {
+				 	        enabled: false
+				    },
+				    series: [{
+				        name: 'Male',
+				        color: '#0683E1',
+				        data: [json.responseJSON[0].male,json.responseJSON[1].male,json.responseJSON[2].male,json.responseJSON[3].male,
+				        	json.responseJSON[4].male,json.responseJSON[5].male,json.responseJSON[6].male,json.responseJSON[7].male,3]
 
-									
-												ageList += '<tr>'
+				    }, {
+				        name: 'Female',
+				        color: '#E10906',
+				        data: [json.responseJSON[0].female,json.responseJSON[1].female,json.responseJSON[2].female,json.responseJSON[3].female,
+				        	json.responseJSON[4].female,json.responseJSON[5].female,json.responseJSON[6].female,json.responseJSON[7].female,4]
 
-														+ '<td>'
-														+ key
-														+ '</td>'
-														+ '<td>'
-														+ value
-														+ '</td></tr>';
-
-												
-											
-
-
-										});
-						//	$('#toDoList').append(toDoList);
-					
-							$("#ageList").html(ageList);
-					
-
-						//(toDoList);
-					}
+				    } ]
 				});
-		//
-		//return data;
-
-	}
-</script>
+			}
+		});
+  	}
+	
+	
+  </script>
 
 </head>
+
 <body>
 
-	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<!-- Brand and toggle get grouped for better mobile display -->
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-					aria-expanded="false">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="#">Ulink Assist</a>
-			</div>
-
-			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div class="collapse navbar-collapse"
-				id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav">
-					<li><a href="index.html">Home</a></li>
-					<li class="dropdown">
-         			 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Client <span class="caret"></span></a>
-			         <ul class="dropdown-menu">
-			            <li><a href="client.html">Client List</a></li>
-			            <li><a href="createClient.html">Create New Client</a></li>
-			          </ul>
-			        </li> 
-			        <li><a href="#">Cases</a></li>
-					<li><a href="#">Invoice</a></li>
-					<li><a href="#">Services</a></li>
-					<li><a href="#">Report</a></li>
-					<li><a href="#">Doctor</a></li>
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false">Timeline <span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="infant.html">Infant</a></li>
-							<li><a href="female.html">Female</a></li>
-							<li><a href="male.html">Male</a></li>
-						</ul></li>
-
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false">Analysis <span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="kpi.html">KPI</a></li>
-							<li><a href="ranking.html">Ranking</a></li>
-							<li><a href="genderAndAgeReport.html">Gender and Age Report</a></li>
-						</ul></li>
-					<li><a href="#">Template</a></li>
-
-
-				</ul>
-				<form class="navbar-form navbar-right">
-					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Search">
-					</div>
-					<button type="submit" class="btn btn-default">Submit</button>
-				</form>
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#">Logout</a></li>
-
-				</ul>
-			</div>
-			<!-- /.navbar-collapse -->
-		</div>
-		<!-- /.container-fluid -->
-	</nav>
-
+  	<div id="includedContent"></div>
 
 	<div class="page-header">
-		<h1 align="center">Gender And Age Report</h1>
-	</div>
-		<div class="container">
-
-		<table class="table table-striped" id="ageList">
-		
-			
-			
-
-			
-		</table>
+		<h1 align="center">Gender-Age Report</h1>
 	</div>
 
-
+	<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
 
 

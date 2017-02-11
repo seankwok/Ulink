@@ -3,13 +3,13 @@ package ulink.constructor;
 public class Condition {
 	private int ID;
 	private String conditionName;
-	private int years;
+	private String years;
 	private int ageRequired;
 	private String screening;
 	private String type;
 
 
-	public Condition(int ID, String conditionName, int years, int ageRequired, String screening, String type) {
+	public Condition(int ID, String conditionName, String years, int ageRequired, String screening, String type) {
 		super();
 		this.ID = ID;
 		this.conditionName = conditionName;
@@ -39,10 +39,10 @@ public class Condition {
 	public void setAgeRequired(int ageRequired) {
 		this.ageRequired = ageRequired;
 	}
-	public int getYears() {
+	public String getYears() {
 		return years;
 	}
-	public void setYears(int years) {
+	public void setYears(String years) {
 		this.years = years;
 	}
 	

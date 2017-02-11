@@ -12,7 +12,27 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
- 
+    
+    <style>
+   	 #wrap {
+	    float: left;
+	    position: relative;
+	    left: 50%;
+	}
+
+	#content {
+	    float: left;
+	    position: relative;
+	    left: -50%;
+	}
+    </style>
+    
+    
+    <script> 
+	    $(function(){
+	      $("#includedContent").load("navBar.html"); 
+	    });
+    </script> 
  
  	<script type="text/javascript">
 	$(document).ready(function() {
@@ -20,7 +40,6 @@
 			var username = $("#inputEmail").val();
 			var password = $("#inputPassword").val();
 			var roles = $("#accountType").val();
-			var url = "index.html";
 			if(username == "" || password == ""){
 				$("#createSuccess").html("<div class='alert alert-danger' role='alert'><center><strong>Please input empty fields</strong></center></div>");
 			} else{
@@ -33,18 +52,21 @@
 						+'roles=' + roles
 						+'&'
 						+ 'password='+ password,
-				async: false,
 				dataType: "json",
+				async: false,
 				complete : function(data) {
-					console.log(data.status);
-					if(data.status == 'success'){
-						$("#createSuccess").html("<div class='alert alert-success' role='alert'><center><strong>Account created successfully</strong></center></div>");
-					}else{
+					console.log(data);
+					if (data.responseText == 'fail'){
 						$("#createSuccess").html("<div class='alert alert-danger' role='alert'><center><strong>Username is taken</strong></center></div>");
-
+						return false;
+					}else {
+						$("#createSuccess").html("<div class='alert alert-success' role='alert'><center><strong>Account created successfully</strong></center></div>");
+						window.location="accountManagement.html";
+						return false;
 					}
 				}
 			});
+			return false;
 			}
 		});
 	});
@@ -57,76 +79,27 @@
 		});
 	}
  	</script>
+ 	
+ 	
  
   </head>
   <body>
     
-   <nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">Ulink Assist</a>
-    </div>
+    
+  	<div id="includedContent"></div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-      <li><a href="index.html">Home</a></li>
-        <li><a href="upload.html">Upload Patient Data</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Screenings <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="addScreening.html">Add Screenings</a></li>
-            <li><a href="viewScreenings.html">View Screenings</a></li>
-          </ul>
-        </li> 
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Analysis <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">KPI</a></li>
-              <li><a href="#">Ranking</a></li>
-            <li><a href="#">Gender and Age Report</a></li>
-          </ul>
-        </li>
-        
-        
-      </ul>
-      <form class="navbar-form navbar-right">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="login.html" onClick=logout()>Logout</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-      	<li class="active"><a href="accountManagement.html">Account Management <span class="sr-only">(current)</span></a></li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-
-
-	
 	<div class="panel panel-default">
 	  <div class="panel-body">
-	   <b>New Account</b>
+	   <b>Enter New Account details</b>
 	  </div>
 	</div>
 	
 	<form class="form-horizontal" >
   <div class="form-group">
     <label class="col-sm-2 control-label">Email</label>
-    <div class="col-sm-4">
-   
-      <input type="text" class="form-control" id="inputEmail" placeholder="Email" required> <b>@Ulinkassist.com</b>
+    <div class="col-sm-4" style="property:value;">
+      <input type="text"  id="inputEmail" placeholder="Email">
+       <b>@ulinkassist.com</b>
     </div>
   </div>
  
@@ -144,7 +117,7 @@
   <div class="form-group">
     <label class="col-sm-2 control-label">Password</label>
     <div class="col-sm-4">
-      <input type="password" class="form-control" id="inputPassword" placeholder="Password" required>
+      <input type="password" class="form-control" id="inputPassword" placeholder="Password">
     </div>
   </div>
   
