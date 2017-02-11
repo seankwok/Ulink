@@ -18,7 +18,7 @@
 <script src="js/bootstrap-datetimepicker.js"></script>
 <script src="js/bootstrap.min.js"></script>
     <script> 
-    $(function(){
+	    $(function(){
 	      $("#includedContent").load("navBar.html"); 
 	    });
     </script> 
@@ -168,15 +168,11 @@ function viewDoctors(clickedID){
 	var speciality = "";
 	var rank = 0;
 	var prev ="";
-	var startDate = $("#datepicker1").val();
-	var endDate = $("#datepicker2").val();
 	var table = "<table id='table' width='80%'>";
 		$.ajax({
 			url : "DisplayDoctorBySpecialty",
 			type : "get",
-			data: 'startDate=' + startDate
-			+ '&'
-			+ 'endDate=' + endDate,
+			data : sendData +  'startDate=' + startDate + '&' + 'endDate=' + endDate,
 			dataType : "json",
 			complete: function(data){
 		    	var json = jQuery.parseJSON(JSON.stringify(data));
