@@ -1,6 +1,4 @@
 To sean:
 
-1. create a method that will only display infants, otherwise infants will display under adults tab for viewscreenings
-2. consolidate all appointments for 1 person
-3. retrieve screening based on client's age &  so that we can display the recommended screening
-4. sort asc and desc given header name
+1) create a method to validate startDate is earlier than endDate
+2) 
