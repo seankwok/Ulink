@@ -49,6 +49,7 @@ public class DisplayIndexMedicalVisa extends HttpServlet {
 		Gson gson = new Gson();
 		PrintWriter out = response.getWriter();
 		String arrayListToJson = gson.toJson(pointSystem);
+		System.out.print(arrayListToJson);
 		out.write(arrayListToJson);
 		out.flush();
 		return;

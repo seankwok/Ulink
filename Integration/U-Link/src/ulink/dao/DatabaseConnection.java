@@ -15,6 +15,34 @@ import ulink.logic.Utility;
 
 public class DatabaseConnection {
 
+	public ArrayList<String> retrieveAllEmail() {
+		Connection con;
+		ArrayList<String> templateList = new ArrayList<>();
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
+
+			Statement stmt = con.createStatement();
+			String sql = "SELECT templateName FROM emailtemplate";
+			ResultSet rs = stmt.executeQuery(sql);
+			Utility utility = new Utility();
+
+			while (rs.next()) {
+				String templateName = rs.getString(1);
+				templateList.add(templateName);
+			}
+
+			con.close();
+
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return templateList;
+
+	}
+
 	public ArrayList<Index> retrieveAllIndex(String startDate, String endDate, String medicial) {
 		Connection con;
 		ArrayList<Index> IndexList = new ArrayList<>();
@@ -49,7 +77,8 @@ public class DatabaseConnection {
 		return IndexList;
 
 	}
-
+	
+	
 	public ArrayList<RankingReferredBy> retrieveAllRankingReferredByDashBoard(String date) {
 		Connection con;
 		ArrayList<RankingReferredBy> referredByList = new ArrayList<>();

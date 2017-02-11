@@ -19,14 +19,9 @@ public class MainTest {
 
 	public static void main(String[] args) {
 DatabaseConnection connection = new DatabaseConnection();
-		
-		LocalDate myDate =LocalDate.parse(connection.retrieveLatestDate());
-		String date = myDate.minusMonths(1).toString();
-		Utility utility = new Utility();
-		String month = utility.getMonth(Integer.parseInt(date.substring(5, 7)));
-		
-		System.out.println(month);
-		
+//DatabaseConnection connection = new DatabaseConnection();
+ArrayList<String> emailList = connection.retrieveAllEmail();
+	System.out.println(emailList.size());
 	
 	}
 
