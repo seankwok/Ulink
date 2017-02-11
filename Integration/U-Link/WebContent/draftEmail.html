@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+
+
+
+
 <html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -6,203 +10,193 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="ISO-8859-1">
 	<title>Draft Email</title>
-	<script src="https://use.fontawesome.com/aac5c45839.js"></script>
-	<link href="css/bootstrap.min.css" rel="stylesheet">
-	
-<script src="../ckeditor.js"></script>
-<script src="js/sample.js"></script>
-<link rel="stylesheet" href="css/samples.css">
-<link rel="stylesheet" href="toolbarconfigurator/lib/codemirror/neo.css">
+	 <link href="css/bootstrap.min.css" rel="stylesheet">
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="js/jquery-1.12.0.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-	
     <script> 
 	    $(function(){
 	      $("#includedContent").load("navBar.html"); 
 	    });
+
     </script> 
 
 	<style>
-<<<<<<< HEAD
-=======
 			.errorMsg {
 			   font-size: 15px; 
 			   text-align: center;
-			}
->>>>>>> origin/master
-				/* Dropdown Button */
-			.dropbtn {
-			    background-color: brown;
-			    color: white;
-			    padding: 8px;
-			    font-size: 16px;
-			    border: none;
-			    cursor: pointer;
-<<<<<<< HEAD
-			    border-radius: 25px;
-=======
-			    border-radius: 10px;
->>>>>>> origin/master
-			}
+			}		
 			
-			/* The container <div> - needed to position the dropdown content */
-			.dropdown {
-			    position: relative;
-			    display: inline-block;
-			}
-			
-			/* Dropdown Content (Hidden by Default) */
-			.dropdown-content {
-			    display: none;
-			    position: absolute;
-			    background-color: #f9f9f9;
-			    min-width: 160px;
-			    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-			    z-index: 1;
-			}
-			
-			/* Links inside the dropdown */
-			.dropdown-content a {
-			    color: black;
-			    padding: 12px 16px;
-			    text-decoration: none;
-			    display: block;
-			}
-			
-			/* Change color of dropdown links on hover */
-			.dropdown-content a:hover {background-color: #f1f1f1}
-			
-			/* Show the dropdown menu on hover */
-			.dropdown:hover .dropdown-content {
-			    display: block;
-			}
-			
-			/* Change the background color of the dropdown button when the dropdown content is shown */
-			.dropdown:hover .dropbtn {
-			    background-color: #3e8e41;
-			}
+	
+
 	</style>
 	
 	
 	<script type="text/javascript">
-<<<<<<< HEAD
-		function selectName(){
-		 	var cursorPos = $('#text').prop('selectionStart');
-            var v = $('#text').val();
-            var textBefore = v.substring(0,  cursorPos );
-            var textAfter  = v.substring( cursorPos, v.length );
-            $('#text').val( textBefore+ " <clientName> " +textAfter );
-		}
-		function selectScreening(){
-		 	var cursorPos = $('#text').prop('selectionStart');
-            var v = $('#text').val();
-            var textBefore = v.substring(0,  cursorPos );
-            var textAfter  = v.substring( cursorPos, v.length );
-            $('#text').val( textBefore+ " <screening> " +textAfter );
-=======
+	$(document).ready(function() {
+		showDropdownList();
 
-
-		function showFields(){
-			return '<html><body><%clientName><br><%clientEmail><br><%screening></body></html>'
-		}
-		
-		function selectClientName(){
-			 var myIFrame = document.getElementById('iframe');
-		     var content = myIFrame.contentWindow.document.body.innerHTML;
-		     console.log("old: "+content);
-		     var newContent = '<clientName>';
-		     console.log("new: "+content);
-		}
-		function selectScreening(){
-			 var myIFrame = document.getElementById('iframe');
-		     var content = myIFrame.contentWindow.document.body.innerHTML;
-		     console.log("old: "+content);
-		     var newContent = '<clientName>';
-		     console.log("new: "+content);
->>>>>>> origin/master
-		}
-		function selectEmail(){
-		 	var cursorPos = $('#text').prop('selectionStart');
-            var v = $('#text').val();
-            var textBefore = v.substring(0,  cursorPos );
-            var textAfter  = v.substring( cursorPos, v.length );
-            $('#text').val( textBefore+ " <email> " +textAfter );
-<<<<<<< HEAD
-	}
 	
-=======
-		}
-		function getTemplate(){
-			window.location.href = "templateList.html";
+		document.getElementById("copyButton").addEventListener("click", function() {
+		    copyToClipboardMsg(document.getElementById("copyTarget"), "msg");
+		});
+	
+		document.getElementById("copyButton2").addEventListener("click", function() {
+		    copyToClipboardMsg(document.getElementById("copyTarget2"), "msg");
+		});
+		
+		document.getElementById("copyButton3").addEventListener("click", function() {
+		    copyToClipboardMsg(document.getElementById("copyTarget3"), "msg");
+		});
+		
+		document.getElementById("pasteTarget").addEventListener("mousedown", function() {
+		    this.value = "";
+		});
+	
+	});
+	
+	function copyToClipboardMsg(elem, msgElem) {
+		  var succeed = copyToClipboard(elem);
+	    var msg;
+	    if (!succeed) {
+	        msg = "Copy not supported or blocked.  Press Ctrl+c to copy."
+	    } else {
+	        msg = "Text copied to the clipboard."
+	    }
+	    if (typeof msgElem === "string") {
+	        msgElem = document.getElementById(msgElem);
+	    }
+	    msgElem.innerHTML = msg;
+	    setTimeout(function() {
+	        msgElem.innerHTML = "";
+	    }, 2000);
+	}
+
+	function copyToClipboard(elem) {
+		  // create hidden text element, if it doesn't already exist
+	    var targetId = "_hiddenCopyText_";
+	    var isInput = elem.tagName === "INPUT" || elem.tagName === "TEXTAREA";
+	    var origSelectionStart, origSelectionEnd;
+	    if (isInput) {
+	        // can just use the original source element for the selection and copy
+	        target = elem;
+	        origSelectionStart = elem.selectionStart;
+	        origSelectionEnd = elem.selectionEnd;
+	    } else {
+	        // must use a temporary form element for the selection and copy
+	        target = document.getElementById(targetId);
+	        if (!target) {
+	            var target = document.createElement("textarea");
+	            target.style.position = "absolute";
+	            target.style.left = "-9999px";
+	            target.style.top = "0";
+	            target.id = targetId;
+	            document.body.appendChild(target);
+	        }
+	        target.textContent = elem.textContent;
+	    }
+	    // select the content
+	    var currentFocus = document.activeElement;
+	    target.focus();
+	    target.setSelectionRange(0, target.value.length);
+	    
+	    // copy the selection
+	    var succeed;
+	    try {
+	    	  succeed = document.execCommand("copy");
+	    } catch(e) {
+	        succeed = false;
+	    }
+	    // restore original focus
+	    if (currentFocus && typeof currentFocus.focus === "function") {
+	        currentFocus.focus();
+	    }
+	    
+	    if (isInput) {
+	        // restore prior selection
+	        elem.setSelectionRange(origSelectionStart, origSelectionEnd);
+	    } else {
+	        // clear temporary content
+	        target.textContent = "";
+	    }
+	    return succeed;
+	}
+
+		function selectTemplate(clickedID){
+			var sendData = {
+					"templateName" : clickedID
+				};
+	    	$.ajax({	    	
+		    	url : "RetrieveEmailTemplate",
+				type : "post",
+				data : sendData,
+				complete : function(data) {
+					var frameContent = data.responseText;
+			    	var doc = document.getElementById('iframe').contentWindow.document;
+			    	doc.open();
+			    	doc.write(frameContent);
+			    	doc.close();
+				}
+			});
+	
 		}
 	    
-	    function copyContent(){
-	    	var frameContent="<h1> Insert title here</h1>";
-	    	var doc = document.getElementById('iframe').contentWindow.document;
-	    	doc.open();
-	    	doc.write(frameContent);
-	    	doc.close();
-	    }
 	    	    
 	    function save(){
 	    	var templateName = $('#template').val();
-	    	console.log("A: "+ templateName);
 	    	if (templateName == ""){
 	      		$('#errMsg').html("Template Name Required!");	 	    		  
 	    	}else{
-	    		console.log("IN ELSE");
-		    	var doc = document.getElementById('iframe').contentWindow.document;
+	    		
+		    	var doc = (iframe.contentDocument)? iframe.contentDocument: iframe.contentWindow.document; 
+		    	var content = doc.body.innerHTML;				
 		    	$.ajax({
 					type: 'post',
 					url: "CreateEmailTemplate",
 					data: 'templateName=' + templateName
 						+ '&'
-						+ 'msg=' + doc,
-					complete: function(data){
-					console.log(data.responseText);			
+						+ 'msg=' + content,
+					complete: function(data){		
 					}
 				});
 		    	$('#exampleModal').modal('hide');
 		    	$('#errMsg').html("");
 	    	}
 	    }	
+	    
+	    
+	    function showDropdownList(){
+	    	$.ajax({			    	
+					type: 'post',
+					url: "DisplayAllEmail",
+					complete: function(data){
+						var htmlDD = "<div class='dropdown'> "
+					    	+ "<a id='drop1' href='#' role='button' class='btn btn-warning dropdown-toggle' data-toggle='dropdown'>Select Template<b class='caret'></b></a>"
+					    	+ " <ul class='dropdown-menu' role='menu' aria-labelledby='dLabel'>"
+						var json = jQuery.parseJSON(data.responseText);
+					
+						$.each(json, function(key, value){
+							htmlDD += "<li><a tabindex='-1' href='#'onClick=selectTemplate(this.id) id='"+value+"'>"+value+"</a></li>"
+						});
+						 htmlDD += "</ul></div>"
+						 $('#templateDropdown').html(htmlDD);
+					}	    		  
+	    	});	
+	    }
+	    
+
 		
->>>>>>> origin/master
+	    function pressSend(){
+			
+	    }
 	</script>
 </head>
 
-<body id="main">
+
+		
+<body onload="enableEditMode();">
 		<div id="includedContent"></div>
-<<<<<<< HEAD
-		<div>
-
-					<button onclick="#">From Template</button>
-					
-					<div class="dropdown">
-					  <button class="dropbtn">Select Field</button>
-					  <div class="dropdown-content">
-					  <a id="name"  href="#" onclick="selectName();return false;">Client Name</a>
-					  <a id="screening"  href="#" onclick="selectScreening();return false;">Screening</a>
-					  <a id="email" href="#" onclick="selectEmail();return false;">Email</a>
-
-					  </div>
-					</div>
-		</div>
-				<form>
-   					<textarea  id="text" style=" width: 1000px; height: 500px;" ></textarea>
-				</form>
-				
-<div class="adjoined-bottom">
-		<div class="grid-container">
-			<div class="grid-width-100">
-				<div id="editor">
-				</div>
-			</div>
-		</div>
-	</div>
-=======
 	<div class="page-header">
 		<h1 align="center">New Email</h1>
 	</div>
@@ -242,42 +236,53 @@
 			</select>
 			Font Color: <input type="color" onchange="execCommandWithArg('foreColor', this.value);">
 			<button onclick="execCmd('selectAll');">Select All</button>	
-			<br><br>
-			<button class="btn btn-secondary" onclick='getTemplate()'>Choose Template</button>
-			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Save as Template</button>
+			
+			<table >
+			 <caption>Fields from Database:</caption>
+				<tr> 
+					<td><input id = 'copyTarget' type="text"  value="$clientName$" readonly></td>
+					<td><button id="copyButton">Copy</button></td>
+					<td><input id = 'copyTarget2' type="text"  value="$clientEmail$" readonly></td>
+					<td><button id="copyButton2">Copy</button></td>
+					<td><input  id = 'copyTarget3' type="text"  value="$screening$" readonly></td>
+					<td><button id="copyButton3">Copy</button></td>
 
-
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="exampleModalLabel"><b>Save Template As</b></h4>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="message-text" class="form-control-label">Template Name:</label>
-            <textarea class="form-control" id="template" ></textarea>
-	            <div class="modal-footer">
-	        		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	        		<input type="button" class="btn btn-primary" onClick='save()' value='save'> 
-	     		 </div>
-          </div>
-        </form>
-        <div id='errMsg' style='color:red' class='errorMsg'></div>
-        
-      </div>
-    </div>
-  </div>
-</div>	
+					<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target='#exampleModal' >Save as Template</button></td>
+					<td><div id='templateDropdown'></div></td>
+				</tr>
+			</table>
+			<span id="msg"></span>
+			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h4 class="modal-title" id="exampleModalLabel"><b>Save Template As</b></h4>
+			      </div>
+			      <div class="modal-body">
+			        <form>
+			          <div class="form-group">
+			            <label for="message-text" class="form-control-label">Template Name:</label>
+			            <textarea class="form-control" id="template" ></textarea>
+				            <div class="modal-footer">
+				        		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				        		<input type="button" class="btn btn-primary" onClick='save()' value='save'> 
+				     		 </div>
+			          </div>
+			        </form>
+			        <div id='errMsg' style='color:red' class='errorMsg'></div>
+			        
+			      </div>
+			    </div>
+			  </div>
+			</div>	
 		</div>
 		<br>
 	</div>				
 		
 		<br>
 		<div class='container' >
-			<iframe id="iframe"  src="javascript:parent.showFields()" name="richTextField" style="width: 1000px; height: 500px;"></iframe>
-			<br><div align='center'><button>Send to ...</button></div>
+			<iframe id="iframe" name="richTextField" style="width: 1000px; height: 500px;"></iframe>
+			<br><div align='center' onclick='pressSend'><button>Send to ...</button></div>
 		</div>	
 
 		<script type="text/javascript">
@@ -288,16 +293,17 @@
 			function enableEditMode () {
 				richTextField.document.designMode = 'On';
 			}
->>>>>>> origin/master
+
+			function execCmd (command) {
+				richTextField.document.execCommand(command, false, null);
+			}
+
+			function execCommandWithArg (command, arg) {
+				richTextField.document.execCommand(command, false, arg);
+			}
 
 
-
-<script>
-	initSample();
-</script>
-				
-
+		</script>
 		
-		
-</body>
+	</body>
 </html>
