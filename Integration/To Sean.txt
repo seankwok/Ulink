@@ -1,4 +1,6 @@
 To sean:
 
-1) create a method to validate startDate is earlier than endDate
-2) Store the email message as string is ok but need the whole HTML structure store
+1) create a general method to validate startDate is earlier than endDate
+2) a general method to give front end the email of the login user
+3) DisplayDoctorBySpecialty need to consider startdate and enddate. 
+	pls run the ranking.html> specialty filter> click on view doctor. 
