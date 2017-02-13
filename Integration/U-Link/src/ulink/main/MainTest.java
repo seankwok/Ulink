@@ -38,7 +38,7 @@ public class MainTest {
 		//String team = request.getParameter("team");
 		TopK t = new TopK();
 		t.getKPIVisa("Visa", "2017/02/01", "2017/02/28");
-	System.out.println(t.getKPIVisa("Visa", "2017/02/01", "2017/02/28").getOutPatient());
+	System.out.println(t.getKPI("Visa", "2017/02/01", "2017/02/28").getOutPatient());
 	}
 
 }
