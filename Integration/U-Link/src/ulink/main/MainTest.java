@@ -32,29 +32,23 @@ public class MainTest {
 	public static void main(String[] args) throws ParseException {
 		//String startDate = request.getParameter("startDate");
 		//String endDate = request.getParameter("endDate");
-		int ID = 48;
 		DatabaseConnection connection = new DatabaseConnection();
-		Condition condition = connection.retrieveAllConditionByID(ID);
-		
-		ArrayList<Client> clientList = connection.retrieveAllClientList();
-		ArrayList<ClientByIllness> clientByIllnessList = new ArrayList<>();
-		for (int i = 0; i < clientList.size(); i++) {
-			Client client = clientList.get(i);
-			if (condition.getType().toLowerCase().equals("male") || condition.getType().toLowerCase().equals("female")) {
-				if (client.getAge() >= condition.getAgeRequired() && client.getGender().toLowerCase().equals(condition.getType().toLowerCase())) {
-					clientByIllnessList.add(new ClientByIllness(client.getClientName(), client.getAge(),
-							client.getEmail(), client.getGender(),condition.getScreening(), condition.getConditionName()));
-				}
-			} else {
-				if (client.getAge() >= condition.getAgeRequired() / 12 && client.getGender().toLowerCase().equals(condition.getType().toLowerCase())) {
-					clientByIllnessList.add(new ClientByIllness(client.getClientName(), client.getAge(),
-							client.getEmail(), client.getGender(),condition.getScreening(), condition.getConditionName()));
-
-				}
+		//String startDate = request.getParameter("startDate");
+		//String endDate = request.getParameter("endDate");
+		//String team = request.getParameter("team");
+		ArrayList<String> personInChargeList = connection.retrieveAllPersonInCharge();
+		Utility utility = new Utility();
+		LinkedHashMap<String,LinkedHashMap<Integer,Integer>> personInChargePointSystem = new  LinkedHashMap<String,LinkedHashMap<Integer,Integer>>();
+		for (int i = 0; i<personInChargeList.size(); i++){
+			String temp = personInChargeList.get(i);
+			ArrayList<Index> indexList = connection.retrieveAllIndexByPerson(utility.changeDateFormatDatabase("01/01/2015"), utility.changeDateFormatDatabase("01/01/2017"),"Visa",temp);	
+			LinkedHashMap<Integer,Integer> pointSystem = utility.getIndexCount(indexList);
+			if (!personInChargePointSystem.containsKey(temp)){
+				personInChargePointSystem.put(temp, pointSystem);
 			}
 		}
 		
-		System.out.println(clientByIllnessList.size());
+		System.out.println(personInChargePointSystem.toString());
 	}
 
 }
