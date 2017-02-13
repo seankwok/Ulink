@@ -47,7 +47,7 @@ public class KPIVisa extends HttpServlet {
 		TopK topk = new TopK();
 		int year = Integer.parseInt(date.substring(0, 4));
 		String month = date.substring(5);
-		System.out.println("TEST " + month);
+		//System.out.println("TEST " + month);
 		Utility utility = new Utility();
 		String startDate = utility.getStartDateOfMonth(year+"-"+month+"-"+"01");
 		String endDate = utility.getEndDateOfMonth(year+"-"+month+"-"+"01");
@@ -57,6 +57,8 @@ public class KPIVisa extends HttpServlet {
 		String endDatelastMonth = utility.getEndDateOfMonth(year+"-"+lastMonthDate+"-"+"01");
 		String startDateLastYear = utility.getStartDateOfMonth(lastYearDate+"-"+month+"-"+"01");
 		String endDatelastYear = utility.getEndDateOfMonth(lastYearDate+"-"+month+"-"+"01");
+		
+		System.out.println(startDate + " " + endDate);
 		
 		KPI kpi = topk.getKPI(type, startDate,endDate);
 		KPI lastMonth = topk.getKPI(type, startDatelastMonth,endDatelastMonth);

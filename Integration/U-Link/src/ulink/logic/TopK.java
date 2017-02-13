@@ -233,9 +233,9 @@ public class TopK {
 		int in = 0;
 		int out = 0;
 
-		for (int i = 1; i < clientList.size(); i++) {
+		for (int i = 0; i < clientList.size(); i++) {
 			Client client = clientList.get(i);
-			if (client.getHospitalAdmitted().length() > 0) {
+			if (client.getHospitalAdmitted().length() > 0 || client.getHospitalAdmitted() != "") {
 				in++;
 			} else if (client.getHospitalAdmitted().length() == 0) {
 				out++;
@@ -261,7 +261,7 @@ public class TopK {
 		int in = 0;
 		int out = 0;
 
-		for (int i = 1; i < clientList.size(); i++) {
+		for (int i = 0; i < clientList.size(); i++) {
 			Client client = clientList.get(i);
 			if (client.getVisaType().contains("Indonesia")) {
 				in++;
