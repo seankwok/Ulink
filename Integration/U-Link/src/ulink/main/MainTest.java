@@ -32,14 +32,27 @@ public class MainTest {
 
 	public static void main(String[] args) throws ParseException {
 		//String startDate = request.getParameter("startDate");
-		Calendar calendar = Calendar.getInstance();
-		//OR Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-
-		calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY)+8);
-
-		Date d = calendar.getTime();
+		DatabaseConnection connection = new DatabaseConnection();
+		Condition condition = connection.retrieveAllConditionByID(48);
 		
-		System.out.println(calendar.getTime());
+		ArrayList<Client> clientList = connection.retrieveAllClientList();
+		ArrayList<ClientByIllness> clientByIllnessList = new ArrayList<>();
+		for (int i = 0; i < clientList.size(); i++) {
+			Client client = clientList.get(i);
+			if ((condition.getType().toLowerCase().equals("male") || condition.getType().toLowerCase().equals("female")) && client.getEmail().length() > 0) {
+				if (client.getAge() >= condition.getAgeRequired() && client.getGender().toLowerCase().equals(condition.getType().toLowerCase())) {
+					clientByIllnessList.add(new ClientByIllness(client.getClientName(), client.getAge(),
+							client.getEmail(), client.getGender(),condition.getScreening(), condition.getConditionName()));
+				}
+			} else {
+				if (client.getAge() >= condition.getAgeRequired() / 12 && client.getGender().toLowerCase().equals(condition.getType().toLowerCase() ) && client.getEmail().length() > 0) {
+					clientByIllnessList.add(new ClientByIllness(client.getClientName(), client.getAge(),
+							client.getEmail(), client.getGender(),condition.getScreening(), condition.getConditionName()));
+
+				}
+			}
+		}
+		System.out.println(clientByIllnessList.size());
 	}
 
 }

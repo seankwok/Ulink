@@ -49,12 +49,12 @@ public class SendEmail extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 		Email emailServer = new Email();
-		String email = request.getParameter("email");
+		String[] email = request.getParameterValues("email");
 		String subject = request.getParameter("subject");
 		String msg = request.getParameter("msg");
 		String screening = request.getParameter("screening");
 		
-		boolean check = emailServer.sendEmail(email, subject, msg, screening);
+		boolean check = emailServer.sendEmail("qwe", subject, msg, screening);
 		String status = "";
 		if (check){
 			status = "pass";
