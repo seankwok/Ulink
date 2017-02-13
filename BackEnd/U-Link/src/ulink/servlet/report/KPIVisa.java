@@ -47,20 +47,23 @@ public class KPIVisa extends HttpServlet {
 		TopK topk = new TopK();
 		int year = Integer.parseInt(date.substring(0, 4));
 		String month = date.substring(5);
-		System.out.println("TEST " + month);
+		//System.out.println("TEST " + month);
 		Utility utility = new Utility();
 		String startDate = utility.getStartDateOfMonth(year+"-"+month+"-"+"01");
 		String endDate = utility.getEndDateOfMonth(year+"-"+month+"-"+"01");
 		int lastMonthDate = Integer.parseInt(thisYearLastMonth.substring(5));
+		int lastMonthYear = Integer.parseInt(thisYearLastMonth.substring(0,4));
 		int lastYearDate = Integer.parseInt(lastYearThisMonth.substring(0, 4));
-		String startDatelastMonth = utility.getStartDateOfMonth(year+"-"+lastMonthDate+"-"+"01");
-		String endDatelastMonth = utility.getEndDateOfMonth(year+"-"+lastMonthDate+"-"+"01");
+		String startDatelastMonth = utility.getStartDateOfMonth(lastMonthYear+"-"+lastMonthDate+"-"+"01");
+		String endDatelastMonth = utility.getEndDateOfMonth(lastMonthYear+"-"+lastMonthDate+"-"+"01");
 		String startDateLastYear = utility.getStartDateOfMonth(lastYearDate+"-"+month+"-"+"01");
 		String endDatelastYear = utility.getEndDateOfMonth(lastYearDate+"-"+month+"-"+"01");
 		
-		KPI kpi = topk.getKPI(type, startDate,endDate);
-		KPI lastMonth = topk.getKPI(type, startDatelastMonth,endDatelastMonth);
-		KPI lastyear = topk.getKPI(type,startDateLastYear,endDatelastYear);
+		//System.out.println(startDate + " " + endDate);
+		
+		KPI kpi = topk.getKPIVisa(type, startDate,endDate);
+		KPI lastMonth = topk.getKPIVisa(type, startDatelastMonth,endDatelastMonth);
+		KPI lastyear = topk.getKPIVisa(type,startDateLastYear,endDatelastYear);
 		//KPI LMLY = topk.getKPI(type,lastYearLastMonth);
 		
 		ArrayList<KPI> kpiList = new ArrayList<>();

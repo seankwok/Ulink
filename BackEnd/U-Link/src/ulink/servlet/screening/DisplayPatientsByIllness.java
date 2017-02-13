@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -17,6 +18,7 @@ import com.google.gson.reflect.TypeToken;
 
 import ulink.constructor.Client;
 import ulink.constructor.ClientByIllness;
+import ulink.constructor.Condition;
 import ulink.dao.DatabaseConnection;
 
 /**
@@ -42,22 +44,28 @@ public class DisplayPatientsByIllness extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		DatabaseConnection connection = new DatabaseConnection();
-		int age = Integer.parseInt(request.getParameter("age"));
-		String gender = request.getParameter("gender");
-		String type = request.getParameter("type");
+		//int age = Integer.parseInt(request.getParameter("age"));
+		//String gender = request.getParameter("gender");
+		//String type = request.getParameter("type");
+		int ID = Integer.parseInt(request.getParameter("ID"));
+		HttpSession session = request.getSession();
+		
+		session.setAttribute("ID", ID);
+		Condition condition = connection.retrieveAllConditionByID(ID);
+		
 		ArrayList<Client> clientList = connection.retrieveAllClientList();
 		ArrayList<ClientByIllness> clientByIllnessList = new ArrayList<>();
 		for (int i = 0; i < clientList.size(); i++) {
 			Client client = clientList.get(i);
-			if (type.equals("adult")) {
-				if (client.getAge() >= age && client.getGender().equals(gender)) {
+			if ((condition.getType().toLowerCase().equals("male") || condition.getType().toLowerCase().equals("female")) && client.getEmail().length() > 0) {
+				if (client.getAge() >= condition.getAgeRequired() && client.getGender().toLowerCase().equals(condition.getType().toLowerCase())) {
 					clientByIllnessList.add(new ClientByIllness(client.getClientName(), client.getAge(),
-							client.getEmail(), client.getGender()));
+							client.getEmail(), client.getGender(),condition.getScreening(), condition.getConditionName()));
 				}
 			} else {
-				if (client.getAge() >= age / 12 && client.getGender().equals(gender)) {
+				if (client.getAge() >= condition.getAgeRequired() / 12 && client.getGender().toLowerCase().equals(condition.getType().toLowerCase() ) && client.getEmail().length() > 0) {
 					clientByIllnessList.add(new ClientByIllness(client.getClientName(), client.getAge(),
-							client.getEmail(), client.getGender()));
+							client.getEmail(), client.getGender(),condition.getScreening(), condition.getConditionName()));
 
 				}
 			}

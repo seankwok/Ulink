@@ -19,26 +19,35 @@ import com.google.gson.reflect.TypeToken;
 
 import ulink.constructor.AgeAndGender;
 import ulink.constructor.Client;
+import ulink.constructor.ClientByIllness;
+import ulink.constructor.Condition;
 import ulink.constructor.Index;
 import ulink.constructor.RankingReferredBy;
 import ulink.dao.DatabaseConnection;
+import ulink.logic.Email;
 import ulink.logic.TopK;
 import ulink.logic.Utility;
 
 public class MainTest {
 
 	public static void main(String[] args) throws ParseException {
-		//String startDate = request.getParameter("startDate");
-		//String endDate = request.getParameter("endDate");
-		//String team = request.getParameter("team");
 		DatabaseConnection connection = new DatabaseConnection();
-		ArrayList<Client> list = connection.retrieveAllClientList();
-		LinkedHashMap<String,Integer> visaTypeList = new LinkedHashMap<>();
+		//DatabaseConnection connection = new DatabaseConnection();
+		//Condition condition = connection.retrieveAllConditionByID(ID);
+		//String subject = request.getParameter("subject");
+		//String msg = request.getParameter("msg");
+		String msg = "[screening] [clientName] [clientEmail]";
+		msg = msg.replace("[screening]", "Dying");
 		
-		Utility utility = new Utility();
 		
-		String startDate = "2015-05-05";
-		System.out.println(utility.getMonth(Integer.parseInt(startDate.substring(5,7))));
-	}
+		//boolean check = true;
+		//for(int i = 0; i < email.length; i++) {
+			msg = msg.replace("[clientName]", "dumbdumb");
+			
+			msg = msg.replace("[clientEmail]", "dumbdumb@gamil");
+			System.out.println(msg);
+	//		check = emailServer.sendEmail(email[i], subject, msg);
+		
+		}
 
 }

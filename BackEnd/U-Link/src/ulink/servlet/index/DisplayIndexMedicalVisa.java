@@ -52,10 +52,10 @@ public class DisplayIndexMedicalVisa extends HttpServlet {
 		ArrayList<Index> indexList = connection.retrieveAllIndex(utility.changeDateFormatDatabase(startDate), utility.changeDateFormatDatabase(endDate), team);
 		LinkedHashMap<Integer,Integer> pointSystem = utility.getIndexCount(indexList);
 		Gson gson = new Gson();
-		JsonArray result = (JsonArray) new Gson().toJsonTree(pointSystem, new TypeToken<LinkedHashMap<Integer,Integer>>() {
-		}.getType());
+	//	JsonArray result = (JsonArray) new Gson().toJsonTree(pointSystem, new TypeToken<LinkedHashMap<Integer,Integer>>() {
+		//}.getType());
 		PrintWriter out = response.getWriter();
-		String arrayListToJson = gson.toJson(result);
+		String arrayListToJson = gson.toJson(pointSystem);
 	//	System.out.print(arrayListToJson);
 		out.write(arrayListToJson);
 		out.flush();

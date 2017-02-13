@@ -9,12 +9,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 
+import ulink.constructor.Condition;
 import ulink.constructor.RankingReferredBy;
+import ulink.constructor.User;
+import ulink.dao.DatabaseConnection;
 import ulink.logic.Email;
 
 /**
@@ -23,46 +27,61 @@ import ulink.logic.Email;
 @WebServlet("/SendEmail")
 public class SendEmail extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public SendEmail() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-
-		
-		
+	public SendEmail() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 		Email emailServer = new Email();
-		String email = request.getParameter("email");
+		HttpSession session = request.getSession();
+
+		String[] email = (String[]) session.getAttribute("emailList");
+		int ID = (int) session.getAttribute("ID");
+		DatabaseConnection connection = new DatabaseConnection();
+		Condition condition = connection.retrieveAllConditionByID(ID);
 		String subject = request.getParameter("subject");
 		String msg = request.getParameter("msg");
+		msg = msg.replace("[screening]", condition.getScreening());
+		User user = (User) session.getAttribute("user");
+		String sendEmail = user.getEmail();
 		
-		boolean check = emailServer.sendEmail(email, subject, msg);
+		boolean check = true;
+		for (int i = 0; i < email.length; i++) {
+			msg = msg.replace("[clientName]", connection.getNameByEmail(email[i]));
+			
+			msg = msg.replace("[clientEmail]", email[i]);
+			check = emailServer.sendEmail(email[i], subject, msg, sendEmail);
+		}
 		String status = "";
-		if (check){
+		if (check) {
 			status = "pass";
 		} else {
 			status = "fail";
 		}
-		
+		System.out.println(msg);
 		PrintWriter out = response.getWriter();
-
 
 		out.write(status);
 		out.flush();

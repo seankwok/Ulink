@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -50,8 +51,17 @@ public class UploadServlet extends HttpServlet {
 	private File tmpDir;
 	private static final String DESTINATION_DIR_PATH = "/MySavedFiles";
 	private File destinationDir;
-	DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-	Date date = new Date();
+	//DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+	//Date date = new Date();
+	
+	Calendar calendar = Calendar.getInstance();
+	//OR Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+
+	
+
+	
+	
+	//System.out.println(d.toString());
 
 	public UploadServlet() {
 		super();
@@ -102,7 +112,7 @@ public class UploadServlet extends HttpServlet {
 		fileItemFactory.setRepository(tmpDir);
 
 		ServletFileUpload uploadHandler = new ServletFileUpload(fileItemFactory);
-		JsonObject myObj = new JsonObject();
+		//JsonObject myObj = new JsonObject();
 
 		String fileName = null;
 		String fullName = null;
@@ -145,22 +155,35 @@ public class UploadServlet extends HttpServlet {
 				// System.out.print(count);
 				// out.write(count);
 				// out.flush();
+				calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY));
+				Date d = calendar.getTime();
+				connection.addDateTime(d.toString());
+				//PrintWriter out = response.getWriter();
 
-				connection.addDateTime(dateFormat.format(date));
 
+				out.write(count);
+			
+				
 				request.getRequestDispatcher("./upload.html").forward(request, response);
+				out.flush();
 				return;
 
 			} else if (extension.trim().equalsIgnoreCase("xls")) {
 				// process your binary excel file
 				System.out.println("test2");
 				count = test(file);
-				connection.addDateTime(dateFormat.format(date));
+				calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY));
+				Date d = calendar.getTime();
+				connection.addDateTime(d.toString());
 				// out.write(count);
 				// out.flush();
 				// response.sendRedirect("./upload.html");
-
+				
+	out.write(count);
+			
+				
 				request.getRequestDispatcher("./upload.html").forward(request, response);
+				out.flush();
 				return;
 			}
 
@@ -426,7 +449,7 @@ public class UploadServlet extends HttpServlet {
 					// System.out.println(clientList.get(clientList.size() -
 					// 1).getClientName());
 					count++;
-				}else {
+				}else if (!accountID.equals("")){
 					clientList.add(new Client(ID, accountID, clientOwner, clientName, clientType, company,
 							nationality, gender, dateOfBirth, email, medical, mainDiagnosis, referredBy, PIC,
 							appointment, doctor, specialty, clinic, otherDoctor, followUpPerson, followUpPIC,
@@ -699,7 +722,7 @@ public class UploadServlet extends HttpServlet {
 						// System.out.println(clientList.get(clientList.size() -
 						// 1).getClientName());
 						count++;
-					}else {
+					}else if (!accountID.equals("")){
 						clientList.add(new Client(ID, accountID, clientOwner, clientName, clientType, company,
 								nationality, gender, dateOfBirth, email, medical, mainDiagnosis, referredBy, PIC,
 								appointment, doctor, specialty, clinic, otherDoctor, followUpPerson, followUpPIC,

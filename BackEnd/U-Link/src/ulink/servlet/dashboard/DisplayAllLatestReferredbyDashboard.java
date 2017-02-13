@@ -47,7 +47,7 @@ public class DisplayAllLatestReferredbyDashboard extends HttpServlet {
 		String date =  connection.retrieveLatestDate();
 		Utility utility = new Utility();
 		String startDate = utility.getStartDateOfMonth(date);
-		String endDate = utility.getEndDateOfMonth(startDate);
+		String endDate = utility.getEndDateOfMonth(date);
 		
 		ArrayList<RankingReferredBy> list = connection.retrieveAllRankingReferredByDashBoard(startDate,endDate);
 		Gson gson = new Gson();

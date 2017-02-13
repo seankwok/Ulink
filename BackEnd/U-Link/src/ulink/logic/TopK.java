@@ -16,6 +16,8 @@ import ulink.constructor.KPI;
 import ulink.dao.DatabaseConnection;
 
 public class TopK {
+	
+
 	DatabaseConnection connection = new DatabaseConnection();
 
 	public ArrayList<AgeAndGender> getAgeGenderReport() {
@@ -45,7 +47,7 @@ public class TopK {
 		for (int i = 0; i < clientList.size(); i++) {
 			Client client = clientList.get(i);
 			if (client.getGender() != null) {
-				if (client.getGender().equals("Male")) {
+				if (client.getGender().equals("Male") && client.getAge() != -1) {
 					if (client.getAge() <= 10) {
 						m10++;
 					} else if (client.getAge() <= 20) {
@@ -65,7 +67,7 @@ public class TopK {
 					} else {
 						m90++;
 					}
-				} else if (client.getGender().equals("Female")) {
+				} else if (client.getGender().equals("Female") && client.getAge() != -1) {
 					if (client.getAge() <= 10) {
 						f10++;
 					} else if (client.getAge() <= 20) {
@@ -233,9 +235,9 @@ public class TopK {
 		int in = 0;
 		int out = 0;
 
-		for (int i = 1; i < clientList.size(); i++) {
+		for (int i = 0; i < clientList.size(); i++) {
 			Client client = clientList.get(i);
-			if (client.getHospitalAdmitted().length() > 0) {
+			if (client.getHospitalAdmitted().length() > 0 ) {
 				in++;
 			} else if (client.getHospitalAdmitted().length() == 0) {
 				out++;
@@ -261,8 +263,9 @@ public class TopK {
 		int in = 0;
 		int out = 0;
 
-		for (int i = 1; i < clientList.size(); i++) {
+		for (int i = 0; i < clientList.size(); i++) {
 			Client client = clientList.get(i);
+			//System.out.println(client.getVisaType());
 			if (client.getVisaType().contains("Indonesia")) {
 				in++;
 			} else {
