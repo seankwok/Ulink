@@ -175,11 +175,11 @@ $(document).ready(function() {
 					    },
 					    series: [{
 					        name: json.responseJSON[0].date,
-					        data: [json.responseJSON[0].inPatient,json.responseJSON[1].inPatient]
+					        data: [json.responseJSON[0].inPatient,json.responseJSON[0].outPatient]
 
 					    }, {
 					        name: json.responseJSON[1].date,
-					        data: [json.responseJSON[0].outPatient,json.responseJSON[1].outPatient]
+					        data: [json.responseJSON[1].inPatient,json.responseJSON[1].outPatient]
 
 					    }]
 					
@@ -226,11 +226,11 @@ $(document).ready(function() {
 					    },
 					    series: [{
 					        name: json.responseJSON[3].date,
-					        data: [json.responseJSON[3].inPatient,json.responseJSON[4].inPatient]
+					        data: [json.responseJSON[3].inPatient,json.responseJSON[3].outPatient]
 
 					    }, {
 					        name: json.responseJSON[4].date,
-					        data: [json.responseJSON[3].outPatient,json.responseJSON[4].outPatient]
+					        data: [json.responseJSON[4].inPatient,json.responseJSON[4].outPatient]
 
 					    }]
 					});
@@ -340,11 +340,11 @@ $(document).ready(function() {
 							 	    },
 								    series: [{
 								        name: json.responseJSON[0].date,
-								        data: [json.responseJSON[0].inPatient,json.responseJSON[1].inPatient]
+								        data: [json.responseJSON[0].inPatient,json.responseJSON[0].outPatient]
 
 								    }, {
 								        name: json.responseJSON[1].date,
-								        data: [json.responseJSON[0].outPatient,json.responseJSON[1].outPatient]
+								        data: [json.responseJSON[1].inPatient,json.responseJSON[1].outPatient]
 
 								    }]
 								

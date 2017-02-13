@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -23,47 +24,54 @@ import ulink.logic.Email;
 @WebServlet("/SendEmail")
 public class SendEmail extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public SendEmail() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-
-		
-		
+	public SendEmail() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 		Email emailServer = new Email();
-		String[] email = request.getParameterValues("email");
+		HttpSession session = request.getSession();
+		
+		
+		
+		String[] email = (String[]) session.getAttribute("emailList");
 		String subject = request.getParameter("subject");
 		String msg = request.getParameter("msg");
 		String screening = request.getParameter("screening");
-		
-		boolean check = emailServer.sendEmail("qwe", subject, msg, screening);
+		boolean check = true;
+		for (int i = 0; i < email.length; i++) {
+			 check = emailServer.sendEmail(email[i], subject, msg, screening);
+		}
 		String status = "";
-		if (check){
+		if (check) {
 			status = "pass";
 		} else {
 			status = "fail";
 		}
-		
-		PrintWriter out = response.getWriter();
 
+		PrintWriter out = response.getWriter();
 
 		out.write(status);
 		out.flush();
