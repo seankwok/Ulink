@@ -5,6 +5,9 @@ public class ClientByIllness {
 	private int age;
 	private String email;
 	private String gender;
+	private String screeningName;
+	private String conditionName;
+	
 	public String getName() {
 		return name;
 	}
@@ -23,12 +26,14 @@ public class ClientByIllness {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public ClientByIllness(String name, int age, String email, String gender) {
-		super();
+	public ClientByIllness(String name, int age, String email, String gender, String screeningName, String conditionName) {
+		super(); 
 		this.name = name;
 		this.age = age;
 		this.email = email;
 		this.gender = gender;
+		this.screeningName = screeningName;
+		this.conditionName= conditionName;
 	}
 	public String getGender() {
 		return gender;
@@ -37,6 +42,13 @@ public class ClientByIllness {
 		this.gender = gender;
 	}
 	
+	public String getScreeningName(){
+		return screeningName;
+	}
+	
+	public String getConditionName(){
+		return conditionName;
+	}
 	
 	
 }
