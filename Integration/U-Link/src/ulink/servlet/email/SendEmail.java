@@ -15,7 +15,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 
+import ulink.constructor.Condition;
 import ulink.constructor.RankingReferredBy;
+import ulink.dao.DatabaseConnection;
 import ulink.logic.Email;
 
 /**
@@ -53,16 +55,22 @@ public class SendEmail extends HttpServlet {
 		doGet(request, response);
 		Email emailServer = new Email();
 		HttpSession session = request.getSession();
-		
-		
-		
+
 		String[] email = (String[]) session.getAttribute("emailList");
+		int ID = (int) session.getAttribute("ID");
+		DatabaseConnection connection = new DatabaseConnection();
+		Condition condition = connection.retrieveAllConditionByID(ID);
 		String subject = request.getParameter("subject");
 		String msg = request.getParameter("msg");
-		String screening = request.getParameter("screening");
+		msg = msg.replace("[screening]", condition.getScreening());
+		
+		
 		boolean check = true;
 		for (int i = 0; i < email.length; i++) {
-			 check = emailServer.sendEmail(email[i], subject, msg, screening);
+			msg = msg.replace("[clientName]", connection.getNameByEmail(email[i]));
+			
+			msg = msg.replace("[clientEmail]", email[i]);
+			check = emailServer.sendEmail(email[i], subject, msg);
 		}
 		String status = "";
 		if (check) {

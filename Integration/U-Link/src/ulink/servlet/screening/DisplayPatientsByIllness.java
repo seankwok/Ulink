@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -47,7 +48,9 @@ public class DisplayPatientsByIllness extends HttpServlet {
 		//String gender = request.getParameter("gender");
 		//String type = request.getParameter("type");
 		int ID = Integer.parseInt(request.getParameter("ID"));
+		HttpSession session = request.getSession();
 		
+		session.setAttribute("ID", ID);
 		Condition condition = connection.retrieveAllConditionByID(ID);
 		
 		ArrayList<Client> clientList = connection.retrieveAllClientList();

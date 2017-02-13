@@ -355,6 +355,33 @@ public class DatabaseConnection {
 		return specialtyList;
 
 	}
+	
+	public String getNameByEmail(String email) {
+		Connection con;
+		String name = "";
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
+
+			Statement stmt = con.createStatement();
+			String sql = "select clientName from client where email = '" + email + "'"; 
+			ResultSet rs = stmt.executeQuery(sql);
+			Utility utility = new Utility();
+
+			while (rs.next()) {
+				name = rs.getString(1);
+			}
+
+			con.close();
+
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return name;
+
+	}
 
 	public ArrayList<RankingDoctor> retrieveAllRankingDoctor(String startDate, String endDate) {
 		Connection con;
@@ -623,7 +650,9 @@ public class DatabaseConnection {
 
 		return clientList;
 	}
-
+	
+	
+	
 	public ArrayList<Client> retrieveAllClientByType(String type, String startDate, String endDate) {
 
 		Connection con;

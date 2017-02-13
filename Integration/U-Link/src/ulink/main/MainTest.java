@@ -31,28 +31,23 @@ import ulink.logic.Utility;
 public class MainTest {
 
 	public static void main(String[] args) throws ParseException {
-		//String startDate = request.getParameter("startDate");
 		DatabaseConnection connection = new DatabaseConnection();
-		Condition condition = connection.retrieveAllConditionByID(48);
+		//DatabaseConnection connection = new DatabaseConnection();
+		//Condition condition = connection.retrieveAllConditionByID(ID);
+		//String subject = request.getParameter("subject");
+		//String msg = request.getParameter("msg");
+		String msg = "[screening] [clientName] [clientEmail]";
+		msg = msg.replace("[screening]", "Dying");
 		
-		ArrayList<Client> clientList = connection.retrieveAllClientList();
-		ArrayList<ClientByIllness> clientByIllnessList = new ArrayList<>();
-		for (int i = 0; i < clientList.size(); i++) {
-			Client client = clientList.get(i);
-			if ((condition.getType().toLowerCase().equals("male") || condition.getType().toLowerCase().equals("female")) && client.getEmail().length() > 0) {
-				if (client.getAge() >= condition.getAgeRequired() && client.getGender().toLowerCase().equals(condition.getType().toLowerCase())) {
-					clientByIllnessList.add(new ClientByIllness(client.getClientName(), client.getAge(),
-							client.getEmail(), client.getGender(),condition.getScreening(), condition.getConditionName()));
-				}
-			} else {
-				if (client.getAge() >= condition.getAgeRequired() / 12 && client.getGender().toLowerCase().equals(condition.getType().toLowerCase() ) && client.getEmail().length() > 0) {
-					clientByIllnessList.add(new ClientByIllness(client.getClientName(), client.getAge(),
-							client.getEmail(), client.getGender(),condition.getScreening(), condition.getConditionName()));
-
-				}
-			}
+		
+		//boolean check = true;
+		//for(int i = 0; i < email.length; i++) {
+			msg = msg.replace("[clientName]", "dumbdumb");
+			
+			msg = msg.replace("[clientEmail]", "dumbdumb@gamil");
+			System.out.println(msg);
+	//		check = emailServer.sendEmail(email[i], subject, msg);
+		
 		}
-		System.out.println(clientByIllnessList.size());
-	}
 
 }
