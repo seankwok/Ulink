@@ -16,6 +16,8 @@ import ulink.constructor.KPI;
 import ulink.dao.DatabaseConnection;
 
 public class TopK {
+	
+
 	DatabaseConnection connection = new DatabaseConnection();
 
 	public ArrayList<AgeAndGender> getAgeGenderReport() {

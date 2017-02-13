@@ -78,6 +78,42 @@ public class DatabaseConnection {
 
 	}
 
+	
+	public ArrayList<Index> retrieveAllIndexByPerson(String startDate, String endDate, String medicial, String followUpPerson) {
+		Connection con;
+		ArrayList<Index> IndexList = new ArrayList<>();
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
+
+			Statement stmt = con.createStatement();
+			String sql = "select ID,billingCity, BillingCode, BillingCountry, BillingState, BillingStreet,phone,email from client where `CreatedTime` between'"+startDate+"'and'"+endDate+"' and medical = '"+medicial+"' and `followUpPerson`= '"+followUpPerson+"'";
+			ResultSet rs = stmt.executeQuery(sql);
+			Utility utility = new Utility();
+
+			while (rs.next()) {
+				String billing = rs.getString(1);
+				billing += rs.getString(2);
+				billing += rs.getString(3);
+				billing += rs.getString(4);
+				billing += rs.getString(5);
+				String phone = rs.getString(6);
+				String email = rs.getString(7);
+				IndexList.add(new Index(billing, phone, email));
+			}
+
+			con.close();
+
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return IndexList;
+
+	}
+	
+	
 	public ArrayList<RankingReferredBy> retrieveAllRankingReferredByDashBoard(String startDate, String endDate) {
 		Connection con;
 		ArrayList<RankingReferredBy> referredByList = new ArrayList<>();

@@ -54,13 +54,13 @@ public class DisplayPatientsByIllness extends HttpServlet {
 		ArrayList<ClientByIllness> clientByIllnessList = new ArrayList<>();
 		for (int i = 0; i < clientList.size(); i++) {
 			Client client = clientList.get(i);
-			if (condition.getType().equals("Male") || condition.getType().equals("Female")) {
-				if (client.getAge() >= condition.getAgeRequired() && client.getGender().equals(condition.getType())) {
+			if (condition.getType().toLowerCase().equals("male") || condition.getType().toLowerCase().equals("female")) {
+				if (client.getAge() >= condition.getAgeRequired() && client.getGender().toLowerCase().equals(condition.getType().toLowerCase())) {
 					clientByIllnessList.add(new ClientByIllness(client.getClientName(), client.getAge(),
 							client.getEmail(), client.getGender(),condition.getScreening(), condition.getConditionName()));
 				}
 			} else {
-				if (client.getAge() >= condition.getAgeRequired() / 12 && client.getGender().equals(condition.getType())) {
+				if (client.getAge() >= condition.getAgeRequired() / 12 && client.getGender().toLowerCase().equals(condition.getType().toLowerCase())) {
 					clientByIllnessList.add(new ClientByIllness(client.getClientName(), client.getAge(),
 							client.getEmail(), client.getGender(),condition.getScreening(), condition.getConditionName()));
 

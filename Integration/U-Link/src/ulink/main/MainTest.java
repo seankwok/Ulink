@@ -19,6 +19,8 @@ import com.google.gson.reflect.TypeToken;
 
 import ulink.constructor.AgeAndGender;
 import ulink.constructor.Client;
+import ulink.constructor.ClientByIllness;
+import ulink.constructor.Condition;
 import ulink.constructor.Index;
 import ulink.constructor.RankingReferredBy;
 import ulink.dao.DatabaseConnection;
@@ -30,15 +32,29 @@ public class MainTest {
 	public static void main(String[] args) throws ParseException {
 		//String startDate = request.getParameter("startDate");
 		//String endDate = request.getParameter("endDate");
-		//String team = request.getParameter("team");
+		int ID = 48;
 		DatabaseConnection connection = new DatabaseConnection();
-		ArrayList<Client> list = connection.retrieveAllClientList();
-		LinkedHashMap<String,Integer> visaTypeList = new LinkedHashMap<>();
+		Condition condition = connection.retrieveAllConditionByID(ID);
 		
-		Utility utility = new Utility();
+		ArrayList<Client> clientList = connection.retrieveAllClientList();
+		ArrayList<ClientByIllness> clientByIllnessList = new ArrayList<>();
+		for (int i = 0; i < clientList.size(); i++) {
+			Client client = clientList.get(i);
+			if (condition.getType().toLowerCase().equals("male") || condition.getType().toLowerCase().equals("female")) {
+				if (client.getAge() >= condition.getAgeRequired() && client.getGender().toLowerCase().equals(condition.getType().toLowerCase())) {
+					clientByIllnessList.add(new ClientByIllness(client.getClientName(), client.getAge(),
+							client.getEmail(), client.getGender(),condition.getScreening(), condition.getConditionName()));
+				}
+			} else {
+				if (client.getAge() >= condition.getAgeRequired() / 12 && client.getGender().toLowerCase().equals(condition.getType().toLowerCase())) {
+					clientByIllnessList.add(new ClientByIllness(client.getClientName(), client.getAge(),
+							client.getEmail(), client.getGender(),condition.getScreening(), condition.getConditionName()));
+
+				}
+			}
+		}
 		
-		String startDate = "2015-05-05";
-		System.out.println(utility.getMonth(Integer.parseInt(startDate.substring(5,7))));
+		System.out.println(clientByIllnessList.size());
 	}
 
 }
