@@ -17,6 +17,7 @@ import com.google.gson.reflect.TypeToken;
 
 import ulink.constructor.Client;
 import ulink.constructor.ClientByIllness;
+import ulink.constructor.Condition;
 import ulink.dao.DatabaseConnection;
 
 /**
@@ -42,20 +43,24 @@ public class DisplayPatientsByIllness extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		DatabaseConnection connection = new DatabaseConnection();
-		int age = Integer.parseInt(request.getParameter("age"));
-		String gender = request.getParameter("gender");
-		String type = request.getParameter("type");
+		//int age = Integer.parseInt(request.getParameter("age"));
+		//String gender = request.getParameter("gender");
+		//String type = request.getParameter("type");
+		int ID = Integer.parseInt(request.getParameter("ID"));
+		
+		Condition condition = connection.retrieveAllConditionByID(ID);
+		
 		ArrayList<Client> clientList = connection.retrieveAllClientList();
 		ArrayList<ClientByIllness> clientByIllnessList = new ArrayList<>();
 		for (int i = 0; i < clientList.size(); i++) {
 			Client client = clientList.get(i);
-			if (type.equals("adult")) {
-				if (client.getAge() >= age && client.getGender().equals(gender)) {
+			if (condition.getType().equals("Male") || condition.getType().equals("Female")) {
+				if (client.getAge() >= condition.getAgeRequired() && client.getGender().equals(condition.getType())) {
 					clientByIllnessList.add(new ClientByIllness(client.getClientName(), client.getAge(),
 							client.getEmail(), client.getGender()));
 				}
 			} else {
-				if (client.getAge() >= age / 12 && client.getGender().equals(gender)) {
+				if (client.getAge() >= condition.getAgeRequired() / 12 && client.getGender().equals(condition.getType())) {
 					clientByIllnessList.add(new ClientByIllness(client.getClientName(), client.getAge(),
 							client.getEmail(), client.getGender()));
 

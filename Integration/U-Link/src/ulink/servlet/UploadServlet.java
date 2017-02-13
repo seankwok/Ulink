@@ -426,7 +426,7 @@ public class UploadServlet extends HttpServlet {
 					// System.out.println(clientList.get(clientList.size() -
 					// 1).getClientName());
 					count++;
-				}else {
+				}else if (!accountID.equals("")){
 					clientList.add(new Client(ID, accountID, clientOwner, clientName, clientType, company,
 							nationality, gender, dateOfBirth, email, medical, mainDiagnosis, referredBy, PIC,
 							appointment, doctor, specialty, clinic, otherDoctor, followUpPerson, followUpPIC,
@@ -699,7 +699,7 @@ public class UploadServlet extends HttpServlet {
 						// System.out.println(clientList.get(clientList.size() -
 						// 1).getClientName());
 						count++;
-					}else {
+					}else if (!accountID.equals("")){
 						clientList.add(new Client(ID, accountID, clientOwner, clientName, clientType, company,
 								nationality, gender, dateOfBirth, email, medical, mainDiagnosis, referredBy, PIC,
 								appointment, doctor, specialty, clinic, otherDoctor, followUpPerson, followUpPIC,

@@ -52,8 +52,9 @@ public class SendEmail extends HttpServlet {
 		String email = request.getParameter("email");
 		String subject = request.getParameter("subject");
 		String msg = request.getParameter("msg");
+		String screening = request.getParameter("screening");
 		
-		boolean check = emailServer.sendEmail(email, subject, msg);
+		boolean check = emailServer.sendEmail(email, subject, msg, screening);
 		String status = "";
 		if (check){
 			status = "pass";

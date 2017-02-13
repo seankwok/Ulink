@@ -12,7 +12,7 @@ import javax.mail.internet.MimeMessage;
 
 public class Email {
 
-	public boolean sendEmail(String email, String Subject, String Msg){
+	public boolean sendEmail(String email, String Subject, String Msg, String Screening){
 		
 		final String username = "ulinkassist_executive@hotmail.com";
 		final String password = "UlinkAssist ";
@@ -41,7 +41,7 @@ public class Email {
 
 			Transport.send(message);
 
-			System.out.println("Done");
+			//System.out.println("Done");
 
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
