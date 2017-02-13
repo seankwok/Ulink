@@ -113,19 +113,19 @@
 	    function pressSend(){
 	    	var doc = document.getElementById('iframe').contentWindow.document; 
 	    	var content = doc.body.innerHTML;
-	    	console.log(content);
+	    	
 	    	$.ajax({
-	    		url:'sendEmail',
+	    		url:'SendEmail',
     			type:'post',
     			data: 'subject=' + "Reminder for Screening"
 				+ '&'
 				+ 'msg=' + content,
 				complete:function(data){
-					
+					$('#message').html("<div class='alert alert-success' role='alert'><center><b> Email Sent! </b></center></div>");
+					console.log(content);
 				}
-   						
+		
 	    	});
-			$('#message').html("<div class='alert alert-success' role='alert'><center><b> Email Sent! </b></center></div>");
 
 	    }
 	</script>
@@ -181,7 +181,7 @@
 					<td><div id='templateDropdown'></div></td>
 				</tr>
 			</table>
-			<span id="msg"></span>
+			
 			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
