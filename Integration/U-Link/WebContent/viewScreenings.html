@@ -507,17 +507,18 @@
 	
 	function viewPatientList(clickedID){
 		var sendData = {
-				"ID" : clickedID
-			};
+				"ID" : clickedID	
+		};	
+    	var condition="";
+    	var screeningName="";
 		var table = "<table id='table'  class='display' cellspacing='0' width='100%'>";
-			console.log(clickedID);
 			$.ajax({
-				url : "DisplayAllClientByCondition",
+				url : "DisplayPatientsByIllness",
 				type : "get",
 				data : sendData,
 				dataType : "json",
-				success: function(data){
-			    	var json = jQuery.parseJSON(JSON.stringify(data));
+				complete: function(data){
+			    	var json = jQuery.parseJSON(data.responseText);
 			    	console.log(json);
 			    	table += "<thead><tr><th>Age</th><th>Client Name</th><th>Select</th></tr></thead>";
 			    	$.each(json,function(key,value) {
@@ -525,7 +526,7 @@
 		    				+ value["age"]
 		    				+ "</td>"
 		    				+ "<td>"
-		    				+ value["clientName"]
+		    				+ value["name"]
 	    					+ "</td>"
 	    					+ "<td>"
 		    				+ "<input type='checkbox' name='selectClients'/>"		    				
@@ -533,10 +534,15 @@
 			    	});
 			    	table += "</table>"
 			    		
-			    	table += "<div class='container' align='center'><button type='submit' value='Submit' class='btn btn-default' id='send'>Send selected clients to own email</button></div>"
+			    	table += "<div class='container' align='center'>"
+			    		  +"<button onclick='sendEmail()' class='btn btn-primary'>"
+			    		  		+"Send selected clients to own email"
+			    		  +"</button>"
+			    		  +"</div>"
 			    		$("#display").html(table);
+			    		$("#displayCondition").html(condition);
+			    		$("#screening").html(screeningName);
 				}	
-
 			});
 	}
 	

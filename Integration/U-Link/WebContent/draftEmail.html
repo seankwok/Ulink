@@ -18,6 +18,7 @@
     <script> 
 	    $(function(){
 	      $("#includedContent").load("navBar.html"); 
+	      
 	    });
 
     </script> 
@@ -40,6 +41,8 @@
 	
 	$(document).ready(function() {
 		showDropdownList();	
+		 var myArray = sessionStorage.getItem('myArray');
+		 console.log("here:"+ myArray);
 	});
 	
 
@@ -71,7 +74,6 @@
 	    	}else{
 		    	var doc = document.getElementById('iframe').contentWindow.document; 
 		    	var content = doc.body.innerHTML;
-		    	console.log(content);
 		    	$.ajax({
 					type: 'post',
 					url: "CreateEmailTemplate",
@@ -109,7 +111,22 @@
 
 		
 	    function pressSend(){
-			
+	    	var doc = document.getElementById('iframe').contentWindow.document; 
+	    	var content = doc.body.innerHTML;
+	    	console.log(content);
+	    	$.ajax({
+	    		url:'sendEmail',
+    			type:'post',
+    			data: 'subject=' + "Reminder for Screening"
+				+ '&'
+				+ 'msg=' + content,
+				complete:function(data){
+					
+				}
+   						
+	    	});
+			$('#message').html("<div class='alert alert-success' role='alert'><center><b> Email Sent! </b></center></div>");
+
 	    }
 	</script>
 </head>
@@ -189,13 +206,13 @@
 			  </div>
 			</div>	
 		</div>
-		<br>
+		
 	</div>				
 		
 		<br>
 		<div class='container' >
-			<iframe src="javascript:parent.showFields()" id="iframe" name="richTextField" style="width: 1000px; height: 500px;"></iframe>
-			<br><div align='center' onclick='pressSend'><button>Send to ...</button></div>
+			<iframe src="javascript:parent.showFields()" id="iframe" name="richTextField" style="width: 1000px; height: 250px;"></iframe>
+			<br><div align='center' onclick='pressSend()'><button>Send to ...</button></div>
 		</div>	
 
 		<script type="text/javascript">
@@ -217,6 +234,7 @@
 
 
 		</script>
+			<div class="container" id="message"></div>
 		
 	</body>
 </html>
