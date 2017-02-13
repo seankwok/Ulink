@@ -60,9 +60,9 @@ public class KPIVisa extends HttpServlet {
 		
 		System.out.println(startDate + " " + endDate);
 		
-		KPI kpi = topk.getKPI(type, startDate,endDate);
-		KPI lastMonth = topk.getKPI(type, startDatelastMonth,endDatelastMonth);
-		KPI lastyear = topk.getKPI(type,startDateLastYear,endDatelastYear);
+		KPI kpi = topk.getKPIVisa(type, startDate,endDate);
+		KPI lastMonth = topk.getKPIVisa(type, startDatelastMonth,endDatelastMonth);
+		KPI lastyear = topk.getKPIVisa(type,startDateLastYear,endDatelastYear);
 		//KPI LMLY = topk.getKPI(type,lastYearLastMonth);
 		
 		ArrayList<KPI> kpiList = new ArrayList<>();

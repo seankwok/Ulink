@@ -36,19 +36,9 @@ public class MainTest {
 		//String startDate = request.getParameter("startDate");
 		//String endDate = request.getParameter("endDate");
 		//String team = request.getParameter("team");
-		ArrayList<String> personInChargeList = connection.retrieveAllPersonInCharge();
-		Utility utility = new Utility();
-		LinkedHashMap<String,LinkedHashMap<Integer,Integer>> personInChargePointSystem = new  LinkedHashMap<String,LinkedHashMap<Integer,Integer>>();
-		for (int i = 0; i<personInChargeList.size(); i++){
-			String temp = personInChargeList.get(i);
-			ArrayList<Index> indexList = connection.retrieveAllIndexByPerson(utility.changeDateFormatDatabase("01/01/2015"), utility.changeDateFormatDatabase("01/01/2017"),"Visa",temp);	
-			LinkedHashMap<Integer,Integer> pointSystem = utility.getIndexCount(indexList);
-			if (!personInChargePointSystem.containsKey(temp)){
-				personInChargePointSystem.put(temp, pointSystem);
-			}
-		}
-		
-		System.out.println(personInChargePointSystem.toString());
+		TopK t = new TopK();
+		t.getKPIVisa("Visa", "2017/02/01", "2017/02/28");
+	System.out.println(t.getKPIVisa("Visa", "2017/02/01", "2017/02/28").getOutPatient());
 	}
 
 }

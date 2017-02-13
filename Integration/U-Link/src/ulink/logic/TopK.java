@@ -265,6 +265,7 @@ public class TopK {
 
 		for (int i = 0; i < clientList.size(); i++) {
 			Client client = clientList.get(i);
+			System.out.println(client.getVisaType());
 			if (client.getVisaType().contains("Indonesia")) {
 				in++;
 			} else {
