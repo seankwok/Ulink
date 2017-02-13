@@ -68,11 +68,14 @@ public class SendEmail extends HttpServlet {
 		String sendEmail = user.getEmail();
 		
 		boolean check = true;
+		
 		for (int i = 0; i < email.length; i++) {
+			
 			msg = msg.replace("[clientName]", connection.getNameByEmail(email[i]));
 			
 			msg = msg.replace("[clientEmail]", email[i]);
 			check = emailServer.sendEmail(email[i], subject, msg, sendEmail);
+			System.out.println(email[i]);
 		}
 		String status = "";
 		if (check) {
@@ -80,7 +83,9 @@ public class SendEmail extends HttpServlet {
 		} else {
 			status = "fail";
 		}
-		System.out.println(msg);
+	
+		
+		System.out.println(msg + "ewqrqrweq");
 		PrintWriter out = response.getWriter();
 
 		out.write(status);

@@ -12,6 +12,8 @@ import javax.mail.internet.MimeMessage;
 
 public class Email {
 
+	
+	
 	public boolean sendEmail(String email, String Subject, String Msg, String sendEmail){
 		
 		final String username = "ulinkas1";
@@ -39,7 +41,8 @@ public class Email {
 			message.setRecipients(Message.RecipientType.TO,
 				InternetAddress.parse("Seankwok794@hotmail.com"));
 			message.setSubject(Subject);
-			message.setText(Msg);
+			message.setContent(Msg, "text/html; charset=utf-8");
+			//message.(Msg);
 
 			Transport.send(message);
 
