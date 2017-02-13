@@ -14,14 +14,16 @@ public class Email {
 
 	public boolean sendEmail(String email, String Subject, String Msg, String Screening){
 		
-		final String username = "ulinkassist_executive@hotmail.com";
-		final String password = "UlinkAssist ";
+		final String username = "ulinkas1";
+		final String password = "lcBsK0Q]p)mt";
 
 		Properties props = new Properties();
+		props.put("mail.smtp.host", "mail.ulinkassist.com");
+		props.put("mail.smtp.port", "25");
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.starttls.enable", "true");
-		props.put("mail.smtp.host", "smtp.live.com");
-		props.put("mail.smtp.port", "25");
+		
+		
 
 		Session session = Session.getInstance(props,
 		  new javax.mail.Authenticator() {
@@ -33,7 +35,7 @@ public class Email {
 		try {
 
 			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress(username));
+			message.setFrom(new InternetAddress("accounts@ulinkassist.com"));
 			message.setRecipients(Message.RecipientType.TO,
 				InternetAddress.parse(email));
 			message.setSubject(Subject);
@@ -41,7 +43,7 @@ public class Email {
 
 			Transport.send(message);
 
-			//System.out.println("Done");
+			System.out.println("Done");
 
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
