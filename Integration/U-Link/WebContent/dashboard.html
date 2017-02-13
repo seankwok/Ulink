@@ -62,7 +62,7 @@
 			     	        type: 'bar'
 			     	    },
 			     	    title: {
-			     	        text: 'Types of Visa requested'
+			     	        text: 'Types of Visa Requested since Jun 2015'
 			     	    },
 			     	    
 			     	    xAxis: {
@@ -151,10 +151,14 @@
 			    	        shared: true,
 			    	        useHTML: true
 			    	    },
+			    	  
 			    	    plotOptions: {
 			    	        column: {
 			    	            pointPadding: 0.2,
-			    	            borderWidth: 0
+			    	            borderWidth: 0,
+			    	            dataLabels: {
+			     	                enabled: true
+			     	            }
 			    	        }
 			    	    },
 			    	    credits: {
@@ -222,7 +226,10 @@
 			    	    plotOptions: {
 			    	        column: {
 			    	            pointPadding: 0.2,
-			    	            borderWidth: 0
+			    	            borderWidth: 0,
+			    	            dataLabels: {
+			     	                enabled: true
+			     	            }
 			    	        }
 			    	    },
 			    	    series: [{
