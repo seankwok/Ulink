@@ -37,7 +37,7 @@ public class Email {
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress("accounts@ulinkassist.com"));
 			message.setRecipients(Message.RecipientType.TO,
-				InternetAddress.parse("seankwok794@hotmail.com"));
+				InternetAddress.parse(toEmail));
 			message.setSubject(Subject);
 			message.setContent(Msg, "text/html; charset=utf-8");
 

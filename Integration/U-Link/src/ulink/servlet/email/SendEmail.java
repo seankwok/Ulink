@@ -63,19 +63,26 @@ public class SendEmail extends HttpServlet {
 		Condition condition = connection.retrieveAllConditionByID(ID);
 		String subject = request.getParameter("subject");
 		String msg = request.getParameter("msg");
+		
 		String temp = "";
 		User user = (User) session.getAttribute("userDetails");
 	email = email[0].split(",");
-		
+		System.out.println(msg + " TEST ");
 		boolean check = true;
 		for (int i = 0; i < email.length; i++) {
 			temp = msg.replace("[screening]", condition.getScreening());
 			temp = temp.replace("[clientName]", connection.getNameByEmail(email[i]));
 			
 			temp = temp.replace("[clientEmail]", email[i]);
-			//System.out.println(email[i]);
 			
-			check = emailServer.sendEmail(email[i], subject, temp, user.getEmail()+"@ulinkassist.com");
+			System.out.println(email[i] + " email");
+			System.out.println(subject + " subject");
+			System.out.println(temp + " temp");
+			System.out.println(user.getEmail() + " userEmail");
+			
+			//check = emailServer.sendEmail(email[i], subject, temp, user.getEmail()+"@ulinkassist.com");
+			check = emailServer.sendEmail(email[i], subject, temp, "Manager@ulinkassist.com");
+			
 		}
 		String status = "";
 		if (check) {

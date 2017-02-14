@@ -31,23 +31,22 @@ import ulink.logic.Utility;
 public class MainTest {
 
 	public static void main(String[] args) throws ParseException {
-		DatabaseConnection connection = new DatabaseConnection();
-		//DatabaseConnection connection = new DatabaseConnection();
-		//Condition condition = connection.retrieveAllConditionByID(ID);
-		//String subject = request.getParameter("subject");
-		//String msg = request.getParameter("msg");
-		String msg = "[screening] [clientName] [clientEmail]";
-		msg = msg.replace("[screening]", "Dying");
-		
-		
-		//boolean check = true;
-		//for(int i = 0; i < email.length; i++) {
-			msg = msg.replace("[clientName]", "dumbdumb");
+	//	DatabaseConnection connection = new DatabaseConnection();
+		String startDate = "2017-01-01";
+		String endDate = "2017-02-02";
+	     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+         try {
+			Date date1 = sdf.parse(startDate);
+			Date date2 = sdf.parse(endDate);
+			System.out.println(date1.before(date2));
 			
-			msg = msg.replace("[clientEmail]", "dumbdumb@gamil");
-			System.out.println(msg);
-	//		check = emailServer.sendEmail(email[i], subject, msg);
+			//Gson gson = new Gson();
+			//PrintWriter out = response.getWriter();
+			//String arrayListToJson = gson.toJson(date1.after(date2));
 		
+		} catch (Exception e){
+			
 		}
 
+}
 }
