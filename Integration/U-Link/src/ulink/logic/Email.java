@@ -12,7 +12,7 @@ import javax.mail.internet.MimeMessage;
 
 public class Email {
 
-	public boolean sendEmail(String email, String Subject, String Msg){
+	public boolean sendEmail(String email, String Subject, String Msg, String toEmail){
 		
 		final String username = "ulinkas1";
 		final String password = "lcBsK0Q]p)mt";
@@ -37,7 +37,7 @@ public class Email {
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress("accounts@ulinkassist.com"));
 			message.setRecipients(Message.RecipientType.TO,
-				InternetAddress.parse("nabilahbmnk.2014@sis.smu.edu.sg"));
+				InternetAddress.parse("seankwok794@hotmail.com"));
 			message.setSubject(Subject);
 			message.setContent(Msg, "text/html; charset=utf-8");
 

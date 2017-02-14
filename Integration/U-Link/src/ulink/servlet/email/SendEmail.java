@@ -17,6 +17,7 @@ import com.google.gson.reflect.TypeToken;
 
 import ulink.constructor.Condition;
 import ulink.constructor.RankingReferredBy;
+import ulink.constructor.User;
 import ulink.dao.DatabaseConnection;
 import ulink.logic.Email;
 
@@ -62,16 +63,19 @@ public class SendEmail extends HttpServlet {
 		Condition condition = connection.retrieveAllConditionByID(ID);
 		String subject = request.getParameter("subject");
 		String msg = request.getParameter("msg");
-		msg = msg.replace("[screening]", condition.getScreening());
+		String temp = "";
+		User user = (User) session.getAttribute("userDetails");
 	email = email[0].split(",");
 		
 		boolean check = true;
 		for (int i = 0; i < email.length; i++) {
-			msg = msg.replace("[clientName]", connection.getNameByEmail(email[i]));
+			temp = msg.replace("[screening]", condition.getScreening());
+			temp = temp.replace("[clientName]", connection.getNameByEmail(email[i]));
 			
-			msg = msg.replace("[clientEmail]", email[i]);
-			System.out.println(email[i]);
-			check = emailServer.sendEmail(email[i], subject, msg);
+			temp = temp.replace("[clientEmail]", email[i]);
+			//System.out.println(email[i]);
+			
+			check = emailServer.sendEmail(email[i], subject, temp, user.getEmail()+"@ulinkassist.com");
 		}
 		String status = "";
 		if (check) {
