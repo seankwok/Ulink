@@ -359,6 +359,7 @@ public class DatabaseConnection {
 	public String getNameByEmail(String email) {
 		Connection con;
 		String name = "";
+		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");

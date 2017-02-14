@@ -12,7 +12,13 @@ import javax.mail.internet.MimeMessage;
 
 public class Email {
 
+<<<<<<< HEAD
 	public boolean sendEmail(String email, String Subject, String Msg){
+=======
+	
+	
+	public boolean sendEmail(String email, String Subject, String Msg, String sendEmail){
+>>>>>>> origin/master
 		
 		final String username = "ulinkas1";
 		final String password = "lcBsK0Q]p)mt";
@@ -40,6 +46,10 @@ public class Email {
 				InternetAddress.parse("nabilahbmnk.2014@sis.smu.edu.sg"));
 			message.setSubject(Subject);
 			message.setContent(Msg, "text/html; charset=utf-8");
+<<<<<<< HEAD
+=======
+			//message.(Msg);
+>>>>>>> origin/master
 
 			Transport.send(message);
 
