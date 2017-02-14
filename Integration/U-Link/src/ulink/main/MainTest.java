@@ -47,10 +47,7 @@ public class MainTest {
 			msg = msg.replace("[clientEmail]", "dumbdumb@gamil");
 			System.out.println(msg);
 	//		check = emailServer.sendEmail(email[i], subject, msg);
-	
-			
-			Email email = new Email();
-			email.sendEmail("qwe", "qwe", msg, "qwe");
+		
 		}
 
 }

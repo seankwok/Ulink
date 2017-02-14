@@ -17,7 +17,6 @@ import com.google.gson.reflect.TypeToken;
 
 import ulink.constructor.Condition;
 import ulink.constructor.RankingReferredBy;
-import ulink.constructor.User;
 import ulink.dao.DatabaseConnection;
 import ulink.logic.Email;
 
@@ -64,15 +63,15 @@ public class SendEmail extends HttpServlet {
 		String subject = request.getParameter("subject");
 		String msg = request.getParameter("msg");
 		msg = msg.replace("[screening]", condition.getScreening());
-		User user = (User) session.getAttribute("user");
-		String sendEmail = user.getEmail();
+	email = email[0].split(",");
 		
 		boolean check = true;
 		for (int i = 0; i < email.length; i++) {
 			msg = msg.replace("[clientName]", connection.getNameByEmail(email[i]));
 			
 			msg = msg.replace("[clientEmail]", email[i]);
-			check = emailServer.sendEmail(email[i], subject, msg, sendEmail);
+			System.out.println(email[i]);
+			check = emailServer.sendEmail(email[i], subject, msg);
 		}
 		String status = "";
 		if (check) {
@@ -80,9 +79,8 @@ public class SendEmail extends HttpServlet {
 		} else {
 			status = "fail";
 		}
-		System.out.println(msg);
-		PrintWriter out = response.getWriter();
 
+		PrintWriter out = response.getWriter();
 		out.write(status);
 		out.flush();
 		return;
