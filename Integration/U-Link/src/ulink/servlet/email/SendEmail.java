@@ -66,19 +66,12 @@ public class SendEmail extends HttpServlet {
 	email = email[0].split(",");
 		
 		boolean check = true;
-		
 		for (int i = 0; i < email.length; i++) {
-			
 			msg = msg.replace("[clientName]", connection.getNameByEmail(email[i]));
 			
 			msg = msg.replace("[clientEmail]", email[i]);
-<<<<<<< HEAD
 			System.out.println(email[i]);
 			check = emailServer.sendEmail(email[i], subject, msg);
-=======
-			check = emailServer.sendEmail(email[i], subject, msg, sendEmail);
-			System.out.println(email[i]);
->>>>>>> origin/master
 		}
 		String status = "";
 		if (check) {
@@ -86,13 +79,6 @@ public class SendEmail extends HttpServlet {
 		} else {
 			status = "fail";
 		}
-<<<<<<< HEAD
-=======
-	
-		
-		System.out.println(msg + "ewqrqrweq");
-		PrintWriter out = response.getWriter();
->>>>>>> origin/master
 
 		PrintWriter out = response.getWriter();
 		out.write(status);
