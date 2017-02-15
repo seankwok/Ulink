@@ -31,11 +31,11 @@ public class Email {
 				return new PasswordAuthentication(username, password);
 			}
 		  });
-
+		
 		try {
 
 			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("accounts@ulinkassist.com"));
+			message.setFrom(new InternetAddress("Manager@ulinkassist.com"));
 			message.setRecipients(Message.RecipientType.TO,
 				InternetAddress.parse(toEmail));
 			message.setSubject(Subject);

@@ -53,36 +53,47 @@ public class SendEmail extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		
 		doGet(request, response);
+		response.setContentType("text/html; charset=utf-8");
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		
 		Email emailServer = new Email();
 		HttpSession session = request.getSession();
-
+		// System.out.println(request.getContentType());
+		
 		String[] email = (String[]) session.getAttribute("emailList");
 		int ID = (int) session.getAttribute("ID");
 		DatabaseConnection connection = new DatabaseConnection();
 		Condition condition = connection.retrieveAllConditionByID(ID);
 		String subject = request.getParameter("subject");
 		String msg = request.getParameter("msg");
-		
+
 		String temp = "";
 		User user = (User) session.getAttribute("userDetails");
-	email = email[0].split(",");
+		email = email[0].split(",");
 		System.out.println(msg + " TEST ");
 		boolean check = true;
-		for (int i = 0; i < email.length; i++) {
-			temp = msg.replace("[screening]", condition.getScreening());
-			temp = temp.replace("[clientName]", connection.getNameByEmail(email[i]));
-			
-			temp = temp.replace("[clientEmail]", email[i]);
-			
-			System.out.println(email[i] + " email");
-			System.out.println(subject + " subject");
-			System.out.println(temp + " temp");
-			System.out.println(user.getEmail() + " userEmail");
-			
-			//check = emailServer.sendEmail(email[i], subject, temp, user.getEmail()+"@ulinkassist.com");
-			check = emailServer.sendEmail(email[i], subject, temp, "Manager@ulinkassist.com");
-			
+		if (msg != null) {
+			for (int i = 0; i < email.length; i++) {
+				temp = msg.replace("[screening]", condition.getScreening());
+				temp = temp.replace("[clientName]", connection.getNameByEmail(email[i]));
+
+				temp = temp.replace("[clientEmail]", email[i]);
+
+				System.out.println(email[i] + " email");
+				System.out.println(subject + " subject");
+				System.out.println(temp + " temp");
+				System.out.println(user.getEmail() + " userEmail");
+
+				 check = emailServer.sendEmail(email[i], subject, temp, user.getEmail()+"@ulinkassist.com");
+				//check = emailServer.sendEmail(email[i], subject, temp, "seankwok794@hotmail.com");
+
+			}
+		} else {
+			check = false;
 		}
 		String status = "";
 		if (check) {
