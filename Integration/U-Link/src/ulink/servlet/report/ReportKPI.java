@@ -83,7 +83,7 @@ public class ReportKPI extends HttpServlet {
 		if (lastMonth.getOutPatient() != 0){
 			outChange = (1.0*kpi.getOutPatient()-lastMonth.getOutPatient())/lastMonth.getOutPatient()*100;
 		}
-		kpiList.add(new KPI("Increase\\Decrease",Math.round(inChange),Math.round(outChange)));
+		kpiList.add(new KPI("Increase\\Decrease %",Math.round(inChange),Math.round(outChange)));
 		kpiList.add(kpi);
 		kpiList.add(lastyear);
 		//kpiList.add(LMLY);
@@ -105,7 +105,7 @@ public class ReportKPI extends HttpServlet {
 				outChange = 0;
 			}
 		}
-		kpiList.add(new KPI("Increase\\Decrease",Math.round(inChange),Math.round(outChange)));
+		kpiList.add(new KPI("Increase\\Decrease %",Math.round(inChange),Math.round(outChange)));
 		PrintWriter out = response.getWriter();
 		Gson gson = new Gson();
 

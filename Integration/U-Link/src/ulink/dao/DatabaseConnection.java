@@ -337,7 +337,7 @@ public class DatabaseConnection {
 			String sql = "select specialty, count(appointment) from client where `CreatedTime` between'" + startDate
 					+ "'and'" + endDate + "' and specialty != '' group by specialty ORDER BY COUNT(appointment) DESC";
 			ResultSet rs = stmt.executeQuery(sql);
-			Utility utility = new Utility();
+			//Utility utility = new Utility();
 
 			while (rs.next()) {
 				String specialty = rs.getString(1);
@@ -448,7 +448,7 @@ public class DatabaseConnection {
 
 	}
 	
-	public ArrayList<Client> retrieveAllClientListT() {
+	public ArrayList<Client> retrieveAllClientListVisa() {
 
 		Connection con;
 		ArrayList<Client> clientList = new ArrayList<Client>();
@@ -457,7 +457,7 @@ public class DatabaseConnection {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
-			String sql = "SELECT * FROM client group by clientName";
+			String sql = "SELECT * FROM client";
 			ResultSet rs = stmt.executeQuery(sql);
 			Utility utility = new Utility();
 
@@ -516,6 +516,10 @@ public class DatabaseConnection {
 		return clientList;
 	}
 
+	
+	
+	
+	
 	public ArrayList<Client> retrieveAllClientList() {
 
 		Connection con;

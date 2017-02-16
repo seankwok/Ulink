@@ -39,7 +39,7 @@ public class DisplayAllVisaType extends HttpServlet {
 		// TODO Auto-generated method stub
 		PrintWriter out = response.getWriter();
 		DatabaseConnection connection = new DatabaseConnection();
-		ArrayList<Client> list = connection.retrieveAllClientList();
+		ArrayList<Client> list = connection.retrieveAllClientListVisa();
 		LinkedHashMap<String,Integer> visaTypeList = new LinkedHashMap<>();
 		
 		Utility utility = new Utility();
