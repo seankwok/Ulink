@@ -1443,6 +1443,64 @@ public class DatabaseConnection {
 
 	}
 
+	
+	public ArrayList<EmailSend> retrieveEmailSendDetails(String clientName) {
+		//EmailSend emailSend = null;
+		Connection con;
+		ArrayList<EmailSend> allEmailSendList = new ArrayList<EmailSend>();
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
+
+			Statement stmt = con.createStatement();
+			String sql = "SELECT * FROM emailsend where clientName='" + clientName + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				// int Id = rs.getInt(1);
+				//String clientName = rs.getString(2);
+				String screening = rs.getString(3);
+				String date = rs.getString(4);
+				//String screening = rs.getString(5);
+				//String type = rs.getString(6);
+				allEmailSendList.add(new EmailSend(clientName, screening, date));
+
+			}
+
+			con.close();
+
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return allEmailSendList;
+	}
+
+	
+	public void createEmailDate(String clientName, String screening, String date) {
+		Connection con;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
+			Statement stmt = con.createStatement();
+
+			String sql = "INSERT INTO emailsend (clientName,screening,date) " + "VALUES (?,?,?)";
+			PreparedStatement preparedStmt = con.prepareStatement(sql);
+			preparedStmt.setString(1, clientName);
+			preparedStmt.setString(2, screening);
+			preparedStmt.setString(3, date);
+			preparedStmt.execute();
+
+			con.close();
+
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
 	public void createEmailTemplate(String name, String details) {
 		Connection con;
 		try {

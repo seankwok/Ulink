@@ -2,9 +2,7 @@ package ulink.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -17,19 +15,19 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 
-import ulink.constructor.ClientByIllness;
+import ulink.dao.DatabaseConnection;
 
 /**
- * Servlet implementation class CompareDate
+ * Servlet implementation class DisplayEmailSendByClientName
  */
-@WebServlet("/CompareDate")
-public class CompareDate extends HttpServlet {
+@WebServlet("/DisplayEmailSendByClientName")
+public class DisplayEmailSendByClientName extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CompareDate() {
+    public DisplayEmailSendByClientName() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -39,32 +37,22 @@ public class CompareDate extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String startDate = request.getParameter("startDate");
-		String endDate = request.getParameter("endDate");
-		
-	     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-         try {
-			Date date1 = sdf.parse(startDate);
-			Date date2 = sdf.parse(endDate);
-			
-			
-			Gson gson = new Gson();
-			PrintWriter out = response.getWriter();
-			String arrayListToJson = gson.toJson(date1.before(date2));
-			//System.out.print(arrayListToJson);
 
-			out.write(arrayListToJson);
-			out.flush();
-			return;
-			
-			
-			
-			
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-         
+		DatabaseConnection connection = new DatabaseConnection();
+		ArrayList<String> emailList = connection.retrieveAllEmail();
+
+
+		Gson gson = new Gson();
+		PrintWriter out = response.getWriter();
+		JsonArray result = (JsonArray) new Gson().toJsonTree(emailList,new TypeToken<List<String>>() {}.getType());
+		  String arrayListToJson = gson.toJson(result);
+		  
+		
+		out.write(arrayListToJson);
+		out.flush();
+		return;
+		
+		
 	}
 
 	/**
@@ -73,9 +61,6 @@ public class CompareDate extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-		
-		
-		
 	}
 
 }

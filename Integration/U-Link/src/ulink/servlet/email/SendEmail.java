@@ -74,7 +74,7 @@ public class SendEmail extends HttpServlet {
 		String temp = "";
 		User user = (User) session.getAttribute("userDetails");
 		email = email[0].split(",");
-		System.out.println(msg + " TEST ");
+		//System.out.println(msg + " TEST ");
 		boolean check = true;
 		if (msg != null) {
 			for (int i = 0; i < email.length; i++) {
@@ -83,14 +83,17 @@ public class SendEmail extends HttpServlet {
 
 				temp = temp.replace("[clientEmail]", email[i]);
 
-				System.out.println(email[i] + " email");
-				System.out.println(subject + " subject");
-				System.out.println(temp + " temp");
-				System.out.println(user.getEmail() + " userEmail");
+			//	System.out.println(email[i] + " email");
+				//System.out.println(subject + " subject");
+				//System.out.println(temp + " temp");
+				//System.out.println(user.getEmail() + " userEmail");
 
 				 check = emailServer.sendEmail(email[i], subject, temp, user.getEmail()+"@ulinkassist.com");
 				//check = emailServer.sendEmail(email[i], subject, temp, "seankwok794@hotmail.com");
-
+				 //Client name, screening, date Email, 
+				 
+				 String datetime = connection.getDateTime();
+				 connection.createEmailDate(connection.getNameByEmail(email[i]), condition.getScreening(), datetime);
 			}
 		} else {
 			check = false;

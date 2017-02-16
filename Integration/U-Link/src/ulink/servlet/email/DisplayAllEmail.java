@@ -16,6 +16,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 
 import ulink.constructor.Condition;
+import ulink.constructor.EmailSend;
 import ulink.dao.DatabaseConnection;
 
 /**
@@ -47,14 +48,14 @@ public class DisplayAllEmail extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-		
+		String clientName = request.getParameter("clientName");
 		DatabaseConnection connection = new DatabaseConnection();
-		ArrayList<String> emailList = connection.retrieveAllEmail();
+		ArrayList<EmailSend> emailSendList = connection.retrieveEmailSendDetails(clientName);
 
 
 		Gson gson = new Gson();
 		PrintWriter out = response.getWriter();
-		JsonArray result = (JsonArray) new Gson().toJsonTree(emailList,new TypeToken<List<String>>() {}.getType());
+		JsonArray result = (JsonArray) new Gson().toJsonTree(emailSendList,new TypeToken<List<EmailSend>>() {}.getType());
 		  String arrayListToJson = gson.toJson(result);
 		  
 		
