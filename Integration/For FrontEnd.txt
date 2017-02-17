@@ -19,7 +19,8 @@ Screenings
 -Allow exporting emails into excel (Columns TBC by Linda)
 
 Email Template
--Allow user to choose/ enter recipient
+-Delete Template
+-Allow user to choose/ enter recipient to send to
 -Use libraries to make text editor more professional
 
 Upload Client Data 
