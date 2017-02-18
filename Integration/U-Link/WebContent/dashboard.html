@@ -47,13 +47,10 @@
 			    
 			    complete: function(data){
 			    	var json = jQuery.parseJSON(JSON.stringify(data));
-			    	console.log("visa type: ");
-			    	console.log(json);
-			  
+			    	
 			    	$.each(json.responseJSON,function(key, value) {
 			    		type.push(key);
 			    		numVisa.push(value);
-			    		console.log(key);
 			    		
 			    	});
 			    	
@@ -116,9 +113,7 @@
 			    
 			    complete: function(data){
 			    	var json = jQuery.parseJSON(JSON.stringify(data));
-			    	console.log("numvisa: ");
-			    	console.log(json.responseJSON);
-			  
+			    	
 			    	$.each(json.responseJSON,function(key, value) {
 			    		month.push(key);
 			    		num.push(value);
@@ -184,13 +179,10 @@
 			    
 			    complete: function(data){
 			    	var json = jQuery.parseJSON(JSON.stringify(data));
-			    	console.log("numvisa: ");
-			    	console.log(json.responseJSON);
-			  
+			    	
 			    	$.each(json.responseJSON,function(key, value) {
 			    		month.push(key);
 			    		num.push(value);
-			    		console.log(key);
 			    		
 			    	});
 			    	
@@ -245,6 +237,18 @@
 	}
  	
  	function displayTopDocThisMonth(){
+ 		var thisMonth;
+ 		$.ajax({
+			url: "DisplayThisMonth",
+			type: "get",
+		    dataType : "json",
+		    complete: function(data){
+		    	var json = jQuery.parseJSON(JSON.stringify(data));
+		    	thisMonth = json.responseText;
+		    	console.log(thisMonth);
+		    }
+ 		}); 
+ 		
  		var thisMonthDoc = "<table id='thisMonthDoc'  class='table table-striped' cellspacing='0' width='100%'>";
  		
  		$.ajax({
@@ -253,8 +257,7 @@
 		    dataType : "json",
 		    complete: function(data){
 		    	var json = jQuery.parseJSON(JSON.stringify(data));
-		  		console.log(json);
-		  		thisMonthDoc += "<h4><b>This Month</b></h4>"
+		  		thisMonthDoc += "<h4><b>" + thisMonth +"</b></h4>"
 		  		thisMonthDoc += "<tr><th>Rank</th>"
 						  +  "<th>Doctor</th>"
 						  +  "<th>Clinic</th>"
@@ -281,6 +284,17 @@
  	}
  	
  	function displayTopDocLastMonth(){
+ 		var lastMonth;
+ 		$.ajax({
+			url: "DisplayLastMonth",
+			type: "get",
+		    dataType : "json",
+		    complete: function(data){
+		    	var json = jQuery.parseJSON(JSON.stringify(data));
+		    	lastMonth = json.responseText;
+		    	console.log(lastMonth);
+		    }
+ 		}); 
  		var lastMonthDoc = "<table id='lastMonthDoc'  class='table table-striped' cellspacing='0' width='100%'>";
  	
  		$.ajax({
@@ -289,8 +303,7 @@
 		    dataType : "json",
 		    complete: function(data){
 		    	var json = jQuery.parseJSON(JSON.stringify(data));
-		  		console.log(json);
-		  		lastMonthDoc += "<h4><b>Last Month</b></h4>"
+		  		lastMonthDoc += "<h4><b>" + lastMonth +"</b></h4>"
 		  		lastMonthDoc += "<tr><th>Rank</th>"
 							  +  "<th>Doctor</th>"
 							  +  "<th>Clinic</th>"
@@ -317,6 +330,17 @@
  	}
  	
  	function displayTopReferralThisMonth(){
+ 		var thisMonth;
+ 		$.ajax({
+			url: "DisplayThisMonth",
+			type: "get",
+		    dataType : "json",
+		    complete: function(data){
+		    	var json = jQuery.parseJSON(JSON.stringify(data));
+		    	thisMonth = json.responseText;
+		    	console.log(thisMonth);
+		    }
+ 		}); 
  		var thisMonthRef = "<table id='thisMonthRef'  class='table table-striped' cellspacing='0' width='100%'>";
  		$.ajax({
 			url: "DisplayAllLatestReferredbyDashboard",
@@ -324,8 +348,7 @@
 		    dataType : "json",
 		    complete: function(data){
 		    	var json = jQuery.parseJSON(JSON.stringify(data));
-		  		console.log(json);
-		  		thisMonthRef += "<h4><b>This Month</b></h4>"
+		  		thisMonthRef += "<h4><b>" + thisMonth +"</b></h4>"
 		  		thisMonthRef += "<tr><th>Rank</th>"
 							  +  "<th>Referred By</th>"
 							  +  "<th>Number of cases referred</th></tr>"
@@ -347,6 +370,17 @@
  	}
  	
  	function displayTopReferralLastMonth(){
+ 		var lastMonth;
+ 		$.ajax({
+			url: "DisplayLastMonth",
+			type: "get",
+		    dataType : "json",
+		    complete: function(data){
+		    	var json = jQuery.parseJSON(JSON.stringify(data));
+		    	lastMonth = json.responseText;
+		    	console.log(lastMonth);
+		    }
+ 		}); 
  		var lastMonthRef = "<table id='lastMonthRef'  class='table table-striped' cellspacing='0' width='100%'>";
  		$.ajax({
 			url: "DisplayAllPastReferredbyDashboard",
@@ -354,8 +388,7 @@
 		    dataType : "json",
 		    complete: function(data){
 		    	var json = jQuery.parseJSON(JSON.stringify(data));
-		  		console.log(json);
-		  		lastMonthRef += "<h4><b>Last Month</b></h4>"
+		  		lastMonthRef += "<h4><b>" + lastMonth +"</b></h4>"
 		  		lastMonthRef += "<tr><th>Rank</th>"
 							  +  "<th>Referred By</th>"
 							  +  "<th>Number of cases referred</th></tr>"
@@ -406,14 +439,14 @@
 	</div>
 	
 	<div class="container" align="center">
-	
+		<h3><b><u>Top 3 Doctors</u></b></h3>
 		<div class="col-md-6" id="thisMonthDoc"></div>
 		
 		<div class="col-md-6" id="lastMonthDoc"></div>
 	</div>
 	
 	<div class="container" align="center">
-	
+		<h3><b><u>Top 5 Referral Sources</u></b></h3>
 		<div class="col-md-6" id="thisMonthRef"></div>
 		
 		<div class="col-md-6" id="lastMonthRef"></div>

@@ -1,21 +1,21 @@
 Dashboard
-- Add title on top of both tables (Top 3 Doctors / Top 5 Referral Sources)
-- This Month / Last Month change to latest month / previous month in database (e.g. February 2016 / January 2016)
+- Add title on top of both tables (Top 3 Doctors / Top 5 Referral Sources) - done
+- This Month / Last Month change to latest month / previous month in database (e.g. February 2016 / January 2016) - done
 - Dashboard info to fill up one screen only if possible, can have additional button to go into detail
 - e.g collapse function
 
 Screenings
--Edit adult screening page should link to viewScreeningsAdult.html after clicking "Update"
--Screening name on viewScreeningsAdult.html to format center
--Display 'Email Address' column after 'Client Name' Column
--Display 'Email Sent Date' column before 'Select' Column
--"Select All" button for checkboxes
--Rename "Add" button to "Go to email template" 
--Indicate total number of clients selected
--Filter by Follow Up Person
+-Edit adult screening page should link to viewScreeningsAdult.html after clicking "Update" - done
+-Screening name on viewScreeningsAdult.html to format center - done
+-Display 'Email Address' column after 'Client Name' Column - done
+-Display 'Email Sent Date' column before 'Select' Column - done (check var name with sean)
+-"Select All" button for checkboxes - done but need to check
+-Rename "Add" button to "Go to email template" - done 
+-Indicate total number of clients selected - lots of integration needed
+-Filter by Follow Up Person - added another col for follow-up person. then search? check var name w sean
 -Shorten list to display max 15-20
 -Include scrollbar 
--"Export to Excel" button 
+-"Export to Excel" button - done
 -Allow exporting emails into excel (Columns TBC by Linda)
 
 Email Template
@@ -27,8 +27,7 @@ Upload Client Data
 -Last Uploaded time
 
 KPI
--Indicate percentage change with '%' sign
+-Indicate percentage change with '%' sign - done
 
 Client Profile
--Include new information in client profile
--"Screening sent", "Date Time sent", "Client Responded"
+-Include new information in client profile: "Screening sent", "Date Time sent", "Client Responded" - done

@@ -114,6 +114,9 @@
 		$("#selectInfant").click(function(){
 			window.location = "viewScreenings.html";
 		});
+		 $("#ckbCheckAll").click(function () {
+		        $(".checkBoxClass").prop('checked', $(this).prop('checked'));
+		  });
 
 			
 	});
@@ -232,31 +235,41 @@
 		    complete: function(data){
 		        var json = jQuery.parseJSON(data.responseText);
 		        console.log(json);
-		        table += "<thead><tr><th>Age</th><th>Client Name</th><th>Select</th></tr></thead>";
+		        table += "<thead><tr><th>Age</th><th>Client Name</th><th>Select   "+"<button type='button' class='btn btn-primary' id='ckbCheckAll'>Select all</button>" +"</th></tr></thead>";
 		        $.each(json,function(key,value) {
-		          condition = value["conditionName"];
-		          screeningName =value["screening"];
-		          console.log(condition);
-		         table += "<tbody><tr><td>"
+		          
+		         condition = value["conditionName"];
+		         screeningName =value["screening"];
+		         
+		          table += "<h2><b><center>" + screeningName + " for " + condition +"</h2></b></center>"
+		          table += "<tbody><tr><td>"
 		          + value["age"]
 		          + "</td>"
 		          + "<td>"
 		          + value["name"]
 		          + "</td>"
 		          + "<td>"
-		          + "<input type='checkbox' name='selectClients' value=" + value["email"]+">"          
+		          + value["email"]
+		          + "</td>"
+		          + "<td>"
+		          + value["emailSentDate"]
+		          + "</td>"
+		          + "<td>"
+		          + value["followUpPIC"]
+		          + "</td>"
+		          + "<td>"
+		          + "<input type='checkbox' class='checkBoxClass' name='selectClients' value=" + value["email"]+">"          
 		       + "</td></tr></tbody>"
 		        });
 		        table += "</table>"
-		        
+		        table += "<div id='displayNumSelected'></div>"
 		        table += "<div class='container' align='center'>"
-		         + "<button class='btn btn-default' onclick='sendEmail()'>Add</button>"
+		         + "<button class='btn btn-default' onclick='sendEmail()'>Go to email template</button>"
+		         + "<button type='button' id='export' class='btn btn-primary'><b>Export to excel</b></button>"
 		           +"</div>"
-		           
-		           
+		       
 		         $("#display").html(table);
-		         $("#displayCondition").html(condition);
-		         $("#screening").html(screeningName);
+		        
 		    } 
 		     
 
@@ -362,10 +375,12 @@
 	</div>
 	</div>
 
-	<div  id='displayCondition'></div>
-	<div  id='screening'></div>
 	
-	<div class="container" id="display"></div>
+	
+	
+	<div class="container" id="display">
+	
+	</div>
 	<div class="container" id="message"></div>
 	
 	
