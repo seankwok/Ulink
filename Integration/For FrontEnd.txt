@@ -24,7 +24,7 @@ Email Template
 -Use libraries to make text editor more professional
 
 Upload Client Data 
--Last Uploaded time
+-Last Uploaded time - display of error messages done, need to check w sean for method names for upload time & count
 
 KPI
 -Indicate percentage change with '%' sign - done

@@ -25,27 +25,30 @@
 		$("#submit").click(function() {
 			var inputFile = $("#InputFile").val();
 			var uploadedTime = $("#timestamp").val();
-			console.log(inputFile);
 			if(inputFile == ""){
-				$("#inputAlert").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Please choose excel files only</strong></div>");
+				console.log("no file selected");
+				$("#inputAlert").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Please select a file to upload</strong></div>");
+				return false;
 			} else{
 				$.ajax({
 					url : "upload",
 					type : "post",
 					data : "inputFile=" + inputFile + "&uploadedTime" + uploadedTime,
 					dataType : "file",
-					success : function(data) {
-						console.log(data.status);
-						if (data.status == "success") {
+					complete : function(data) {
+						var json = jQuery.parseJSON(JSON.stringify(data));
+				        console.log(json.statusText);
+						if (json.statusText == "OK") {
 							$("#inputAlert").html("<div class='alert alert-success' role='alert'><center><b> Successfully uploaded a file! </b></center></div>");
-							$("#rowsUpdate").html("<div class='alert alert-success' role='alert'><center><b>Number of rows updated: </b></center></div>");
-						}else{
-							$("#errorMessage").html("<div class='alert alert-danger' role='alert'><center><b>Error uploading file.</b></center></div>");
+							//$("#rowsUpdate").html("<div class='alert alert-success' role='alert'><center><b>Number of rows updated: </b></center></div>");
+						} else{
+							$("#inputAlert").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Please select only excel files</strong></div>");
 						}
 
 					}
 					
-				})
+				});
+				return false;
 			}
 			
 		})
@@ -78,8 +81,8 @@
 				<div class="form-group">
 				    <label for="InputFile">Please select a file to upload:</label>
                 <form action="upload" method="post" enctype="multipart/form-data">
-	                <input type="file" name="file" /> <br>
-					 <button type="submit" class="btn btn-default">
+	                <input type="file" id="InputFile" name="file" /> <br>
+					 <button type="submit" id="submit" class="btn btn-default">
 					  <span class="add">Upload</span>
 					</button>					
 	            </form>  
