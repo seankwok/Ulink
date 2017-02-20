@@ -1136,10 +1136,10 @@ public class DatabaseConnection {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
-			String sql = "SELECT LAST(dateTime) FROM uploadtime";
+			String sql = "SELECT dateTime FROM uploadtime order by ID DESC LIMIT 1;";
 			ResultSet rs = stmt.executeQuery(sql);
 
-			dateTime = rs.getString(2);
+			dateTime = rs.getString(1);
 
 			con.close();
 
@@ -1575,6 +1575,7 @@ public class DatabaseConnection {
 				msg = rs.getString(1);
 
 			}
+			con.close();
 
 		} catch (SQLException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -1621,6 +1622,7 @@ public class DatabaseConnection {
 				String roles = rs.getString(3);
 				userList.add(new User(email, password, roles));
 			}
+			con.close();
 
 		} catch (SQLException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
