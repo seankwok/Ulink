@@ -42,15 +42,15 @@
 	
 	<script type="text/javascript">
 	function showFields(){
-		return '<html><body>[clientName]<br>[clientEmail]<br>[screening]</body></html>'
+		var templateContent = '[clientName]<br>[clientEmail]<br>[screening]' ;
+		 CKEDITOR.instances.editor1.setData(templateContent);
+
 	}
 	
 	$(document).ready(function() {
+		showFields();
 		showDropdownList();	
 		 var myArray = sessionStorage.getItem('myArray');
-		    $(".deleteMe").on("click", function(){
-		        $(this).closest("li").remove(); 
-		     });
 	});
 	
 		function selectTemplate(clickedID){
