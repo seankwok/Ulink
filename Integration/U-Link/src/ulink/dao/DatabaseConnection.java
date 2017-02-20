@@ -165,7 +165,7 @@ public class DatabaseConnection {
 					referredByList.add(new RankingReferredBy(ranking, referredBy, count));
 
 				} else {
-					if (ranking < 3) {
+					if (ranking < 5) {
 						ranking++;
 						referredByList.add(new RankingReferredBy(ranking, referredBy, count));
 						previous = count;
@@ -215,7 +215,7 @@ public class DatabaseConnection {
 					doctorList.add(new RankingDoctor(ranking, doctor, clinic, specialty, count));
 
 				} else {
-					if (ranking < 5) {
+					if (ranking < 3) {
 						ranking++;
 						doctorList.add(new RankingDoctor(ranking, doctor, clinic, specialty, count));
 						previous = count;
@@ -1138,9 +1138,9 @@ public class DatabaseConnection {
 			Statement stmt = con.createStatement();
 			String sql = "SELECT dateTime FROM uploadtime order by ID DESC LIMIT 1;";
 			ResultSet rs = stmt.executeQuery(sql);
-
+			while(rs.next()){
 			dateTime = rs.getString(1);
-
+			}
 			con.close();
 
 		} catch (SQLException | ClassNotFoundException e) {

@@ -31,11 +31,10 @@ import ulink.logic.Utility;
 public class MainTest {
 
 	public static void main(String[] args) throws ParseException {
-		DatabaseConnection connection = new DatabaseConnection();
-		LocalDate myDate = LocalDate.parse(connection.retrieveLatestDate());
-		String date = myDate.minusMonths(1).toString();
-		Utility utility = new Utility();
-		String month = utility.getMonth(Integer.parseInt(date.substring(5, 7)));
-		System.out.print(month + " " + date.substring(0,4));
+DatabaseConnection connection = new DatabaseConnection();
+		
+		String datetime = connection.getDateTime();
+		
+		System.out.println(datetime);
 	}
 }

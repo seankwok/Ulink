@@ -48,10 +48,11 @@ public class CreateEmailTemplate extends HttpServlet {
 		response.setContentType("text/html; charset=utf-8");
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
-		java.net.URLDecoder.decode(((String[]) request.getParameterMap().get("msg"))[0], "UTF-8");
+		
 		String templateName = request.getParameter("templateName");
 		String msg = request.getParameter("msg");
-		System.out.println(msg);
+		//System.out.println(msg[0]);
+		//System.out.println(msg[2]);
 		DatabaseConnection connection = new DatabaseConnection();
 
 		ArrayList<String> templateList = connection.retrieveAllEmailTemplate();
