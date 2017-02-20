@@ -22,14 +22,14 @@ import ulink.dao.DatabaseConnection;
 /**
  * Servlet implementation class DisplayAllEmail
  */
-@WebServlet("/DisplayAllEmail")
-public class DisplayAllEmail extends HttpServlet {
+@WebServlet("/DisplayAllEmailDateSend")
+public class DisplayAllEmailDateSend extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DisplayAllEmail() {
+    public DisplayAllEmailDateSend() {
         super();
         // TODO Auto-generated constructor stub
     }
