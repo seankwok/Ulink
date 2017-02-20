@@ -71,13 +71,10 @@
 		}
 	    
 	   	function replaceSpace(msg){
-	   		var toReturn = "";
-	   		console.log("msg: " + msg);
-	   		var space = msg.replace(/&nbsp;/g," ");	
-	   		var percentage = space.replace("&#37;","%");
-	   		toReturn = percentage.replace("&amp;" ,"&");
-	   		console.log("return: " + toReturn );
-	   		return toReturn;
+	   		var uri = msg;
+	   	    var res = encodeURIComponent(msg);
+	   	    return res;
+
 	   	}   
 	    function save(){
 	    	var templateName = $('#template').val();
@@ -85,7 +82,7 @@
 	      		$('#errMsg').html("Template Name Required!");	 	    		  
 	    	}else{
 		    	var content = CKEDITOR.instances.editor1.getData();
-		    	content  = replaceSpace(content);		    	    	
+		    	content  = replaceSpace(content);
 		    	$.ajax({
 					type: 'post',
 					url: "CreateEmailTemplate",
@@ -146,6 +143,7 @@
 	    }
 	    function pressSend(){
 	    	var content = CKEDITOR.instances.editor1.getData();
+	    	content  = replaceSpace(content);
 	    	$.ajax({
 	    		url:'SendEmail',
     			type:'post',
