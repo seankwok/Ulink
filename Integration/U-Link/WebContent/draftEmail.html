@@ -72,7 +72,9 @@
 	    
 	   	function replaceSpace(msg){
 	   		var toReturn = "";
-	   		toReturn = msg.replace("&nbsp;", "<br />");
+	   		console.log("msg: " + msg);
+	   		toReturn = msg.replace(/&nbsp;/g,"<br/>");
+	   		console.log("return: " + toReturn );
 	   		return toReturn;
 	   	}   
 	    function save(){
