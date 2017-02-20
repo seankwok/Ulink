@@ -204,6 +204,7 @@
 		if (clients == ""){
 			$('#message').html("<div class='alert alert-danger' role='alert'><center><b> Please select at least 1 checkbox. </b></center></div>");
 		}else{
+			
 	    	$.ajax({
 				type: 'post',
 				url: "StoreSendEmail",
@@ -223,6 +224,7 @@
 		  var sendData = {
 		    "ID" : clickedID
 		   };
+		  
 		  var table = "<table id='table'  class='display' cellspacing='0' width='100%'>";
 		     var condition="";
 		     var screeningName="";
@@ -234,14 +236,17 @@
 		    dataType : "json",
 		    complete: function(data){
 		        var json = jQuery.parseJSON(data.responseText);
-		        console.log(json);
-		        table += "<thead><tr><th>Age</th><th>Client Name</th><th>Select   "+"<button type='button' class='btn btn-primary' id='ckbCheckAll'>Select all</button>" +"</th></tr></thead>";
+		        console.log(json[0].conditionName);
+		        console.log(json[0].screeningName);
+		        table += "<h3><b>Condition Name:</b>  " + json[0].conditionName +"<br>   <b>Screening Name: </b> "+ json[0].screeningName +"</h3>"
+		        
+		        table += "<thead><tr><th>Age</th><th>Client Name</th><th>Email</th><th>Email Sent Date</th><th>PIC</th>"
+		        	+ "<th>Select   "+"<button type='button' class='btn btn-primary' id='ckbCheckAll'>Select all</button>" +"</th></tr></thead>";
+		      
 		        $.each(json,function(key,value) {
-		          
-		         condition = value["conditionName"];
-		         screeningName =value["screening"];
+		        
 		         
-		          table += "<h2><b><center>" + screeningName + " for " + condition +"</h2></b></center>"
+		          
 		          table += "<tbody><tr><td>"
 		          + value["age"]
 		          + "</td>"
@@ -252,10 +257,10 @@
 		          + value["email"]
 		          + "</td>"
 		          + "<td>"
-		          + value["emailSentDate"]
+		          + value["date"]
 		          + "</td>"
 		          + "<td>"
-		          + value["followUpPIC"]
+		          + value["followUpPerson"]
 		          + "</td>"
 		          + "<td>"
 		          + "<input type='checkbox' class='checkBoxClass' name='selectClients' value=" + value["email"]+">"          
@@ -359,7 +364,7 @@
 	  <div class="row">
 	  <button type="button" class="btn btn-default"> <a href='addScreeningAdult.html'> Add new screening</a></button>
 	  <div class="container" align="right">
-	   		<input type="text" id="myInput" onkeyup="mySearch()" placeholder="Search Screenings..">
+	   		<input type="text" id="myInput" onkeyup="mySearch()" placeholder="Search">
 	   	</div>
 	   	</div>
 	</div>

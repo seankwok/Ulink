@@ -61,7 +61,9 @@
 			displayAll();
 			displayAppointment();
 			displayScreening();
+			console.log("before");
 			displayNotif();
+			console.log("after");
 			
 		});
 		
@@ -127,24 +129,24 @@
 		}
 		
 		function displayNotif() {
+			console.log("noti");
+
 			var notifTable = "<table  width='90%' border='1'>";
 			$.ajax({
-				url : "",
-				type : "get",
+				url : "DisplayAllEmailDateSent",
+				type : "post",
 				dataType : "json",
 				complete : function(data) {
 					var json = jQuery.parseJSON(data.responseText);
 					console.log(json);
 					notifTable += "<thead>"
-									+"<th class='tableHeader' width='35%'>Screenings Notifications Sent</th>"
-									+"<th class='tableHeader'width='35%'>Date & Time Sent</th>"
-									+"<th class='tableHeader'width='30%'>Client Response</th>"
+									+"<th class='tableHeader' width='50%'>Screenings Notifications Sent</th>"
+									+"<th class='tableHeader'width='50%'>Date & Time Sent</th>"
 								+"</thead>"
 				          $.each(json, function(key, value){
 				        	  notifTable   +="<tbody>"
 				          		
 				          		+"<tr>"
-					                +"<td class='appTd'>"+value[""]+"</td>"
 					                +"<td class='appTd'>"+value[""]+"</td>"
 					                +"<td class='appTd'>"+value[""]+"</td>"
 				                +"</tr>"
