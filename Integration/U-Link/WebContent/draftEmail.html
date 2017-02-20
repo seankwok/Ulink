@@ -41,6 +41,7 @@
 	
 	
 	<script type="text/javascript">
+	
 	function showFields(){
 		var templateContent = '[clientName]<br>[clientEmail]<br>[screening]' ;
 		 CKEDITOR.instances.editor1.setData(templateContent);
@@ -64,30 +65,44 @@
 				complete : function(data) {
 					var templateContent = data.responseText;
 					 CKEDITOR.instances.editor1.setData(templateContent);
-
 				}
 			});
 	
 		}
 	    
-	    	    
+	   	function replaceSpace(msg){
+	   		var toReturn = "";
+	   		toReturn = msg.replace("&nbsp;", "<br />");
+	   		return toReturn;
+	   	}   
 	    function save(){
 	    	var templateName = $('#template').val();
 	    	if (templateName == ""){
 	      		$('#errMsg').html("Template Name Required!");	 	    		  
 	    	}else{
 		    	var content = CKEDITOR.instances.editor1.getData();
+		    	content  = replaceSpace(content);		    	    	
 		    	$.ajax({
 					type: 'post',
 					url: "CreateEmailTemplate",
 					data: 'templateName=' + templateName
 						+ '&'
 						+ 'msg=' + content,
-					complete: function(data){	
-						showDropdownList();	
+					complete: function(data){
+						var json = jQuery.parseJSON(JSON.stringify(data));
+						var status = json.responseText;
+						var err = "";
+						if(status == "fail"){
+							$('#errMsg').html( "Template Name already exist!");
+						}else{
+							showDropdownList();	
+							$('#exampleModal').modal('hide');
+						}
+						
 					}
 				});
-		    	$('#exampleModal').modal('hide');
+		    	
+		    	
 		    	$('#errMsg').html("");
 	    	}
 	    }	
