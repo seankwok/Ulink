@@ -27,13 +27,16 @@
     </script> 
 
 	<style>
-			.errorMsg {
-			   font-size: 15px; 
-			   text-align: center;
-			}		
-			
-	
+		.errorMsg {
+		   font-size: 15px; 
+		   text-align: center;
+		}		
+		
+		.dropdownSide {
+			  display: inline-block;
+			  margin-right:20px;
 
+		}			
 	</style>
 	
 	
@@ -45,6 +48,9 @@
 	$(document).ready(function() {
 		showDropdownList();	
 		 var myArray = sessionStorage.getItem('myArray');
+		    $(".deleteMe").on("click", function(){
+		        $(this).closest("li").remove(); 
+		     });
 	});
 	
 		function selectTemplate(clickedID){
@@ -58,6 +64,7 @@
 				complete : function(data) {
 					var templateContent = data.responseText;
 					 CKEDITOR.instances.editor1.setData(templateContent);
+
 				}
 			});
 	
@@ -71,7 +78,6 @@
 	    	}else{
 
 		    	var content = CKEDITOR.instances.editor1.getData();
-		    	console.log("test: " + content);
 		    	$.ajax({
 					type: 'post',
 					url: "CreateEmailTemplate",
@@ -96,9 +102,8 @@
 					    	+ "<a id='drop1' href='#' role='button' class='btn btn-link dropdown-toggle' data-toggle='dropdown'>Select Template<b class='caret'></b></a>"
 					    	+ " <ul class='dropdown-menu' role='menu' aria-labelledby='dLabel'>"
 						var json = jQuery.parseJSON(data.responseText);
-					console.log(json);
 						$.each(json, function(key, value){
-							htmlDD += "<li><a tabindex='-1' href='#'onClick=selectTemplate(this.id) id='"+value+"'>"+value+"</a></li>"
+							htmlDD += "<li><div class='dropdownSide'><a href='#' onClick=selectTemplate(this.id) id='"+value+"'>"+value+"</a></div><div class='dropdownSide'> <a href='#' onClick=deleteEmail(this.id) id='"+value+"'> Delete </a> </div></li>"
 						});
 						 htmlDD += "</ul></div>"
 						 $('#templateDropdown').html(htmlDD);
@@ -106,9 +111,22 @@
 	    	});	
 	    }
 
+	    function deleteEmail(clickedID){
+			var sendData = {
+					"templateName" : clickedID
+				};
+	    	$.ajax({	    	
+		    	url : "DeleteEmailTemplate",
+				type : "post",
+				data : sendData,
+				complete : function(data) {
+					showDropdownList();	
+				}
+			});
+	    	
+	    }
 	    function pressSend(){
 	    	var content = CKEDITOR.instances.editor1.getData();
-	    	console.log(content);
 	    	$.ajax({
 	    		url:'SendEmail',
     			type:'post',
