@@ -51,17 +51,13 @@ public class UploadServlet extends HttpServlet {
 	private File tmpDir;
 	private static final String DESTINATION_DIR_PATH = "/MySavedFiles";
 	private File destinationDir;
-	//DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-	//Date date = new Date();
-	
+	// DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+	// Date date = new Date();
+
 	Calendar calendar = Calendar.getInstance();
-	//OR Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+	// OR Calendar.getInstance(TimeZone.getTimeZone("GMT"));
 
-	
-
-	
-	
-	//System.out.println(d.toString());
+	// System.out.println(d.toString());
 
 	public UploadServlet() {
 		super();
@@ -97,7 +93,12 @@ public class UploadServlet extends HttpServlet {
 		String uploadedTime = request.getParameter("uploadedTime");
 
 		// set content type and header attributes
-		response.setContentType("text/html");
+		// response.setContentType("UTF-8");
+		// response.setHeader("Content-disposition",
+		// "attachment;filename=myExcel.xls");
+		// response.setContentType("application/vnd.ms-excel").
+		// response.setContentType("APPLICATION/OCTET-STREAM");
+		// System.out.println(response.getContentType());
 		response.setHeader("Cache-control", "no-cache, no-store");
 		response.setHeader("Pragma", "no-cache");
 		response.setHeader("Expires", "-1");
@@ -112,7 +113,7 @@ public class UploadServlet extends HttpServlet {
 		fileItemFactory.setRepository(tmpDir);
 
 		ServletFileUpload uploadHandler = new ServletFileUpload(fileItemFactory);
-		//JsonObject myObj = new JsonObject();
+		// JsonObject myObj = new JsonObject();
 
 		String fileName = null;
 		String fullName = null;
@@ -158,13 +159,12 @@ public class UploadServlet extends HttpServlet {
 				calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY));
 				Date d = calendar.getTime();
 				connection.addDateTime(d.toString());
-				//PrintWriter out = response.getWriter();
+				// PrintWriter out = response.getWriter();
 
+				out.write("" + count);
 
-				out.write(count);
-			
-				
-				request.getRequestDispatcher("./upload.html").forward(request, response);
+				// request.getRequestDispatcher("./upload.html").forward(request,
+				// response);
 				out.flush();
 				return;
 
@@ -178,12 +178,21 @@ public class UploadServlet extends HttpServlet {
 				// out.write(count);
 				// out.flush();
 				// response.sendRedirect("./upload.html");
-				
-	out.write(count);
-			
-				
-				request.getRequestDispatcher("./upload.html").forward(request, response);
+
+				out.write("" + count);
+
+				// request.getRequestDispatcher("./upload.html").forward(request,
+				// response);
 				out.flush();
+				return;
+			} else {
+
+				// request.getRequestDispatcher("./upload.html").forward(request,
+				// response);
+				out.write("Not excel file");
+				out.flush();
+
+				// response.sendRedirect("./upload.html");
 				return;
 			}
 
@@ -204,9 +213,6 @@ public class UploadServlet extends HttpServlet {
 			return;
 		}
 
-		request.getRequestDispatcher("./upload.html").forward(request, response);
-		// response.sendRedirect("./upload.html");
-		return;
 	}
 
 	private int test(File file) throws FileNotFoundException, IOException {
@@ -294,8 +300,6 @@ public class UploadServlet extends HttpServlet {
 			String createdTime = "";
 			String phone = "";
 
-			
-			
 			ID++;
 
 			HSSFRow myRow = (HSSFRow) rowIter.next();
@@ -316,7 +320,7 @@ public class UploadServlet extends HttpServlet {
 
 							accountIDRow = temp.getColumnIndex();
 							accountID = temp.toString();
-						
+
 						} else if (temp.toString().equals("Client Name") || temp.getColumnIndex() == clientNameRow) {
 							clientNameRow = temp.getColumnIndex();
 							clientName = temp.toString();
@@ -440,22 +444,20 @@ public class UploadServlet extends HttpServlet {
 				}
 				// System.out.print(clientName);
 				if (!accountID.equals("") && !dateOfBirth.equals("")) {
-					clientList.add(new Client(ID, accountID, clientOwner, clientName, clientType, company,
-							nationality, gender, dateOfBirth, email, medical, mainDiagnosis, referredBy, PIC,
-							appointment, doctor, specialty, clinic, otherDoctor, followUpPerson, followUpPIC,
-							hospitalAdmitted, log, claim, visa, visaRequestBy, visaType, visaType2,
-							utility.getAge(dateOfBirth), billingCity, billingCode, billingCountry, billingState,
-							billingStreet, createdTime, phone));
+					clientList.add(new Client(ID, accountID, clientOwner, clientName, clientType, company, nationality,
+							gender, dateOfBirth, email, medical, mainDiagnosis, referredBy, PIC, appointment, doctor,
+							specialty, clinic, otherDoctor, followUpPerson, followUpPIC, hospitalAdmitted, log, claim,
+							visa, visaRequestBy, visaType, visaType2, utility.getAge(dateOfBirth), billingCity,
+							billingCode, billingCountry, billingState, billingStreet, createdTime, phone));
 					// System.out.println(clientList.get(clientList.size() -
 					// 1).getClientName());
 					count++;
-				}else if (!accountID.equals("")){
-					clientList.add(new Client(ID, accountID, clientOwner, clientName, clientType, company,
-							nationality, gender, dateOfBirth, email, medical, mainDiagnosis, referredBy, PIC,
-							appointment, doctor, specialty, clinic, otherDoctor, followUpPerson, followUpPIC,
-							hospitalAdmitted, log, claim, visa, visaRequestBy, visaType, visaType2,
-							-1, billingCity, billingCode, billingCountry, billingState,
-							billingStreet, createdTime, phone));
+				} else if (!accountID.equals("")) {
+					clientList.add(new Client(ID, accountID, clientOwner, clientName, clientType, company, nationality,
+							gender, dateOfBirth, email, medical, mainDiagnosis, referredBy, PIC, appointment, doctor,
+							specialty, clinic, otherDoctor, followUpPerson, followUpPIC, hospitalAdmitted, log, claim,
+							visa, visaRequestBy, visaType, visaType2, -1, billingCity, billingCode, billingCountry,
+							billingState, billingStreet, createdTime, phone));
 					// System.out.println(clientList.get(clientList.size() -
 					// 1).getClientName());
 					count++;
@@ -524,7 +526,7 @@ public class UploadServlet extends HttpServlet {
 			int billingStreetRow = 0;
 			int createdTimeRow = 0;
 			int phoneRow = 0;
-			
+
 			while (rowIter.hasNext()) {
 				String accountID = "";
 				String clientOwner = "";
@@ -564,7 +566,7 @@ public class UploadServlet extends HttpServlet {
 				ID++;
 				XSSFRow myRow = (XSSFRow) rowIter.next();
 				int numberOfRow = myRow.getPhysicalNumberOfCells();
-				
+
 				Iterator<Cell> cellIter = myRow.cellIterator();
 				if (numberOfRow == 35) {
 					for (int i = 0; i < numberOfRow; i++) {
@@ -572,10 +574,10 @@ public class UploadServlet extends HttpServlet {
 						XSSFCell temp = (XSSFCell) cellIter.next();
 						if (!temp.toString().equals("")) {
 							if (temp.toString().equals("ACCOUNTID") || temp.getColumnIndex() == accountIDRow) {
-								
+
 								accountIDRow = temp.getColumnIndex();
 								accountID = temp.toString();
-								//System.out.println(accountID);
+								// System.out.println(accountID);
 							} else if (temp.toString().equals("Client Name")
 									|| temp.getColumnIndex() == clientNameRow) {
 								clientNameRow = temp.getColumnIndex();
@@ -633,7 +635,6 @@ public class UploadServlet extends HttpServlet {
 									dateOfBirth = temp.toString();
 								}
 
-								
 							} else if (temp.toString().equals("Doctor") || temp.getColumnIndex() == doctorRow) {
 								doctorRow = temp.getColumnIndex();
 								doctor = temp.toString();
@@ -648,7 +649,7 @@ public class UploadServlet extends HttpServlet {
 									|| temp.getColumnIndex() == followUpPICRow) {
 								followUpPICRow = temp.getColumnIndex();
 								followUpPIC = temp.toString();
-								
+
 							} else if (temp.toString().equals("Gender") || temp.getColumnIndex() == genderRow) {
 								genderRow = temp.getColumnIndex();
 								gender = temp.toString();
@@ -667,7 +668,7 @@ public class UploadServlet extends HttpServlet {
 							} else if (temp.toString().equals("Nationality")
 									|| temp.getColumnIndex() == nationalityRow) {
 								nationalityRow = temp.getColumnIndex();
-								nationality = temp.toString();								
+								nationality = temp.toString();
 							} else if (temp.toString().equals("Other doctor")
 									|| temp.getColumnIndex() == otherDoctorRow) {
 								otherDoctorRow = temp.getColumnIndex();
@@ -722,13 +723,12 @@ public class UploadServlet extends HttpServlet {
 						// System.out.println(clientList.get(clientList.size() -
 						// 1).getClientName());
 						count++;
-					}else if (!accountID.equals("")){
+					} else if (!accountID.equals("")) {
 						clientList.add(new Client(ID, accountID, clientOwner, clientName, clientType, company,
 								nationality, gender, dateOfBirth, email, medical, mainDiagnosis, referredBy, PIC,
 								appointment, doctor, specialty, clinic, otherDoctor, followUpPerson, followUpPIC,
-								hospitalAdmitted, log, claim, visa, visaRequestBy, visaType, visaType2,
-								-1, billingCity, billingCode, billingCountry, billingState,
-								billingStreet, createdTime, phone));
+								hospitalAdmitted, log, claim, visa, visaRequestBy, visaType, visaType2, -1, billingCity,
+								billingCode, billingCountry, billingState, billingStreet, createdTime, phone));
 						// System.out.println(clientList.get(clientList.size() -
 						// 1).getClientName());
 						count++;
@@ -739,7 +739,7 @@ public class UploadServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		//System.out.print(clientList.size());
+		// System.out.print(clientList.size());
 		connection.createClient(clientList);
 		return count;
 
