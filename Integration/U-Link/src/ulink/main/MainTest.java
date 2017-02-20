@@ -38,7 +38,11 @@ public class MainTest {
          try {
 			Date date1 = sdf.parse(startDate);
 			Date date2 = sdf.parse(endDate);
-			System.out.println(date1.before(date2));
+			//System.out.println(date1.before(date2));
+			
+			String abc = "QWEQWEWQ&nbsp;qwewqe";
+			
+			System.out.println(abc.replaceAll("&nbsp;", " TEST "));
 			
 			//Gson gson = new Gson();
 			//PrintWriter out = response.getWriter();

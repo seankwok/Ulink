@@ -71,7 +71,7 @@ public class SendEmail extends HttpServlet {
 		Condition condition = connection.retrieveAllConditionByID(ID);
 		String subject = request.getParameter("subject");
 		String msg = request.getParameter("msg");
-
+		msg = msg.replaceAll("&nbsp;", "<br>");
 		String temp = "";
 		
 		email = email[0].split(",");
