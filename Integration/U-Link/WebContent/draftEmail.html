@@ -47,8 +47,6 @@
 		 var myArray = sessionStorage.getItem('myArray');
 	});
 	
-
-
 		function selectTemplate(clickedID){
 			var sendData = {
 					"templateName" : clickedID
@@ -58,11 +56,8 @@
 				type : "post",
 				data : sendData,
 				complete : function(data) {
-					var frameContent = data.responseText;
-			    	var doc = document.getElementById('iframe').contentWindow.document;
-			    	doc.open();
-			    	doc.write(frameContent);
-			    	doc.close();
+					var templateContent = data.responseText;
+					 CKEDITOR.instances.editor1.setData(templateContent);
 				}
 			});
 	
@@ -94,11 +89,11 @@
 	    
 	    function showDropdownList(){
 	    	$.ajax({			    	
-					type: 'post',
-					url: "DisplayAllEmail",
+					type: 'get',
+					url: "DisplayAllEmailTemplate",
 					complete: function(data){
 						var htmlDD = "<div class='dropdown'> "
-					    	+ "<a id='drop1' href='#' role='button' class='btn btn-warning dropdown-toggle' data-toggle='dropdown'>Select Template<b class='caret'></b></a>"
+					    	+ "<a id='drop1' href='#' role='button' class='btn btn-link dropdown-toggle' data-toggle='dropdown'>Select Template<b class='caret'></b></a>"
 					    	+ " <ul class='dropdown-menu' role='menu' aria-labelledby='dLabel'>"
 						var json = jQuery.parseJSON(data.responseText);
 					console.log(json);
@@ -144,8 +139,8 @@
 	
 	<table >
 		<tr> 
-			<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target='#exampleModal' >Save as Template</button></td>
-			<td><div id='templateDropdown'></div></td>
+			<td><button type="button" class="btn btn-link" data-toggle="modal" data-target='#exampleModal' >Save as Template</button></td>
+			<td><div id='templateDropdown' ></div></td>
 		</tr>
 	</table>
 	
