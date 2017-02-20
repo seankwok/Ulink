@@ -8,6 +8,7 @@ public class Condition {
 	private String screening;
 	private String type;
 
+	
 
 	public Condition(int ID, String conditionName, String years, int ageRequired, String screening, String type) {
 		super();

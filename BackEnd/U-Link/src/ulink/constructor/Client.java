@@ -40,6 +40,7 @@ public class Client {
 	
 	
 	
+	
 	public Client(int ID, String accountID, String clientOwner, String clientName, String clientType, String company,
 			String nationality, String gender, String dateOfBirth, String email, String medical, String mainDiagnosis,
 			String referredBy, String PIC, String appointment, String doctor, String specialty, String clinic,

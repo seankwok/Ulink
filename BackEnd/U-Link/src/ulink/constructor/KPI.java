@@ -5,6 +5,7 @@ public class KPI {
 	private double inPatient;
 	private double outPatient;
 		
+	
 	public KPI(String date, double inPatient, double outPatient) {
 		super();
 		this.date = date;

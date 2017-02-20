@@ -20,6 +20,7 @@ public class TopK {
 
 	DatabaseConnection connection = new DatabaseConnection();
 
+	
 	public ArrayList<AgeAndGender> getAgeGenderReport() {
 		ArrayList<AgeAndGender> ageGenderReport = new ArrayList<>();
 		ArrayList<Client> clientList = connection.retrieveAllClientList();

@@ -6,6 +6,8 @@ public class AgeAndGender {
 	private double female;
 	private double total;
 	
+	
+	
 	public AgeAndGender(String age, double male, double female, double total) {
 		super();
 		Age = age;

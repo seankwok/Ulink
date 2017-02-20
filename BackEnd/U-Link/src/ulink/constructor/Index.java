@@ -6,6 +6,7 @@ public class Index {
 	private String email;
 
 	
+	
 	public Index(String address, String phone, String email) {
 		super();
 		this.address = address;

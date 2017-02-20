@@ -7,6 +7,7 @@ public class RankingDoctor {
 	private String speciality;
 	private int numAppointment;
 	private int ranking; 
+	
 	public RankingDoctor(int ranking, String name, String clinic, String speciality, int numAppointment) {
 		super();
 		this.ranking = ranking;

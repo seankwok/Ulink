@@ -7,6 +7,7 @@ public class User {
 	private String roles;
 	
 	
+	
 	public User(String email, String password, String roles) {
 		super();
 		//this.username = username;

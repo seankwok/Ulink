@@ -1,29 +1,28 @@
-package ulink.servlet.dashboard;
+package ulink.servlet.accountManagement;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.LocalDate;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import ulink.dao.DatabaseConnection;
-import ulink.logic.Utility;
+import ulink.constructor.User;
 
 /**
- * Servlet implementation class DisplayLastMonth
+ * Servlet implementation class DisplayLoginUser
  */
-@WebServlet("/DisplayLastMonth")
-public class DisplayLastMonth extends HttpServlet {
+@WebServlet("/DisplayLoginUser")
+public class DisplayLoginUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DisplayLastMonth() {
+    public DisplayLoginUser() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,17 +32,11 @@ public class DisplayLastMonth extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		DatabaseConnection connection = new DatabaseConnection();
-		
-		LocalDate myDate =LocalDate.parse(connection.retrieveLatestDate());
-		String date = myDate.minusMonths(1).toString();
-		Utility utility = new Utility();
-		String month = utility.getMonth(Integer.parseInt(date.substring(5, 7)));
-		
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("userDetails");
 		
 		PrintWriter out = response.getWriter();
-		//System.out.print(month);
-		out.write(month + "-" + date.substring(0,4));
+		out.write(user.getEmail());
 		out.flush();
 		return;
 	}
