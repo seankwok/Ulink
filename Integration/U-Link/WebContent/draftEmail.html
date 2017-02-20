@@ -15,6 +15,9 @@
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="js/jquery-1.12.0.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+
+<script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
+   
     <script> 
 	    $(function(){
 	      $("#includedContent").load("navBar.html"); 
@@ -42,7 +45,6 @@
 	$(document).ready(function() {
 		showDropdownList();	
 		 var myArray = sessionStorage.getItem('myArray');
-		 console.log("here:"+ myArray);
 	});
 	
 
@@ -72,8 +74,9 @@
 	    	if (templateName == ""){
 	      		$('#errMsg').html("Template Name Required!");	 	    		  
 	    	}else{
-		    	var doc = document.getElementById('iframe').contentWindow.document; 
-		    	var content = doc.body.innerHTML;
+
+		    	var content = CKEDITOR.instances.editor1.getData();
+		    	console.log("test: " + content);
 		    	$.ajax({
 					type: 'post',
 					url: "CreateEmailTemplate",
@@ -98,7 +101,7 @@
 					    	+ "<a id='drop1' href='#' role='button' class='btn btn-warning dropdown-toggle' data-toggle='dropdown'>Select Template<b class='caret'></b></a>"
 					    	+ " <ul class='dropdown-menu' role='menu' aria-labelledby='dLabel'>"
 						var json = jQuery.parseJSON(data.responseText);
-					
+					console.log(json);
 						$.each(json, function(key, value){
 							htmlDD += "<li><a tabindex='-1' href='#'onClick=selectTemplate(this.id) id='"+value+"'>"+value+"</a></li>"
 						});
@@ -107,13 +110,10 @@
 					}	    		  
 	    	});	
 	    }
-	    
 
-		
 	    function pressSend(){
-	    	var doc = document.getElementById('iframe').contentWindow.document; 
-	    	var content = doc.body.innerHTML;
-	    	
+	    	var content = CKEDITOR.instances.editor1.getData();
+	    	console.log(content);
 	    	$.ajax({
 	    		url:'SendEmail',
     			type:'post',
@@ -122,67 +122,47 @@
 				+ 'msg=' + content,
 				complete:function(data){
 					$('#message').html("<div class='alert alert-success' role='alert'><center><b> Email Sent! </b></center></div>");
-					console.log(content);
 				}
 		
 	    	});
 
 	    }
+	    
+
 	</script>
 </head>
 
 
 		
-<body onload="enableEditMode();">
-		<div id="includedContent"></div>
+<body>
+   
+	<div id="includedContent"></div>
+	
 	<div class="page-header">
 		<h1 align="center">New Email</h1>
 	</div>
-	<div align="left" >
-		<div class='container'>
-			<button onclick="execCmd('bold');"><b>B</b><i class="fa fa-bold"></i></button>
-			<button onclick="execCmd('italic');"><i>I</i><i class="fa fa-italic"></i></button>
-			<button onclick="execCmd('underline');">U<i class="fa fa-underline"></i></button>
-			<button onclick="execCmd('justifyLeft');"> Left<i class="fa fa-align-left"></i></button>
-			<button onclick="execCmd('justifyCenter');"> Center<i class="fa fa-align-center"></i></button>
-			<button onclick="execCmd('justifyRight');"> Right<i class="fa fa-align-right"></i></button>
-			<button onclick="execCmd('justifyFull');"> Full<i class="fa fa-align-justify"></i></button>
-			<button onclick="execCmd('undo');">Undo<i class="fa fa-undo"></i></button>
-			<button onclick="execCmd('redo');">Redo<i class="fa fa-repeat"></i></button>
-			<button onclick="execCmd('insertUnorderedList');">Bullets<i class="fa fa-list-ul"></i></button>
-			<button onclick="execCmd('insertOrderedList');">Number List<i class="fa fa-list-ol"></i></button>
-			<select onchange="execCommandWithArg('fontName', this.value);">
-				<option value="Arial">Arial</option>
-				<option value="Comic Sans MS">Comic Sans MS</option>
-				<option value="Courier">Courier</option>
-				<option value="Georgia">Georgia</option>
-				<option value="Tahoma">Tahoma</option>
-				<option value="Times New Roman">Times New Roman</option>
-				<option value="Verdana">Verdana</option>
-			</select>
-			<select onchange="execCommandWithArg('fontSize', this.value);">
-				<option value="1">9</option>
-				<option value="2">10</option>
-				<option value="3">11</option>
-				<option value="4" selected="selected">12</option>
-				<option value="5">13</option>
-				<option value="6">14</option>
-				<option value="8">15</option>
-				<option value="9">16</option>
-				<option value="10">17</option>
-				<option value="11">18</option>
-			</select>
-			Font Color: <input type="color" onchange="execCommandWithArg('foreColor', this.value);">
-			<button onclick="execCmd('selectAll');">Select All</button>	
-			
-			<table >
-				<tr> 
-					<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target='#exampleModal' >Save as Template</button></td>
-					<td><div id='templateDropdown'></div></td>
-				</tr>
-			</table>
-			
-			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	
+	<table >
+		<tr> 
+			<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target='#exampleModal' >Save as Template</button></td>
+			<td><div id='templateDropdown'></div></td>
+		</tr>
+	</table>
+	
+	 <textarea id="editor1"></textarea>
+	 
+     <script>
+         CKEDITOR.replace( 'editor1' );
+     </script>
+
+
+		<div class='container' >
+			<br><div align='center' onclick='pressSend()'><button>Send</button></div>
+		</div>	
+
+
+		<div class="container" id="message"></div>
+					<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
 			      <div class="modal-header">
@@ -205,36 +185,5 @@
 			    </div>
 			  </div>
 			</div>	
-		</div>
-		
-	</div>				
-		
-		<br>
-		<div class='container' >
-			<iframe src="javascript:parent.showFields()" id="iframe" name="richTextField" style="width: 1000px; height: 250px;"></iframe>
-			<br><div align='center' onclick='pressSend()'><button>Send to ...</button></div>
-		</div>	
-
-		<script type="text/javascript">
-
-			var showingSourceCode = false;
-			var isInEditMode = true;
-
-			function enableEditMode () {
-				richTextField.document.designMode = 'On';
-			}
-
-			function execCmd (command) {
-				richTextField.document.execCommand(command, false, null);
-			}
-
-			function execCommandWithArg (command, arg) {
-				richTextField.document.execCommand(command, false, arg);
-			}
-
-
-		</script>
-			<div class="container" id="message"></div>
-		
 	</body>
 </html>
