@@ -42,8 +42,8 @@ public class DisplayLastMonth extends HttpServlet {
 		
 		
 		PrintWriter out = response.getWriter();
-		System.out.print(month);
-		out.write(month);
+		//System.out.print(month);
+		out.write(month + "-" + date.substring(0,4));
 		out.flush();
 		return;
 	}

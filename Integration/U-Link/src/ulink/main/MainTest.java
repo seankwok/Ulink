@@ -31,26 +31,11 @@ import ulink.logic.Utility;
 public class MainTest {
 
 	public static void main(String[] args) throws ParseException {
-	//	DatabaseConnection connection = new DatabaseConnection();
-		String startDate = "2017-01-01";
-		String endDate = "2017-02-02";
-	     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-         try {
-			Date date1 = sdf.parse(startDate);
-			Date date2 = sdf.parse(endDate);
-			//System.out.println(date1.before(date2));
-			
-			String abc = "QWEQWEWQ&nbsp;qwewqe";
-			
-			System.out.println(abc.replaceAll("&nbsp;", " TEST "));
-			
-			//Gson gson = new Gson();
-			//PrintWriter out = response.getWriter();
-			//String arrayListToJson = gson.toJson(date1.after(date2));
-		
-		} catch (Exception e){
-			
-		}
-
-}
+		DatabaseConnection connection = new DatabaseConnection();
+		LocalDate myDate = LocalDate.parse(connection.retrieveLatestDate());
+		String date = myDate.minusMonths(1).toString();
+		Utility utility = new Utility();
+		String month = utility.getMonth(Integer.parseInt(date.substring(5, 7)));
+		System.out.print(month + " " + date.substring(0,4));
+	}
 }
