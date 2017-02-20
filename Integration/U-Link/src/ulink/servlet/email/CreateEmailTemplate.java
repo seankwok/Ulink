@@ -2,6 +2,7 @@ package ulink.servlet.email;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,37 +18,60 @@ import ulink.dao.DatabaseConnection;
 @WebServlet("/CreateEmailTemplate")
 public class CreateEmailTemplate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public CreateEmailTemplate() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-	
-		
+	public CreateEmailTemplate() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+		response.setContentType("text/html; charset=utf-8");
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		java.net.URLDecoder.decode(((String[]) request.getParameterMap().get("msg"))[0], "UTF-8");
 		String templateName = request.getParameter("templateName");
 		String msg = request.getParameter("msg");
+		System.out.println(msg);
 		DatabaseConnection connection = new DatabaseConnection();
-		connection.createEmailTemplate(templateName, msg);
+
+		ArrayList<String> templateList = connection.retrieveAllEmailTemplate();
+		boolean check = true;
+		for (int i = 0; i < templateList.size(); i++) {
+			String temp = templateList.get(i);
+			if (temp.equals(templateName)) {
+				check = false;
+			}
+		}
 		
+		String status = "";
+		if (check) {
+			connection.createEmailTemplate(templateName, msg);
+			status = "success";
+		} else {
+			status = "fail";
+		}
 		PrintWriter out = response.getWriter();
-		out.write("success");
+		out.write(status);
 		out.flush();
 		return;
 	}

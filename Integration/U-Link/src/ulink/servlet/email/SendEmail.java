@@ -55,6 +55,7 @@ public class SendEmail extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		
+		
 		doGet(request, response);
 		response.setContentType("text/html; charset=utf-8");
 		request.setCharacterEncoding("UTF-8");
@@ -65,12 +66,14 @@ public class SendEmail extends HttpServlet {
 		
 		// System.out.println(request.getContentType());
 		
+		String msg = request.getParameter("msg");
+		System.out.println(msg);
 		String[] email = (String[]) session.getAttribute("emailList");
 		int ID = (int) session.getAttribute("ID");
 		DatabaseConnection connection = new DatabaseConnection();
 		Condition condition = connection.retrieveAllConditionByID(ID);
 		String subject = request.getParameter("subject");
-		String msg = request.getParameter("msg");
+		
 		msg = msg.replaceAll("&nbsp;", "<br>");
 		String temp = "";
 		

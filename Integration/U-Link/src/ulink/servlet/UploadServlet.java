@@ -90,7 +90,7 @@ public class UploadServlet extends HttpServlet {
 
 		// PrintWriter to send the JSON response back
 		PrintWriter out = response.getWriter();
-		String uploadedTime = request.getParameter("uploadedTime");
+		//String uploadedTime = request.getParameter("uploadedTime");
 
 		// set content type and header attributes
 		// response.setContentType("UTF-8");
