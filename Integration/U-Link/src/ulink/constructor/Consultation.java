@@ -7,6 +7,7 @@ public class Consultation {
 	private String clinicName;
 	private String passportNumber;
 	
+	
 	public Consultation(int iD, String appointmentDate, String doctorName, String clinicName, String passportNumber) {
 		super();
 		ID = iD;

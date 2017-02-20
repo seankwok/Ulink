@@ -1483,6 +1483,38 @@ public class DatabaseConnection {
 	}
 
 	
+	public String retrieveLatestDateSend(String clientName) {
+		//EmailSend emailSend = null;
+		Connection con;
+		String date = "";
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
+
+			Statement stmt = con.createStatement();
+			String sql = "SELECT date FROM emailsend where clientName='" + clientName + "' order by ID DESC LIMIT 1";
+
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			while (rs.next()) {
+				// int Id = rs.getInt(1);
+				//String clientName = rs.getString(2);
+				 date = rs.getString(1);
+				
+
+			}
+
+			con.close();
+
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return date;
+	}
+	
 	public void createEmailDate(String clientName, String screening, String date) {
 		Connection con;
 		try {

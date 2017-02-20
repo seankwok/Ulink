@@ -6,6 +6,7 @@ public class RankingDoctorSpecialty {
 	
 	
 	
+	
 	public RankingDoctorSpecialty(String specialty, int engagement) {
 		super();
 		Specialty = specialty;

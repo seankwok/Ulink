@@ -6,6 +6,7 @@ public class Timeline {
 	private String passportNumber;
 	private int yearToSend;
 	
+	
 	public Timeline(int iD, String conditionName, String passportNumber, int yearToSend) {
 		super();
 		ID = iD;

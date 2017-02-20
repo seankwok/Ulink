@@ -7,6 +7,16 @@ public class ClientByIllness {
 	private String gender;
 	private String screeningName;
 	private String conditionName;
+	private String date;
+	private String followUpPerson;
+	
+	public String getDate(){
+		return date;
+	}
+	
+	public String getFollowUpPerson(){
+		return followUpPerson;
+	}
 	
 	public String getName() {
 		return name;
@@ -26,7 +36,8 @@ public class ClientByIllness {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public ClientByIllness(String name, int age, String email, String gender, String screeningName, String conditionName) {
+	
+	public ClientByIllness(String name, int age, String email, String gender, String screeningName, String conditionName, String date, String followUpPerson) {
 		super(); 
 		this.name = name;
 		this.age = age;
@@ -34,6 +45,8 @@ public class ClientByIllness {
 		this.gender = gender;
 		this.screeningName = screeningName;
 		this.conditionName= conditionName;
+		this.date = date;
+		this.followUpPerson = followUpPerson;
 	}
 	public String getGender() {
 		return gender;

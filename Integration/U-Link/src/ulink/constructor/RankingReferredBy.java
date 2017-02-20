@@ -5,6 +5,7 @@ public class RankingReferredBy {
 	private int count;
 	private int ranking; 
 	
+	
 	public RankingReferredBy(int ranking, String name, int count) {
 		super();
 		this.ranking = ranking;
