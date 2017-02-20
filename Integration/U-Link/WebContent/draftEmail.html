@@ -76,7 +76,6 @@
 	    	if (templateName == ""){
 	      		$('#errMsg').html("Template Name Required!");	 	    		  
 	    	}else{
-
 		    	var content = CKEDITOR.instances.editor1.getData();
 		    	$.ajax({
 					type: 'post',
@@ -84,7 +83,8 @@
 					data: 'templateName=' + templateName
 						+ '&'
 						+ 'msg=' + content,
-					complete: function(data){		
+					complete: function(data){	
+						showDropdownList();	
 					}
 				});
 		    	$('#exampleModal').modal('hide');
