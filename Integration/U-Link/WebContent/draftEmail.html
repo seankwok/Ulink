@@ -73,7 +73,9 @@
 	   	function replaceSpace(msg){
 	   		var toReturn = "";
 	   		console.log("msg: " + msg);
-	   		toReturn = msg.replace(/&nbsp;/g," ");
+	   		var space = msg.replace(/&nbsp;/g," ");	
+	   		var percentage = space.replace("&#37;","%");
+	   		toReturn = percentage.replace("&amp;" ,"&");
 	   		console.log("return: " + toReturn );
 	   		return toReturn;
 	   	}   
