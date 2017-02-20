@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -48,7 +49,8 @@ public class DisplayAllEmailDateSent extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-		String clientName = request.getParameter("clientName");
+		HttpSession session = request.getSession();
+		String clientName =  (String) session.getAttribute("clientName");
 		DatabaseConnection connection = new DatabaseConnection();
 		ArrayList<EmailSend> emailSendList = connection.retrieveEmailSendDetails(clientName);
 
