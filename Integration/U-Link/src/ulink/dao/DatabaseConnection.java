@@ -15,7 +15,7 @@ import ulink.logic.Utility;
 
 public class DatabaseConnection {
 
-	public ArrayList<String> retrieveAllEmail() {
+	public ArrayList<String> retrieveAllEmailTemplate() {
 		Connection con;
 		ArrayList<String> templateList = new ArrayList<>();
 		try {
