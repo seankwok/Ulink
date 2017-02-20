@@ -31,22 +31,19 @@ import ulink.logic.Utility;
 public class MainTest {
 
 	public static void main(String[] args) throws ParseException {
-	//	DatabaseConnection connection = new DatabaseConnection();
-		String startDate = "2017-01-01";
-		String endDate = "2017-02-02";
-	     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-         try {
-			Date date1 = sdf.parse(startDate);
-			Date date2 = sdf.parse(endDate);
-			System.out.println(date1.before(date2));
-			
-			//Gson gson = new Gson();
-			//PrintWriter out = response.getWriter();
-			//String arrayListToJson = gson.toJson(date1.after(date2));
-		
-		} catch (Exception e){
-			
+		DatabaseConnection connection = new DatabaseConnection();
+		ArrayList<String> personInChargeList = connection.retrieveAllPersonInCharge();
+		Utility utility = new Utility();
+		LinkedHashMap<String,LinkedHashMap<Integer,Integer>> personInChargePointSystem = new  LinkedHashMap<String,LinkedHashMap<Integer,Integer>>();
+		for (int i = 0; i<personInChargeList.size(); i++){
+			String temp = personInChargeList.get(i);
+			ArrayList<Index> indexList = connection.retrieveAllIndexByPerson(utility.changeDateFormatDatabase("05/05/2015"), utility.changeDateFormatDatabase("01/01/2017"), "Medical",temp);	
+			LinkedHashMap<Integer,Integer> pointSystem = utility.getIndexCount(indexList);
+			if (!personInChargePointSystem.containsKey(temp)){
+				personInChargePointSystem.put(temp, pointSystem);
+			}
 		}
-
-}
+		
+		System.out.println(personInChargePointSystem.toString());
+	}
 }

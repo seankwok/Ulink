@@ -55,6 +55,7 @@ public class SendEmail extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		
+		
 		doGet(request, response);
 		response.setContentType("text/html; charset=utf-8");
 		request.setCharacterEncoding("UTF-8");
@@ -62,17 +63,20 @@ public class SendEmail extends HttpServlet {
 		
 		Email emailServer = new Email();
 		HttpSession session = request.getSession();
+		
 		// System.out.println(request.getContentType());
 		
+		String msg = request.getParameter("msg");
+		System.out.println(msg);
 		String[] email = (String[]) session.getAttribute("emailList");
 		int ID = (int) session.getAttribute("ID");
 		DatabaseConnection connection = new DatabaseConnection();
 		Condition condition = connection.retrieveAllConditionByID(ID);
 		String subject = request.getParameter("subject");
-		String msg = request.getParameter("msg");
-
+		
+		msg = msg.replaceAll("&nbsp;", "<br>");
 		String temp = "";
-		User user = (User) session.getAttribute("userDetails");
+		
 		email = email[0].split(",");
 		//System.out.println(msg + " TEST ");
 		boolean check = true;
@@ -88,8 +92,8 @@ public class SendEmail extends HttpServlet {
 				//System.out.println(temp + " temp");
 				//System.out.println(user.getEmail() + " userEmail");
 
-				 check = emailServer.sendEmail(email[i], subject, temp, user.getEmail()+"@ulinkassist.com");
-				//check = emailServer.sendEmail(email[i], subject, temp, "seankwok794@hotmail.com");
+				 //check = emailServer.sendEmail(email[i], subject, temp, user.getEmail()+"@ulinkassist.com");
+				check = emailServer.sendEmail(email[i], subject, temp, "nabilahbmnk.2014@sis.smu.edu.sg");
 				 //Client name, screening, date Email, 
 				 
 				 String datetime = connection.getDateTime();
@@ -100,7 +104,7 @@ public class SendEmail extends HttpServlet {
 		}
 		String status = "";
 		if (check) {
-			status = "pass";
+			status = ""+email.length;
 		} else {
 			status = "fail";
 		}

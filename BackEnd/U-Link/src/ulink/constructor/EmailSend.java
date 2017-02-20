@@ -6,6 +6,9 @@ public class EmailSend {
 	String dateTime;
 	
 	
+	
+	
+	
 	public EmailSend(String clientName, String screeningName, String dateTime) {
 		super();
 		this.clientName = clientName;

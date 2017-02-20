@@ -1,4 +1,4 @@
-package ulink.servlet;
+package ulink.servlet.email;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,16 +18,16 @@ import com.google.gson.reflect.TypeToken;
 import ulink.dao.DatabaseConnection;
 
 /**
- * Servlet implementation class DisplayEmailSendByClientName
+ * Servlet implementation class DisplayAllEmailTemplate
  */
-@WebServlet("/DisplayEmailSendByClientName")
-public class DisplayEmailSendByClientName extends HttpServlet {
+@WebServlet("/DisplayAllEmailTemplate")
+public class DisplayAllEmailTemplate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DisplayEmailSendByClientName() {
+    public DisplayAllEmailTemplate() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,10 +36,9 @@ public class DisplayEmailSendByClientName extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 
 		DatabaseConnection connection = new DatabaseConnection();
-		ArrayList<String> emailList = connection.retrieveAllEmail();
+		ArrayList<String> emailList = connection.retrieveAllEmailTemplate();
 
 
 		Gson gson = new Gson();
@@ -51,8 +50,6 @@ public class DisplayEmailSendByClientName extends HttpServlet {
 		out.write(arrayListToJson);
 		out.flush();
 		return;
-		
-		
 	}
 
 	/**

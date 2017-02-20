@@ -3,6 +3,7 @@ package ulink.constructor;
 public class RankingSpecialty {
 	private String Specialty;
 	private int count;
+	
 	public RankingSpecialty(String specialty, int count) {
 		super();
 		Specialty = specialty;
