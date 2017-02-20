@@ -42,7 +42,7 @@ public class CompareDate extends HttpServlet {
 		String startDate = request.getParameter("startDate");
 		String endDate = request.getParameter("endDate");
 		
-	     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
          try {
 			Date date1 = sdf.parse(startDate);
 			Date date2 = sdf.parse(endDate);
@@ -51,7 +51,7 @@ public class CompareDate extends HttpServlet {
 			Gson gson = new Gson();
 			PrintWriter out = response.getWriter();
 			String arrayListToJson = gson.toJson(date1.before(date2));
-			//System.out.print(arrayListToJson);
+			System.out.print(arrayListToJson);
 
 			out.write(arrayListToJson);
 			out.flush();
