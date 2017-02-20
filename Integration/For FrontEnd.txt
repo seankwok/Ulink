@@ -19,9 +19,11 @@ Screenings
 -Allow exporting emails into excel (Columns TBC by Linda)
 
 Email Template
--Delete Template
+-Delete Template - done
 -Allow user to choose/ enter recipient to send to
--Use libraries to make text editor more professional
+-Use libraries to make text editor more professional - done
+-& % + issue on text editor 
+
 
 Upload Client Data 
 -Last Uploaded time - display of error messages done, need to check w sean for method names for upload time & count
