@@ -1,9 +1,9 @@
-package ulink.servlet.dashboard;
+package ulink.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,22 +12,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.reflect.TypeToken;
 
-import ulink.constructor.Client;
 import ulink.dao.DatabaseConnection;
-import ulink.logic.Utility;
 
 /**
- * Servlet implementation class DisplayAllVisaType
+ * Servlet implementation class DisplayEmailSendByClientName
  */
-@WebServlet("/DisplayAllVisaType")
-public class DisplayAllVisaType extends HttpServlet {
+@WebServlet("/DisplayEmailSendByClientName")
+public class DisplayEmailSendByClientName extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DisplayAllVisaType() {
+    public DisplayEmailSendByClientName() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,32 +37,22 @@ public class DisplayAllVisaType extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		PrintWriter out = response.getWriter();
+
 		DatabaseConnection connection = new DatabaseConnection();
-		ArrayList<Client> list = connection.retrieveAllClientListVisa();
-		LinkedHashMap<String,Integer> visaTypeList = new LinkedHashMap<>();
-		
-		Utility utility = new Utility();
-		
-		for (int i=0; i <list.size(); i++){
-			Client c = list.get(i);
-			if(c.getVisaType().length() > 0){
-			if (visaTypeList.containsKey(c.getVisaType())){
-				int temp = visaTypeList.get(c.getVisaType());
-				visaTypeList.put(c.getVisaType(), temp+1);
-			}else {
-				visaTypeList.put(c.getVisaType(), 1);
-			}
-			}
-			//System.out.println(visaTypeList.keySet());
-		}
-		
+		ArrayList<String> emailList = connection.retrieveAllEmail();
+
+
 		Gson gson = new Gson();
-		String arrayListToJson = gson.toJson(visaTypeList);
+		PrintWriter out = response.getWriter();
+		JsonArray result = (JsonArray) new Gson().toJsonTree(emailList,new TypeToken<List<String>>() {}.getType());
+		  String arrayListToJson = gson.toJson(result);
+		  
+		
 		out.write(arrayListToJson);
 		out.flush();
 		return;
-
+		
+		
 	}
 
 	/**

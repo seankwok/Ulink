@@ -1,8 +1,10 @@
-package ulink.servlet.email;
+package ulink.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -15,21 +17,19 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 
-import ulink.constructor.Condition;
-import ulink.constructor.EmailSend;
-import ulink.dao.DatabaseConnection;
+import ulink.constructor.ClientByIllness;
 
 /**
- * Servlet implementation class DisplayAllEmail
+ * Servlet implementation class CompareDate
  */
-@WebServlet("/DisplayAllEmail")
-public class DisplayAllEmail extends HttpServlet {
+@WebServlet("/CompareDate")
+public class CompareDate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DisplayAllEmail() {
+    public CompareDate() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -39,7 +39,32 @@ public class DisplayAllEmail extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String startDate = request.getParameter("startDate");
+		String endDate = request.getParameter("endDate");
+		
+	     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+         try {
+			Date date1 = sdf.parse(startDate);
+			Date date2 = sdf.parse(endDate);
+			
+			
+			Gson gson = new Gson();
+			PrintWriter out = response.getWriter();
+			String arrayListToJson = gson.toJson(date1.before(date2));
+			//System.out.print(arrayListToJson);
 
+			out.write(arrayListToJson);
+			out.flush();
+			return;
+			
+			
+			
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+         
 	}
 
 	/**
@@ -48,20 +73,9 @@ public class DisplayAllEmail extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-		String clientName = request.getParameter("clientName");
-		DatabaseConnection connection = new DatabaseConnection();
-		ArrayList<EmailSend> emailSendList = connection.retrieveEmailSendDetails(clientName);
-
-
-		Gson gson = new Gson();
-		PrintWriter out = response.getWriter();
-		JsonArray result = (JsonArray) new Gson().toJsonTree(emailSendList,new TypeToken<List<EmailSend>>() {}.getType());
-		  String arrayListToJson = gson.toJson(result);
-		  
 		
-		out.write(arrayListToJson);
-		out.flush();
-		return;
+		
+		
 	}
 
 }

@@ -53,26 +53,50 @@ public class SendEmail extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		
 		doGet(request, response);
+		response.setContentType("text/html; charset=utf-8");
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		
 		Email emailServer = new Email();
 		HttpSession session = request.getSession();
-
+		// System.out.println(request.getContentType());
+		
 		String[] email = (String[]) session.getAttribute("emailList");
 		int ID = (int) session.getAttribute("ID");
 		DatabaseConnection connection = new DatabaseConnection();
 		Condition condition = connection.retrieveAllConditionByID(ID);
 		String subject = request.getParameter("subject");
 		String msg = request.getParameter("msg");
-		msg = msg.replace("[screening]", condition.getScreening());
-		User user = (User) session.getAttribute("user");
-		String sendEmail = user.getEmail();
-		
+
+		String temp = "";
+		User user = (User) session.getAttribute("userDetails");
+		email = email[0].split(",");
+		//System.out.println(msg + " TEST ");
 		boolean check = true;
-		for (int i = 0; i < email.length; i++) {
-			msg = msg.replace("[clientName]", connection.getNameByEmail(email[i]));
-			
-			msg = msg.replace("[clientEmail]", email[i]);
-			check = emailServer.sendEmail(email[i], subject, msg, sendEmail);
+		if (msg != null) {
+			for (int i = 0; i < email.length; i++) {
+				temp = msg.replace("[screening]", condition.getScreening());
+				temp = temp.replace("[clientName]", connection.getNameByEmail(email[i]));
+
+				temp = temp.replace("[clientEmail]", email[i]);
+
+			//	System.out.println(email[i] + " email");
+				//System.out.println(subject + " subject");
+				//System.out.println(temp + " temp");
+				//System.out.println(user.getEmail() + " userEmail");
+
+				 check = emailServer.sendEmail(email[i], subject, temp, user.getEmail()+"@ulinkassist.com");
+				//check = emailServer.sendEmail(email[i], subject, temp, "seankwok794@hotmail.com");
+				 //Client name, screening, date Email, 
+				 
+				 String datetime = connection.getDateTime();
+				 connection.createEmailDate(connection.getNameByEmail(email[i]), condition.getScreening(), datetime);
+			}
+		} else {
+			check = false;
 		}
 		String status = "";
 		if (check) {
@@ -80,9 +104,8 @@ public class SendEmail extends HttpServlet {
 		} else {
 			status = "fail";
 		}
-		System.out.println(msg);
-		PrintWriter out = response.getWriter();
 
+		PrintWriter out = response.getWriter();
 		out.write(status);
 		out.flush();
 		return;
