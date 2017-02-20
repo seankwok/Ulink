@@ -62,6 +62,7 @@ public class SendEmail extends HttpServlet {
 		
 		Email emailServer = new Email();
 		HttpSession session = request.getSession();
+		
 		// System.out.println(request.getContentType());
 		
 		String[] email = (String[]) session.getAttribute("emailList");
@@ -72,7 +73,7 @@ public class SendEmail extends HttpServlet {
 		String msg = request.getParameter("msg");
 
 		String temp = "";
-		User user = (User) session.getAttribute("userDetails");
+		
 		email = email[0].split(",");
 		//System.out.println(msg + " TEST ");
 		boolean check = true;
