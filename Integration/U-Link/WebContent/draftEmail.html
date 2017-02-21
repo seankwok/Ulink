@@ -2,7 +2,6 @@
 
 
 
-
 <html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -51,7 +50,6 @@
 	$(document).ready(function() {
 		showFields();
 		showDropdownList();	
-		 var myArray = sessionStorage.getItem('myArray');
 	});
 	
 		function selectTemplate(clickedID){
@@ -140,21 +138,13 @@
 			});
 	    	
 	    }
+	    
 	    function pressSend(){
 	    	var content = CKEDITOR.instances.editor1.getData();
 	    	content  = replaceSpace(content);
-	    	$.ajax({
-	    		url:'SendEmail',
-    			type:'post',
-    			data: 'subject=' + "Reminder for Screening"
-				+ '&'
-				+ 'msg=' + content,
-				complete:function(data){
-					$('#message').html("<div class='alert alert-success' role='alert'><center><b> Email Sent! </b></center></div>");
-				}
-		
-	    	});
-
+	    	sessionStorage.setItem('passContent', content);
+	    	window.location.href = "sendingEmail.html";
+	  
 	    }
 	    
 
@@ -185,12 +175,11 @@
      </script>
 
 
-		<div class='container' >
-			<br><div align='center' onclick='pressSend()'><button>Send</button></div>
-		</div>	
+		
+<form action="sendingEmail.html" method="POST">
+   <button onclick='pressSend()'>Send</button>
+</form>
 
-
-		<div class="container" id="message"></div>
 					<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
