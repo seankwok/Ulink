@@ -55,13 +55,73 @@
  		});
  		
  		
+ 		
  	});	
  	
- 	function printChart(array){
- 		$.each(array, function(key,value){
- 			console.log(value);
+ 	function printChart(response){
+ 		
+		var PICPoints = [];
+		var points = [1,2,3,4];
+		var test = 10;
+ 		$.each(response, function(key,value){
+ 			//console.log(key);
+ 			 $.each(value, function(key, value){ // loop through every point
+ 				PICPoints.push(value); // store in array
+ 			});
+ 			console.log(PICPoints);
+ 			PICPoints = [];
+ 			var $chart = $('<div>').appendTo(document.body);
+ 			
+ 			var x = new Highcharts.Chart({ 
+				    chart: {
+				    	renderTo: $chart[0],
+				        type: 'column'
+				    },
+				    title: {
+				        text: key
+				    },
+				    
+				    xAxis: {
+				    	categories: points,
+				        title: {
+				            text: 'Point of contact'
+				        },
+				        crosshair: true
+				    },
+				    
+				    yAxis: {
+				        min: 0,
+				        title: {
+				            text: 'Percentage of clients'
+				        }
+				    },
+				    tooltip: {
+				        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+				        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+				            '<td style="padding:0"><b>{point.y:.1f} %</b></td></tr>',
+				        footerFormat: '</table>',
+				        shared: true,
+				        useHTML: true
+				    },
+				    plotOptions: {
+				        column: {
+				            pointPadding: 0.2,
+				            borderWidth: 0
+				        }
+				    },
+				    credits: {
+			 	        enabled: false
+			 	    },
+				    series: [{
+				    	name: "Percentage",
+				        data: PICPoints
+				     }]
+				
+				});
+ 			
  			
  		});
+ 		
  	}
 	
  		function checkDate(startDate,endDate){
@@ -216,76 +276,9 @@
 									console.log(json.responseText);
 									var response = JSON.parse(json.responseText);
 									console.log(response);
-									console.log(Object.keys(response).length);
-									//numLoops(response);
+									//console.log(Object.keys(response).length);
 
-									var PIC = "";
-									var PICPoints = [];
-									var charts = "";
-									var arrayName = [];
-									
-									$.each(response, function(key, value){ // loop through every PIC
-										PIC = key;
-										arrayName.push( PIC );
-										
-										document.getElementById("printCharts").innerHTML = arrayName; 
-										//console.log(PIC);
-										$.each(value, function(key, value){ // loop through every point
-											//console.log(key);
-											PICPoints.push(value); // store in array
-										});
-										//console.log(PICPoints);
-										/**Highcharts.chart('storeCharts',{ 
-							 				    chart: {
-							 				        type: 'column'
-							 				    },
-							 				    title: {
-							 				        text: PIC
-							 				    },
-							 				    
-							 				    xAxis: {
-							 				        categories: points,
-							 				        title: {
-							 				            text: 'Point of contact'
-							 				        },
-							 				        crosshair: true
-							 				    },
-							 				    
-							 				    yAxis: {
-							 				        min: 0,
-							 				        title: {
-							 				            text: 'Percentage of clients'
-							 				        }
-							 				    },
-							 				    tooltip: {
-							 				        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-							 				        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-							 				            '<td style="padding:0"><b>{point.y:.1f} %</b></td></tr>',
-							 				        footerFormat: '</table>',
-							 				        shared: true,
-							 				        useHTML: true
-							 				    },
-							 				    plotOptions: {
-							 				        column: {
-							 				            pointPadding: 0.2,
-							 				            borderWidth: 0
-							 				        }
-							 				    },
-							 				    credits: {
-							 			 	        enabled: false
-							 			 	    },
-							 				    series: [{
-							 				    	name: "Percentage",
-							 				        data: PICPoints
-							 				     }]
-							 				
-							 				});
-									**/
-											PICPoints = [];
-										
-										
-									});
-								printChart(arrayName);									
+									printChart(response);									
 									
 				 			    }	
 				 			});
@@ -352,7 +345,8 @@
 	</div>
 	
 	<div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
-	<div id="printCharts" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+	<div id="chart" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+	
      
 </body>
 </html>
