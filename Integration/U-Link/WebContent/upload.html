@@ -61,8 +61,7 @@
 			}
 			
 		})
-		var uploadedTime = 
-		document.getElementById("timestamp").innerHTML = Date();
+		
 	});
 	
 	function logout(){
@@ -74,14 +73,13 @@
 	}
 	
 	function getLatestUploadTime(){
-		console.log("phew");
 		var dateTime = "";
 		$.ajax({
 	    	url : "DisplayDateTime",
 			type : "get",
 			complete : function(data) {
-				console.log("in");
 				var json = jQuery.parseJSON(JSON.stringify(data));
+				dateTime = json.responseText;
 				document.getElementById('timestamp').innerHTML = dateTime;
 			}
 		});
