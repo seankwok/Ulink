@@ -5,13 +5,19 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.TimeZone;
 
 import org.apache.poi.util.SystemOutLogger;
+import org.joda.time.DateTimeZone;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -32,9 +38,15 @@ public class MainTest {
 
 	public static void main(String[] args) throws ParseException {
 DatabaseConnection connection = new DatabaseConnection();
-		
-		String datetime = connection.getDateTime();
-		
-		System.out.println(datetime);
+
+Calendar calendar = Calendar.getInstance();
+
+
+TimeZone timeZone = TimeZone.getTimeZone("Singapore");
+
+calendar.setTimeZone(timeZone);
+
+System.out.println(calendar.getTime());
+
 	}
 }

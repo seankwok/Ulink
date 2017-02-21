@@ -12,6 +12,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -53,8 +54,13 @@ public class UploadServlet extends HttpServlet {
 	private File destinationDir;
 	// DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 	// Date date = new Date();
-
 	Calendar calendar = Calendar.getInstance();
+
+
+	TimeZone timeZone = TimeZone.getTimeZone("Singapore");
+	
+	
+	
 	// OR Calendar.getInstance(TimeZone.getTimeZone("GMT"));
 
 	// System.out.println(d.toString());
@@ -156,9 +162,9 @@ public class UploadServlet extends HttpServlet {
 				// System.out.print(count);
 				// out.write(count);
 				// out.flush();
-				calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY));
-				Date d = calendar.getTime();
-				connection.addDateTime(d.toString());
+				calendar.setTimeZone(timeZone);
+		
+				connection.addDateTime(calendar.getTime().toString());
 				// PrintWriter out = response.getWriter();
 
 				out.write("" + count);
@@ -172,9 +178,9 @@ public class UploadServlet extends HttpServlet {
 				// process your binary excel file
 				System.out.println("test2");
 				count = test(file);
-				calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY));
-				Date d = calendar.getTime();
-				connection.addDateTime(d.toString());
+				calendar.setTimeZone(timeZone);
+				
+				connection.addDateTime(calendar.getTime().toString());
 				// out.write(count);
 				// out.flush();
 				// response.sendRedirect("./upload.html");
@@ -200,16 +206,16 @@ public class UploadServlet extends HttpServlet {
 			log("Error encountered while parsing the request", ex);
 			// myObj.addProperty("success", false);
 			// out.println(myObj.toString());
-
-			request.getRequestDispatcher("./upload.html").forward(request, response);
+			out.write("Not excel file");
+			out.flush();
 			return;
 		} catch (Exception ex) {
 			log("Error encountered while uploading file", ex);
 			// myObj.addProperty("success", false);
 
 			// out.println(myObj.toString());
-
-			request.getRequestDispatcher("./upload.html").forward(request, response);
+			out.write("Not excel file");
+			out.flush();
 			return;
 		}
 

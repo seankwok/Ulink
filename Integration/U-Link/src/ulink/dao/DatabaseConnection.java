@@ -1483,7 +1483,7 @@ public class DatabaseConnection {
 	}
 
 	
-	public String retrieveLatestDateSend(String clientName) {
+	public String retrieveLatestDateSend(String clientName, String screeningName) {
 		//EmailSend emailSend = null;
 		Connection con;
 		String date = "";
@@ -1493,7 +1493,7 @@ public class DatabaseConnection {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
-			String sql = "SELECT date FROM emailsend where clientName='" + clientName + "' order by ID DESC LIMIT 1";
+			String sql = "SELECT date FROM emailsend where clientName='" + clientName + " & screening='" + screeningName +"' order by ID DESC LIMIT 1";
 
 			ResultSet rs = stmt.executeQuery(sql);
 			

@@ -5,7 +5,9 @@ import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -101,8 +103,12 @@ public class SendEmail extends HttpServlet {
 				check = emailServer.sendEmail(email[i], subject, temp, "nabilahbmnk.2014@sis.smu.edu.sg");
 				check = emailServer.sendEmail(email[i], subject, temp, "sychien.2014@sis.smu.edu.sg");
 				 //Client name, screening, date Email, 
-				 
-				 String datetime = connection.getDateTime();
+				Calendar calendar = Calendar.getInstance();
+				TimeZone timeZone = TimeZone.getTimeZone("Singapore");
+				calendar.setTimeZone(timeZone); 
+				
+				
+				 String datetime = calendar.getTime().toString();
 				 connection.createEmailDate(connection.getNameByEmail(email[i]), condition.getScreening(), datetime);
 			}
 		} else {
