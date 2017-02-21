@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.TimeZone;
@@ -37,16 +38,15 @@ import ulink.logic.Utility;
 public class MainTest {
 
 	public static void main(String[] args) throws ParseException {
-DatabaseConnection connection = new DatabaseConnection();
+		Date date1 = new Date();
+		System.out.println(date1);
 
-Calendar calendar = Calendar.getInstance();
+		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+	
 
+		Date date2 = new Date();
+		System.out.println(date2.toString());
 
-TimeZone timeZone = TimeZone.getTimeZone("Singapore");
-
-calendar.setTimeZone(timeZone);
-
-System.out.println(calendar.getTime());
 
 	}
 }

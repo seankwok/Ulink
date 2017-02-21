@@ -53,14 +53,7 @@ public class UploadServlet extends HttpServlet {
 	private static final String DESTINATION_DIR_PATH = "/MySavedFiles";
 	private File destinationDir;
 	// DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-	// Date date = new Date();
-	Calendar calendar = Calendar.getInstance();
 
-
-	TimeZone timeZone = TimeZone.getTimeZone("Singapore");
-	
-	
-	
 	// OR Calendar.getInstance(TimeZone.getTimeZone("GMT"));
 
 	// System.out.println(d.toString());
@@ -96,7 +89,7 @@ public class UploadServlet extends HttpServlet {
 
 		// PrintWriter to send the JSON response back
 		PrintWriter out = response.getWriter();
-		//String uploadedTime = request.getParameter("uploadedTime");
+		// String uploadedTime = request.getParameter("uploadedTime");
 
 		// set content type and header attributes
 		// response.setContentType("UTF-8");
@@ -162,9 +155,11 @@ public class UploadServlet extends HttpServlet {
 				// System.out.print(count);
 				// out.write(count);
 				// out.flush();
-				calendar.setTimeZone(timeZone);
-		
-				connection.addDateTime(calendar.getTime().toString());
+				TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
+
+				Date date2 = new Date();
+
+				connection.addDateTime(date2.toString());
 				// PrintWriter out = response.getWriter();
 
 				out.write("" + count);
@@ -178,9 +173,11 @@ public class UploadServlet extends HttpServlet {
 				// process your binary excel file
 				System.out.println("test2");
 				count = test(file);
-				calendar.setTimeZone(timeZone);
-				
-				connection.addDateTime(calendar.getTime().toString());
+				TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
+
+				Date date2 = new Date();
+
+				connection.addDateTime(date2.toString());
 				// out.write(count);
 				// out.flush();
 				// response.sendRedirect("./upload.html");
