@@ -19,8 +19,7 @@
    
     <script> 
 	    $(function(){
-	      $("#includedContent").load("navBar.html"); 
-	      
+	      $("#includedContent").load("navBar.html"); 	      
 	    });
 
     </script> 
@@ -35,7 +34,12 @@
 			  display: inline-block;
 			  margin-right:20px;
 
-		}			
+		}	
+		
+		
+		form {
+		  text-align: center;
+		}
 	</style>
 	
 	
@@ -44,12 +48,24 @@
 	function showFields(){
 		var templateContent = '[clientName]<br>[clientEmail]<br>[screening]' ;
 		 CKEDITOR.instances.editor1.setData(templateContent);
+		 var clients = sessionStorage.getItem('clients');
+		 var array = clients.split(',');
+		 var table = " <table class='table table-bordered' width='50%'><tr><th>Selected Clients</th></tr>";
+		 array.forEach(function(entry) {
+			    table += "<tr><td>"+entry+"</td><tr>"
+			});
+			
+		
+		 table += "</table>";
+		 $('#clientTab').html(table);
+
 
 	}
 	
 	$(document).ready(function() {
 		showFields();
 		showDropdownList();	
+		
 	});
 	
 		function selectTemplate(clickedID){
@@ -160,25 +176,37 @@
 	<div class="page-header">
 		<h1 align="center">New Email</h1>
 	</div>
+	<div class="container" id="clients"></div>
 	
+<div class="container">
 	<table >
 		<tr> 
 			<td><button type="button" class="btn btn-link" data-toggle="modal" data-target='#exampleModal' >Save as Template</button></td>
 			<td><div id='templateDropdown' ></div></td>
 		</tr>
 	</table>
+	<div class="row">
+		  <div class="col-md-10">
+		   		 <textarea id="editor1"></textarea>
+			     <script>
+			         CKEDITOR.replace( 'editor1' );
+			     </script>
+		  </div>
 	
-	 <textarea id="editor1"></textarea>
-	 
-     <script>
-         CKEDITOR.replace( 'editor1' );
-     </script>
+		  <div class="col-md-2" id='clientTab'> </div>
+	 </div>
+
+ </div>
+ 	<form action="sendingEmail.html" method="POST">
+	   <button  class='btn btn-primary' onclick='pressSend()'>Send</button>
+	</form>
+
+
+
 
 
 		
-<form action="sendingEmail.html" method="POST">
-   <button onclick='pressSend()'>Send</button>
-</form>
+
 
 					<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			  <div class="modal-dialog" role="document">
