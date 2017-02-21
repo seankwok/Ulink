@@ -31,19 +31,10 @@ import ulink.logic.Utility;
 public class MainTest {
 
 	public static void main(String[] args) throws ParseException {
-		DatabaseConnection connection = new DatabaseConnection();
-		ArrayList<String> personInChargeList = connection.retrieveAllPersonInCharge();
-		Utility utility = new Utility();
-		LinkedHashMap<String,LinkedHashMap<Integer,Integer>> personInChargePointSystem = new  LinkedHashMap<String,LinkedHashMap<Integer,Integer>>();
-		for (int i = 0; i<personInChargeList.size(); i++){
-			String temp = personInChargeList.get(i);
-			ArrayList<Index> indexList = connection.retrieveAllIndexByPerson(utility.changeDateFormatDatabase("05/05/2015"), utility.changeDateFormatDatabase("01/01/2017"), "Medical",temp);	
-			LinkedHashMap<Integer,Integer> pointSystem = utility.getIndexCount(indexList);
-			if (!personInChargePointSystem.containsKey(temp)){
-				personInChargePointSystem.put(temp, pointSystem);
-			}
-		}
+DatabaseConnection connection = new DatabaseConnection();
 		
-		System.out.println(personInChargePointSystem.toString());
+		String datetime = connection.getDateTime();
+		
+		System.out.println(datetime);
 	}
 }

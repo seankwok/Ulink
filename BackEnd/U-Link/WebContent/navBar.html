@@ -1,3 +1,35 @@
+<style>
+
+	.user,p{
+		display: inline;
+	}
+	</style>
+	
+	<script type="text/javascript">	    
+    $(document).ready(function() {
+		getLoggedInUser();
+		var user = "";
+	});
+    
+    function getLoggedInUser(){
+    	$.ajax({
+			url : "DisplayLoginUser",
+			type : "get",
+			dataType : "json",
+			complete : function(data) {
+		    	var json = jQuery.parseJSON(JSON.stringify(data));
+				console.log(json.responseText);
+				user = json.responseText;
+				document.getElementById('loggedInAs').innerHTML = user;
+			}
+    	});
+    }
+    
+    </script>     
+
+
+<body>
+
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -29,9 +61,11 @@
 	        <li class="dropdown">
 	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reports <span class="caret"></span></a>
 	          <ul class="dropdown-menu">
+	          <li><a href="genderAndAgeReport.html">Gender and Age Report</a></li>
+	            <li><a href="reportIndex.html">Index (Points)</a></li>
 	            <li><a href="kpi.html">KPI</a></li>
 	              <li><a href="ranking.html">Ranking</a></li>
-	            <li><a href="genderAndAgeReport.html">Gender and Age Report</a></li>
+	            
 	          </ul>
 	        </li> 
       </ul>
@@ -41,8 +75,12 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="accountManagement.html">Account Management</a></li>
-        
       </ul>
+      <ul class="nav navbar-nav navbar-right">
+         <li><a href="dashboard.html"> <div class="user"> Currently logged in as:  <p id='loggedInAs'></p></div></a></li>
+      </ul>
+      
+     
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>

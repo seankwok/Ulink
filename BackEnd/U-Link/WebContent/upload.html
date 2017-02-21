@@ -22,17 +22,16 @@
  	<script type="text/javascript">
 	$(document).ready(function() {
 		
+		getLatestUploadTime();
+		
 		$("#submit").click(function() {
 			var inputFile = $("#InputFile").val();
-			var uploadedTime = $("#timestamp").val();
-			console.log("here");
 			if(inputFile == ""){
 				console.log("no file selected");
 				$("#inputAlert").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Please select a file to upload</strong></div>");
 				return false;
 			} else{
 				console.log("else loop");
-				
 				  var oMyForm = new FormData();
 				  oMyForm.append("file", InputFile.files[0]);
 				$.ajax({
@@ -45,12 +44,14 @@
 					dataType : "file",
 					complete : function(data) {
 						var json = jQuery.parseJSON(JSON.stringify(data));
-				        console.log(json);
-						if (json.statusText == "OK") {
-							$("#inputAlert").html("<div class='alert alert-success' role='alert'><center><b> Successfully uploaded a file! </b></center></div>");
-							//$("#rowsUpdate").html("<div class='alert alert-success' role='alert'><center><b>Number of rows updated: </b></center></div>");
-						} else{
+						var count = json.responseText;
+				        console.log(json.responseText);
+						if (json.responseText == "Not excel file") {
 							$("#inputAlert").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Please select only excel files</strong></div>");
+						} else{
+							$("#inputAlert").html("<div class='alert alert-success' role='alert'><center><b> Successfully uploaded a file! </b></center></div>");
+							$("#rowsUpdate").html("<div class='alert alert-success' role='alert'><center><b>Number of rows updated: "+ count +"</b></center></div>");
+
 						}
 
 					}
@@ -62,7 +63,8 @@
 		})
 		var uploadedTime = 
 		document.getElementById("timestamp").innerHTML = Date();
-	})
+	});
+	
 	function logout(){
 		$.ajax({
 			url: "Logout",
@@ -70,6 +72,22 @@
 			 
 		});
 	}
+	
+	function getLatestUploadTime(){
+		console.log("phew");
+		var dateTime = "";
+		$.ajax({
+	    	url : "DisplayDateTime",
+			type : "get",
+			complete : function(data) {
+				console.log("in");
+				var json = jQuery.parseJSON(JSON.stringify(data));
+				document.getElementById('timestamp').innerHTML = dateTime;
+			}
+		});
+		
+	}
+	
 	
 
 	

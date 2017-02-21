@@ -2,6 +2,9 @@ package ulink.servlet.email;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -54,19 +57,21 @@ public class SendEmail extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		
+		System.out.println("this is content type : " + request.getCharacterEncoding());
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
 		
 		doGet(request, response);
 		response.setContentType("text/html; charset=utf-8");
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
 		
 		Email emailServer = new Email();
 		HttpSession session = request.getSession();
 		
-		// System.out.println(request.getContentType());
+		System.out.println("this is content type : " + request.getContentType());
 		
 		String msg = request.getParameter("msg");
+		//msg = URLEncoder.encode( msg, "ISO-8859-1" ); // H%C3%A9l%C3%A8ne
+		//msg = URLDecoder.decode( msg, "UTF-8" );
 		System.out.println(msg);
 		String[] email = (String[]) session.getAttribute("emailList");
 		int ID = (int) session.getAttribute("ID");

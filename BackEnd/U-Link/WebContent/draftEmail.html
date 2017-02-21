@@ -27,22 +27,29 @@
     </script> 
 
 	<style>
-			.errorMsg {
-			   font-size: 15px; 
-			   text-align: center;
-			}		
-			
-	
+		.errorMsg {
+		   font-size: 15px; 
+		   text-align: center;
+		}		
+		
+		.dropdownSide {
+			  display: inline-block;
+			  margin-right:20px;
 
+		}			
 	</style>
 	
 	
 	<script type="text/javascript">
+	
 	function showFields(){
-		return '<html><body>[clientName]<br>[clientEmail]<br>[screening]</body></html>'
+		var templateContent = '[clientName]<br>[clientEmail]<br>[screening]' ;
+		 CKEDITOR.instances.editor1.setData(templateContent);
+
 	}
 	
 	$(document).ready(function() {
+		showFields();
 		showDropdownList();	
 		 var myArray = sessionStorage.getItem('myArray');
 	});
@@ -63,26 +70,42 @@
 	
 		}
 	    
-	    	    
+		function replaceSpace(msg){         
+	         var toReturn = "";
+	         console.log("msg: " + msg);
+	         toReturn = msg.replace(/%/,"&#37;").replace(/&nbsp;/g," ");
+	         console.log("return: " + toReturn );
+	         return toReturn;
+	       }
+		
 	    function save(){
 	    	var templateName = $('#template').val();
 	    	if (templateName == ""){
 	      		$('#errMsg').html("Template Name Required!");	 	    		  
 	    	}else{
-
 		    	var content = CKEDITOR.instances.editor1.getData();
-		    	console.log("test: " + content);
+		    	content  = replaceSpace(content);		    	    	
 		    	$.ajax({
 					type: 'post',
-					contentType: "application/x-www-form-urlencoded;charset=UTF-8",
 					url: "CreateEmailTemplate",
 					data: 'templateName=' + templateName
 						+ '&'
 						+ 'msg=' + content,
-					complete: function(data){		
+					complete: function(data){
+						var json = jQuery.parseJSON(JSON.stringify(data));
+						var status = json.responseText;
+						var err = "";
+						if(status == "fail"){
+							$('#errMsg').html( "Template Name already exist!");
+						}else{
+							showDropdownList();	
+							$('#exampleModal').modal('hide');
+						}
+						
 					}
 				});
-		    	$('#exampleModal').modal('hide');
+		    	
+		    	
 		    	$('#errMsg').html("");
 	    	}
 	    }	
@@ -97,9 +120,8 @@
 					    	+ "<a id='drop1' href='#' role='button' class='btn btn-link dropdown-toggle' data-toggle='dropdown'>Select Template<b class='caret'></b></a>"
 					    	+ " <ul class='dropdown-menu' role='menu' aria-labelledby='dLabel'>"
 						var json = jQuery.parseJSON(data.responseText);
-					console.log(json);
 						$.each(json, function(key, value){
-							htmlDD += "<li><a tabindex='-1' href='#'onClick=selectTemplate(this.id) id='"+value+"'>"+value+"</a></li>"
+							htmlDD += "<li><div class='dropdownSide'><a href='#' onClick=selectTemplate(this.id) id='"+value+"'>"+value+"</a></div><div class='dropdownSide'> <a href='#' onClick=deleteEmail(this.id) id='"+value+"'> Delete </a> </div></li>"
 						});
 						 htmlDD += "</ul></div>"
 						 $('#templateDropdown').html(htmlDD);
@@ -107,13 +129,26 @@
 	    	});	
 	    }
 
+	    function deleteEmail(clickedID){
+			var sendData = {
+					"templateName" : clickedID
+				};
+	    	$.ajax({	    	
+		    	url : "DeleteEmailTemplate",
+				type : "post",
+				data : sendData,
+				complete : function(data) {
+					showDropdownList();	
+				}
+			});
+	    	
+	    }
 	    function pressSend(){
 	    	var content = CKEDITOR.instances.editor1.getData();
-	    	console.log(content);
 	    	$.ajax({
 	    		url:'SendEmail',
     			type:'post',
-       			data: 'subject=' + "Reminder for Screening"
+    			data: 'subject=' + "Reminder for Screening"
 				+ '&'
 				+ 'msg=' + content,
 				complete:function(data){
