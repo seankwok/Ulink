@@ -57,7 +57,7 @@ public class SendEmail extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		System.out.println("this is content type : " + request.getCharacterEncoding());
+		//System.out.println("this is content type : " + request.getCharacterEncoding());
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		
