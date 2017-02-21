@@ -56,6 +56,13 @@
  		
  		
  	});	
+ 	
+ 	function printChart(array){
+ 		$.each(array, function(key,value){
+ 			console.log(value);
+ 			
+ 		});
+ 	}
 	
  		function checkDate(startDate,endDate){
 			var team = $("#teamName").val();
@@ -125,7 +132,7 @@
 						 				    tooltip: {
 						 				        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
 						 				        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-						 				            '<td style="padding:0"><b>{point.y:.1f} clients</b></td></tr>',
+						 				            '<td style="padding:0"><b>{point.y:.1f} %</b></td></tr>',
 						 				        footerFormat: '</table>',
 						 				        shared: true,
 						 				        useHTML: true
@@ -171,7 +178,7 @@
 						 				    tooltip: {
 						 				        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
 						 				        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-						 				            '<td style="padding:0"><b>{point.y:.1f} clients</b></td></tr>',
+						 				            '<td style="padding:0"><b>{point.y:.1f} %</b></td></tr>',
 						 				        footerFormat: '</table>',
 						 				        shared: true,
 						 				        useHTML: true
@@ -208,23 +215,27 @@
 				 			    	var json = jQuery.parseJSON(JSON.stringify(data));	
 									console.log(json.responseText);
 									var response = JSON.parse(json.responseText);
-									console.log(response.length);
-									
+									console.log(response);
+									console.log(Object.keys(response).length);
+									//numLoops(response);
+
 									var PIC = "";
 									var PICPoints = [];
 									var charts = "";
-									
+									var arrayName = [];
 									
 									$.each(response, function(key, value){ // loop through every PIC
 										PIC = key;
-										console.log(PIC);
+										arrayName.push( PIC );
+										
+										document.getElementById("printCharts").innerHTML = arrayName; 
+										//console.log(PIC);
 										$.each(value, function(key, value){ // loop through every point
-											console.log(key);
+											//console.log(key);
 											PICPoints.push(value); // store in array
 										});
-										console.log(PICPoints);
-										
-							 				Highcharts.chart('member', {
+										//console.log(PICPoints);
+										/**Highcharts.chart('storeCharts',{ 
 							 				    chart: {
 							 				        type: 'column'
 							 				    },
@@ -249,7 +260,7 @@
 							 				    tooltip: {
 							 				        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
 							 				        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-							 				            '<td style="padding:0"><b>{point.y:.1f} clients</b></td></tr>',
+							 				            '<td style="padding:0"><b>{point.y:.1f} %</b></td></tr>',
 							 				        footerFormat: '</table>',
 							 				        shared: true,
 							 				        useHTML: true
@@ -269,10 +280,12 @@
 							 				     }]
 							 				
 							 				});
+									**/
 											PICPoints = [];
 										
-									
+										
 									});
+								printChart(arrayName);									
 									
 				 			    }	
 				 			});
@@ -339,7 +352,7 @@
 	</div>
 	
 	<div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
-	<div id="member" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+	<div id="printCharts" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
      
 </body>
 </html>
