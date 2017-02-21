@@ -223,7 +223,7 @@ public class UploadServlet extends HttpServlet {
 		HSSFWorkbook wb = new HSSFWorkbook(fs);
 		HSSFSheet sheet = wb.getSheetAt(0);
 		HSSFCell cell;
-		int count = 0;
+		int count = -1;
 		Utility utility = new Utility();
 		DatabaseConnection connection = new DatabaseConnection();
 		Iterator<Row> rowIter = sheet.rowIterator();
@@ -476,7 +476,7 @@ public class UploadServlet extends HttpServlet {
 	private int processExcelFile(File file) {
 		ArrayList<Client> clientList = new ArrayList<>();
 		DatabaseConnection connection = new DatabaseConnection();
-		int count = 0;
+		int count = -1;
 
 		try {
 			// Creating Input Stream
