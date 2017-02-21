@@ -115,14 +115,14 @@ public class Utility {
 		return two.format(Math.sqrt(temp));
 	}
 	
-	public LinkedHashMap<Integer,Integer> getIndexCount(ArrayList<Index> indexList){
+	public LinkedHashMap<Integer,Double> getIndexCount(ArrayList<Index> indexList){
 		
-		LinkedHashMap<Integer, Integer> pointSystem = new LinkedHashMap<>();
+		LinkedHashMap<Integer, Double> pointSystem = new LinkedHashMap<>();
 		
-		pointSystem.put(0,0);
-		pointSystem.put(1,0);
-		pointSystem.put(2,0);
-		pointSystem.put(3,0);
+		pointSystem.put(0,0.0);
+		pointSystem.put(1,0.0);
+		pointSystem.put(2,0.0);
+		pointSystem.put(3,0.0);
 
 		for (int i = 0; i < indexList.size(); i++) {
 			int point = 0;
@@ -137,10 +137,22 @@ public class Utility {
 				point++;
 			}
 			if (pointSystem.containsKey(point)){
-				int temp = pointSystem.get(point);
+				double temp = pointSystem.get(point);
 				pointSystem.put(point, temp+1);
 			}
 		}
+		
+		double sum = pointSystem.get(0) + pointSystem.get(1) + pointSystem.get(2) + pointSystem.get(3); 
+		double zero = pointSystem.get(0);
+		double one = pointSystem.get(1);
+		double two = pointSystem.get(2);
+		double three = pointSystem.get(3);
+		
+		pointSystem.put(0, zero/sum *100);
+		pointSystem.put(1, one/sum *100);
+		pointSystem.put(2, two/sum *100);
+		pointSystem.put(3, three/sum *100);
+		
 		return pointSystem;
 		
 	}

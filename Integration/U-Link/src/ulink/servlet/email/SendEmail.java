@@ -99,6 +99,7 @@ public class SendEmail extends HttpServlet {
 
 				 //check = emailServer.sendEmail(email[i], subject, temp, user.getEmail()+"@ulinkassist.com");
 				check = emailServer.sendEmail(email[i], subject, temp, "nabilahbmnk.2014@sis.smu.edu.sg");
+				check = emailServer.sendEmail(email[i], subject, temp, "sychien.2014@sis.smu.edu.sg");
 				 //Client name, screening, date Email, 
 				 
 				 String datetime = connection.getDateTime();

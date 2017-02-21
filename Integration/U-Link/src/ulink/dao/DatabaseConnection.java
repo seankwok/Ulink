@@ -804,7 +804,7 @@ public class DatabaseConnection {
 					+ "mainDiagnosis,referredBy,PIC,appointment,doctor,specialty,clinic,otherDoctor,followUpPerson,followUpPIC,hospitalAdmitted,"
 					+ "log,claim, visaRequestBy,visa,visaType,visaType2, age,billingCity,billingCode,billingCountry,billingState,billingStreet,createdTime,phone)"
 					+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-			Utility utility = new Utility();
+			//Utility utility = new Utility();
 			PreparedStatement preparedStmt = con.prepareStatement(sql);
 
 			for (int i = 1; i < clientList.size(); i++) {
@@ -861,7 +861,7 @@ public class DatabaseConnection {
 				// System.out.print(client.getCreatedtime());
 				String date = client.getCreatedtime().substring(6, 10) + "-" + client.getCreatedtime().substring(3, 5)
 						+ "-" + client.getCreatedtime().substring(0, 2);
-				System.out.println(date);
+				//System.out.println(date);
 				preparedStmt.setDate(34, java.sql.Date.valueOf(date));
 				preparedStmt.setString(35, client.getPhone());
 				preparedStmt.execute();

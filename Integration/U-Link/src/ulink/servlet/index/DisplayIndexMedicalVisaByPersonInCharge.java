@@ -43,11 +43,11 @@ public class DisplayIndexMedicalVisaByPersonInCharge extends HttpServlet {
 		String team = request.getParameter("team");
 		ArrayList<String> personInChargeList = connection.retrieveAllPersonInCharge();
 		Utility utility = new Utility();
-		LinkedHashMap<String,LinkedHashMap<Integer,Integer>> personInChargePointSystem = new  LinkedHashMap<String,LinkedHashMap<Integer,Integer>>();
+		LinkedHashMap<String,LinkedHashMap<Integer,Double>> personInChargePointSystem = new  LinkedHashMap<String,LinkedHashMap<Integer,Double>>();
 		for (int i = 0; i<personInChargeList.size(); i++){
 			String temp = personInChargeList.get(i);
 			ArrayList<Index> indexList = connection.retrieveAllIndexByPerson(utility.changeDateFormatDatabase(startDate), utility.changeDateFormatDatabase(endDate), team,temp);	
-			LinkedHashMap<Integer,Integer> pointSystem = utility.getIndexCount(indexList);
+			LinkedHashMap<Integer,Double> pointSystem = utility.getIndexCount(indexList);
 			if (!personInChargePointSystem.containsKey(temp)){
 				personInChargePointSystem.put(temp, pointSystem);
 			}

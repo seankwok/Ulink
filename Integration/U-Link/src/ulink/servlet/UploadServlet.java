@@ -148,7 +148,7 @@ public class UploadServlet extends HttpServlet {
 
 			}
 
-			int count = 0;
+			int count = -1;
 			String extension = FilenameUtils.getExtension(fullName);
 			if (extension.trim().equalsIgnoreCase("xlsx")) {
 				System.out.println("test1");
