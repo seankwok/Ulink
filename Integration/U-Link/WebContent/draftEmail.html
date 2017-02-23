@@ -50,7 +50,8 @@
 		 CKEDITOR.instances.editor1.setData(templateContent);
 		 var clients = sessionStorage.getItem('clients');
 		 var array = clients.split(',');
-		 var table = " <table class='table table-bordered' width='50%'><tr><th>Selected Clients</th></tr>";
+		 var numSelected = array.length;
+		 var table = " <table class='table table-bordered' width='50%'><tr><th>" + numSelected + " Clients Selected</th></tr>";
 		 array.forEach(function(entry) {
 			    table += "<tr><td>"+entry+"</td><tr>"
 			});
@@ -190,7 +191,10 @@
 		   		 <textarea id="editor1"></textarea>
 			     <script>
 			         CKEDITOR.replace( 'editor1' );
+			         
+			        
 			     </script>
+			     
 		  </div>
 	
 		  <div class="col-md-2" id='clientTab'> </div>
