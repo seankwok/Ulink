@@ -47,10 +47,12 @@ public class DisplayDoctorBySpecialty extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		DatabaseConnection connection = new DatabaseConnection();
 		Utility utility = new Utility();
-		ArrayList<RankingDoctorSpecialty> doctorList = connection.retrieveAllDoctorBySpecialty(specialty,utility.changeDateFormatDatabase(startDate),utility.changeDateFormat(endDate));
+		ArrayList<RankingDoctorSpecialty> doctorList = connection.retrieveAllDoctorBySpecialty(specialty,utility.changeDateFormatDatabase(startDate),utility.changeDateFormatDatabase(endDate));
+		System.out.println(startDate);
+		System.out.println(endDate);
 		
 		Gson gson = new Gson();
-
+System.out.println(doctorList.size());
 		JsonArray result = (JsonArray) new Gson().toJsonTree(doctorList, new TypeToken<List<RankingDoctorSpecialty>>() {
 		}.getType());
 		String arrayListToJson = gson.toJson(result);

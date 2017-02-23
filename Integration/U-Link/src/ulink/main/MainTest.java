@@ -29,6 +29,7 @@ import ulink.constructor.Client;
 import ulink.constructor.ClientByIllness;
 import ulink.constructor.Condition;
 import ulink.constructor.Index;
+import ulink.constructor.RankingDoctorSpecialty;
 import ulink.constructor.RankingReferredBy;
 import ulink.dao.DatabaseConnection;
 import ulink.logic.Email;
@@ -38,14 +39,13 @@ import ulink.logic.Utility;
 public class MainTest {
 
 	public static void main(String[] args) throws ParseException {
-		Date date1 = new Date();
-		System.out.println(date1);
-
-		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-	
-
-		Date date2 = new Date();
-		System.out.println(date2.toString());
+		DatabaseConnection connection = new DatabaseConnection();
+		Utility utility = new Utility();
+		ArrayList<RankingDoctorSpecialty> doctorList = connection.retrieveAllDoctorBySpecialty("Obs & Gynae",utility.changeDateFormatDatabase("01/01/2017"),utility.changeDateFormat("28/01/2017"));
+		
+		System.out.println(doctorList.size());
+		
+		System.out.println(doctorList.get(0).getName());
 
 
 	}
