@@ -39,6 +39,7 @@
 	 	displayTopReferralThisMonth();
 	 	displayTopReferralLastMonth();
 	 	
+
 	 	$("#selectDoc").click(function(){
 			window.location = "dashboardDoc.html";
 		});
@@ -284,56 +285,66 @@
 		    complete: function(data){
 		    	var json = jQuery.parseJSON(JSON.stringify(data));
 		    	console.log(json.responseJSON);
-		    	thisMonthDoc += "<h4><b>" + thisMonth +"</b></h4>"
-		 		thisMonthDoc += "<tr><th>Rank</th><th>Doctor</th><th>Clinic</th><th>Specialty</th></tr>"
+		    	thisMonthDoc += "<h4><b>" + thisMonth + "</b></h4>"
+		 		thisMonthDoc += "<th>Rank</th><th>Doctor</th><th>Clinic</th><th>Specialty</th>"
 				thisMonthDoc += "<tbody>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[0].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[0].name
+							  +	 "</td>"
 							  +  "<td>"
+							  +  json.responseJSON[0].name
+							  +  "</td>"
 							  +	 "<td>"
 							  +  json.responseJSON[0].clinic
+							  +  "</td>"
 							  +  "<td>"
 							  +  json.responseJSON[0].speciality
 							  +  "</td></tr>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[1].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[1].name
+							  +	 "</td>"
 							  +  "<td>"
-							  +	 "<td>"
+							  +  json.responseJSON[1].name
+							  +	 "</td>"
+							  +  "<td>"
 							  +  json.responseJSON[1].clinic
+							  +	 "</td>"
 							  +  "<td>"
 							  +  json.responseJSON[1].speciality
 							  +  "</td></tr>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[2].ranking
-							  +	 "<td>"
+							  +	 "</td>"
+							  +  "<td>"
 							  +  json.responseJSON[2].name
 							  +  "<td>"
 							  +	 "<td>"
 							  +  json.responseJSON[2].clinic
+							  +	 "</td>"
 							  +  "<td>"
 							  +  json.responseJSON[2].speciality
 							  +  "</td></tr>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[3].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[3].name
+							  +	 "</td>"
 							  +  "<td>"
-							  +	 "<td>"
+							  +  json.responseJSON[3].name
+							  +	 "</td>"
+							  +  "<td>"
 							  +  json.responseJSON[3].clinic
+							  +	 "</td>"
 							  +  "<td>"
 							  +  json.responseJSON[3].speciality
 							  +  "</td></tr>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[4].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[4].name
+							  +	 "</td>"
 							  +  "<td>"
-							  +	 "<td>"
+							  +  json.responseJSON[4].name
+							  +	 "</td>"
+							  +  "<td>"
 							  +  json.responseJSON[4].clinic
+							  +	 "</td>"
 							  +  "<td>"
 							  +  json.responseJSON[4].speciality
 			    			  + "</td></tr></tbody></table>"
@@ -357,59 +368,69 @@
 		    complete: function(data){
 		    	var json = jQuery.parseJSON(JSON.stringify(data));
 		  		lastMonthDoc += "<h4><b>" + lastMonth +"</b></h4>"
-		  		lastMonthDoc += "<tr><th>Rank</th>"
+		  		lastMonthDoc += "<th>Rank</th>"
 							  +  "<th>Doctor</th>"
 							  +  "<th>Clinic</th>"
-							  +  "<th>Specialty</th></tr>"
+							  +  "<th>Specialty</th>"
 							  
 				lastMonthDoc += "<tbody>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[0].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[0].name
+							  +	 "</td>"
 							  +  "<td>"
-							  +	 "<td>"
+							  +  json.responseJSON[0].name
+							  +	 "</td>"
+							  +  "<td>"
 							  +  json.responseJSON[0].clinic
+							  +	 "</td>"
 							  +  "<td>"
 							  +  json.responseJSON[0].speciality
 							  +  "</td></tr>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[1].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[1].name
+							  +	 "</td>"
 							  +  "<td>"
-							  +	 "<td>"
+							  +  json.responseJSON[1].name
+							  +	 "</td>"
+							  +  "<td>"
 							  +  json.responseJSON[1].clinic
+							  +	 "</td>"
 							  +  "<td>"
 							  +  json.responseJSON[1].speciality
 							  +  "</td></tr>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[2].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[2].name
+							  +	 "</td>"
 							  +  "<td>"
-							  +	 "<td>"
+							  +  json.responseJSON[2].name
+							  +	 "</td>"
+							  +  "<td>"
 							  +  json.responseJSON[2].clinic
+							  +	 "</td>"
 							  +  "<td>"
 							  +  json.responseJSON[2].speciality
 							  +  "</td></tr>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[3].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[3].name
+							  +	 "</td>"
 							  +  "<td>"
-							  +	 "<td>"
+							  +  json.responseJSON[3].name
+							  +	 "</td>"
+							  +  "<td>"
 							  +  json.responseJSON[3].clinic
+							  +	 "</td>"
 							  +  "<td>"
 							  +  json.responseJSON[3].speciality
 							  +  "</td></tr>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[4].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[4].name
+							  +	 "</td>"
 							  +  "<td>"
-							  +	 "<td>"
+							  +  json.responseJSON[4].name
+							  +	 "</td>"
+							  +  "<td>"
 							  +  json.responseJSON[4].clinic
+							  +	 "</td>"
 							  +  "<td>"
 							  +  json.responseJSON[4].speciality	
 							  + "</td></tr></tbody></table>"
@@ -436,42 +457,47 @@
 				thisMonthRef += "<tbody>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[0].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[0].name
+							  +	 "</td>"
 							  +  "<td>"
-							  +	 "<td>"
+							  +  json.responseJSON[0].name
+							  +	 "</td>"
+							  +  "<td>"
 							  +  json.responseJSON[0].count
 							  + "</td></tr>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[1].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[1].name
+							  +	 "</td>"
 							  +  "<td>"
-							  +	 "<td>"
+							  +  json.responseJSON[1].name
+							  +	 "</td>"
+							  +  "<td>"
 							  +  json.responseJSON[1].count
 							  +  "</td></tr>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[2].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[2].name
+							  +	 "</td>"
 							  +  "<td>"
-							  +	 "<td>"
+							  +  json.responseJSON[2].name
+							  +	 "</td>"
+							  +  "<td>"
 							  +  json.responseJSON[2].count
 							  +  "</td></tr>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[3].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[3].name
+							  +	 "</td>"
 							  +  "<td>"
-							  +	 "<td>"
+							  +  json.responseJSON[3].name
+							  +	 "</td>"
+							  +  "<td>"
 							  +  json.responseJSON[3].count
 							  +  "</td></tr>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[4].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[4].name
+							  +	 "</td>"
 							  +  "<td>"
-							  +	 "<td>"
+							  +  json.responseJSON[4].name
+							  +	 "</td>"
+							  +  "<td>"
 							  +  json.responseJSON[4].count
 							  + "</td></tr></tbody></table>"
 				 $('#thisMonthRef').html(thisMonthRef);
@@ -489,48 +515,53 @@
 		    complete: function(data){
 		    	var json = jQuery.parseJSON(JSON.stringify(data));
 		  		lastMonthRef += "<h4><b>" + lastMonth +"</b></h4>"
-		  		lastMonthRef += "<tr><th>Rank</th>"
-							  +  "<th>Referred By</th>"
-							  +  "<th>Number of cases referred</th></tr>"
+		  		lastMonthRef += "<tr><th width>Rank</th>"
+							  +  "<th width>Referred By</th>"
+							  +  "<th width>Number of cases referred</th></tr>"
 				lastMonthRef +=  "<tbody>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[0].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[0].name
+							  +	 "</td>"
 							  +  "<td>"
-							  +	 "<td>"
+							  +  json.responseJSON[0].name
+							  +	 "</td>"
+							  +  "<td>"
 							  +  json.responseJSON[0].count
 							  + "</td></tr>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[1].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[1].name
+							  +	 "</td>"
 							  +  "<td>"
-							  +	 "<td>"
+							  +  json.responseJSON[1].name
+							  +	 "</td>"
+							  +  "<td>"
 							  +  json.responseJSON[1].count
 							  +  "</td></tr>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[2].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[2].name
+							  +	 "</td>"
 							  +  "<td>"
-							  +	 "<td>"
+							  +  json.responseJSON[2].name
+							  +	 "</td>"
+							  +  "<td>"
 							  +  json.responseJSON[2].count
 							  +  "</td></tr>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[3].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[3].name
+							  +	 "</td>"
 							  +  "<td>"
-							  +	 "<td>"
+							  +  json.responseJSON[3].name
+							  +	 "</td>"
+							  +  "<td>"
 							  +  json.responseJSON[3].count
 							  +  "</td></tr>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[4].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[4].name
+							  +	 "</td>"
 							  +  "<td>"
-							  +	 "<td>"
+							  +  json.responseJSON[4].name
+							  +	 "</td>"
+							  +  "<td>"
 							  +  json.responseJSON[4].count
 							  + "</td></tr></tbody></table>"
 				$('#lastMonthRef').html(lastMonthRef);
@@ -576,16 +607,19 @@
 	<div class="container">
 	<div class="btn-group btn-group-justified" role="group">
 	  <div class="btn-group" role="group">
-	    <button type="button" id="selectDoc" class="btn btn-default"><b>View Top 5 Doctors</b></button>
-	    
+	    <button type="button" id="selectDoc" class="btn btn-primary"><b>View Top 5 Doctors</b></button>
+	   
 	  </div>
 	  <div class="btn-group" role="group">
-	    <button type="button" id="selectRef" class="btn btn-primary"><b>View Top 5 Referral Sources</b></button>
-	    
+	    <button type="button" id="selectRef" class="btn btn-default"><b>View Top 5 Referral Sources</b></button>
+	  
 	  </div>
+	  
+	   
 	</div>
 	</div>
-	
+	<div class="col-md-6" id="thisMonthDoc"></div>
+		<div class="col-md-6" id="lastMonthDoc"></div>
 	
 	</div>
 	

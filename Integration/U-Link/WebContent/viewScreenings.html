@@ -87,46 +87,68 @@
 		$("#selectAdult").click(function(){
 			window.location = "viewScreeningsAdult.html";
 		});
-			
+		$("#sort").click(function(){
+			 $.ajax({
+				    url : "",
+				    type : "get",
+				    dataType : "json",
+				    complete: function(data){}
+		 });
+		 });	
+
+		 var search = "<div class='col-md-3'><form action='#' method='get'><div class='input-group'>"
+            + "<input class='form-control' id='system-search' name='q' placeholder='Search for' required>"
+            + "<span class='input-group-btn'><button class='btn btn-default'><i class='glyphicon glyphicon-search'></i></button>"
+            + "</span></div></form></div>"
+
+			$("#search").html(search);
+            
+            
+         
+		 var activeSystemClass = $('.list-group-item.active');
+
+		    //something is entered in search form
+		    $('#system-search').keyup( function() {
+		       var that = this;
+		        // affect all table rows on in systems table
+		        var tableBody = $('.table-list-search tbody');
+		        var tableRowsClass = $('.table-list-search tbody tr');
+		        $('.search-sf').remove();
+		        tableRowsClass.each( function(i, val) {
+		        
+		            //Lower text for case insensitive
+		            var rowText = $(val).text().toLowerCase();
+		            var inputText = $(that).val().toLowerCase();
+		            if(inputText != ''){
+		            }
+		            else
+		            {
+		                $('.search-query-sf').remove();
+		            }
+
+		            if( rowText.indexOf( inputText ) == -1 )
+		            {
+		                //hide rows
+		                tableRowsClass.eq(i).hide();
+		                
+		            }
+		            else
+		            {
+		                $('.search-sf').remove();
+		                tableRowsClass.eq(i).show();
+		            }
+		        });
+		        //all tr elements are hidden
+		        if(tableRowsClass.children(':visible').length == 0)
+		        {
+		            tableBody.append('<tr class="search-sf"><td class="text-muted" colspan="6">No entries found.</td></tr>');
+		        }
+		    });   
+            
 		});
 	
 
-	function jsFunction1(value){
-		   // set search box value as gender
-		   var txt =  document.getElementById('myInput');
-		   txt.value = value;
-		   document.getElementById('gender').value = '';
-		   mySearch();
-	}
-	function mySearch() {
-		  
-		  var searchText = document.getElementById('myInput').value.toUpperCase();
-		    var targetTable = document.getElementById('table');
-		    var targetTableColCount;
-		            
-		    //Loop through table rows
-		    for (var rowIndex = 0; rowIndex < targetTable.rows.length; rowIndex++) {
-		        var rowData = '';
-
-		        //Get column count from header row
-		        if (rowIndex == 0) {
-		           targetTableColCount = targetTable.rows.item(rowIndex).cells.length;
-		           continue; //do not execute further code for header row.
-		        }
-		                
-		        //Process data rows. (rowIndex >= 1)
-		        for (var colIndex = 0; colIndex < targetTableColCount; colIndex++) {
-		            rowData += targetTable.rows.item(rowIndex).cells.item(colIndex).textContent.toUpperCase();
-		        }
-
-		        //If search term is not found in row data
-		        //then hide the row, else show
-		        if (rowData.indexOf(searchText) == -1)
-		            targetTable.rows.item(rowIndex).style.display = 'none';
-		        else
-		            targetTable.rows.item(rowIndex).style.display = 'table-row';
-		    }
-	}
+	
 	
 	function deleteItem(clickedID){
 		
@@ -200,6 +222,10 @@
 			    dataType : "json",
 			    complete: function(data){
 			        var json = jQuery.parseJSON(data.responseText);
+			        console.log(json);
+			        if (json == ""){
+						$('#noPatient').html("<div class='alert alert-danger' role='alert'><center><b> No patient in database matches criteria </b></center></div>");	
+			        }else{
 			        console.log(json[0].conditionName);
 			        console.log(json[0].screeningName);
 			        table += "<h3><b>Condition Name:</b>  " + json[0].conditionName +"<br>   <b>Screening Name: </b> "+ json[0].screeningName +"</h3>"
@@ -238,14 +264,14 @@
 			         $("#display").html(table);
 			        
 			    } 
-			     
+			    }
 
 			   });
 			 }
 		
 		
 		function displayAll(){
-			var table = "<table id='table'  class='display' cellspacing='0' >";
+			var table = "<table class='table table-list-search' class='display' cellspacing='0' >";
 			var isEmpty = false;
 			$.ajax({
 				url: "DisplayAllInfant",
@@ -253,12 +279,9 @@
 			    dataType : "json",    
 			    success: function(data){
 			    	var json = jQuery.parseJSON(JSON.stringify(data));
-			    	table += "<thead><tr><th>Starting Age (In months)<a href='#' onClick=sortAscAge(this.id) id='ageRequired'>&#9652</a>"
-			    			+ "<a href='#' onClick=sortDescAge(this.id) id='ageRequired'> &#9662</a></th>"
-			    			+ "<th>Common Illness<a href='#' onClick=sortAscIllness(this.id) id='conditionName'> &#9652</a>"
-			    			+ "<a href='#' onClick=sortDescIllness(this.id) id='conditionName'> &#9662</a></th>"
-			    			+ "<th>Screening <a href='#' onClick=sortAscScreening(this.id) id='screening'> &#9652</a>"
-			    			+ "<a href='#' onClick=sortDescIllness(this.id) id='screening'> &#9662</a></th>"
+			    	table += "<thead><tr><th><button type='button' id='sort' class='btn btn-default btn-sm'>Starting Age (In months)</th>"
+			    			+ "<th>Common Illness</th>"
+			    			+ "<th>Screening</th>"
 			    			+"<th>Demographic</th>"
 			    			+ "<th>Regularity of screening</th>"
 			    			+ "<th>View Patients</th>"
@@ -323,9 +346,7 @@
 		  <h1><b>View Screenings - Infant</b></h1>
 		  <div class="row">
 		  <button type="button" class="btn btn-default"><a href="addScreening.html">Add new screening</a></button>
-		  <div class="container" align="right">
-		   		<input type="text" id="myInput" onkeyup="mySearch()" placeholder="Search Screenings by Name..">
-		   	</div>
+		 <div class="container" align = "center" id="search"></div>
 		   	</div>
 		</div>
 
@@ -346,6 +367,7 @@
 	
 	</div>
 	<div class="container" id="message"></div>
+	<div class="container" id="noPatient"></div>
 	
   </body>
 </html>
