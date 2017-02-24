@@ -231,7 +231,7 @@
 			        table += "<h3><b>Condition Name:</b>  " + json[0].conditionName +"<br>   <b>Screening Name: </b> "+ json[0].screeningName +"</h3>"
 			        
 			        table += "<thead><tr><th>Age</th><th>Client Name</th><th>Email</th><th>Email Sent Date</th><th>PIC</th>"
-			        	+ "<th>Select   "+"<button type='button' class='btn btn-primary' id='ckbCheckAll'>Select all</button>" +"</th></tr></thead>";
+			        	+ "<th>Select All	<input type='checkbox' id='select_all'/></th></tr></thead>";
 			      
 			        $.each(json,function(key,value) {
 			        
@@ -251,7 +251,7 @@
 			          + value["followUpPerson"]
 			          + "</td>"
 			          + "<td>"
-			          + "<input type='checkbox' class='checkBoxClass' name='selectClients' value=" + value["email"]+">"          
+			          + "<input type='checkbox' class='checkbox' name='selectClients' value=" + value["email"]+">"          
 			       + "</td></tr></tbody>"
 			        });
 			        table += "</table>"
@@ -262,6 +262,25 @@
 			           +"</div>"
 			       
 			         $("#display").html(table);
+			           var select_all = document.getElementById("select_all"); //select all checkbox
+				   	 	var checkboxes = document.getElementsByClassName("checkbox"); //checkbox i
+				   		select_all.addEventListener("change", function(e){
+				   		    for (i = 0; i < checkboxes.length; i++) { 
+				   		        checkboxes[i].checked = select_all.checked;
+				   		    }
+				   		});
+				   		for (var i = 0; i < checkboxes.length; i++) {
+				   		    checkboxes[i].addEventListener('change', function(e){ //".checkbox" change 
+				   		        //uncheck "select all", if one of the listed checkbox item is unchecked
+				   		        if(this.checked == false){
+				   		            select_all.checked = false;
+				   		        }
+				   		        //check "select all" if all checkbox items are checked
+				   		        if(document.querySelectorAll('.checkbox:checked').length == checkboxes.length){
+				   		            select_all.checked = true;
+				   		        }
+				   		    });
+				   		}
 			        
 			    } 
 			    }
