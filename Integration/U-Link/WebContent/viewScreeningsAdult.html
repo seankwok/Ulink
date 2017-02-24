@@ -191,7 +191,8 @@
 				type: 'post',
 				url: "StoreSendEmail",
 				data: 'email=' + clients,
-				complete: function(data){		
+				complete: function(data){
+					sessionStorage.setItem('clients',clients);
 			    		window.location.href = "draftEmail.html";	
 				}
 	    	
