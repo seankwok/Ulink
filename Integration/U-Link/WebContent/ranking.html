@@ -198,7 +198,27 @@ function viewDoctors(clickedID){
 			dataType : "json",
 			complete: function(data){
 				var json = jQuery.parseJSON(data.responseText);
-		 
+			    	table += "<thead>"
+		    			+"<th>Ranking</th>"
+		    			+"<th>Doctor</th>"
+		    			+"<th>Number of Engagement</th>"
+	    			+"</thead>";
+	    			+ "<tbody>"
+	    			$.each(json,function(key, value) {
+		    		speciality = value["Specialty"]
+		    		if(prev != value["engagement"]){
+						rank += 1;	
+					}
+				table +="<tr>"
+						  +"<td>"+rank+"</td>"
+						  +"<td>"+value["name"]+"</td>"	 
+						  +"<td>"+value["engagement"]+"</td>"
+						+ "</tr>"
+					prev = value["engagement"];
+	    		});
+	    		table += "</tbody></table>"
+	    		$("#result").html(table);
+	    		$("#clickedSpeciality").html("Speciality: "+clickedID);
 			}	
 		});
 }
