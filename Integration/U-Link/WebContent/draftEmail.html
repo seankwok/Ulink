@@ -31,11 +31,11 @@
 		}		
 		
 		.dropdownSide {
-			  display: inline-block;
-			  margin-right:20px;
-
+			  width: 300px !important;
+			  
 		}	
 		
+
 		
 		form {
 		  text-align: center;
@@ -133,7 +133,7 @@
 					    	+ " <ul class='dropdown-menu' role='menu' aria-labelledby='dLabel'>"
 						var json = jQuery.parseJSON(data.responseText);
 						$.each(json, function(key, value){
-							htmlDD += "<li><div class='dropdownSide'><a href='#' onClick=selectTemplate(this.id) id='"+value+"'>"+value+"</a></div><div class='dropdownSide'> <a href='#' onClick=deleteEmail(this.id) id='"+value+"'> Delete </a> </div></li>"
+							htmlDD += "<li><div class='dropdownSide'><a href='#' onClick=selectTemplate(this.id) id='"+value+"'>"+value+"</a> &nbsp; <a href='#' onClick=deleteEmail(this.id) id='"+value+"'> Delete </a></div> </li>"
 						});
 						 htmlDD += "</ul></div>"
 						 $('#templateDropdown').html(htmlDD);
