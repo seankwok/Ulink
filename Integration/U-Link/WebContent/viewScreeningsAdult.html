@@ -89,6 +89,26 @@
 		 });
 		 
 		 
+		 $("#select_all").change(function(){  //"select all" change 
+			 console.log("test select all");
+			    var status = this.checked; // "select all" checked status
+			    $('.checkBoxClass').each(function(){ //iterate all listed checkbox items
+			        this.checked = status; //change ".checkbox" checked status
+			    });
+			});
+
+			$('.checkBoxClass').change(function(){ //".checkbox" change 
+			    //uncheck "select all", if one of the listed checkbox item is unchecked
+			    if(this.checked == false){ //if this item is unchecked
+			        $("#select_all")[0].checked = false; //change "select all" checked status to false
+			    }
+			    
+			    //check "select all" if all checkbox items are checked
+			    if ($('.checkBoxClass:checked').length == $('.checkBoxClass').length ){ 
+			        $("#select_all")[0].checked = true; //change "select all" checked status to true
+			    }
+			});
+		 
 		 var search = "<div class='col-md-3'><form action='#' method='get'><div class='input-group'>"
              + "<input class='form-control' id='system-search' name='q' placeholder='Search for' required>"
              + "<span class='input-group-btn'><button class='btn btn-default'><i class='glyphicon glyphicon-search'></i></button>"
@@ -223,7 +243,7 @@
 		        table += "<h3><b>Condition Name:</b>  " + json[0].conditionName +"<br>   <b>Screening Name: </b> "+ json[0].screeningName +"</h3>"
 		        
 		        table += "<thead><tr><th>Age</th><th>Client Name</th><th>Email</th><th>Email Sent Date</th><th>PIC</th>"
-		        	+ "<th>Select</th></tr></thead>";
+		        	+ "<th>Select All	<input type='checkbox' id='select_all'/></th></tr></thead>";
 		      
 		        $.each(json,function(key,value) {
 		        
