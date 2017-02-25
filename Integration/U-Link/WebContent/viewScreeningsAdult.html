@@ -80,15 +80,7 @@
 		 $("#ckbCheckAll").click(function () {
 		        $(".checkBoxClass").prop('checked', $(this).prop('checked'));
 		  });
-		 $("#sort").click(function(){
-			 $.ajax({
-				    url : "",
-				    type : "get",
-				    dataType : "json",
-				    complete: function(data){}
-		 });
-		 });
-		 
+		
 			
 		 
 		 var search = "<div class='col-md-3'><form action='#' method='get'><div class='input-group'>"
@@ -280,6 +272,78 @@
 		   });
 		 }
 	
+	function sortGender(clickedID){
+		console.log(clickedID);
+		var table = "<table id='table'  class='display' cellspacing='0' width='100%'>";
+		var sendData = "name=screening &orderDirection=DESC &gender=" + clickedID;
+		console.log(sendData);
+		
+		$.ajax({
+		    url : "DisplayAll",
+		    type : "get",
+		    data : sendData,
+		    complete: function(data){
+		    	var json = jQuery.parseJSON(JSON.stringify(data));
+		    	var response = JSON.parse(json.responseText);
+		    	console.log(response);
+		    	table += "<thead><tr><th>Starting Age<a href='#' onClick=sortAscAge(this.id)  id='ageRequired'>&#9652</a>"
+		    			+ "<a href='#' onClick=sortDescAge(this.id) id='ageRequired'> &#9662</a></th>"
+		    			+ "<th>Common Illness<a href='#' onClick=sortAscIllness(this.id) id='conditionName'> &#9652</a>"
+		    			+ "<a href='#' onClick=sortDescIllness(this.id) id='conditionName'> &#9662</a></th>"
+		    			+ "<th>Screening <a href='#' onClick=sortAscScreening(this.id) id='screening'> &#9652</a>"
+		    			+ "<a href='#' onClick=sortDescScreening(this.id) id='screening'> &#9662</a></th>"
+		    			+"<th>"
+		    			+"<select onchange = sortGender(this.value) >"
+		    			+"<option value='' selected='selected'> Gender </option>"
+				    	+"<option value='All' >All</option>"
+				    	+"<option value='Male' >Male</option>"
+				    	+"<option value='Female'>Female</option>"
+				    	+"</select>"
+				    	+"</th>"
+		    			+ "<th>Regularity of screening</th>"
+		    			+ "<th>View Patients</th>"
+		    			+ "<th>Edit</th>"
+		    			+ "<th>Delete</th></tr></thead>";
+		    	$.each(response,function(key, value) {
+		    		table += "<tbody><tr><td>"
+	    				+ value["ageRequired"]
+	    				+ "</td>"
+	    				+ "<td>"
+	    				+ value["conditionName"]
+    					+ "</td>"
+    					+ "<td>"
+	    				+ value["screening"]
+    					+ "</td>"
+    					+ "<td>"
+	    				+ value["type"]
+    					+ "</td>"
+    					+ "<td>"
+	    				+ value["years"] 
+    					+ "</td>"
+    					+ "<td>"
+	    				+"<a href='#' onClick=viewPatientList(this.id) id= '"
+	    				+ value.ID
+	    				+ "'>View patients</a>"
+    					+ "</td>"
+    					+ "<td>"
+	    				+ "<a href='#' onClick=editItem(this.id) id= '"
+	    				+ value.ID
+	    				+ "'>Edit</a>"
+    					+ "</td>"
+    					+ '<td><a href=# onClick=deleteItem(this.id) id="'
+						+ value.ID
+						+ '">Delete</a></td></tr>'		    				
+						+ "</td></tr></tbody>"
+		    	});
+		    	table += "</table>"
+		    		$("#display").html(table);
+		    	
+		    
+		    }
+ 		});
+
+	}
+	
 	function sortAscAge(clickedID){
 			var table = "<table id='table'  class='display' cellspacing='0' width='100%'>";
 			var sendData = "name=ageRequired &orderDirection=ASC";
@@ -298,11 +362,12 @@
 			    			+ "<th>Screening <a href='#' onClick=sortAscScreening(this.id) id='screening'> &#9652</a>"
 			    			+ "<a href='#' onClick=sortDescIllness(this.id) id='screening'> &#9662</a></th>"
 			    			+"<th>"
-				    		+"<select id='gender'>"
-						    	+"<option value='Male'>Male</option>"
-						    	+"<option value='Female'>Female</option>"
-						    	+"<option value='' selected='selected' >All Gender Type</option>"
-						    	+"</select>"
+			    			+"<select onchange = sortGender(this.value) >"
+			    			+"<option value='' selected='selected'> Gender </option>"
+					    	+"<option value='All' >All</option>"
+					    	+"<option value='Male' >Male</option>"
+					    	+"<option value='Female'>Female</option>"
+					    	+"</select>"
 					    	+"</th>"
 			    			+ "<th>Regularity of screening</th>"
 			    			+ "<th>View Patients</th>"
@@ -367,11 +432,12 @@
 		    			+ "<th>Screening <a href='#' onClick=sortAscScreening(this.id) id='screening'> &#9652</a>"
 		    			+ "<a href='#' onClick=sortDescIllness(this.id) id='screening'> &#9662</a></th>"
 		    			+"<th>"
-			    		+"<select id='gender'>"
-					    	+"<option value='Male'>Male</option>"
-					    	+"<option value='Female'>Female</option>"
-					    	+"<option value='' selected='selected' >All Gender Type</option>"
-					    	+"</select>"
+		    			+"<select onchange = sortGender(this.value) >"
+		    			+"<option value='' selected='selected'> Gender </option>"
+				    	+"<option value='All' >All</option>"
+				    	+"<option value='Male' >Male</option>"
+				    	+"<option value='Female'>Female</option>"
+				    	+"</select>"
 				    	+"</th>"
 		    			+ "<th>Regularity of screening</th>"
 		    			+ "<th>View Patients</th>"
@@ -436,11 +502,12 @@
 		    			+ "<th>Screening <a href='#' onClick=sortAscScreening(this.id) id='screening'> &#9652</a>"
 		    			+ "<a href='#' onClick=sortDescIllness(this.id) id='screening'> &#9662</a></th>"
 		    			+"<th>"
-			    		+"<select id='gender'>"
-					    	+"<option value='Male'>Male</option>"
-					    	+"<option value='Female'>Female</option>"
-					    	+"<option value='' selected='selected' >All Gender Type</option>"
-					    	+"</select>"
+		    			+"<select onchange = sortGender(this.value) >"
+		    			+"<option value='' selected='selected'> Gender </option>"
+				    	+"<option value='All' >All</option>"
+				    	+"<option value='Male' >Male</option>"
+				    	+"<option value='Female'>Female</option>"
+				    	+"</select>"
 				    	+"</th>"
 		    			+ "<th>Regularity of screening</th>"
 		    			+ "<th>View Patients</th>"
@@ -505,11 +572,12 @@
 		    			+ "<th>Screening <a href='#' onClick=sortAscScreening(this.id) id='screening'> &#9652</a>"
 		    			+ "<a href='#' onClick=sortDescIllness(this.id) id='screening'> &#9662</a></th>"
 		    			+"<th>"
-			    		+"<select id='gender'>"
-					    	+"<option value='Male'>Male</option>"
-					    	+"<option value='Female'>Female</option>"
-					    	+"<option value='' selected='selected' >All Gender Type</option>"
-					    	+"</select>"
+		    			+"<select onchange = sortGender(this.value) >"
+		    			+"<option value='' selected='selected'> Gender </option>"
+				    	+"<option value='All' >All</option>"
+				    	+"<option value='Male' >Male</option>"
+				    	+"<option value='Female'>Female</option>"
+				    	+"</select>"
 				    	+"</th>"
 		    			+ "<th>Regularity of screening</th>"
 		    			+ "<th>View Patients</th>"
@@ -574,11 +642,12 @@
 		    			+ "<th>Screening <a href='#' onClick=sortAscScreening(this.id) id='screening'> &#9652</a>"
 		    			+ "<a href='#' onClick=sortDescScreening(this.id) id='screening'> &#9662</a></th>"
 		    			+"<th>"
-			    		+"<select id='gender'>"
-					    	+"<option value='Male'>Male</option>"
-					    	+"<option value='Female'>Female</option>"
-					    	+"<option value='' selected='selected' >All Gender Type</option>"
-					    	+"</select>"
+		    			+"<select onchange = sortGender(this.value) >"
+		    			+"<option value='' selected='selected'> Gender </option>"
+				    	+"<option value='All' >All</option>"
+				    	+"<option value='Male' >Male</option>"
+				    	+"<option value='Female'>Female</option>"
+				    	+"</select>"
 				    	+"</th>"
 		    			+ "<th>Regularity of screening</th>"
 		    			+ "<th>View Patients</th>"
@@ -643,11 +712,12 @@
 		    			+ "<th>Screening <a href='#' onClick=sortAscScreening(this.id) id='screening'> &#9652</a>"
 		    			+ "<a href='#' onClick=sortDescScreening(this.id) id='screening'> &#9662</a></th>"
 		    			+"<th>"
-			    		+"<select id='gender'>"
-					    	+"<option value='Male'>Male</option>"
-					    	+"<option value='Female'>Female</option>"
-					    	+"<option value='' selected='selected' >All Gender Type</option>"
-					    	+"</select>"
+		    			+"<select onchange = sortGender(this.value) >"
+		    			+"<option value='' selected='selected'> Gender </option>"
+				    	+"<option value='All' >All</option>"
+				    	+"<option value='Male' >Male</option>"
+				    	+"<option value='Female'>Female</option>"
+				    	+"</select>"
 				    	+"</th>"
 		    			+ "<th>Regularity of screening</th>"
 		    			+ "<th>View Patients</th>"
@@ -697,7 +767,7 @@
 	function displayAll(){
 		var table = "<table class='table table-list-search' class='display' cellspacing='0' >";
 		var isEmpty = false;
-		sendData = "name=ageRequired&&orderDirection=ASC"
+		sendData = "name=ageRequired&orderDirection=ASC&gender=All"
 		console.log(sendData);
 		$.ajax({
 			url: "DisplayAll",
@@ -714,18 +784,18 @@
 		    			+ "<th>Screening <a href='#' onClick=sortAscScreening(this.id) id='screening'> &#9652</a>"
 		    			+ "<a href='#' onClick=sortDescIllness(this.id) id='screening'> &#9662</a></th>"
 		    			+"<th>"
-			    		+"<select onchange='jsFunction1(value)' id='gender'>"
-					    	+"<option value='Male' onclick='if (!document.getElementById('searchInput').onchange()) mySearch();'>Male</option>"
-					    	+"<option value='Female'>Female</option>"
-					    	+"<option value='' selected='selected' >All Gender Type</option>"
-					    	+"</select>"
+		    			+"<select onchange = sortGender(this.value) >"
+		    			+"<option value='' selected='selected'> Gender </option>"
+				    	+"<option value='All' >All</option>"
+				    	+"<option value='Male' >Male</option>"
+				    	+"<option value='Female'>Female</option>"
+				    	+"</select>"
 				    	+"</th>"
 		    			+ "<th>Regularity of screening</th>"
 		    			+ "<th>View Patients</th>"
 		    			+ "<th>Edit</th>"
 		    			+ "<th>Delete</th></tr></thead>";
 		    	$.each(response,function(key, value) {
-		    		console.log("test");
 		    		table += "<tbody><tr><td>"
 	    				+ value["ageRequired"]
 	    				+ "</td>"
