@@ -43,7 +43,7 @@ public class DisplayAllClientByName extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		
+		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 		
 		String clientName =  (String) session.getAttribute("clientName");

@@ -43,7 +43,7 @@ public class Add extends HttpServlet {
 		String screening = request.getParameter("screening");
 		String[] types = request.getParameterValues("type");
 		String years = request.getParameter("years");
-		ArrayList<Condition> conditionList = connection.retrieveAllCondition();
+		ArrayList<Condition> conditionList = connection.retrieveAllCondition("ID", "ASC");
 	
 		String[] type = types[0].split(",");
 		for (int i = 0; i < type.length; i++) {

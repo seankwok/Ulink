@@ -43,12 +43,14 @@ public class DisplayAll extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		
 		String[] gender = request.getParameterValues("gender");
-		//String order = request.getParameter("order");
+		String name = request.getParameter("name");
+		String orderDirection = request.getParameter("orderDirection");
+				//String order = request.getParameter("order");
 		System.out.println(gender);
 		DatabaseConnection database = new DatabaseConnection();
 		ArrayList<Condition> conditionList; 
 		if (gender ==null || gender.equals("All")){
-			conditionList = database.retrieveAllCondition();
+			conditionList = database.retrieveAllCondition(name, orderDirection);
 		} else if (gender.equals("Female")){
 			conditionList = database.retrieveAllConditionBySort(gender[0]);
 		} else {

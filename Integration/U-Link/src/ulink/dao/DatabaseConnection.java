@@ -20,7 +20,7 @@ public class DatabaseConnection {
 		ArrayList<String> templateList = new ArrayList<>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
 			String sql = "SELECT templateName FROM emailtemplate";
@@ -48,7 +48,7 @@ public class DatabaseConnection {
 		ArrayList<Index> IndexList = new ArrayList<>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
 			String sql = "select billingCity, BillingCode, BillingCountry, BillingState, BillingStreet,phone,email from client where `CreatedTime` between'"
@@ -84,7 +84,7 @@ public class DatabaseConnection {
 		ArrayList<String> followUpPersonList = new ArrayList<>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
 			String sql = "select followUpPerson from client where followUpPerson != '' group by followUpPerson";
@@ -113,7 +113,7 @@ public class DatabaseConnection {
 		ArrayList<Index> IndexList = new ArrayList<>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
 			String sql = "select ID,billingCity, BillingCode, BillingCountry, BillingState, BillingStreet,phone,email from client where `CreatedTime` between'"+startDate+"'and'"+endDate+"' and medical = '"+medicial+"' and `followUpPerson`= '"+followUpPerson+"'";
@@ -148,7 +148,7 @@ public class DatabaseConnection {
 		ArrayList<RankingReferredBy> referredByList = new ArrayList<>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
 			String sql = "select  referredBy, count(referredBy) from client where `CreatedTime` between'" + startDate
@@ -191,7 +191,7 @@ public class DatabaseConnection {
 		ArrayList<RankingDoctor> doctorList = new ArrayList<>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
 			// String sql = "select doctor, clinic, specialty,
@@ -242,7 +242,7 @@ public class DatabaseConnection {
 		String createTime = "";
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
 			String sql = "SELECT CreatedTime FROM `client` order BY(CreatedTime) DESC limit 1";
@@ -269,7 +269,7 @@ public class DatabaseConnection {
 		ArrayList<String> dateList = new ArrayList<>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
 			String sql = "SELECT CreatedTime FROM `client` WHERE CreatedTime BETWEEN ('" + startDate
@@ -301,7 +301,7 @@ public class DatabaseConnection {
 		ArrayList<RankingReferredBy> referredByList = new ArrayList<>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
 			String sql = "select  referredBy, count(referredBy) from client where `CreatedTime` between'" + startDate
@@ -331,7 +331,7 @@ public class DatabaseConnection {
 		ArrayList<RankingSpecialty> specialtyList = new ArrayList<>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
 			String sql = "select specialty, count(appointment) from client where `CreatedTime` between'" + startDate
@@ -361,7 +361,7 @@ public class DatabaseConnection {
 		String name = "";
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
 			String sql = "select clientName from client where email = '" + email + "'"; 
@@ -388,7 +388,7 @@ public class DatabaseConnection {
 		ArrayList<RankingDoctor> doctorList = new ArrayList<>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
 			String sql = "select doctor, clinic, specialty, count(appointment) from client where `CreatedTime` between'"
@@ -422,7 +422,7 @@ public class DatabaseConnection {
 		ArrayList<RankingDoctorSpecialty> doctorList = new ArrayList<>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
 			String sql = "select doctor, count(appointment) from client where `CreatedTime` between'" + startDate
@@ -454,7 +454,7 @@ public class DatabaseConnection {
 		ArrayList<Client> clientList = new ArrayList<Client>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
 			String sql = "SELECT * FROM client";
@@ -526,7 +526,7 @@ public class DatabaseConnection {
 		ArrayList<Client> clientList = new ArrayList<Client>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
 			String sql = "SELECT * FROM client group by clientName";
@@ -594,7 +594,7 @@ public class DatabaseConnection {
 		ArrayList<Client> clientList = new ArrayList<Client>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
 			String sql = "SELECT * FROM client where clientType= '" + type + "' and medical= '" + type2 + "'";
@@ -662,7 +662,7 @@ public class DatabaseConnection {
 		ArrayList<Client> clientList = new ArrayList<Client>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
 			String sql = "select * from client where clientName='" + name + "'";
@@ -731,7 +731,7 @@ public class DatabaseConnection {
 		ArrayList<Client> clientList = new ArrayList<Client>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
 			String sql = "select * from client where  `CreatedTime` between'" + startDate + "'and'" + endDate
@@ -798,7 +798,7 @@ public class DatabaseConnection {
 		Connection con;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			String sql = "INSERT INTO client (accountID,clientOwner,clientName,clientType,company,nationality,gender,dateOfBirth,email,medical,"
 					+ "mainDiagnosis,referredBy,PIC,appointment,doctor,specialty,clinic,otherDoctor,followUpPerson,followUpPIC,hospitalAdmitted,"
@@ -806,7 +806,7 @@ public class DatabaseConnection {
 					+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			//Utility utility = new Utility();
 			PreparedStatement preparedStmt = con.prepareStatement(sql);
-
+			con.setAutoCommit(false);
 			for (int i = 1; i < clientList.size(); i++) {
 				Client client = clientList.get(i);
 
@@ -864,11 +864,12 @@ public class DatabaseConnection {
 				//System.out.println(date);
 				preparedStmt.setDate(34, java.sql.Date.valueOf(date));
 				preparedStmt.setString(35, client.getPhone());
-				preparedStmt.execute();
-				// preparedStmt.addBatch();
+				
+				preparedStmt.addBatch();
 
 			}
-
+			preparedStmt.executeBatch();
+			con.commit();
 			con.close();
 
 		} catch (SQLException | ClassNotFoundException e) {
@@ -888,7 +889,7 @@ public class DatabaseConnection {
 		ArrayList<Consultation> consultationList = new ArrayList<Consultation>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
 			String sql = "SELECT C_ID, dateTime, consultation.doctorName, clinicName, passportNumber FROM `consultation` INNER JOIN doctor ON consultation.doctorName = doctor.doctorName where dateTime >= '"
@@ -921,7 +922,7 @@ public class DatabaseConnection {
 		ArrayList<String> specialityList = new ArrayList<String>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
 			String sql = "SELECT speciality from doctor INNER join consultation on doctor.doctorName = consultation.doctorName where dateTime >= '"
@@ -951,7 +952,7 @@ public class DatabaseConnection {
 		ArrayList<String> admissionList = new ArrayList<String>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
 			String sql = "select client.passportNumber,client.clientName, client.nationality, user.role, followup.hospitalAdmitted from client inner join appointment on client.passportNumber = appointment.passportNumber INNER join user on appointment.email = user.email inner join admission on client.passportNumber = admission.passportNumber inner join followup on admission.followUpID = followup.followUpID where followup.dateOfAdmission >= '"
@@ -978,19 +979,19 @@ public class DatabaseConnection {
 		return admissionList;
 	}
 
-	public ArrayList<Condition> retrieveAllCondition() {
+	public ArrayList<Condition> retrieveAllCondition(String name, String sortDirection) {
 
 		Connection con;
 		ArrayList<Condition> allconditionList = new ArrayList<Condition>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 			// con =
-			// DriverManager.getConnection("jdbc:mysql://localhost:3306/test",
+			// DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink",
 			// "root", "");
 
 			Statement stmt = con.createStatement();
-			String sql = "SELECT * FROM allcondition where type != 'infant'";
+			String sql = "SELECT * FROM allcondition where type != 'infant'  order by '" +  name + "'" + sortDirection;
 
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -1022,9 +1023,9 @@ public class DatabaseConnection {
 		Condition condition = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 			// con =
-			// DriverManager.getConnection("jdbc:mysql://localhost:3306/test",
+			// DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink",
 			// "root", "");
 
 			Statement stmt = con.createStatement();
@@ -1059,9 +1060,9 @@ public class DatabaseConnection {
 		ArrayList<Condition> allconditionList = new ArrayList<Condition>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 			// con =
-			// DriverManager.getConnection("jdbc:mysql://localhost:3306/test",
+			// DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink",
 			// "root", "");
 
 			Statement stmt = con.createStatement();
@@ -1090,19 +1091,19 @@ public class DatabaseConnection {
 		return allconditionList;
 	}
 
-	public ArrayList<Condition> retrieveAllConditionInfant() {
+	public ArrayList<Condition> retrieveAllConditionInfant(String name, String sortDirection) {
 
 		Connection con;
 		ArrayList<Condition> allconditionList = new ArrayList<Condition>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 			// con =
-			// DriverManager.getConnection("jdbc:mysql://localhost:3306/test",
+			// DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink",
 			// "root", "");
 
 			Statement stmt = con.createStatement();
-			String sql = "SELECT * FROM allcondition where type = 'infant'";
+			String sql = "SELECT * FROM allcondition where type = 'infant' order by '" +  name + "'" + sortDirection;
 
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -1133,7 +1134,7 @@ public class DatabaseConnection {
 		String dateTime = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
 			String sql = "SELECT dateTime FROM uploadtime order by ID DESC LIMIT 1;";
@@ -1158,7 +1159,7 @@ public class DatabaseConnection {
 		Connection con;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			String sql = "INSERT INTO uploadtime (dateTime)" + "VALUES (?)";
 			PreparedStatement preparedStmt = con.prepareStatement(sql);
@@ -1182,7 +1183,7 @@ public class DatabaseConnection {
 		Connection con;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			String sql = "INSERT INTO allcondition (conditionName,numOfYears,ageRequired, screening, type)"
 					+ "VALUES (?,?,?,?,?)";
@@ -1210,7 +1211,7 @@ public class DatabaseConnection {
 		Connection con;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			String sql = "Delete from allcondition where ID = ?";
 			PreparedStatement preparedStmt = con.prepareStatement(sql);
@@ -1231,7 +1232,7 @@ public class DatabaseConnection {
 		Connection con;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			String sql = "UPDATE allcondition SET numOfYears= ?, ageRequired = ?, screening = ?, type = ?, conditionName = ?  WHERE ID = ?";
 			PreparedStatement preparedStmt = con.prepareStatement(sql);
@@ -1257,7 +1258,7 @@ public class DatabaseConnection {
 		ArrayList<Timeline> timelineList = new ArrayList<Timeline>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			String sql = "Select * from listoftimeline";
 			Statement stmt = con.createStatement();
@@ -1283,7 +1284,7 @@ public class DatabaseConnection {
 		Connection con;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			String sql = "UPDATE listoftimeline SET yearsToSend= ? WHERE timelineID = ?";
 			PreparedStatement preparedStmt = con.prepareStatement(sql);
@@ -1304,7 +1305,7 @@ public class DatabaseConnection {
 		Connection con;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			String sql = "INSERT INTO listoftimeline (conditionName,passportNumber,yearsToSend) " + "VALUES (?,?,?)";
 			PreparedStatement preparedStmt = con.prepareStatement(sql);
@@ -1328,7 +1329,7 @@ public class DatabaseConnection {
 		ArrayList<Condition> allconditionList = new ArrayList<Condition>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
 			String sql = "SELECT * FROM allcondition where type= 'both' || type='" + types + "'";
@@ -1362,7 +1363,7 @@ public class DatabaseConnection {
 		ArrayList<Condition> allconditionList = new ArrayList<Condition>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
 			String sql = "SELECT * FROM allcondition where ID='" + ID + "'";
@@ -1396,7 +1397,7 @@ public class DatabaseConnection {
 		ArrayList<Condition> allconditionList = new ArrayList<Condition>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
 			String sql = "SELECT * FROM allcondition where ageRequired <'" + year + "'";
@@ -1428,7 +1429,7 @@ public class DatabaseConnection {
 		Connection con;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 			Statement stmt = con.createStatement();
 
 			String sql = "INSERT INTO user (email,password,roles) " + "VALUES (?,?,?)";
@@ -1454,7 +1455,7 @@ public class DatabaseConnection {
 		ArrayList<EmailSend> allEmailSendList = new ArrayList<EmailSend>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
 			String sql = "SELECT * FROM emailsend where clientName='" + clientName + "'";
@@ -1490,7 +1491,7 @@ public class DatabaseConnection {
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
 			String sql = "SELECT date FROM emailsend where clientName='" + clientName + " & screening='" + screeningName +"' order by ID DESC LIMIT 1";
@@ -1519,7 +1520,7 @@ public class DatabaseConnection {
 		Connection con;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 			Statement stmt = con.createStatement();
 
 			String sql = "INSERT INTO emailsend (clientName,screening,date) " + "VALUES (?,?,?)";
@@ -1541,7 +1542,7 @@ public class DatabaseConnection {
 		Connection con;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 			Statement stmt = con.createStatement();
 
 			String sql = "INSERT INTO emailtemplate (templateName,msg) " + "VALUES (?,?)";
@@ -1566,9 +1567,9 @@ public class DatabaseConnection {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			// con =
-			// DriverManager.getConnection("jdbc:mysql://localhost:3306/test",
+			// DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink",
 			// "root", "");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("select msg from emailtemplate where templateName='" + name + "'");
 			while (rs.next()) {
@@ -1589,7 +1590,7 @@ public class DatabaseConnection {
 		Connection con;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			String sql = "DELETE FROM emailtemplate WHERE templateName = ?";
 			PreparedStatement preparedStmt = con.prepareStatement(sql);
@@ -1611,9 +1612,9 @@ public class DatabaseConnection {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			// con =
-			// DriverManager.getConnection("jdbc:mysql://localhost:3306/test",
+			// DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink",
 			// "root", "");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("select * from User");
 			while (rs.next()) {
@@ -1636,7 +1637,7 @@ public class DatabaseConnection {
 		Connection con;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			String sql = "DELETE FROM user WHERE email = ?";
 			PreparedStatement preparedStmt = con.prepareStatement(sql);
@@ -1656,7 +1657,7 @@ public class DatabaseConnection {
 		Connection con;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			String sql = "UPDATE user SET password= ? WHERE email = ?";
 			PreparedStatement preparedStmt = con.prepareStatement(sql);
@@ -1678,7 +1679,7 @@ public class DatabaseConnection {
 		User user = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "2FeroT8WC0GG");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
 			String sql = "SELECT * FROM User where email='" + email + "'";

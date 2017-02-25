@@ -39,9 +39,10 @@ public class DisplayAllConditionInfant extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		PrintWriter out = response.getWriter();
-		
+		String name = request.getParameter("name");
+		String orderDirection = request.getParameter("orderDirection");
 		DatabaseConnection database = new DatabaseConnection();
-		ArrayList<Condition> conditionList = database.retrieveAllConditionInfant();
+		ArrayList<Condition> conditionList = database.retrieveAllConditionInfant(name, orderDirection);
 		System.out.print(conditionList);
 		
 		Gson gson = new Gson();

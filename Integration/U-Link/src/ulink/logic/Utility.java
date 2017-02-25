@@ -106,7 +106,7 @@ public class Utility {
 		return two.format(Math.sqrt(temp));
 	}
 	
-	public LinkedHashMap<Integer,String> getIndexCount(ArrayList<Index> indexList){
+	public LinkedHashMap<Integer,Double> getIndexCount(ArrayList<Index> indexList){
 		
 		LinkedHashMap<Integer, Double> pointSystem = new LinkedHashMap<>();
 		LinkedHashMap<Integer, String> returnList = new LinkedHashMap<>();
@@ -140,12 +140,12 @@ public class Utility {
 		double two = pointSystem.get(2);
 		double three = pointSystem.get(3);
 		
-		returnList.put(0, zero/sum *100 + "");
-		returnList.put(1, one/sum *100 + "");
-		returnList.put(2, two/sum *100 + "");
-		returnList.put(3, three/sum *100 + "");
+		pointSystem.put(0, zero/sum *100);
+		pointSystem.put(1, one/sum *100);
+		pointSystem.put(2, two/sum *100);
+		pointSystem.put(3, three/sum *100);
 		
-		return returnList;
+		return pointSystem;
 		
 	}
 	

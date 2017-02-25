@@ -41,12 +41,18 @@ public class MainTest {
 	public static void main(String[] args) throws ParseException {
 		DatabaseConnection connection = new DatabaseConnection();
 		Utility utility = new Utility();
-		ArrayList<RankingDoctorSpecialty> doctorList = connection.retrieveAllDoctorBySpecialty("Obs & Gynae",utility.changeDateFormatDatabase("01/01/2017"),utility.changeDateFormat("28/01/2017"));
+		ArrayList<String> personInChargeList = connection.retrieveAllPersonInCharge();
+	//	Utility utility = new Utility();
+		LinkedHashMap<String,LinkedHashMap<Integer,Double>> personInChargePointSystem = new  LinkedHashMap<String,LinkedHashMap<Integer,Double>>();
+		for (int i = 0; i<personInChargeList.size(); i++){
+			String temp = personInChargeList.get(i);
+			ArrayList<Index> indexList = connection.retrieveAllIndexByPerson(utility.changeDateFormatDatabase("01/01/2015"), utility.changeDateFormatDatabase("01/01/2017"), "Medical",temp);	
+			LinkedHashMap<Integer,Double> pointSystem = utility.getIndexCount(indexList);
+			if (!personInChargePointSystem.containsKey(temp)){
+				personInChargePointSystem.put(temp, pointSystem);
+			}
+		}
 		
-		System.out.println(doctorList.size());
-		
-		System.out.println(doctorList.get(0).getName());
-
-
+		System.out.println(personInChargePointSystem.values());
 	}
 }
