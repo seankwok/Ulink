@@ -12,6 +12,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -52,9 +53,7 @@ public class UploadServlet extends HttpServlet {
 	private static final String DESTINATION_DIR_PATH = "/MySavedFiles";
 	private File destinationDir;
 	// DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-	// Date date = new Date();
 
-	Calendar calendar = Calendar.getInstance();
 	// OR Calendar.getInstance(TimeZone.getTimeZone("GMT"));
 
 	// System.out.println(d.toString());
@@ -69,13 +68,15 @@ public class UploadServlet extends HttpServlet {
 		String realPath = getServletContext().getRealPath(TMP_DIR_PATH);
 		tmpDir = new File(realPath);
 		if (!tmpDir.isDirectory()) {
-			throw new ServletException(TMP_DIR_PATH + " is not a directory");
+			new File("/MyTempFiles").mkdirs();
+			//throw new ServletException(TMP_DIR_PATH + " is not a directory");
 		}
 
 		realPath = getServletContext().getRealPath(DESTINATION_DIR_PATH);
 		destinationDir = new File(realPath);
 		if (!destinationDir.isDirectory()) {
-			throw new ServletException(DESTINATION_DIR_PATH + " is not a directory");
+			new File("/MySavedFiles").mkdirs();
+			//throw new ServletException(DESTINATION_DIR_PATH + " is not a directory");
 		}
 
 	}
@@ -90,7 +91,7 @@ public class UploadServlet extends HttpServlet {
 
 		// PrintWriter to send the JSON response back
 		PrintWriter out = response.getWriter();
-		//String uploadedTime = request.getParameter("uploadedTime");
+		// String uploadedTime = request.getParameter("uploadedTime");
 
 		// set content type and header attributes
 		// response.setContentType("UTF-8");
@@ -148,7 +149,7 @@ public class UploadServlet extends HttpServlet {
 
 			}
 
-			int count = 0;
+			int count = -1;
 			String extension = FilenameUtils.getExtension(fullName);
 			if (extension.trim().equalsIgnoreCase("xlsx")) {
 				System.out.println("test1");
@@ -156,9 +157,11 @@ public class UploadServlet extends HttpServlet {
 				// System.out.print(count);
 				// out.write(count);
 				// out.flush();
-				calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY));
-				Date d = calendar.getTime();
-				connection.addDateTime(d.toString());
+				TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
+
+				Date date2 = new Date();
+
+				connection.addDateTime(date2.toString());
 				// PrintWriter out = response.getWriter();
 
 				out.write("" + count);
@@ -172,9 +175,11 @@ public class UploadServlet extends HttpServlet {
 				// process your binary excel file
 				System.out.println("test2");
 				count = test(file);
-				calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY));
-				Date d = calendar.getTime();
-				connection.addDateTime(d.toString());
+				TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
+
+				Date date2 = new Date();
+
+				connection.addDateTime(date2.toString());
 				// out.write(count);
 				// out.flush();
 				// response.sendRedirect("./upload.html");
@@ -200,16 +205,16 @@ public class UploadServlet extends HttpServlet {
 			log("Error encountered while parsing the request", ex);
 			// myObj.addProperty("success", false);
 			// out.println(myObj.toString());
-
-			request.getRequestDispatcher("./upload.html").forward(request, response);
+			out.write("Not excel file");
+			out.flush();
 			return;
 		} catch (Exception ex) {
 			log("Error encountered while uploading file", ex);
 			// myObj.addProperty("success", false);
 
 			// out.println(myObj.toString());
-
-			request.getRequestDispatcher("./upload.html").forward(request, response);
+			out.write("Not excel file");
+			out.flush();
 			return;
 		}
 
@@ -220,7 +225,7 @@ public class UploadServlet extends HttpServlet {
 		HSSFWorkbook wb = new HSSFWorkbook(fs);
 		HSSFSheet sheet = wb.getSheetAt(0);
 		HSSFCell cell;
-		int count = 0;
+		int count = -1;
 		Utility utility = new Utility();
 		DatabaseConnection connection = new DatabaseConnection();
 		Iterator<Row> rowIter = sheet.rowIterator();
@@ -473,7 +478,7 @@ public class UploadServlet extends HttpServlet {
 	private int processExcelFile(File file) {
 		ArrayList<Client> clientList = new ArrayList<>();
 		DatabaseConnection connection = new DatabaseConnection();
-		int count = 0;
+		int count = -1;
 
 		try {
 			// Creating Input Stream

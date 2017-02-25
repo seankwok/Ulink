@@ -42,17 +42,22 @@ public class DisplayAll extends HttpServlet {
 		// TODO Auto-generated method stub
 		PrintWriter out = response.getWriter();
 		
-		String[] gender = request.getParameterValues("gender");
-		//String order = request.getParameter("order");
-		System.out.println(gender);
+		String gender = request.getParameter("gender");
+		String name = request.getParameter("name");
+		String orderDirection = request.getParameter("orderDirection");
+				//String order = request.getParameter("order");
+		//System.out.println(gender);
 		DatabaseConnection database = new DatabaseConnection();
 		ArrayList<Condition> conditionList; 
-		if (gender ==null || gender.equals("All")){
-			conditionList = database.retrieveAllCondition();
-		} else if (gender.equals("Female")){
-			conditionList = database.retrieveAllConditionBySort(gender[0]);
+		if (gender != null && gender.equals("Male")){
+			conditionList = database.retrieveAllConditionBySort(gender);
+			//System.out.println(conditionList.size());
+			//System.out.println("TETETE");
+		} else if (gender != null && gender.equals("Female")){
+			conditionList = database.retrieveAllConditionBySort(gender);
 		} else {
-			conditionList = database.retrieveAllConditionBySort(gender[0]);
+			
+			conditionList = database.retrieveAllCondition(name, orderDirection);
 		}
 	
 		 
@@ -62,7 +67,7 @@ public class DisplayAll extends HttpServlet {
 		
 		JsonArray result = (JsonArray) new Gson().toJsonTree(conditionList,new TypeToken<List<Condition>>() {}.getType());
 		  String arrayListToJson = gson.toJson(result);
-		  System.out.print(arrayListToJson);
+		//  System.out.print(arrayListToJson);
 		
 		out.write(arrayListToJson);
 		out.flush();

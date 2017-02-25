@@ -43,15 +43,17 @@ public class Add extends HttpServlet {
 		String screening = request.getParameter("screening");
 		String[] types = request.getParameterValues("type");
 		String years = request.getParameter("years");
-		ArrayList<Condition> conditionList = connection.retrieveAllCondition();
+		ArrayList<Condition> conditionList = connection.retrieveAllCondition("ID", "ASC");
 	
 		String[] type = types[0].split(",");
 		for (int i = 0; i < type.length; i++) {
 			boolean check = true;
 			for (int k = 0; k < conditionList.size(); k++) {
 				Condition condition = conditionList.get(k);
-			
-				if (condition.getConditionName().equals(illness) && condition.getType().equals(type[i])){
+				System.out.println( type[i] + " gender " + condition.getType());
+				System.out.println(condition.getConditionName() + " Condition  " + illness);
+				System.out.println(condition.getScreening() + " Screening " + screening);
+				if (condition.getConditionName().equals(illness) && condition.getType().equals(type[i]) && condition.getScreening().equals(screening)){
 			
 					check = false;
 				}

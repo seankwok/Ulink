@@ -53,19 +53,20 @@ public class DisplayPatientsByIllness extends HttpServlet {
 		session.setAttribute("ID", ID);
 		Condition condition = connection.retrieveAllConditionByID(ID);
 		
-		ArrayList<Client> clientList = connection.retrieveAllClientList();
+		ArrayList<Client> clientList = connection.retrieveAllClientListEmail();
 		ArrayList<ClientByIllness> clientByIllnessList = new ArrayList<>();
 		for (int i = 0; i < clientList.size(); i++) {
 			Client client = clientList.get(i);
 			if ((condition.getType().toLowerCase().equals("male") || condition.getType().toLowerCase().equals("female")) && client.getEmail().length() > 0) {
 				if (client.getAge() >= condition.getAgeRequired() && client.getGender().toLowerCase().equals(condition.getType().toLowerCase())) {
 					clientByIllnessList.add(new ClientByIllness(client.getClientName(), client.getAge(),
-							client.getEmail(), client.getGender(),condition.getScreening(), condition.getConditionName(), connection.retrieveLatestDateSend(client.getClientName()) ,client.getFollowUpPerson()));
+							client.getEmail(), client.getGender(),condition.getScreening(), condition.getConditionName(), connection.retrieveLatestDateSend(client.getClientName(),condition.getScreening()) ,client.getFollowUpPerson()));
+					//System.out.println("TQEQWEQWEQW " + connection.retrieveLatestDateSend(client.getClientName(),condition.getScreening()));
 				}
-			} else {
-				if (client.getAge() >= condition.getAgeRequired() / 12 && client.getGender().toLowerCase().equals(condition.getType().toLowerCase() ) && client.getEmail().length() > 0) {
+			} else if (client.getAge() < 2){
+				if (client.getAge()*12 >= condition.getAgeRequired()  && client.getEmail().length() > 0) {
 					clientByIllnessList.add(new ClientByIllness(client.getClientName(), client.getAge(),
-							client.getEmail(), client.getGender(),condition.getScreening(), condition.getConditionName(), connection.retrieveLatestDateSend(client.getClientName()), client.getFollowUpPerson()));
+							client.getEmail(), client.getGender(),condition.getScreening(), condition.getConditionName(), connection.retrieveLatestDateSend(client.getClientName(), condition.getScreening()), client.getFollowUpPerson()));
 
 				}
 			}

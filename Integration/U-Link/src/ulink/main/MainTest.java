@@ -29,6 +29,7 @@ import ulink.constructor.Client;
 import ulink.constructor.ClientByIllness;
 import ulink.constructor.Condition;
 import ulink.constructor.Index;
+import ulink.constructor.PersonInCharge;
 import ulink.constructor.RankingDoctorSpecialty;
 import ulink.constructor.RankingReferredBy;
 import ulink.dao.DatabaseConnection;
@@ -40,13 +41,30 @@ public class MainTest {
 
 	public static void main(String[] args) throws ParseException {
 		DatabaseConnection connection = new DatabaseConnection();
-		ArrayList<Client> clientList = connection.retrieveAllClientListEmail();
+		ArrayList<String> personInChargeList = connection.retrieveAllPersonInCharge();
+		Utility utility = new Utility();
+		ArrayList<PersonInCharge> listAllPIC = new ArrayList<>();
+	//	LinkedHashMap<String,LinkedHashMap<Integer,Double>> personInChargePointSystem = new  LinkedHashMap<String,LinkedHashMap<Integer,Double>>();
+		for (int i = 0; i<personInChargeList.size(); i++){
+			String temp = personInChargeList.get(i);
+			ArrayList<Index> indexList = connection.retrieveAllIndexByPerson(utility.changeDateFormatDatabase("01-01-2015"), utility.changeDateFormatDatabase("01-01-2017"), "Visa",temp);	
+			
+			
+		System.out.println(indexList.size());
+			LinkedHashMap<Integer,Double> pointSystem = utility.getIndexCount(indexList);
+			
+			listAllPIC.add(new PersonInCharge(temp, pointSystem));
+		}
 		
-		System.out.println(clientList.get(1).getVisaRequestBy());
+		for (int i= 0; i< personInChargeList.size();i++){
+			System.out.println(personInChargeList.get(i));
+		}
 		
-	//	for (int i =0; i< conditionList.size(); i++){
-		//	System.out.println(conditionList.get(i).getAgeRequired());
-	//	}
+		for (int i =0; i< listAllPIC.size(); i++){
+			System.out.println(listAllPIC.get(i).getPointSystem().values());
+		}
+	
+		
 		
 	}
 }

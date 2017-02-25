@@ -6,17 +6,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.Properties;
 import java.util.TreeMap;
-
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 
 import org.joda.time.DateTime;
 
@@ -115,32 +106,54 @@ public class Utility {
 		return two.format(Math.sqrt(temp));
 	}
 	
-	public LinkedHashMap<Integer,Integer> getIndexCount(ArrayList<Index> indexList){
+	public LinkedHashMap<Integer,Double> getIndexCount(ArrayList<Index> indexList){
 		
-		LinkedHashMap<Integer, Integer> pointSystem = new LinkedHashMap<>();
+		LinkedHashMap<Integer, Double> pointSystem = new LinkedHashMap<>();
+		LinkedHashMap<Integer, String> returnList = new LinkedHashMap<>();
 		
-		pointSystem.put(0,0);
-		pointSystem.put(1,0);
-		pointSystem.put(2,0);
-		pointSystem.put(3,0);
+		pointSystem.put(0,0.0);
+		pointSystem.put(1,0.0);
+		pointSystem.put(2,0.0);
+		pointSystem.put(3,0.0);
 
 		for (int i = 0; i < indexList.size(); i++) {
 			int point = 0;
+			
 			Index index = indexList.get(i);
 			if (index.getAddress().length() > 0) {
+				System.out.println(index.getAddress());
 				point++;
+				
 			}
 			if (index.getEmail().length() > 0) {
+				System.out.println(index.getEmail());
 				point++;
+				
 			}
 			if (index.getPhone().length() > 0) {
+				System.out.println(index.getPhone());
 				point++;
+				
 			}
+			System.out.print(point);
 			if (pointSystem.containsKey(point)){
-				int temp = pointSystem.get(point);
+				double temp = pointSystem.get(point);
 				pointSystem.put(point, temp+1);
+				System.out.println(point + " " + temp+1);
 			}
 		}
+		
+		double sum = pointSystem.get(0) + pointSystem.get(1) + pointSystem.get(2) + pointSystem.get(3); 
+		double zero = pointSystem.get(0);
+		double one = pointSystem.get(1);
+		double two = pointSystem.get(2);
+		double three = pointSystem.get(3);
+		
+		pointSystem.put(0, (double) Math.round(zero/sum *100));
+		pointSystem.put(1, (double) Math.round(one/sum *100));
+		pointSystem.put(2, (double) Math.round(two/sum *100));
+		pointSystem.put(3, (double) Math.round(three/sum *100));
+		
 		return pointSystem;
 		
 	}

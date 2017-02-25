@@ -177,41 +177,48 @@ $(document).ready(function() {
 	});
 				
 function viewDoctors(clickedID){
+	var startDate = $("#datepicker1").val();
+	var endDate = $("#datepicker2").val();
+	
+
 	var sendData = {
-			"Specialty" :clickedID
+			"Specialty" :clickedID,
+			"startDate" :startDate,
+			"endDate" :	endDate
 		};
 	var speciality = "";
 	var rank = 0;
 	var prev ="";
+	
 	var table = "<table id='table' width='80%'>";
 		$.ajax({
 			url : "DisplayDoctorBySpecialty",
 			type : "get",
-			data : sendData +  'startDate=' + startDate + '&' + 'endDate=' + endDate,
+			data : sendData ,
 			dataType : "json",
 			complete: function(data){
-		    	var json = jQuery.parseJSON(JSON.stringify(data));
-		    	table += "<thead>"
-			    			+"<th>Ranking</th>"
-			    			+"<th>Doctor</th>"
-			    			+"<th>Number of Engagement</th>"
-		    			+"</thead>";
-		    			+ "<tbody>"
-		    	$.each(json.responseJSON,function(key,value) {
+				var json = jQuery.parseJSON(data.responseText);
+			    	table += "<thead>"
+		    			+"<th>Ranking</th>"
+		    			+"<th>Doctor</th>"
+		    			+"<th>Number of Engagement</th>"
+	    			+"</thead>";
+	    			+ "<tbody>"
+	    			$.each(json,function(key, value) {
 		    		speciality = value["Specialty"]
 		    		if(prev != value["engagement"]){
 						rank += 1;	
 					}
-	    		table +="<tr>"
-	    				  +"<td>"+rank+"</td>"
-	    				  +"<td>"+value["Specialty"]+"</td>"	 
-	    				  +"<td>"+value["engagement"]+"</td>"
+				table +="<tr>"
+						  +"<td>"+rank+"</td>"
+						  +"<td>"+value["name"]+"</td>"	 
+						  +"<td>"+value["engagement"]+"</td>"
 						+ "</tr>"
 					prev = value["engagement"];
-		    	});
-		    	table += "</tbody></table>"
-		    		$("#result").html(table);
-		    		$("#clickedSpeciality").html("Speciality: "+clickedID);
+	    		});
+	    		table += "</tbody></table>"
+	    		$("#result").html(table);
+	    		$("#clickedSpeciality").html("Speciality: "+clickedID);
 			}	
 		});
 }

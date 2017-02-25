@@ -51,6 +51,7 @@ public class DisplayAllEmailDateSent extends HttpServlet {
 		doGet(request, response);
 		HttpSession session = request.getSession();
 		String clientName =  (String) session.getAttribute("clientName");
+		
 		DatabaseConnection connection = new DatabaseConnection();
 		ArrayList<EmailSend> emailSendList = connection.retrieveEmailSendDetails(clientName);
 

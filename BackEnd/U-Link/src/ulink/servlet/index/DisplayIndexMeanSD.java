@@ -43,13 +43,13 @@ public class DisplayIndexMeanSD extends HttpServlet {
 		String team = request.getParameter("team");
 		Utility utility = new Utility();
 		ArrayList<Index> indexList = connection.retrieveAllIndex(startDate, endDate, team);
-		HashMap<Integer,Integer> pointSystem = utility.getIndexCount(indexList);
-		String mean = utility.countMean(pointSystem, indexList.size());
-		String SD = utility.countSD(pointSystem, indexList.size());
+		//HashMap<Integer,Double> pointSystem = utility.getIndexCount(indexList);
+		//String mean = utility.countMean(pointSystem, indexList.size());
+		//String SD = utility.countSD(pointSystem, indexList.size());
 		
 		HashMap<String,String> calculation = new HashMap<>();
-		calculation.put("mean", mean);
-		calculation.put("SD", SD);
+		//calculation.put("mean", mean);
+		//calculation.put("SD", SD);
 		
 		Gson gson = new Gson();
 		PrintWriter out = response.getWriter();

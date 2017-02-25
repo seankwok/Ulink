@@ -427,7 +427,7 @@ public class DatabaseConnection {
 			Statement stmt = con.createStatement();
 			String sql = "select doctor, count(appointment) from client where `CreatedTime` between'" + startDate
 					+ "'and'" + endDate + "' and specialty= '" + specialty
-					+ "' group by doctor ORDER BY COUNT(appointment) DESC";
+					+ "' and doctor != '' group by doctor ORDER BY COUNT(appointment) DESC";
 			ResultSet rs = stmt.executeQuery(sql);
 			Utility utility = new Utility();
 
@@ -486,9 +486,9 @@ public class DatabaseConnection {
 				String hospitalAdmitted = rs.getString(22);
 				String log = rs.getString(23);
 				String claim = rs.getString(24);
-				String visaRequestBy = rs.getString(25);
-				String visa = rs.getString(26);
-				String visaType = rs.getString(27).trim();
+				String visa = rs.getString(25);
+				String visaRequestBy = rs.getString(26);
+				String visaType = rs.getString(27);
 				String visaType2 = rs.getString(28);
 				int age = rs.getInt(29);
 				String billingCity = rs.getString(30);
@@ -517,10 +517,7 @@ public class DatabaseConnection {
 	}
 
 	
-	
-	
-	
-	public ArrayList<Client> retrieveAllClientList() {
+	public ArrayList<Client> retrieveAllClientListByName() {
 
 		Connection con;
 		ArrayList<Client> clientList = new ArrayList<Client>();
@@ -587,6 +584,75 @@ public class DatabaseConnection {
 
 		return clientList;
 	}
+	
+	
+	public ArrayList<Client> retrieveAllClientListEmail() {
+
+		Connection con;
+		ArrayList<Client> clientList = new ArrayList<Client>();
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
+
+			Statement stmt = con.createStatement();
+			String sql = "SELECT * FROM client group by email";
+			ResultSet rs = stmt.executeQuery(sql);
+			Utility utility = new Utility();
+
+			while (rs.next()) {
+				int ID = rs.getInt(1);
+				String accountID = rs.getString(2);
+				String clientOwner = rs.getString(3);
+				String clientName = rs.getString(4);
+				String clientType = rs.getString(5);
+				String company = rs.getString(6);
+				String nationality = rs.getString(7);
+				String gender = rs.getString(8);
+				String dateOfBirth = rs.getString(9);
+				String email = rs.getString(10);
+				String medical = rs.getString(11);
+				String mainDiagnosis = rs.getString(12);
+				String referredBy = rs.getString(13);
+				String PIC = rs.getString(14);
+				String appointment = rs.getString(15);
+				String doctor = rs.getString(16);
+				String specialty = rs.getString(17);
+				String clinic = rs.getString(18);
+				String otherDoctor = rs.getString(19);
+				String followUpPerson = rs.getString(20);
+				String followUpPIC = rs.getString(21);
+				String hospitalAdmitted = rs.getString(22);
+				String log = rs.getString(23);
+				String claim = rs.getString(24);
+				String visa = rs.getString(25);
+				String visaRequestBy = rs.getString(26);
+				String visaType = rs.getString(27);
+				String visaType2 = rs.getString(28);
+				int age = rs.getInt(29);
+				String billingCity = rs.getString(30);
+				String billingCode = rs.getString(31);
+				String billingCountry = rs.getString(32);
+				String billingState = rs.getString(33);
+				String billingStreet = rs.getString(34);
+				String createdTime = "" + rs.getDate(35);
+				String phone = rs.getString(36);
+
+				clientList.add(new Client(ID, accountID, clientOwner, clientName, clientType, company, nationality,
+						gender, dateOfBirth, email, medical, mainDiagnosis, referredBy, PIC, appointment, doctor,
+						specialty, clinic, otherDoctor, followUpPerson, followUpPIC, hospitalAdmitted, log, claim,
+						visaRequestBy, visa, visaType, visaType2, age, billingCity, billingCode, billingCountry,
+						billingState, billingStreet, createdTime, phone));
+			}
+
+			con.close();
+
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return clientList;
+	}
 
 	public ArrayList<Client> retrieveAllClientListByOrder(String type, String type2) {
 
@@ -626,8 +692,8 @@ public class DatabaseConnection {
 				String hospitalAdmitted = rs.getString(22);
 				String log = rs.getString(23);
 				String claim = rs.getString(24);
-				String visaRequestBy = rs.getString(25);
-				String visa = rs.getString(26);
+				String visa = rs.getString(25);
+				String visaRequestBy = rs.getString(26);
 				String visaType = rs.getString(27);
 				String visaType2 = rs.getString(28);
 				int age = rs.getInt(29);
@@ -694,8 +760,8 @@ public class DatabaseConnection {
 				String hospitalAdmitted = rs.getString(22);
 				String log = rs.getString(23);
 				String claim = rs.getString(24);
-				String visaRequestBy = rs.getString(25);
-				String visa = rs.getString(26);
+				String visa = rs.getString(25);
+				String visaRequestBy = rs.getString(26);
 				String visaType = rs.getString(27);
 				String visaType2 = rs.getString(28);
 				int age = rs.getInt(29);
@@ -764,8 +830,8 @@ public class DatabaseConnection {
 				String hospitalAdmitted = rs.getString(22);
 				String log = rs.getString(23);
 				String claim = rs.getString(24);
-				String visaRequestBy = rs.getString(25);
-				String visa = rs.getString(26);
+				String visa = rs.getString(25);
+				String visaRequestBy = rs.getString(26);
 				String visaType = rs.getString(27);
 				String visaType2 = rs.getString(28);
 				int age = rs.getInt(29);
@@ -804,9 +870,9 @@ public class DatabaseConnection {
 					+ "mainDiagnosis,referredBy,PIC,appointment,doctor,specialty,clinic,otherDoctor,followUpPerson,followUpPIC,hospitalAdmitted,"
 					+ "log,claim, visaRequestBy,visa,visaType,visaType2, age,billingCity,billingCode,billingCountry,billingState,billingStreet,createdTime,phone)"
 					+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-			Utility utility = new Utility();
+			//Utility utility = new Utility();
 			PreparedStatement preparedStmt = con.prepareStatement(sql);
-
+			con.setAutoCommit(false);
 			for (int i = 1; i < clientList.size(); i++) {
 				Client client = clientList.get(i);
 
@@ -861,14 +927,15 @@ public class DatabaseConnection {
 				// System.out.print(client.getCreatedtime());
 				String date = client.getCreatedtime().substring(6, 10) + "-" + client.getCreatedtime().substring(3, 5)
 						+ "-" + client.getCreatedtime().substring(0, 2);
-				System.out.println(date);
+				//System.out.println(date);
 				preparedStmt.setDate(34, java.sql.Date.valueOf(date));
 				preparedStmt.setString(35, client.getPhone());
-				preparedStmt.execute();
-				// preparedStmt.addBatch();
+				
+				preparedStmt.addBatch();
 
 			}
-
+			preparedStmt.executeBatch();
+			con.commit();
 			con.close();
 
 		} catch (SQLException | ClassNotFoundException e) {
@@ -978,7 +1045,7 @@ public class DatabaseConnection {
 		return admissionList;
 	}
 
-	public ArrayList<Condition> retrieveAllCondition() {
+	public ArrayList<Condition> retrieveAllCondition(String name, String sortDirection) {
 
 		Connection con;
 		ArrayList<Condition> allconditionList = new ArrayList<Condition>();
@@ -990,7 +1057,7 @@ public class DatabaseConnection {
 			// "root", "");
 
 			Statement stmt = con.createStatement();
-			String sql = "SELECT * FROM allcondition where type != 'infant'";
+			String sql = "SELECT * FROM allcondition where type != 'infant'  order by " +  name + " " + sortDirection;
 
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -1001,6 +1068,7 @@ public class DatabaseConnection {
 				int ageRequired = rs.getInt(4);
 				String screening = rs.getString(5);
 				String type = rs.getString(6);
+				
 				Condition condition = new Condition(ID, conditionName, numOfYears, ageRequired, screening, type);
 				allconditionList.add(condition);
 			}
@@ -1090,7 +1158,7 @@ public class DatabaseConnection {
 		return allconditionList;
 	}
 
-	public ArrayList<Condition> retrieveAllConditionInfant() {
+	public ArrayList<Condition> retrieveAllConditionInfant(String name, String sortDirection) {
 
 		Connection con;
 		ArrayList<Condition> allconditionList = new ArrayList<Condition>();
@@ -1102,7 +1170,7 @@ public class DatabaseConnection {
 			// "root", "");
 
 			Statement stmt = con.createStatement();
-			String sql = "SELECT * FROM allcondition where type = 'infant'";
+			String sql = "SELECT * FROM allcondition where type = 'infant'  order by " +  name + " " + sortDirection;
 
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -1483,7 +1551,7 @@ public class DatabaseConnection {
 	}
 
 	
-	public String retrieveLatestDateSend(String clientName) {
+	public String retrieveLatestDateSend(String clientName, String screeningName) {
 		//EmailSend emailSend = null;
 		Connection con;
 		String date = "";
@@ -1493,7 +1561,7 @@ public class DatabaseConnection {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
-			String sql = "SELECT date FROM emailsend where clientName='" + clientName + "' order by ID DESC LIMIT 1";
+			String sql = "SELECT date FROM emailsend where clientName='" + clientName + "' and screening='" + screeningName +"' order by ID DESC LIMIT 1";
 
 			ResultSet rs = stmt.executeQuery(sql);
 			

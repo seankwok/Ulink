@@ -147,11 +147,13 @@
 				    },
 				    plotOptions: {
 				        column: {
-				            pointPadding: 0.2,
+				            pointPadding: 0.1,
 				            borderWidth: 0,
 				            dataLabels: {
-		     	                enabled: true
+		     	                enabled: true,
+		     	               allowOverlap: true
 		     	            }
+				    
 				        }
 				    },  
 				    credits: {
@@ -159,7 +161,7 @@
 				    },
 				    series: [{
 				        name: 'Total',
-				        color: '#0683E1',
+				        color: '#8A8184',
 				        data: [json.responseJSON[0].total,json.responseJSON[1].total,json.responseJSON[2].total,json.responseJSON[3].total,
 				        	json.responseJSON[4].total,json.responseJSON[5].total,json.responseJSON[6].total,json.responseJSON[7].total,json.responseJSON[8].total]
 

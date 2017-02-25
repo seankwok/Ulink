@@ -1,24 +1,24 @@
 package ulink.constructor;
 
 public class RankingDoctorSpecialty {
-	private String Specialty;
+	private String name;
 	private int engagement;
 	
 	
 	
 	
-	public RankingDoctorSpecialty(String specialty, int engagement) {
+	public RankingDoctorSpecialty(String name, int engagement) {
 		super();
-		Specialty = specialty;
+		this.name = name;
 		this.engagement = engagement;
 	}
 	
 	
-	public String getSpecialty() {
-		return Specialty;
+	public String getName() {
+		return name;
 	}
-	public void setSpecialty(String specialty) {
-		Specialty = specialty;
+	public void setName(String name) {
+		this.name = name;
 	}
 	public int getEngagement() {
 		return engagement;

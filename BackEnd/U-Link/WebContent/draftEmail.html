@@ -2,7 +2,6 @@
 
 
 
-
 <html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -20,8 +19,7 @@
    
     <script> 
 	    $(function(){
-	      $("#includedContent").load("navBar.html"); 
-	      
+	      $("#includedContent").load("navBar.html"); 	      
 	    });
 
     </script> 
@@ -33,25 +31,42 @@
 		}		
 		
 		.dropdownSide {
-			  display: inline-block;
-			  margin-right:20px;
+			  width: 300px !important;
+			  
+		}	
+		
 
-		}			
+		
+		form {
+		  text-align: center;
+		}
 	</style>
 	
 	
 	<script type="text/javascript">
 	
 	function showFields(){
-		var templateContent = '[clientName]<br>[clientEmail]<br>[screening]' ;
+		var templateContent = '[clientEmail]<br>[clientName]<br>[screening]' ;
 		 CKEDITOR.instances.editor1.setData(templateContent);
+		 var clients = sessionStorage.getItem('clients');
+		 var array = clients.split(',');
+		 var numSelected = array.length;
+		 var table = " <table class='table table-bordered' width='50%'><tr><th>" + numSelected + " Clients Selected</th></tr>";
+		 array.forEach(function(entry) {
+			    table += "<tr><td>"+entry+"</td><tr>"
+			});
+			
+		
+		 table += "</table>";
+		 $('#clientTab').html(table);
+
 
 	}
 	
 	$(document).ready(function() {
 		showFields();
 		showDropdownList();	
-		 var myArray = sessionStorage.getItem('myArray');
+		
 	});
 	
 		function selectTemplate(clickedID){
@@ -70,21 +85,18 @@
 	
 		}
 	    
-		function replaceSpace(msg){         
-	         var toReturn = "";
-	         console.log("msg: " + msg);
-	         toReturn = msg.replace(/%/,"&#37;").replace(/&nbsp;/g," ");
-	         console.log("return: " + toReturn );
-	         return toReturn;
-	       }
-		
+	   	function replaceSpace(msg){
+	   	    var res = encodeURIComponent(msg);
+	   	    return res;
+
+	   	}   
 	    function save(){
 	    	var templateName = $('#template').val();
 	    	if (templateName == ""){
 	      		$('#errMsg').html("Template Name Required!");	 	    		  
 	    	}else{
 		    	var content = CKEDITOR.instances.editor1.getData();
-		    	content  = replaceSpace(content);		    	    	
+		    	content  = replaceSpace(content);
 		    	$.ajax({
 					type: 'post',
 					url: "CreateEmailTemplate",
@@ -121,7 +133,7 @@
 					    	+ " <ul class='dropdown-menu' role='menu' aria-labelledby='dLabel'>"
 						var json = jQuery.parseJSON(data.responseText);
 						$.each(json, function(key, value){
-							htmlDD += "<li><div class='dropdownSide'><a href='#' onClick=selectTemplate(this.id) id='"+value+"'>"+value+"</a></div><div class='dropdownSide'> <a href='#' onClick=deleteEmail(this.id) id='"+value+"'> Delete </a> </div></li>"
+							htmlDD += "<li><div class='dropdownSide'><a href='#' onClick=selectTemplate(this.id) id='"+value+"'>"+value+"</a> &nbsp; <a href='#' onClick=deleteEmail(this.id) id='"+value+"'> Delete </a></div> </li>"
 						});
 						 htmlDD += "</ul></div>"
 						 $('#templateDropdown').html(htmlDD);
@@ -143,20 +155,13 @@
 			});
 	    	
 	    }
+	    
 	    function pressSend(){
 	    	var content = CKEDITOR.instances.editor1.getData();
-	    	$.ajax({
-	    		url:'SendEmail',
-    			type:'post',
-    			data: 'subject=' + "Reminder for Screening"
-				+ '&'
-				+ 'msg=' + content,
-				complete:function(data){
-					$('#message').html("<div class='alert alert-success' role='alert'><center><b> Email Sent! </b></center></div>");
-				}
-		
-	    	});
-
+	    	content  = replaceSpace(content);
+	    	sessionStorage.setItem('passContent', content);
+	    	window.location.href = "sendingEmail.html";
+	  
 	    }
 	    
 
@@ -172,27 +177,41 @@
 	<div class="page-header">
 		<h1 align="center">New Email</h1>
 	</div>
+	<div class="container" id="clients"></div>
 	
+<div class="container">
 	<table >
 		<tr> 
 			<td><button type="button" class="btn btn-link" data-toggle="modal" data-target='#exampleModal' >Save as Template</button></td>
 			<td><div id='templateDropdown' ></div></td>
 		</tr>
 	</table>
+	<div class="row">
+		  <div class="col-md-10">
+		   		 <textarea id="editor1"></textarea>
+			     <script>
+			         CKEDITOR.replace( 'editor1' );
+			         
+			        
+			     </script>
+			     
+		  </div>
 	
-	 <textarea id="editor1"></textarea>
-	 
-     <script>
-         CKEDITOR.replace( 'editor1' );
-     </script>
+		  <div class="col-md-2" id='clientTab'> </div>
+	 </div>
+
+ </div>
+ 	<form action="sendingEmail.html" method="POST">
+	   <button  class='btn btn-primary' onclick='pressSend()'>Send</button>
+	</form>
 
 
-		<div class='container' >
-			<br><div align='center' onclick='pressSend()'><button>Send</button></div>
-		</div>	
 
 
-		<div class="container" id="message"></div>
+
+		
+
+
 					<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">

@@ -49,7 +49,7 @@ public class DisplayIndexMedicalVisaByPersonInCharge extends HttpServlet {
 		ArrayList<String> personInChargeList = connection.retrieveAllPersonInCharge();
 		Utility utility = new Utility();
 		ArrayList<PersonInCharge> listAllPIC = new ArrayList<>();
-		LinkedHashMap<String,LinkedHashMap<Integer,Double>> personInChargePointSystem = new  LinkedHashMap<String,LinkedHashMap<Integer,Double>>();
+	//	LinkedHashMap<String,LinkedHashMap<Integer,Double>> personInChargePointSystem = new  LinkedHashMap<String,LinkedHashMap<Integer,Double>>();
 		for (int i = 0; i<personInChargeList.size(); i++){
 			String temp = personInChargeList.get(i);
 			ArrayList<Index> indexList = connection.retrieveAllIndexByPerson(utility.changeDateFormatDatabase(startDate), utility.changeDateFormatDatabase(endDate), team,temp);	

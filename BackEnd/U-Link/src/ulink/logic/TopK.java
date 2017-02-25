@@ -23,7 +23,7 @@ public class TopK {
 	
 	public ArrayList<AgeAndGender> getAgeGenderReport() {
 		ArrayList<AgeAndGender> ageGenderReport = new ArrayList<>();
-		ArrayList<Client> clientList = connection.retrieveAllClientList();
+		ArrayList<Client> clientList = connection.retrieveAllClientListByName();
 		double m10 = 0;
 		double f10 = 0;
 		double m20 = 0;

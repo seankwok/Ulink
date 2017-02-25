@@ -48,7 +48,7 @@ public class DisplayConditionByClient extends HttpServlet {
 
 		ArrayList<Client> clientList = connection.retrieveAllClientByName(clientName);
 		Client client = clientList.get(0);
-		ArrayList<Condition> conditionList = connection.retrieveAllCondition();
+		ArrayList<Condition> conditionList = connection.retrieveAllCondition("ID", "ASC");
 
 		ArrayList<Condition> newConditionList = new ArrayList<>();
 
