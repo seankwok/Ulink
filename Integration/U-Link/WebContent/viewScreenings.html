@@ -567,8 +567,7 @@ function sortDescScreening(clickedID){
 					url: "StoreSendEmail",
 					data: 'email=' + clients,
 					complete: function(data){		
-						sessionStorage.setItem('clients',clients);
-				    	window.location.href = "draftEmail.html";	
+				    		window.location.href = "draftEmail.html";	
 					}
 		    	
 				    	
@@ -581,8 +580,8 @@ function sortDescScreening(clickedID){
 			  var sendData = {
 			    "ID" : clickedID
 			   };
-			  
-			  var table = "<table id='table'  class='display' cellspacing='0' width='100%'>";
+			  console.log(sendData);
+			  var table = "<table id='table'  class='table table-list-search' cellspacing='0' width='100%'>";
 			     var condition="";
 			     var screeningName="";
 			   $.ajax({
@@ -725,14 +724,6 @@ function sortDescScreening(clickedID){
 			
 			}
 			
-	
-	
-	
-
-	
-	
-	
-	
 	
 		
  </script>
