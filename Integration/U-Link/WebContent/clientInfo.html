@@ -67,9 +67,7 @@
 			displayAll();
 			displayAppointment();
 			displayScreening();
-			console.log("before");
 			displayNotif();
-			console.log("after");
 			
 		});
 		
@@ -81,7 +79,6 @@
 				dataType : "json",
 				complete : function(data) {
 					var json = jQuery.parseJSON(data.responseText);
-					console.log(json);
 					appTable += "<thead>"
 									+"<th class='tableHeader' width='25%'>Appointment Date & Time</th>"
 									+"<th class='tableHeader'width='15%'>Doctor</th>"
@@ -114,7 +111,6 @@
 				dataType : "json",
 				complete : function(data) {
 					var json = jQuery.parseJSON(data.responseText);
-					console.log(json);
 					screenTable += "<thead>"
 									+"<th class='tableHeader' width='50%'>Common Illness</th>"
 									+"<th class='tableHeader'width='50%'>Recommended Screening</th>"
@@ -142,7 +138,6 @@
 				dataType : "json",
 				complete : function(data) {
 					var json = jQuery.parseJSON(data.responseText);
-					console.log(json);
 					notifTable += "<thead>"
 									+"<th class='tableHeader' width='50%'>Screenings Notifications Sent</th>"
 									+"<th class='tableHeader'width='50%'>Date &amp; Time Sent</th>"
@@ -165,20 +160,24 @@
 		function displayAll() {
 			var profileTable = "<table  width='90%'>";
 			var cName = "";
+			var age = "";
 			$.ajax({
 				url : "DisplayAllClientByName",
 				type : "get",
 				dataType : "json",
 				complete : function(data) {
 					var json = jQuery.parseJSON(data.responseText);
-					console.log(json);
 					var profile=json[0];
 					profileTable += "<thead><th width='50%'></th><th width='50%'></th></thead>"		
-				       	 cName = profile.clientName
+				       	 cName = profile.clientName;
+				       	 age = profile.age;
+				       	 if(age < 1){
+				       		 age = "";
+				       	 }
 				          profileTable   +="<tbody>"
 				          		
 				          		+"<tr>"
-				                +"<td><span class='myHeader'>Age: </span>" +profile["age"]+"</td>"
+				                +"<td><span class='myHeader'>Age: </span>" +age+"</td>"
 				                +"<td><span class='myHeader'>Client Owner: </span>" +profile["clientOwner"]+"</td>"
 				                +"</tr>"
 				                
