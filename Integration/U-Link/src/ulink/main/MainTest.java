@@ -40,10 +40,9 @@ public class MainTest {
 
 	public static void main(String[] args) throws ParseException {
 		DatabaseConnection connection = new DatabaseConnection();
-		Utility utility = new Utility();
-		ArrayList<String> personInChargeList = connection.retrieveAllPersonInCharge();
-	//	Utility utility = new Utility();
-		ArrayList<Condition> conditionList = connection.retrieveAllCondition("ageRequired", "ASC");
+		ArrayList<Client> clientList = connection.retrieveAllClientListEmail();
+		
+		System.out.println(clientList.get(1).getVisaRequestBy());
 		
 	//	for (int i =0; i< conditionList.size(); i++){
 		//	System.out.println(conditionList.get(i).getAgeRequired());

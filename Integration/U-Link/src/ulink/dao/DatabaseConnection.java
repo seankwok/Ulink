@@ -427,7 +427,7 @@ public class DatabaseConnection {
 			Statement stmt = con.createStatement();
 			String sql = "select doctor, count(appointment) from client where `CreatedTime` between'" + startDate
 					+ "'and'" + endDate + "' and specialty= '" + specialty
-					+ "' group by doctor ORDER BY COUNT(appointment) DESC";
+					+ "' and doctor != '' group by doctor ORDER BY COUNT(appointment) DESC";
 			ResultSet rs = stmt.executeQuery(sql);
 			Utility utility = new Utility();
 
@@ -486,9 +486,9 @@ public class DatabaseConnection {
 				String hospitalAdmitted = rs.getString(22);
 				String log = rs.getString(23);
 				String claim = rs.getString(24);
-				String visaRequestBy = rs.getString(25);
-				String visa = rs.getString(26);
-				String visaType = rs.getString(27).trim();
+				String visa = rs.getString(25);
+				String visaRequestBy = rs.getString(26);
+				String visaType = rs.getString(27);
 				String visaType2 = rs.getString(28);
 				int age = rs.getInt(29);
 				String billingCity = rs.getString(30);
@@ -624,9 +624,9 @@ public class DatabaseConnection {
 				String hospitalAdmitted = rs.getString(22);
 				String log = rs.getString(23);
 				String claim = rs.getString(24);
-				String visaRequestBy = rs.getString(25);
-				String visa = rs.getString(26);
-				String visaType = rs.getString(27).trim();
+				String visa = rs.getString(25);
+				String visaRequestBy = rs.getString(26);
+				String visaType = rs.getString(27);
 				String visaType2 = rs.getString(28);
 				int age = rs.getInt(29);
 				String billingCity = rs.getString(30);
@@ -692,8 +692,8 @@ public class DatabaseConnection {
 				String hospitalAdmitted = rs.getString(22);
 				String log = rs.getString(23);
 				String claim = rs.getString(24);
-				String visaRequestBy = rs.getString(25);
-				String visa = rs.getString(26);
+				String visa = rs.getString(25);
+				String visaRequestBy = rs.getString(26);
 				String visaType = rs.getString(27);
 				String visaType2 = rs.getString(28);
 				int age = rs.getInt(29);
@@ -760,8 +760,8 @@ public class DatabaseConnection {
 				String hospitalAdmitted = rs.getString(22);
 				String log = rs.getString(23);
 				String claim = rs.getString(24);
-				String visaRequestBy = rs.getString(25);
-				String visa = rs.getString(26);
+				String visa = rs.getString(25);
+				String visaRequestBy = rs.getString(26);
 				String visaType = rs.getString(27);
 				String visaType2 = rs.getString(28);
 				int age = rs.getInt(29);
@@ -830,8 +830,8 @@ public class DatabaseConnection {
 				String hospitalAdmitted = rs.getString(22);
 				String log = rs.getString(23);
 				String claim = rs.getString(24);
-				String visaRequestBy = rs.getString(25);
-				String visa = rs.getString(26);
+				String visa = rs.getString(25);
+				String visaRequestBy = rs.getString(26);
 				String visaType = rs.getString(27);
 				String visaType2 = rs.getString(28);
 				int age = rs.getInt(29);
