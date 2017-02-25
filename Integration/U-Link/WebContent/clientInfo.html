@@ -34,6 +34,7 @@
 	}
 	.appTd{
 		font-size: 15px;
+		text-align: center;
 	}
 	
 	table{
@@ -53,6 +54,11 @@
 		color: #092473;
 	}
 
+	div.ex1 {
+		width: 90%;
+	    margin: auto;
+	}
+
  	</style>
  
  <script type="text/javascript">
@@ -68,7 +74,7 @@
 		});
 		
 		function displayAppointment() {
-			var appTable = "<table  width='90%' border='1'>";
+			var appTable = "<table class='table table-bordered'>";
 			$.ajax({
 				url : "DisplayAllClientByName",
 				type : "get",
@@ -101,7 +107,7 @@
 		}
 		
 		function displayScreening() {
-			var screenTable = "<table  width='90%' border='1'>";
+			var screenTable = "<table class='table table-bordered'>";
 			$.ajax({
 				url : "DisplayConditionByClient",
 				type : "get",
@@ -129,9 +135,7 @@
 		}
 		
 		function displayNotif() {
-			console.log("noti");
-
-			var notifTable = "<table  width='90%' border='1'>";
+			var notifTable = "<table  class='table table-bordered'>";
 			$.ajax({
 				url : "DisplayAllEmailDateSent",
 				type : "post",
@@ -141,7 +145,7 @@
 					console.log(json);
 					notifTable += "<thead>"
 									+"<th class='tableHeader' width='50%'>Screenings Notifications Sent</th>"
-									+"<th class='tableHeader'width='50%'>Date & Time Sent</th>"
+									+"<th class='tableHeader'width='50%'>Date &amp; Time Sent</th>"
 								+"</thead>"
 				          $.each(json, function(key, value){
 				        	  notifTable   +="<tbody>"
@@ -231,19 +235,19 @@
     
     <div align="right"id="myTable"></div>  
     
-   <div>
+   <div class="ex1">
    		<div align="center" class='tableName'> Appointment Date &amp; Time </div><br> 
  		<div align="center" id="aTable"> </div>
 
    </div>
 
-   <div>
+   <div class="ex1">
    		<div align="center" class='tableName'>Screenings</div>
 		<div align="center"  id="sTable"></div>
    </div>
 	
-	<div>
-   		<div align="center" class='tableName'> Screenings notification </div><br> 
+	<div class="ex1">
+   		<div align="center" class='tableName'> Screenings Notification </div><br> 
  		<div align="center" id="nTable"> </div>
 
    </div>
