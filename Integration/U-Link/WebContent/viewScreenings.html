@@ -567,7 +567,8 @@ function sortDescScreening(clickedID){
 					url: "StoreSendEmail",
 					data: 'email=' + clients,
 					complete: function(data){		
-				    		window.location.href = "draftEmail.html";	
+						sessionStorage.setItem('clients',clients);
+				    	window.location.href = "draftEmail.html";	
 					}
 		    	
 				    	
