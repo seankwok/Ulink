@@ -59,16 +59,86 @@
  	});	
  	
  	function printChart(response){
-		$.each(response,function(key,value){
+ 		var nameArray = [];
+ 		var num0 = [];
+ 		var num1 = [];
+ 		var num2 = [];
+ 		var num3 = [];
+ 		
+		$.each(response, function(key, value){
+			nameArray.push(value.name);
+			var pointSystem = value.pointSystem;
 			
-			$.each(value,function(key,value){
-				console.log(key['pointSystem']);
-				
+			$.each(pointSystem, function(key, value){
+				if (key == '0'){
+					num0.push(value);
+				} else if(key == '1'){
+					num1.push(value);
+				} else if (key == '2'){
+					num2.push(value);
+				} else{
+					num3.push(value);
+				}
 				
 			});
 			
-		});		
+			
+		});	
+		console.log(num0);
+		console.log(num1);
+		console.log(num2);
+		console.log(num3);
+		console.log(nameArray);
 		
+		Highcharts.chart('pic', {
+		    chart: {
+		        type: 'column'
+		    },
+		    title: {
+		        text: 'Breakdown by Person-In-Charge'
+		    },
+		    xAxis: {
+		        categories: nameArray,
+		        crosshair: true
+		    },
+		    yAxis: {
+		        min: 0,
+		        title: {
+		            text: 'Number of clients'
+		        }
+		    },
+		    tooltip: {
+		        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+		        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+		            '<td style="padding:0"><b>{point.y:.1f} clients</b></td></tr>',
+		        footerFormat: '</table>',
+		        shared: true,
+		        useHTML: true
+		    },
+		    plotOptions: {
+		        column: {
+		            pointPadding: 0.2,
+		            borderWidth: 0
+		        }
+		    },
+		    series: [{
+		        name: '0',
+		        data: num0
+
+		    }, {
+		        name: '1',
+		        data: num1
+
+		    }, {
+		        name: '2',
+		        data: num2
+
+		    }, {
+		        name: '3',
+		        data: num3
+
+		    }]
+		});
  		
  	}
 	
