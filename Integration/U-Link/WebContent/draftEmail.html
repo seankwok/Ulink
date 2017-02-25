@@ -46,7 +46,7 @@
 	<script type="text/javascript">
 	
 	function showFields(){
-		var templateContent = '[clientName]<br>[clientEmail]<br>[screening]' ;
+		var templateContent = '[clientEmail]<br>[clientName]<br>[screening]' ;
 		 CKEDITOR.instances.editor1.setData(templateContent);
 		 var clients = sessionStorage.getItem('clients');
 		 var array = clients.split(',');
