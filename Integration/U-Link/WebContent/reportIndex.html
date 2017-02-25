@@ -59,68 +59,16 @@
  	});	
  	
  	function printChart(response){
- 		
-		var PICPoints = [];
-		var points = [1,2,3,4];
-		var test = 10;
- 		$.each(response, function(key,value){
- 			//console.log(key);
- 			 $.each(value, function(key, value){ // loop through every point
- 				PICPoints.push(value); // store in array
- 			});
- 			//console.log(PICPoints);
- 			PICPoints = [];
- 			var $chart = $('<div>').appendTo(document.body);
- 			
- 			var x = new Highcharts.Chart({ 
-				    chart: {
-				    	renderTo: $chart[0],
-				        type: 'column'
-				    },
-				    title: {
-				        text: key
-				    },
-				    
-				    xAxis: {
-				    	categories: points,
-				        title: {
-				            text: 'Point of contact'
-				        },
-				        crosshair: true
-				    },
-				    
-				    yAxis: {
-				        min: 0,
-				        title: {
-				            text: 'Percentage of clients'
-				        }
-				    },
-				    tooltip: {
-				        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-				        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-				            '<td style="padding:0"><b>{point.y:.1f} %</b></td></tr>',
-				        footerFormat: '</table>',
-				        shared: true,
-				        useHTML: true
-				    },
-				    plotOptions: {
-				        column: {
-				            pointPadding: 0.2,
-				            borderWidth: 0
-				        }
-				    },
-				    credits: {
-			 	        enabled: false
-			 	    },
-				    series: [{
-				    	name: "Percentage",
-				        data: PICPoints
-				     }]
+		$.each(response,function(key,value){
+			
+			$.each(value,function(key,value){
+				console.log(key['pointSystem']);
 				
-				});
- 			
- 			
- 		});
+				
+			});
+			
+		});		
+		
  		
  	}
 	
@@ -138,14 +86,14 @@
 				data : sendData,
 				complete : function(data) {
 			    		var json = jQuery.parseJSON(JSON.stringify(data));	
-			    	//	console.log(json.responseText);
+			    		//console.log(json.responseText);
 						if(json.responseText == "false"){
 							$('#error').html("Start Date should be before End Date!"); 
 							$("#result").html("");
 						}else{
 				 			var points = [];
 							var val = [];
-				 	//		console.log(team);
+				 			console.log(team);
 				 			
 				 			$.ajax({
 								url: "DisplayIndexMedicalVisa",
@@ -157,9 +105,9 @@
 										+ 'endDate=' + endDate,
 							    complete: function(data){
 							    	var json = jQuery.parseJSON(JSON.stringify(data));	
-								//	console.log(json.responseText);
+									console.log(json.responseText);
 									var response = JSON.parse(json.responseText);
-								//	console.log(response);
+									console.log(response);
 									
 									$.each(response, function(key, value){
 										points.push(key);
@@ -272,13 +220,11 @@
 				 						+ 'endDate=' + endDate,
 				 			    
 				 			    complete: function(data){
-				 					var json = jQuery.parseJSON(data.responseText);
-									console.log(json);
+									var response = jQuery.parseJSON(data.responseText);
+									console.log(response);
 									//var response = JSON.parse(json.responseText);
-									//console.log(response);
-									//console.log(Object.keys(response).length);
 
-									//printChart(response);									
+									printChart(response);									
 									
 				 			    }	
 				 			});
@@ -345,7 +291,7 @@
 	</div>
 	
 	<div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
-	<div id="chart" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+	<div id="pic" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
 	
      
 </body>
