@@ -1104,7 +1104,7 @@ public class DatabaseConnection {
 			// "root", "");
 
 			Statement stmt = con.createStatement();
-			String sql = "SELECT * FROM allcondition where type = 'infant' order by " +  name + " " + sortDirection;
+			String sql = "SELECT * FROM allcondition where type = 'infant'  order by " +  name + " " + sortDirection;
 
 			ResultSet rs = stmt.executeQuery(sql);
 

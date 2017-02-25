@@ -46,17 +46,18 @@ public class DisplayAll extends HttpServlet {
 		String name = request.getParameter("name");
 		String orderDirection = request.getParameter("orderDirection");
 				//String order = request.getParameter("order");
-		System.out.println(gender);
+		//System.out.println(gender);
 		DatabaseConnection database = new DatabaseConnection();
 		ArrayList<Condition> conditionList; 
-		if (gender.equals("All")){
-			conditionList = database.retrieveAllCondition(name, orderDirection);
-			System.out.println(conditionList.size());
-			System.out.println("TETETE");
-		} else if (gender.equals("Female")){
+		if (gender != null && gender.equals("Male")){
+			conditionList = database.retrieveAllConditionBySort(gender);
+			//System.out.println(conditionList.size());
+			//System.out.println("TETETE");
+		} else if (gender != null && gender.equals("Female")){
 			conditionList = database.retrieveAllConditionBySort(gender);
 		} else {
-			conditionList = database.retrieveAllConditionBySort(gender);
+			
+			conditionList = database.retrieveAllCondition(name, orderDirection);
 		}
 	
 		 

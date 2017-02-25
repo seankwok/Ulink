@@ -68,13 +68,15 @@ public class UploadServlet extends HttpServlet {
 		String realPath = getServletContext().getRealPath(TMP_DIR_PATH);
 		tmpDir = new File(realPath);
 		if (!tmpDir.isDirectory()) {
-			throw new ServletException(TMP_DIR_PATH + " is not a directory");
+			new File("/MyTempFiles").mkdirs();
+			//throw new ServletException(TMP_DIR_PATH + " is not a directory");
 		}
 
 		realPath = getServletContext().getRealPath(DESTINATION_DIR_PATH);
 		destinationDir = new File(realPath);
 		if (!destinationDir.isDirectory()) {
-			throw new ServletException(DESTINATION_DIR_PATH + " is not a directory");
+			new File("/MySavedFiles").mkdirs();
+			//throw new ServletException(DESTINATION_DIR_PATH + " is not a directory");
 		}
 
 	}
