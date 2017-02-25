@@ -87,14 +87,7 @@
 		$("#selectAdult").click(function(){
 			window.location = "viewScreeningsAdult.html";
 		});
-		$("#sort").click(function(){
-			 $.ajax({
-				    url : "",
-				    type : "get",
-				    dataType : "json",
-				    complete: function(data){}
-		 });
-		 });	
+			
 
 		 var search = "<div class='col-md-3'><form action='#' method='get'><div class='input-group'>"
             + "<input class='form-control' id='system-search' name='q' placeholder='Search for' required>"
@@ -149,11 +142,11 @@
 	
 
 	function sortAscAge(clickedID){
-		var table = "<table id='table'  class='display' cellspacing='0' width='100%'>";
+		var table = "<table id='table'  class='table table-list-search' cellspacing='0' width='100%'>";
 		var sendData = "name=ageRequired &orderDirection=ASC";
 		console.log(sendData);
 		$.ajax({
-		    url : "DisplayAll",
+		    url : "DisplayAllInfant",
 		    type : "get",
 		    data : sendData,
 		    complete: function(data){
@@ -212,11 +205,11 @@
 }
 
 function sortDescAge(clickedID){
-	var table = "<table id='table'  class='display' cellspacing='0' width='100%'>";
+	var table = "<table id='table'  class='table table-list-search' cellspacing='0' width='100%'>";
 	var sendData = "name=ageRequired &orderDirection=DESC";
 	console.log(sendData);
 	$.ajax({
-	    url : "DisplayAll",
+	    url : "DisplayAllInfant",
 	    type : "get",
 	    data : sendData,
 	    complete: function(data){
@@ -275,11 +268,11 @@ function sortDescAge(clickedID){
 }
 
 function sortAscIllness(clickedID){
-	var table = "<table id='table'  class='display' cellspacing='0' width='100%'>";
+	var table = "<table id='table'  class='table table-list-search' cellspacing='0' width='100%'>";
 	var sendData = "name=conditionName &orderDirection=ASC";
 	console.log(sendData);
 	$.ajax({
-	    url : "DisplayAll",
+	    url : "DisplayAllInfant",
 	    type : "get",
 	    data : sendData,
 	    complete: function(data){
@@ -338,27 +331,27 @@ function sortAscIllness(clickedID){
 }
 
 function sortDescIllness(clickedID){
-	table += "<thead><tr><th>Starting Age (In Months)<a href='#' onClick=sortAscAge(this.id)  id='ageRequired'>&#9652</a>"
+	var table = "<table id='table'  class='table table-list-search' cellspacing='0' width='100%'>";
 	var sendData = "name=conditionName &orderDirection=DESC";
 	console.log(sendData);
 	$.ajax({
-	    url : "DisplayAll",
+	    url : "DisplayAllInfant",
 	    type : "get",
 	    data : sendData,
 	    complete: function(data){
 	    	var json = jQuery.parseJSON(JSON.stringify(data));
 	    	var response = JSON.parse(json.responseText);
-	    	table += "<thead><tr><th>Starting Age<a href='#' onClick=sortAscAge(this.id)  id='ageRequired'>&#9652</a>"
-	    			+ "<a href='#' onClick=sortDescAge(this.id) id='ageRequired'> &#9662</a></th>"
-	    			+ "<th>Common Illness<a href='#' onClick=sortAscIllness(this.id) id='conditionName'> &#9652</a>"
-	    			+ "<a href='#' onClick=sortDescIllness(this.id) id='conditionName'> &#9662</a></th>"
-	    			+ "<th>Screening <a href='#' onClick=sortAscScreening(this.id) id='screening'> &#9652</a>"
-	    			+ "<a href='#' onClick=sortDescIllness(this.id) id='screening'> &#9662</a></th>"
-	    			+"<th>Demographic</th>"
-	    			+ "<th>Regularity of screening</th>"
-	    			+ "<th>View Patients</th>"
-	    			+ "<th>Edit</th>"
-	    			+ "<th>Delete</th></tr></thead>";
+	    	table += "<thead><tr><th>Starting Age (In Months)<a href='#' onClick=sortAscAge(this.id)  id='ageRequired'>&#9652</a>"
+    			+ "<a href='#' onClick=sortDescAge(this.id) id='ageRequired'> &#9662</a></th>"
+    			+ "<th>Common Illness<a href='#' onClick=sortAscIllness(this.id) id='conditionName'> &#9652</a>"
+    			+ "<a href='#' onClick=sortDescIllness(this.id) id='conditionName'> &#9662</a></th>"
+    			+ "<th>Screening <a href='#' onClick=sortAscScreening(this.id) id='screening'> &#9652</a>"
+    			+ "<a href='#' onClick=sortDescScreening(this.id) id='screening'> &#9662</a></th>"
+    			+"<th>Demographic</th>"
+    			+ "<th>Regularity of screening</th>"
+    			+ "<th>View Patients</th>"
+    			+ "<th>Edit</th>"
+    			+ "<th>Delete</th></tr></thead>";
 	    	$.each(response,function(key, value) {
 	    		table += "<tbody><tr><td>"
     				+ value["ageRequired"]
@@ -401,27 +394,27 @@ function sortDescIllness(clickedID){
 }
 
 function sortAscScreening(clickedID){
-	var table = "<table id='table'  class='display' cellspacing='0' width='100%'>";
+	var table = "<table id='table'  class='table table-list-search' cellspacing='0' width='100%'>";
 	var sendData = "name=screening &orderDirection=ASC";
 	console.log(sendData);
 	$.ajax({
-	    url : "DisplayAll",
+	    url : "DisplayAllInfant",
 	    type : "get",
 	    data : sendData,
 	    complete: function(data){
 	    	var json = jQuery.parseJSON(JSON.stringify(data));
 	    	var response = JSON.parse(json.responseText);
 	    	table += "<thead><tr><th>Starting Age (In Months)<a href='#' onClick=sortAscAge(this.id)  id='ageRequired'>&#9652</a>"
-	    			+ "<a href='#' onClick=sortDescAge(this.id) id='ageRequired'> &#9662</a></th>"
-	    			+ "<th>Common Illness<a href='#' onClick=sortAscIllness(this.id) id='conditionName'> &#9652</a>"
-	    			+ "<a href='#' onClick=sortDescIllness(this.id) id='conditionName'> &#9662</a></th>"
-	    			+ "<th>Screening <a href='#' onClick=sortAscScreening(this.id) id='screening'> &#9652</a>"
-	    			+ "<a href='#' onClick=sortDescScreening(this.id) id='screening'> &#9662</a></th>"
-	    			+"<th>Demographic</th>"
-	    			+ "<th>Regularity of screening</th>"
-	    			+ "<th>View Patients</th>"
-	    			+ "<th>Edit</th>"
-	    			+ "<th>Delete</th></tr></thead>";
+    			+ "<a href='#' onClick=sortDescAge(this.id) id='ageRequired'> &#9662</a></th>"
+    			+ "<th>Common Illness<a href='#' onClick=sortAscIllness(this.id) id='conditionName'> &#9652</a>"
+    			+ "<a href='#' onClick=sortDescIllness(this.id) id='conditionName'> &#9662</a></th>"
+    			+ "<th>Screening <a href='#' onClick=sortAscScreening(this.id) id='screening'> &#9652</a>"
+    			+ "<a href='#' onClick=sortDescScreening(this.id) id='screening'> &#9662</a></th>"
+    			+"<th>Demographic</th>"
+    			+ "<th>Regularity of screening</th>"
+    			+ "<th>View Patients</th>"
+    			+ "<th>Edit</th>"
+    			+ "<th>Delete</th></tr></thead>";
 	    	$.each(response,function(key, value) {
 	    		table += "<tbody><tr><td>"
     				+ value["ageRequired"]
@@ -464,27 +457,27 @@ function sortAscScreening(clickedID){
 }
 
 function sortDescScreening(clickedID){
-	var table = "<table id='table'  class='display' cellspacing='0' width='100%'>";
+	var table = "<table id='table'  class='table table-list-search' cellspacing='0' width='100%'>";
 	var sendData = "name=screening &orderDirection=DESC";
 	console.log(sendData);
 	$.ajax({
-	    url : "DisplayAll",
+	    url : "DisplayAllInfant",
 	    type : "get",
 	    data : sendData,
 	    complete: function(data){
 	    	var json = jQuery.parseJSON(JSON.stringify(data));
 	    	var response = JSON.parse(json.responseText);
 	    	table += "<thead><tr><th>Starting Age (In Months)<a href='#' onClick=sortAscAge(this.id)  id='ageRequired'>&#9652</a>"
-	    			+ "<a href='#' onClick=sortDescAge(this.id) id='ageRequired'> &#9662</a></th>"
-	    			+ "<th>Common Illness<a href='#' onClick=sortAscIllness(this.id) id='conditionName'> &#9652</a>"
-	    			+ "<a href='#' onClick=sortDescIllness(this.id) id='conditionName'> &#9662</a></th>"
-	    			+ "<th>Screening <a href='#' onClick=sortAscScreening(this.id) id='screening'> &#9652</a>"
-	    			+ "<a href='#' onClick=sortDescScreening(this.id) id='screening'> &#9662</a></th>"
-	    			+"<th>Demographic</th>"
-	    			+ "<th>Regularity of screening</th>"
-	    			+ "<th>View Patients</th>"
-	    			+ "<th>Edit</th>"
-	    			+ "<th>Delete</th></tr></thead>";
+    			+ "<a href='#' onClick=sortDescAge(this.id) id='ageRequired'> &#9662</a></th>"
+    			+ "<th>Common Illness<a href='#' onClick=sortAscIllness(this.id) id='conditionName'> &#9652</a>"
+    			+ "<a href='#' onClick=sortDescIllness(this.id) id='conditionName'> &#9662</a></th>"
+    			+ "<th>Screening <a href='#' onClick=sortAscScreening(this.id) id='screening'> &#9652</a>"
+    			+ "<a href='#' onClick=sortDescScreening(this.id) id='screening'> &#9662</a></th>"
+    			+"<th>Demographic</th>"
+    			+ "<th>Regularity of screening</th>"
+    			+ "<th>View Patients</th>"
+    			+ "<th>Edit</th>"
+    			+ "<th>Delete</th></tr></thead>";
 	    	$.each(response,function(key, value) {
 	    		table += "<tbody><tr><td>"
     				+ value["ageRequired"]
@@ -668,61 +661,67 @@ function sortDescScreening(clickedID){
 		function displayAll(){
 			var table = "<table class='table table-list-search' class='display' cellspacing='0' >";
 			var isEmpty = false;
-			$.ajax({
-				url: "DisplayAllInfant",
-				type: "get",
-			    dataType : "json",    
-			    success: function(data){
-			    	var json = jQuery.parseJSON(JSON.stringify(data));
-			    	table += "<thead><tr><th>Starting Age (In Months)<a href='#' onClick=sortAscAge(this.id)  id='ageRequired'>&#9652</a>"
-		    			+ "<a href='#' onClick=sortDescAge(this.id) id='ageRequired'> &#9662</a></th>"
-		    			+ "<th>Common Illness<a href='#' onClick=sortAscIllness(this.id) id='conditionName'> &#9652</a>"
-		    			+ "<a href='#' onClick=sortDescIllness(this.id) id='conditionName'> &#9662</a></th>"
-		    			+ "<th>Screening <a href='#' onClick=sortAscScreening(this.id) id='screening'> &#9652</a>"
-		    			+ "<a href='#' onClick=sortDescIllness(this.id) id='screening'> &#9662</a></th>"
-		    			+"<th>Demographic</th>"
-		    			+ "<th>Regularity of screening</th>"
-		    			+ "<th>View Patients</th>"
-		    			+ "<th>Edit</th>"
-		    			+ "<th>Delete</th></tr></thead>";
-			    	
-			    	$.each(json,function(key, value) {
-			    		table += "<tbody><tr><td>"
-		    				+ value["ageRequired"]
-		    				+ "</td>"
-		    				+ "<td>"
-		    				+ value["conditionName"]
-	    					+ "</td>"
-	    					+ "<td>"
-		    				+ value["screening"]
-	    					+ "</td>"
-	    					+ "<td>"
-		    				+ value["type"]
-	    					+ "</td>"
-	    					+ "<td>"
-		    				+ value["years"] 
-	    					+ "</td>"
-	    					+ "<td>"
-		    				+"<a href='#' onClick=viewPatientList(this.id) id= '"
-		    				+ value.ID
-		    				+ "'>View patients</a>"
-	    					+ "</td>"
-	    					+ "<td>"
-		    				+ "<a href='#' onClick=editItem(this.id) id= '"
-		    				+ value.ID
-		    				+ "'>Edit</a>"
-	    					+ "</td>"
-	    					+ '<td><a href=# onClick=deleteItem(this.id) id="'
-							+ value.ID
-							+ '">Delete</a></td></tr>'		    				
-							+ "</td></tr></tbody>"
-			    	});
-			    	table += "</table>"
-			    		$("#display").html(table);
-			    	
-			    }	
-			    
-			});	
+			
+			sendData = "name=ageRequired&orderDirection=ASC";
+				console.log(sendData);
+				$.ajax({
+					url: "DisplayAllInfant",
+					type: "get",
+				    data : sendData,    
+				    complete: function(data){
+				    	var json = jQuery.parseJSON(JSON.stringify(data));
+				    	var response = JSON.parse(json.responseText);
+				    	//console.log(json.responseText);
+				    	table += "<thead><tr><th>Starting Age (In Months)<a href='#' onClick=sortAscAge(this.id)  id='ageRequired'>&#9652</a>"
+				    			+ "<a href='#' onClick=sortDescAge(this.id) id='ageRequired'> &#9662</a></th>"
+				    			+ "<th>Common Illness<a href='#' onClick=sortAscIllness(this.id) id='conditionName'> &#9652</a>"
+				    			+ "<a href='#' onClick=sortDescIllness(this.id) id='conditionName'> &#9662</a></th>"
+				    			+ "<th>Screening <a href='#' onClick=sortAscScreening(this.id) id='screening'> &#9652</a>"
+				    			+ "<a href='#' onClick=sortDescScreening(this.id) id='screening'> &#9662</a></th>"
+				    			+"<th>Demographic</th>"
+				    			+ "<th>Regularity of screening</th>"
+				    			+ "<th>View Patients</th>"
+				    			+ "<th>Edit</th>"
+				    			+ "<th>Delete</th></tr></thead>";
+				    	$.each(response,function(key, value) {
+				    		table += "<tbody><tr><td>"
+			    				+ value["ageRequired"]
+			    				+ "</td>"
+			    				+ "<td>"
+			    				+ value["conditionName"]
+		    					+ "</td>"
+		    					+ "<td>"
+			    				+ value["screening"]
+		    					+ "</td>"
+		    					+ "<td>"
+			    				+ value["type"]
+		    					+ "</td>"
+		    					+ "<td>"
+			    				+ value["years"] 
+		    					+ "</td>"
+		    					+ "<td>"
+			    				+"<a href='#' onClick=viewPatientList(this.id) id= '"
+			    				+ value.ID
+			    				+ "'>View patients</a>"
+		    					+ "</td>"
+		    					+ "<td>"
+			    				+ "<a href='#' onClick=editItem(this.id) id= '"
+			    				+ value.ID
+			    				+ "'>Edit</a>"
+		    					+ "</td>"
+		    					+ '<td><a href=# onClick=deleteItem(this.id) id="'
+								+ value.ID
+								+ '">Delete</a></td></tr>'		    				
+								+ "</td></tr></tbody>"
+				    	});
+				    	table += "</table>"
+				    		$("#display").html(table);
+				    	
+				    }	
+				    
+				});	
+			
+			
 			}
 			
 	

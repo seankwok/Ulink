@@ -274,7 +274,7 @@
 	
 	function sortGender(clickedID){
 		console.log(clickedID);
-		var table = "<table id='table'  class='display' cellspacing='0' width='100%'>";
+		var table = "<table id='table'  class='table table-list-search' cellspacing='0' width='100%'>";
 		var sendData = "name=screening &orderDirection=DESC &gender=" + clickedID;
 		console.log(sendData);
 		
@@ -345,7 +345,7 @@
 	}
 	
 	function sortAscAge(clickedID){
-			var table = "<table id='table'  class='display' cellspacing='0' width='100%'>";
+			var table = "<table id='table'  class='table table-list-search' cellspacing='0' width='100%'>";
 			var sendData = "name=ageRequired &orderDirection=ASC";
 			console.log(sendData);
 			$.ajax({
@@ -415,7 +415,7 @@
 	}
 	
 	function sortDescAge(clickedID){
-		var table = "<table id='table'  class='display' cellspacing='0' width='100%'>";
+		var table = "<table id='table'  class='table table-list-search' cellspacing='0' width='100%'>";
 		var sendData = "name=ageRequired &orderDirection=DESC";
 		console.log(sendData);
 		$.ajax({
@@ -485,7 +485,7 @@
 }
 	
 	function sortAscIllness(clickedID){
-		var table = "<table id='table'  class='display' cellspacing='0' width='100%'>";
+		var table = "<table id='table'  class='table table-list-search' cellspacing='0' width='100%'>";
 		var sendData = "name=conditionName &orderDirection=ASC";
 		console.log(sendData);
 		$.ajax({
@@ -555,7 +555,7 @@
 }
 	
 	function sortDescIllness(clickedID){
-		var table = "<table id='table'  class='display' cellspacing='0' width='100%'>";
+		var table = "<table id='table'  class='table table-list-search' cellspacing='0' width='100%'>";
 		var sendData = "name=conditionName &orderDirection=DESC";
 		console.log(sendData);
 		$.ajax({
@@ -625,7 +625,7 @@
 }
 	
 	function sortAscScreening(clickedID){
-		var table = "<table id='table'  class='display' cellspacing='0' width='100%'>";
+		var table = "<table id='table'  class='table table-list-search' cellspacing='0' width='100%'>";
 		var sendData = "name=screening &orderDirection=ASC";
 		console.log(sendData);
 		$.ajax({
@@ -695,7 +695,7 @@
 }
 	
 	function sortDescScreening(clickedID){
-		var table = "<table id='table'  class='display' cellspacing='0' width='100%'>";
+		var table = "<table id='table'  class='table table-list-search' cellspacing='0' width='100%'>";
 		var sendData = "name=screening &orderDirection=DESC";
 		console.log(sendData);
 		$.ajax({
