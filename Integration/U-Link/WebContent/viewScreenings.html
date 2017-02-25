@@ -566,7 +566,8 @@ function sortDescScreening(clickedID){
 					type: 'post',
 					url: "StoreSendEmail",
 					data: 'email=' + clients,
-					complete: function(data){		
+					complete: function(data){	
+						sessionStorage.setItem('clients',clients);
 				    		window.location.href = "draftEmail.html";	
 					}
 		    	
@@ -627,7 +628,7 @@ function sortDescScreening(clickedID){
 			        table += "<div id='displayNumSelected'></div>"
 			        table += "<div class='container' align='center'>"
 			         + "<button class='btn btn-default' onclick='sendEmail()'>Go to email template</button>"
-			         + "<button type='button' id='export' class='btn btn-primary'><b>Export to excel</b></button>"
+			         + "<br><button type='button' id='export' class='btn btn-link'><b>Export to excel(in progress)</b></button>"
 			           +"</div>"
 			       
 			         $("#display").html(table);
