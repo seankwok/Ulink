@@ -108,7 +108,7 @@ public class SendEmail extends HttpServlet {
 				TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
 				
 				Date date2 = new Date();
-				 String datetime = date2.getDate() +"/"+ date2.getMonth() +"/"+ date2.getYear()+1900 +" "+ date2.getHours() +":"+ date2.getMinutes(); 
+				 String datetime = date2.getDate() +"/"+ date2.getMonth() +"/"+ (date2.getYear()+1900) +" "+ date2.getHours() +":"+ date2.getMinutes(); 
 						 
 						 
 				 connection.createEmailDate(connection.getNameByEmail(email[i]), condition.getScreening(), datetime);
