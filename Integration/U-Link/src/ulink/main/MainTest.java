@@ -43,16 +43,11 @@ public class MainTest {
 		Utility utility = new Utility();
 		ArrayList<String> personInChargeList = connection.retrieveAllPersonInCharge();
 	//	Utility utility = new Utility();
-		LinkedHashMap<String,LinkedHashMap<Integer,Double>> personInChargePointSystem = new  LinkedHashMap<String,LinkedHashMap<Integer,Double>>();
-		for (int i = 0; i<personInChargeList.size(); i++){
-			String temp = personInChargeList.get(i);
-			ArrayList<Index> indexList = connection.retrieveAllIndexByPerson(utility.changeDateFormatDatabase("01/01/2015"), utility.changeDateFormatDatabase("01/01/2017"), "Medical",temp);	
-			LinkedHashMap<Integer,Double> pointSystem = utility.getIndexCount(indexList);
-			if (!personInChargePointSystem.containsKey(temp)){
-				personInChargePointSystem.put(temp, pointSystem);
-			}
-		}
+		ArrayList<Condition> conditionList = connection.retrieveAllCondition("ageRequired", "ASC");
 		
-		System.out.println(personInChargePointSystem.values());
+	//	for (int i =0; i< conditionList.size(); i++){
+		//	System.out.println(conditionList.get(i).getAgeRequired());
+	//	}
+		
 	}
 }

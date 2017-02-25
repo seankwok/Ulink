@@ -991,7 +991,7 @@ public class DatabaseConnection {
 			// "root", "");
 
 			Statement stmt = con.createStatement();
-			String sql = "SELECT * FROM allcondition where type != 'infant'  order by '" +  name + "'" + sortDirection;
+			String sql = "SELECT * FROM allcondition where type != 'infant'  order by " +  name + " " + sortDirection;
 
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -1002,6 +1002,7 @@ public class DatabaseConnection {
 				int ageRequired = rs.getInt(4);
 				String screening = rs.getString(5);
 				String type = rs.getString(6);
+				System.out.println(ageRequired);
 				Condition condition = new Condition(ID, conditionName, numOfYears, ageRequired, screening, type);
 				allconditionList.add(condition);
 			}
@@ -1103,7 +1104,7 @@ public class DatabaseConnection {
 			// "root", "");
 
 			Statement stmt = con.createStatement();
-			String sql = "SELECT * FROM allcondition where type = 'infant' order by '" +  name + "'" + sortDirection;
+			String sql = "SELECT * FROM allcondition where type = 'infant' order by " +  name + " " + sortDirection;
 
 			ResultSet rs = stmt.executeQuery(sql);
 
