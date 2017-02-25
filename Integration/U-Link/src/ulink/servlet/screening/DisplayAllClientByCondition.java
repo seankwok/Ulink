@@ -40,9 +40,9 @@ public class DisplayAllClientByCondition extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		DatabaseConnection connection = new DatabaseConnection();
-		ArrayList<Client> clientList = connection.retrieveAllClientList();
+		ArrayList<Client> clientList = connection.retrieveAllClientListByName();
 		int ID = Integer.parseInt(request.getParameter("ID"));
-		System.out.println(ID);
+	//	System.out.println(ID);
 		Condition condition = connection.retrieveAllConditionByID(ID);
 		ArrayList<Client> newClientList = new ArrayList<>();
 		//System.out.println(condition);

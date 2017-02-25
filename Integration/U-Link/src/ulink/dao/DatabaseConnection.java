@@ -517,10 +517,76 @@ public class DatabaseConnection {
 	}
 
 	
+	public ArrayList<Client> retrieveAllClientListByName() {
+
+		Connection con;
+		ArrayList<Client> clientList = new ArrayList<Client>();
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
+
+			Statement stmt = con.createStatement();
+			String sql = "SELECT * FROM client group by clientName";
+			ResultSet rs = stmt.executeQuery(sql);
+			Utility utility = new Utility();
+
+			while (rs.next()) {
+				int ID = rs.getInt(1);
+				String accountID = rs.getString(2);
+				String clientOwner = rs.getString(3);
+				String clientName = rs.getString(4);
+				String clientType = rs.getString(5);
+				String company = rs.getString(6);
+				String nationality = rs.getString(7);
+				String gender = rs.getString(8);
+				String dateOfBirth = rs.getString(9);
+				String email = rs.getString(10);
+				String medical = rs.getString(11);
+				String mainDiagnosis = rs.getString(12);
+				String referredBy = rs.getString(13);
+				String PIC = rs.getString(14);
+				String appointment = rs.getString(15);
+				String doctor = rs.getString(16);
+				String specialty = rs.getString(17);
+				String clinic = rs.getString(18);
+				String otherDoctor = rs.getString(19);
+				String followUpPerson = rs.getString(20);
+				String followUpPIC = rs.getString(21);
+				String hospitalAdmitted = rs.getString(22);
+				String log = rs.getString(23);
+				String claim = rs.getString(24);
+				String visaRequestBy = rs.getString(25);
+				String visa = rs.getString(26);
+				String visaType = rs.getString(27).trim();
+				String visaType2 = rs.getString(28);
+				int age = rs.getInt(29);
+				String billingCity = rs.getString(30);
+				String billingCode = rs.getString(31);
+				String billingCountry = rs.getString(32);
+				String billingState = rs.getString(33);
+				String billingStreet = rs.getString(34);
+				String createdTime = "" + rs.getDate(35);
+				String phone = rs.getString(36);
+
+				clientList.add(new Client(ID, accountID, clientOwner, clientName, clientType, company, nationality,
+						gender, dateOfBirth, email, medical, mainDiagnosis, referredBy, PIC, appointment, doctor,
+						specialty, clinic, otherDoctor, followUpPerson, followUpPIC, hospitalAdmitted, log, claim,
+						visaRequestBy, visa, visaType, visaType2, age, billingCity, billingCode, billingCountry,
+						billingState, billingStreet, createdTime, phone));
+			}
+
+			con.close();
+
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return clientList;
+	}
 	
 	
-	
-	public ArrayList<Client> retrieveAllClientList() {
+	public ArrayList<Client> retrieveAllClientListEmail() {
 
 		Connection con;
 		ArrayList<Client> clientList = new ArrayList<Client>();

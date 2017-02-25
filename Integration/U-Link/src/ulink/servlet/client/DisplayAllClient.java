@@ -47,7 +47,7 @@ public class DisplayAllClient extends HttpServlet {
 		String order = request.getParameter("order");
 			
 		if (headerName == null && order == null){
-			clientList = database.retrieveAllClientList();
+			clientList = database.retrieveAllClientListByName();
 		} else if (order == null || order.equals("All")){
 			clientList = database.retrieveAllClientListByOrder(headerName, "All");
 		} else if (headerName == null || headerName.equals("All")) {
