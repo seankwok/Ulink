@@ -140,10 +140,10 @@ public class Utility {
 		double two = pointSystem.get(2);
 		double three = pointSystem.get(3);
 		
-		pointSystem.put(0, zero/sum *100);
-		pointSystem.put(1, one/sum *100);
-		pointSystem.put(2, two/sum *100);
-		pointSystem.put(3, three/sum *100);
+		pointSystem.put(0, (double) Math.round(zero/sum *100));
+		pointSystem.put(1, (double) Math.round(one/sum *100));
+		pointSystem.put(2, (double) Math.round(two/sum *100));
+		pointSystem.put(3, (double) Math.round(three/sum *100));
 		
 		return pointSystem;
 		
