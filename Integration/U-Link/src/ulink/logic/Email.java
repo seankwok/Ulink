@@ -2,6 +2,7 @@ package ulink.logic;
 
 import java.util.Properties;
 
+import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -34,11 +35,15 @@ public class Email {
 		  });
 		
 		try {
-
+	
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress("Manager@ulinkassist.com"));
-			message.setRecipients(Message.RecipientType.TO,
+			message.addRecipients(Message.RecipientType.TO,
 				InternetAddress.parse(toEmail));
+			message.addRecipients(Message.RecipientType.CC,
+					InternetAddress.parse("kaixin.teh.2014@sis.smu.edu.sg"));
+			message.addRecipients(Message.RecipientType.CC,
+					InternetAddress.parse("sychien.2014@sis.smu.edu.sg"));
 			message.setSubject(Subject);
 			message.setContent(Msg, "text/html; charset=utf-8");
 

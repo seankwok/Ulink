@@ -70,12 +70,12 @@ public class SendEmail extends HttpServlet {
 		Email emailServer = new Email();
 		HttpSession session = request.getSession();
 		
-		System.out.println("this is content type : " + request.getContentType());
+	
 		
 		String msg = request.getParameter("msg");
 		//msg = URLEncoder.encode( msg, "ISO-8859-1" ); // H%C3%A9l%C3%A8ne
 		//msg = URLDecoder.decode( msg, "UTF-8" );
-		System.out.println(msg);
+		//System.out.println(msg);
 		String[] email = (String[]) session.getAttribute("emailList");
 		int ID = (int) session.getAttribute("ID");
 		DatabaseConnection connection = new DatabaseConnection();
@@ -102,12 +102,15 @@ public class SendEmail extends HttpServlet {
 
 				 //check = emailServer.sendEmail(email[i], subject, temp, user.getEmail()+"@ulinkassist.com");
 				check = emailServer.sendEmail(email[i], subject, temp, "nabilahbmnk.2014@sis.smu.edu.sg");
-				check = emailServer.sendEmail(email[i], subject, temp, "sychien.2014@sis.smu.edu.sg");
+				//check = emailServer.sendEmail(email[i], subject, temp, "kaixin.teh.2014@sis.smu.edu.sg");
+				//check = emailServer.sendEmail(email[i], subject, temp, "sychien.2014@sis.smu.edu.sg");
 				 //Client name, screening, date Email, 
 				TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
 				
 				Date date2 = new Date();
-				 String datetime = date2.toString();
+				 String datetime = date2.getDate() +"/"+ date2.getMonth() +"/"+ date2.getYear()+1900 +" "+ date2.getHours() +":"+ date2.getMinutes(); 
+						 
+						 
 				 connection.createEmailDate(connection.getNameByEmail(email[i]), condition.getScreening(), datetime);
 			}
 		} else {
