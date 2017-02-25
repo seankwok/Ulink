@@ -1002,7 +1002,7 @@ public class DatabaseConnection {
 				int ageRequired = rs.getInt(4);
 				String screening = rs.getString(5);
 				String type = rs.getString(6);
-				System.out.println(ageRequired);
+				
 				Condition condition = new Condition(ID, conditionName, numOfYears, ageRequired, screening, type);
 				allconditionList.add(condition);
 			}
@@ -1495,7 +1495,7 @@ public class DatabaseConnection {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
-			String sql = "SELECT date FROM emailsend where clientName='" + clientName + " & screening='" + screeningName +"' order by ID DESC LIMIT 1";
+			String sql = "SELECT date FROM emailsend where clientName='" + clientName + "' and screening='" + screeningName +"' order by ID DESC LIMIT 1";
 
 			ResultSet rs = stmt.executeQuery(sql);
 			

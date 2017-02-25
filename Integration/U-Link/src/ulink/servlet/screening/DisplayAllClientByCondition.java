@@ -45,7 +45,7 @@ public class DisplayAllClientByCondition extends HttpServlet {
 		System.out.println(ID);
 		Condition condition = connection.retrieveAllConditionByID(ID);
 		ArrayList<Client> newClientList = new ArrayList<>();
-		System.out.println(condition);
+		//System.out.println(condition);
 		for (int i =0; i<clientList.size(); i++){
 			Client client = clientList.get(i);
 			System.out.println(client.getAge());

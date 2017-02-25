@@ -61,6 +61,7 @@ public class DisplayPatientsByIllness extends HttpServlet {
 				if (client.getAge() >= condition.getAgeRequired() && client.getGender().toLowerCase().equals(condition.getType().toLowerCase())) {
 					clientByIllnessList.add(new ClientByIllness(client.getClientName(), client.getAge(),
 							client.getEmail(), client.getGender(),condition.getScreening(), condition.getConditionName(), connection.retrieveLatestDateSend(client.getClientName(),condition.getScreening()) ,client.getFollowUpPerson()));
+					//System.out.println("TQEQWEQWEQW " + connection.retrieveLatestDateSend(client.getClientName(),condition.getScreening()));
 				}
 			} else {
 				if (client.getAge() >= condition.getAgeRequired() / 12 && client.getGender().toLowerCase().equals(condition.getType().toLowerCase() ) && client.getEmail().length() > 0) {
