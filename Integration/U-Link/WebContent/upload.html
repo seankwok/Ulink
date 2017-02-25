@@ -81,8 +81,14 @@
 			type : "get",
 			complete : function(data) {
 				var json = jQuery.parseJSON(JSON.stringify(data));
+				
 				dateTime = json.responseText;
+				console.log(dateTime);
+				if (dateTime == ''){
+					
+				} else{
 				document.getElementById('timestamp').innerHTML = dateTime;
+				}
 			}
 		});
 		
