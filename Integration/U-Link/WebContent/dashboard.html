@@ -286,7 +286,7 @@
  	
  	function displayTopDocThisMonth(){
  		
- 		var thisMonthDoc = "<table id='thisMonthDoc'  class='table table-striped' cellspacing='0' width='100%'>";
+ 		var thisMonthDoc = "<table id='thisMonthDoc'  class='table table-bordered' cellspacing='0' width='100%'>";
  		
  		$.ajax({
 			url: "DisplayAllLatestDoctorRankingDashboard",
@@ -296,55 +296,65 @@
 		    	var json = jQuery.parseJSON(JSON.stringify(data));
 		    	console.log(json.responseJSON);
 		    	thisMonthDoc += "<h4><b>" + thisMonth +"</b></h4>"
-		 		thisMonthDoc += "<tr><th>Rank</th><th>Doctor</th><th>Clinic</th><th>Specialty</th></tr>"
+		 		thisMonthDoc += "<th>Rank</th><th>Doctor</th><th>Clinic</th><th>Specialty</th>"
 				thisMonthDoc += "<tbody>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[0].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[0].name
+							  +	 "</td>"
 							  +  "<td>"
+							  +  json.responseJSON[0].name
+							  +  "</td>"
 							  +	 "<td>"
 							  +  json.responseJSON[0].clinic
+							  +	 "</td>"
 							  +  "<td>"
 							  +  json.responseJSON[0].speciality
 							  +  "</td></tr>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[1].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[1].name
+							  +	 "</td>"
 							  +  "<td>"
+							  +  json.responseJSON[1].name
+							  +  "</td>"
 							  +	 "<td>"
 							  +  json.responseJSON[1].clinic
+							  +	 "</td>"
 							  +  "<td>"
 							  +  json.responseJSON[1].speciality
 							  +  "</td></tr>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[2].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[2].name
+							  +	 "</td>"
 							  +  "<td>"
+							  +  json.responseJSON[2].name
+							  +  "</td>"
 							  +	 "<td>"
 							  +  json.responseJSON[2].clinic
+							  +	 "</td>"
 							  +  "<td>"
 							  +  json.responseJSON[2].speciality
 							  +  "</td></tr>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[3].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[3].name
+							  +	 "</td>"
 							  +  "<td>"
+							  +  json.responseJSON[3].name
+							  +  "</td>"
 							  +	 "<td>"
 							  +  json.responseJSON[3].clinic
+							  +	 "</td>"
 							  +  "<td>"
 							  +  json.responseJSON[3].speciality
 							  +  "</td></tr>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[4].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[4].name
+							  +	 "</td>"
 							  +  "<td>"
+							  +  json.responseJSON[4].name
+							  +  "</td>"
 							  +	 "<td>"
 							  +  json.responseJSON[4].clinic
+							  +	 "</td>"
 							  +  "<td>"
 							  +  json.responseJSON[4].speciality
 			    			  + "</td></tr></tbody></table>"
@@ -359,7 +369,7 @@
  	
  	function displayTopDocLastMonth(){
  		
- 		var lastMonthDoc = "<table id='lastMonthDoc'  class='table table-striped' cellspacing='0' width='100%'>";
+ 		var lastMonthDoc = "<table id='lastMonthDoc'  class='table table-bordered' cellspacing='0' width='100%'>";
  	
  		$.ajax({
 			url: "DisplayAllPastDoctorRankingDashboard",
@@ -368,59 +378,69 @@
 		    complete: function(data){
 		    	var json = jQuery.parseJSON(JSON.stringify(data));
 		  		lastMonthDoc += "<h4><b>" + lastMonth +"</b></h4>"
-		  		lastMonthDoc += "<tr><th>Rank</th>"
+		  		lastMonthDoc += "<th>Rank</th>"
 							  +  "<th>Doctor</th>"
 							  +  "<th>Clinic</th>"
-							  +  "<th>Specialty</th></tr>"
+							  +  "<th>Specialty</th>"
 							  
 				lastMonthDoc += "<tbody>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[0].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[0].name
+							  +	 "</td>"
 							  +  "<td>"
+							  +  json.responseJSON[0].name
+							  +  "</td>"
 							  +	 "<td>"
 							  +  json.responseJSON[0].clinic
+							  +	 "</td>"
 							  +  "<td>"
 							  +  json.responseJSON[0].speciality
 							  +  "</td></tr>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[1].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[1].name
+							  +	 "</td>"
 							  +  "<td>"
+							  +  json.responseJSON[1].name
+							  +  "</td>"
 							  +	 "<td>"
 							  +  json.responseJSON[1].clinic
+							  +	 "</td>"
 							  +  "<td>"
 							  +  json.responseJSON[1].speciality
 							  +  "</td></tr>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[2].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[2].name
+							  +	 "</td>"
 							  +  "<td>"
+							  +  json.responseJSON[2].name
+							  +  "</td>"
 							  +	 "<td>"
 							  +  json.responseJSON[2].clinic
+							  +	 "</td>"
 							  +  "<td>"
 							  +  json.responseJSON[2].speciality
 							  +  "</td></tr>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[3].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[3].name
+							  +	 "</td>"
 							  +  "<td>"
+							  +  json.responseJSON[3].name
+							  +  "</td>"
 							  +	 "<td>"
 							  +  json.responseJSON[3].clinic
+							  +	 "</td>"
 							  +  "<td>"
 							  +  json.responseJSON[3].speciality
 							  +  "</td></tr>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[4].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[4].name
+							  +	 "</td>"
 							  +  "<td>"
+							  +  json.responseJSON[4].name
+							  +  "</td>"
 							  +	 "<td>"
 							  +  json.responseJSON[4].clinic
+							  +	 "</td>"
 							  +  "<td>"
 							  +  json.responseJSON[4].speciality	
 							  + "</td></tr></tbody></table>"
@@ -432,7 +452,7 @@
  	
  	function displayTopReferralThisMonth(){
  		
- 		var thisMonthRef = "<table id='thisMonthRef'  class='table table-striped' cellspacing='0' width='100%'>";
+ 		var thisMonthRef = "<table id='thisMonthRef'  class='table table-bordered' cellspacing='0' width='100%'>";
  		$.ajax({
 			url: "DisplayAllLatestReferredbyDashboard",
 			type: "get",
@@ -441,47 +461,52 @@
 		    	var json = jQuery.parseJSON(JSON.stringify(data));
 		    	console.log(json.responseJSON);
 		  		thisMonthRef += "<h4><b>" + thisMonth +"</b></h4>"
-		  		thisMonthRef += "<tr><th>Rank</th>"
+		  		thisMonthRef += "<th>Rank</th>"
 							  +  "<th>Referred By</th>"
-							  +  "<th>Number of cases referred</th></tr>"
+							  +  "<th>Number of cases referred</th>"
 				thisMonthRef += "<tbody>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[0].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[0].name
+							  +	 "</td>"
 							  +  "<td>"
+							  +  json.responseJSON[0].name
+							  +  "</td>"
 							  +	 "<td>"
 							  +  json.responseJSON[0].count
 							  + "</td></tr>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[1].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[1].name
+							  +	 "</td>"
 							  +  "<td>"
+							  +  json.responseJSON[1].name
+							  +  "</td>"
 							  +	 "<td>"
 							  +  json.responseJSON[1].count
 							  +  "</td></tr>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[2].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[2].name
+							  +	 "</td>"
 							  +  "<td>"
+							  +  json.responseJSON[2].name
+							  +  "</td>"
 							  +	 "<td>"
 							  +  json.responseJSON[2].count
 							  +  "</td></tr>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[3].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[3].name
+							  +	 "</td>"
 							  +  "<td>"
+							  +  json.responseJSON[3].name
+							  +  "</td>"
 							  +	 "<td>"
 							  +  json.responseJSON[3].count
 							  +  "</td></tr>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[4].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[4].name
+							  +	 "</td>"
 							  +  "<td>"
+							  +  json.responseJSON[4].name
+							  +  "</td>"
 							  +	 "<td>"
 							  +  json.responseJSON[4].count
 							  + "</td></tr></tbody></table>"
@@ -492,7 +517,7 @@
  	
  	function displayTopReferralLastMonth(){
  		
- 		var lastMonthRef = "<table id='lastMonthRef'  class='table table-striped' cellspacing='0' width='100%'>";
+ 		var lastMonthRef = "<table id='lastMonthRef'  class='table table-bordered' cellspacing='0' width='100%'>";
  		$.ajax({
 			url: "DisplayAllPastReferredbyDashboard",
 			type: "get",
@@ -500,31 +525,34 @@
 		    complete: function(data){
 		    	var json = jQuery.parseJSON(JSON.stringify(data));
 		  		lastMonthRef += "<h4><b>" + lastMonth +"</b></h4>"
-		  		lastMonthRef += "<tr><th>Rank</th>"
+		  		lastMonthRef += "<th>Rank</th>"
 							  +  "<th>Referred By</th>"
-							  +  "<th>Number of cases referred</th></tr>"
+							  +  "<th>Number of cases referred</th>"
 				lastMonthRef +=  "<tbody>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[0].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[0].name
+							  +	 "</td>"
 							  +  "<td>"
-							  +	 "<td>"
+							  +  json.responseJSON[0].name
+							  +	 "</td>"
+							  +  "<td>"
 							  +  json.responseJSON[0].count
 							  + "</td></tr>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[1].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[1].name
+							  +	 "</td>"
 							  +  "<td>"
+							  +  json.responseJSON[1].name
+							  +  "</td>"
 							  +	 "<td>"
 							  +  json.responseJSON[1].count
 							  +  "</td></tr>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[2].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[2].name
+							  +	 "</td>"
 							  +  "<td>"
+							  +  json.responseJSON[2].name
+							  +  "</td>"
 							  +	 "<td>"
 							  +  json.responseJSON[2].count
 							  +  "</td></tr>"
@@ -532,15 +560,16 @@
 							  +  json.responseJSON[3].ranking
 							  +	 "<td>"
 							  +  json.responseJSON[3].name
+							  +	 "</td>"
 							  +  "<td>"
-							  +	 "<td>"
 							  +  json.responseJSON[3].count
 							  +  "</td></tr>"
 							  +  "<tr><td>"
 							  +  json.responseJSON[4].ranking
-							  +	 "<td>"
-							  +  json.responseJSON[4].name
+							  +	 "</td>"
 							  +  "<td>"
+							  +  json.responseJSON[4].name
+							  +  "</td>"
 							  +	 "<td>"
 							  +  json.responseJSON[4].count
 							  + "</td></tr></tbody></table>"
