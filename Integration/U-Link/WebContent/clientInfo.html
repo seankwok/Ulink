@@ -87,16 +87,23 @@
 									+"<th class='tableHeader'width='20%'>Hospital Admitted</th>"
 								+"</thead>"
 				          $.each(json, function(key, value){
-				       	  appTable   +="<tbody>"				      
-				          		+"<tr>"
-					                +"<td class='appTd'>"+value["appointment"]+"</td>"
-					                +"<td class='appTd'>"+value["doctor"]+"</td>"
-					                +"<td class='appTd'>"+value["otherDoctor"]+"</td>"
-					                +"<td class='appTd'>"+value["clinic"]+"</td>"
-					                +"<td class='appTd'>"+value["hospitalAdmitted"]+"</td>"
-				                +"</tr>"
-	               				             				                
+				        	  var appt = value["appointment"];
+				        	  var doc = value["doctor"];
+				        	  var oDoc = value["otherDoctor"];
+				        	  var cln =value["clinic"];
+				        	  var hos = value["hospitalAdmitted"];				          
+				        	  if(appt != ""){
+				        	  	  appTable   +="<tbody>"				      
+						          		+"<tr>"
+							                +"<td class='appTd'>"+value["appointment"]+"</td>"
+							                +"<td class='appTd'>"+value["doctor"]+"</td>"
+							                +"<td class='appTd'>"+value["otherDoctor"]+"</td>"
+							                +"<td class='appTd'>"+value["clinic"]+"</td>"
+							                +"<td class='appTd'>"+value["hospitalAdmitted"]+"</td>"
+						                +"</tr>"
+				        	  }		             				                
 							});
+					     
 								appTable	+="</tbody></table>"
 			    	$("#aTable").html(appTable);
 				}							

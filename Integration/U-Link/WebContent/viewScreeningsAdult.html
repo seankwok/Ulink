@@ -213,59 +213,67 @@
 		    dataType : "json",
 		    complete: function(data){
 		        var json = jQuery.parseJSON(data.responseText);
-		        table += "<h3><b>Condition Name:</b>  " + json[0].conditionName +"<br>   <b>Screening Name: </b> "+ json[0].screeningName +"</h3>"
-		        
-		        table += "<thead><tr><th>Age</th><th>Client Name</th><th>Email</th><th>Email Sent Date</th><th>PIC</th>"
-		        	+ "<th>Select All	<input type='checkbox' id='select_all'/></th></tr></thead>";
-		      
-		        $.each(json,function(key,value) {
-		        
-		          table += "<tbody><tr><td>"
-		          + value["age"]
-		          + "</td>"
-		          + "<td>"
-		          + value["name"]
-		          + "</td>"
-		          + "<td>"
-		          + value["email"]
-		          + "</td>"
-		          + "<td>"
-		          + value["date"]
-		          + "</td>"
-		          + "<td>"
-		          + value["followUpPerson"]
-		          + "</td>"
-		          + "<td>"
-		          + "<input class='checkbox' type='checkbox' name='selectClients' value=" + value["email"]+">"          
-		       + "</td></tr></tbody>"
-		        });
-		        table += "</table>"
-		        table += "<div id='displayNumSelected'></div>"
-		        table += "<div class='container' align='center'>"
-		         + "<div class='inline'><button class='btn btn-default' onclick='sendEmail()'>Go to email template</button></div><div class='inline'><div  id='message'></div></div>"
-		         + "<br> <button type='button' id='export' class='btn btn-link'><b>Export to excel(in progress)</b></button>"
-		           +"</div>"
-		       
-		         $("#display").html(table);
-		           var select_all = document.getElementById("select_all"); //select all checkbox
-		   	 	var checkboxes = document.getElementsByClassName("checkbox"); //checkbox i
-		   		select_all.addEventListener("change", function(e){
-		   		    for (i = 0; i < checkboxes.length; i++) { 
-		   		        checkboxes[i].checked = select_all.checked;
-		   		    }
-		   		});
-		   		for (var i = 0; i < checkboxes.length; i++) {
-		   		    checkboxes[i].addEventListener('change', function(e){ //".checkbox" change 
-		   		        //uncheck "select all", if one of the listed checkbox item is unchecked
-		   		        if(this.checked == false){
-		   		            select_all.checked = false;
-		   		        }
-		   		        //check "select all" if all checkbox items are checked
-		   		        if(document.querySelectorAll('.checkbox:checked').length == checkboxes.length){
-		   		            select_all.checked = true;
-		   		        }
-		   		    });
-		   		}
+		       if(json.length != 0){
+			        table += "<h3><b>Condition Name:</b>  " + json[0].conditionName +"<br>   <b>Screening Name: </b> "+ json[0].screeningName +"</h3>"
+			        
+			        table += "<thead><tr><th>Age</th><th>Client Name</th><th>Email</th><th>Email Sent Date</th><th>PIC</th>"
+			        	+ "<th>Select All	<input type='checkbox' id='select_all'/></th></tr></thead>";
+			      
+			        $.each(json,function(key,value) {
+			        
+			          table += "<tbody><tr><td>"
+			          + value["age"]
+			          + "</td>"
+			          + "<td>"
+			          + value["name"]
+			          + "</td>"
+			          + "<td>"
+			          + value["email"]
+			          + "</td>"
+			          + "<td>"
+			          + value["date"]
+			          + "</td>"
+			          + "<td>"
+			          + value["followUpPerson"]
+			          + "</td>"
+			          + "<td>"
+			          + "<input class='checkbox' type='checkbox' name='selectClients' value=" + value["email"]+">"          
+			       + "</td></tr></tbody>"
+			        });
+			        table += "</table>"
+			        table += "<div id='displayNumSelected'></div>"
+			        table += "<div class='container' align='center'>"
+			         + "<div class='inline'><button class='btn btn-default' onclick='sendEmail()'>Go to email template</button></div><div class='inline'><div  id='message'></div></div>"
+			         + "<br> <button type='button' id='export' class='btn btn-link'><b>Export to excel(in progress)</b></button>"
+			           +"</div>"
+			       
+			         $("#display").html(table);
+						$('#error').html("");
+
+			           var select_all = document.getElementById("select_all"); //select all checkbox
+			   	 	var checkboxes = document.getElementsByClassName("checkbox"); //checkbox i
+			   		select_all.addEventListener("change", function(e){
+			   		    for (i = 0; i < checkboxes.length; i++) { 
+			   		        checkboxes[i].checked = select_all.checked;
+			   		    }
+			   		});
+			   		for (var i = 0; i < checkboxes.length; i++) {
+			   		    checkboxes[i].addEventListener('change', function(e){ //".checkbox" change 
+			   		        //uncheck "select all", if one of the listed checkbox item is unchecked
+			   		        if(this.checked == false){
+			   		            select_all.checked = false;
+			   		        }
+			   		        //check "select all" if all checkbox items are checked
+			   		        if(document.querySelectorAll('.checkbox:checked').length == checkboxes.length){
+			   		            select_all.checked = true;
+			   		        }
+			   		    });
+			   		}
+		       }else{
+					$('#error').html("<div class='alert alert-danger' role='alert'><center><b> No patient in database matches criteria </b></center></div>");
+
+		       }
+
 		    } 
 		     
 
@@ -867,7 +875,8 @@
 	</div>
 
 	
-	
+
+	<div class="container" id="error" ></div>
 	<div class="container" id="display" ></div>
 	
 	
