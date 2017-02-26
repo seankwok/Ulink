@@ -80,62 +80,37 @@
 		 $("#ckbCheckAll").click(function () {
 		        $(".checkBoxClass").prop('checked', $(this).prop('checked'));
 		  });
-		
-			
-		 
-		 var search = "<div class='col-md-3'><form action='#' method='get'><div class='input-group'>"
-             + "<input class='form-control' id='system-search' name='q' placeholder='Search for' required>"
-             + "<span class='input-group-btn'><button class='btn btn-default'><i class='glyphicon glyphicon-search'></i></button>"
-             + "</span></div></form></div>"
-
-		$("#search").html(search);
-             
-             
-          
-		 var activeSystemClass = $('.list-group-item.active');
-
-		    //something is entered in search form
-		    $('#system-search').keyup( function() {
-		       var that = this;
-		        // affect all table rows on in systems table
-		        var tableBody = $('.table-list-search tbody');
-		        var tableRowsClass = $('.table-list-search tbody tr');
-		        $('.search-sf').remove();
-		        tableRowsClass.each( function(i, val) {
-		        
-		            //Lower text for case insensitive
-		            var rowText = $(val).text().toLowerCase();
-		            var inputText = $(that).val().toLowerCase();
-		            if(inputText != ''){
-		            }
-		            else
-		            {
-		                $('.search-query-sf').remove();
-		            }
-
-		            if( rowText.indexOf( inputText ) == -1 )
-		            {
-		                //hide rows
-		                tableRowsClass.eq(i).remove();
-		                
-		            }
-		            else
-		            {
-		                $('.search-sf').remove();
-		                tableRowsClass.eq(i).show();
-		            }
-		        });
-		        //all tr elements are hidden
-		        if(tableRowsClass.children(':visible').length == 0)
-		        {
-		            tableBody.append('<tr class="search-sf"><td class="text-muted" colspan="6">No entries found.</td></tr>');
-		        }
-		    });   
-             
-             
+		  
           
 	});
 	
+	function mySearch() {
+		 var searchText = document.getElementById('myInput').value.toUpperCase();
+		    var targetTable = document.getElementById('table');
+		    var targetTableColCount;			            
+		    //Loop through table rows
+		    for (var rowIndex = 0; rowIndex < targetTable.rows.length; rowIndex++) {
+		        var rowData = '';
+
+		        //Get column count from header row
+		        if (rowIndex == 0) {
+		           targetTableColCount = targetTable.rows.item(rowIndex).cells.length;
+		           continue; //do not execute further code for header row.
+		        }
+		                
+		        //Process data rows. (rowIndex >= 1)
+		        for (var colIndex = 0; colIndex < targetTableColCount; colIndex++) {
+		            rowData += targetTable.rows.item(rowIndex).cells.item(colIndex).textContent.toUpperCase();
+		        }
+
+		        //If search term is not found in row data
+		        //then hide the row, else show
+		        if (rowData.indexOf(searchText) == -1)
+		            targetTable.rows.item(rowIndex).style.display = 'none';
+		        else
+		            targetTable.rows.item(rowIndex).style.display = 'table-row';
+		    }
+		}
 		
 	function deleteItem(clickedID){
 			
@@ -202,7 +177,7 @@
 		    "ID" : clickedID
 		   };
 		  
-		  var table = "<table id='table'  class='table table-list-search' cellspacing='0' width='100%'>";
+		  var table = "<table id='table'  cellspacing='0' width='100%'>";
 		     var condition="";
 		     var screeningName="";
 		     var type = "";
@@ -282,7 +257,7 @@
 	
 	function sortGender(clickedID){
 		console.log(clickedID);
-		var table = "<table id='table'  class='table table-list-search' cellspacing='0' width='100%'>";
+		var table = "<table id='table'  cellspacing='0' width='100%'>";
 		var sendData = "name=screening &orderDirection=DESC &gender=" + clickedID;
 		console.log(sendData);
 		
@@ -353,7 +328,7 @@
 	}
 	
 	function sortAscAge(clickedID){
-			var table = "<table id='table'  class='table table-list-search' cellspacing='0' width='100%'>";
+			var table = "<table id='table' cellspacing='0' width='100%'>";
 			var sendData = "name=ageRequired &orderDirection=ASC";
 			console.log(sendData);
 			$.ajax({
@@ -423,7 +398,7 @@
 	}
 	
 	function sortDescAge(clickedID){
-		var table = "<table id='table'  class='table table-list-search' cellspacing='0' width='100%'>";
+		var table = "<table id='table'  cellspacing='0' width='100%'>";
 		var sendData = "name=ageRequired &orderDirection=DESC";
 		console.log(sendData);
 		$.ajax({
@@ -493,7 +468,7 @@
 }
 	
 	function sortAscIllness(clickedID){
-		var table = "<table id='table'  class='table table-list-search' cellspacing='0' width='100%'>";
+		var table = "<table id='table'  cellspacing='0' width='100%'>";
 		var sendData = "name=conditionName &orderDirection=ASC";
 		console.log(sendData);
 		$.ajax({
@@ -563,7 +538,7 @@
 }
 	
 	function sortDescIllness(clickedID){
-		var table = "<table id='table'  class='table table-list-search' cellspacing='0' width='100%'>";
+		var table = "<table id='table'  cellspacing='0' width='100%'>";
 		var sendData = "name=conditionName &orderDirection=DESC";
 		console.log(sendData);
 		$.ajax({
@@ -633,7 +608,7 @@
 }
 	
 	function sortAscScreening(clickedID){
-		var table = "<table id='table'  class='table table-list-search' cellspacing='0' width='100%'>";
+		var table = "<table id='table' cellspacing='0' width='100%'>";
 		var sendData = "name=screening &orderDirection=ASC";
 		console.log(sendData);
 		$.ajax({
@@ -703,7 +678,7 @@
 }
 	
 	function sortDescScreening(clickedID){
-		var table = "<table id='table'  class='table table-list-search' cellspacing='0' width='100%'>";
+		var table = "<table id='table'  cellspacing='0' width='100%'>";
 		var sendData = "name=screening &orderDirection=DESC";
 		console.log(sendData);
 		$.ajax({
@@ -773,7 +748,7 @@
 }
 	
 	function displayAll(){
-		var table = "<table class='table table-list-search' class='display' cellspacing='0' >";
+		var table = "<table id='table' class='display' cellspacing='0' >";
 		var isEmpty = false;
 		sendData = "name=ageRequired&orderDirection=ASC&gender=All"
 		console.log(sendData);
@@ -858,8 +833,13 @@
 	  <h1><b>View Screenings - Adult</b></h1>
 	  <div class="row">
 	  <button type="button" class="btn btn-default"> <a href='addScreeningAdult.html'> Add new screening</a></button>
+	  <div class="container"><div align="left"><input type="text" id="myInput" onkeyup="mySearch()" placeholder="Search for"></div></div>
+	  
 	  </div>
-	  <div class="container" align = "center" id="search"></div>
+	
+	
+		
+	 
 	   	
 	</div>
 
