@@ -40,6 +40,10 @@
 		form {
 		  text-align: center;
 		}
+		
+		.col-form-label {
+ 			text-align: right;
+		}
 	</style>
 	
 	
@@ -51,7 +55,11 @@
 		 var clients = sessionStorage.getItem('clients');
 		 var array = clients.split(',');
 		 var numSelected = array.length;
-		 var table = " <table class='table table-bordered' width='50%'><tr><th>" + numSelected + " Clients Selected</th></tr>";
+		 if(numSelected == 1){
+			 table = " <table class='table table-bordered' width='50%'><tr><th>" + numSelected + " Client Selected </th></tr>";
+		 }else{
+			 table = " <table class='table table-bordered' width='50%'><tr><th>" + numSelected + " Clients Selected </th></tr>";
+		 }
 		 array.forEach(function(entry) {
 			    table += "<tr><td>"+entry+"</td><tr>"
 			});
@@ -64,10 +72,28 @@
 	}
 	
 	$(document).ready(function() {
+		var user = "";
+		var screeningName = sessionStorage.getItem('screeningName');
+		presetInputBox();
 		showFields();
 		showDropdownList();	
-		
+		document.getElementById("header").innerHTML =  "Email for " + screeningName + " ";
+
 	});
+    function presetInputBox(){
+    	$.ajax({
+			url : "DisplayLoginUser",
+			type : "get",
+			dataType : "json",
+			complete : function(data) {
+		    	var json = jQuery.parseJSON(JSON.stringify(data));
+				console.log(json.responseText);
+				user = json.responseText;
+				document.getElementById("emailTo").placeholder = user + "@ulinkassist.com";
+				document.getElementById("emailSubject").value  = "Screening Recommendation";
+			}
+    	});
+    }
 	
 		function selectTemplate(clickedID){
 			var sendData = {
@@ -113,7 +139,6 @@
 							showDropdownList();	
 							$('#exampleModal').modal('hide');
 						}
-						
 					}
 				});
 		    	
@@ -158,8 +183,12 @@
 	    
 	    function pressSend(){
 	    	var content = CKEDITOR.instances.editor1.getData();
+	    	var emailSubject = document.getElementById("emailSubject").value;
+	    	var emailCC = document.getElementById("emailCC").value;
 	    	content  = replaceSpace(content);
 	    	sessionStorage.setItem('passContent', content);
+	    	sessionStorage.setItem('emailSubject', emailSubject);
+	    	sessionStorage.setItem('emailCC', emailCC);
 	    	window.location.href = "sendingEmail.html";
 	  
 	    }
@@ -175,11 +204,30 @@
 	<div id="includedContent"></div>
 	
 	<div class="page-header">
-		<h1 align="center">New Email</h1>
+		<h1 align="center" id="header">New Email</h1>
 	</div>
 	<div class="container" id="clients"></div>
-	
-<div class="container">
+
+	 <div class="form-group row">
+	      <label  class="col-sm-2 col-form-label">To:</label>
+	      <div class="col-sm-6">
+	        	<input type="text" class="form-control form-control-sm" id="emailTo"  readonly>
+	      </div>      
+	</div>
+   	<div class="form-group row">
+   	      <label  class="col-sm-2 col-form-label">Subject:</label>
+	      <div class="col-sm-6">
+	        	<input type="text" class="form-control form-control-sm" id="emailSubject" placeholder="enter email subject...">
+	      </div>     
+    </div>
+   	<div class="form-group row">
+   	      <label  class="col-sm-2 col-form-label">CC:</label>
+	      <div class="col-sm-6">
+	        	<input type="text" class="form-control form-control-sm" id="emailCC" placeholder="enter another receipient...">
+	      </div>     
+    </div>
+
+<div class="container">    
 	<table >
 		<tr> 
 			<td><button type="button" class="btn btn-link" data-toggle="modal" data-target='#exampleModal' >Save as Template</button></td>
@@ -190,9 +238,7 @@
 		  <div class="col-md-10">
 		   		 <textarea id="editor1"></textarea>
 			     <script>
-			         CKEDITOR.replace( 'editor1' );
-			         
-			        
+			         CKEDITOR.replace( 'editor1' );	        
 			     </script>
 			     
 		  </div>

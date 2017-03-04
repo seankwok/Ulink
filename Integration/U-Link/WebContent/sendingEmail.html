@@ -22,16 +22,24 @@
 			$(document).ready(function() {
 				$('#message').html("<div class='alert alert-warning' role='alert'><center><b> Sending Email Please Wait...<br>Do not close page </b></center></div>");
 				var content = sessionStorage.getItem('passContent');
+				var emailSubject = sessionStorage.getItem('emailSubject');
+				var emailCC = sessionStorage.getItem('emailCC');
+				var sendData = {
+						"subject" : emailSubject,
+						"emailCC" : emailCC,
+						"msg":content,
+				};
 		    	$.ajax({
 		    		url:'SendEmail',
 	    			type:'post',
-	    			data: 'subject=' + "Reminder for Screening"
-					+ '&'
-					+ 'msg=' + content,
+	    			data: sendData,
 					complete:function(data){
 						$('#message').html("<div class='alert alert-success' role='alert'><center><b> Email Sent! </b></center></div>");
 						sessionStorage.removeItem('passContent');
 						sessionStorage.removeItem('clients');
+						sessionStorage.removeItem('emailSubject');
+						sessionStorage.removeItem('emailCC');
+						sessionStorage.removeItem('screeningName');
 					
 					}
 			

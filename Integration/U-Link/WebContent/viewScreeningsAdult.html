@@ -72,7 +72,7 @@
  
 	$(document).ready(function() {
 			
-		
+		 var screeningName="";
 		displayAll();
 		$("#selectInfant").click(function(){
 			window.location = "viewScreenings.html";
@@ -80,7 +80,7 @@
 		 $("#ckbCheckAll").click(function () {
 		        $(".checkBoxClass").prop('checked', $(this).prop('checked'));
 		  });
-		  
+		
           
 	});
 	
@@ -179,7 +179,6 @@
 		  
 		  var table = "<table id='table'  cellspacing='0' width='100%'>";
 		     var condition="";
-		     var screeningName="";
 		     var type = "";
 		   $.ajax({
 		    url : "DisplayPatientsByIllness",
@@ -190,8 +189,7 @@
 		        var json = jQuery.parseJSON(data.responseText);
 		       if(json.length != 0){
 			        table += "<h3><b>Condition Name:</b>  " + json[0].conditionName +"<br>   <b>Screening Name: </b> "+ json[0].screeningName +"</h3>"
-			        
-			        table += "<thead><tr><th>Age</th><th>Client Name</th><th>Email</th><th>Email Sent Date</th><th>PIC</th>"
+			        sessionStorage.setItem('screeningName',json[0].screeningName);			        table += "<thead><tr><th>Age</th><th>Client Name</th><th>Email</th><th>Email Sent Date</th><th>PIC</th>"
 			        	+ "<th>Select All	<input type='checkbox' id='select_all'/></th></tr></thead>";
 			      
 			        $.each(json,function(key,value) {
