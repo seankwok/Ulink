@@ -1,6 +1,8 @@
 To sean:
 
-1) create a general method to validate startDate is earlier than endDate
-2) a general method to give front end the email of the login user
-3) DisplayDoctorBySpecialty need to consider startdate and enddate. 
-	pls run the ranking.html> specialty filter> click on view doctor. 
+
+1) send email: will need to pass you the 
+	a) "to:"
+	b)"subject"
+	c) "CC:"
+	d" "BCC:"
