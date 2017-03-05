@@ -74,7 +74,10 @@
 		function draftEmail(clickedID){ 
 			var clients =  sessionStorage.getItem('clients');
 			clickedID = clickedID.replace("_", " ")
-            sessionStorage.setItem('screeningName',clickedID);
+			if(clients==""){
+				alert("This client has no email!");
+			}else{
+	            sessionStorage.setItem('screeningName',clickedID);
 		    	$.ajax({
 					type: 'post',
 					url: "StoreSendEmail",
@@ -85,7 +88,7 @@
 		    	
 				    	
 				});
-			
+			}	
 		}
 		
 		function displayAppointment() {
