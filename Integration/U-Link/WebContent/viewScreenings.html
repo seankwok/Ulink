@@ -531,7 +531,7 @@ function sortDescScreening(clickedID){
 			    return this.value;
 			}).get();
 			if (clients == ""){
-				$('#message').html("<div class='alert alert-danger' role='alert'><center><b> Please select at least 1 checkbox. </b></center></div>");
+				$('#message').html("<div class='alert alert-danger' role='alert'><center><b> Please select at least 1 client. </b></center></div>");
 			}else{
 		    	$.ajax({
 					type: 'post',
