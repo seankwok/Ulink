@@ -28,14 +28,10 @@
 		.errorMsg {
 		   font-size: 15px; 
 		   text-align: center;
-		}		
-		
+		}			
 		.dropdownSide {
-			  width: 300px !important;
-			  
+			  width: 300px !important;			  
 		}	
-		
-
 		
 		form {
 		  text-align: center;
@@ -193,6 +189,11 @@
 	  
 	    }
 	    
+	    function resetField(){
+	    	var templateContent = '[clientEmail]<br>[clientName]<br>[screening]' ;
+			 CKEDITOR.instances.editor1.setData(templateContent);
+		 }
+	    
 
 	</script>
 </head>
@@ -232,6 +233,7 @@
 		<tr> 
 			<td><button type="button" class="btn btn-link" data-toggle="modal" data-target='#exampleModal' >Save as Template</button></td>
 			<td><div id='templateDropdown' ></div></td>
+			<td><button type="button" class='btn btn-default btn-xs' onclick='resetField()'> Reset Editor</button></td>			
 		</tr>
 	</table>
 	<div class="row">
