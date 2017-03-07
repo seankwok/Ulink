@@ -586,7 +586,7 @@ public class DatabaseConnection {
 	}
 	
 	
-	public ArrayList<Client> retrieveAllClientListEmail() {
+	public ArrayList<Client> retrieveAllClientListEmail(String name, String sortDirection) {
 
 		Connection con;
 		ArrayList<Client> clientList = new ArrayList<Client>();
@@ -595,7 +595,7 @@ public class DatabaseConnection {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
-			String sql = "SELECT * FROM client group by email";
+			String sql = "SELECT * FROM client group by email order by " +  name + " " + sortDirection;
 			ResultSet rs = stmt.executeQuery(sql);
 			Utility utility = new Utility();
 

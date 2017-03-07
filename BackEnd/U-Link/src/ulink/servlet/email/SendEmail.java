@@ -80,7 +80,7 @@ public class SendEmail extends HttpServlet {
 		DatabaseConnection connection = new DatabaseConnection();
 		Condition condition = connection.retrieveAllConditionByID(ID);
 		String subject = request.getParameter("subject");
-
+		String CC = request.getParameter("CC");
 		msg = msg.replaceAll("&nbsp;", "<br>");
 		String temp = "";
 
@@ -101,16 +101,17 @@ public class SendEmail extends HttpServlet {
 
 				// check = emailServer.sendEmail(email[i], subject, temp,
 				// user.getEmail()+"@ulinkassist.com");
-				check = emailServer.sendEmail(email[i], subject, temp, "nabilahbmnk.2014@sis.smu.edu.sg");
+				check = emailServer.sendEmail(email[i], CC, subject, temp, "nabilahbmnk.2014@sis.smu.edu.sg");
 				// check = emailServer.sendEmail(email[i], subject, temp,
 				// "kaixin.teh.2014@sis.smu.edu.sg");
 				// check = emailServer.sendEmail(email[i], subject, temp,
 				// "sychien.2014@sis.smu.edu.sg");
 				// Client name, screening, date Email,
 				TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
-
+				
 				Date date2 = new Date();
-				String datetime = date2.getDate() + "/" + date2.getMonth() + "/" + (date2.getYear() + 1900) + " "
+				
+				String datetime = date2.getDate() + "/" + (date2.getMonth()+1) + "/" + (date2.getYear() + 1900) + " "
 						+ date2.getHours() + ":" + date2.getMinutes();
 
 				connection.createEmailDate(connection.getNameByEmail(email[i]), condition.getScreening(), datetime);

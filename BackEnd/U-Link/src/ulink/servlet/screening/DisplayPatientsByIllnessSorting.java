@@ -22,36 +22,30 @@ import ulink.constructor.Condition;
 import ulink.dao.DatabaseConnection;
 
 /**
- * Servlet implementation class DisplayPatientsByIllness
+ * Servlet implementation class DisplayPatientsByIllnessSorting
  */
-@WebServlet("/DisplayPatientsByIllness")
-public class DisplayPatientsByIllness extends HttpServlet {
+@WebServlet("/DisplayPatientsByIllnessSorting")
+public class DisplayPatientsByIllnessSorting extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public DisplayPatientsByIllnessSorting() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
-	 * @see HttpServlet#HttpServlet()
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	public DisplayPatientsByIllness() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		DatabaseConnection connection = new DatabaseConnection();
-		//int age = Integer.parseInt(request.getParameter("age"));
-		//String gender = request.getParameter("gender");
-		//String type = request.getParameter("type");
-		int ID = Integer.parseInt(request.getParameter("ID"));
 		HttpSession session = request.getSession();
 		String name = request.getParameter("name");
 		String direction = request.getParameter("direction");
-		session.setAttribute("ID", ID);
+		int ID = (int)session.getAttribute("ID");
 		Condition condition = connection.retrieveAllConditionByID(ID);
 		
 		ArrayList<Client> clientList = connection.retrieveAllClientListEmail(name, direction);
@@ -83,15 +77,12 @@ public class DisplayPatientsByIllness extends HttpServlet {
 		out.write(arrayListToJson);
 		out.flush();
 		return;
-		
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
