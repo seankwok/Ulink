@@ -41,29 +41,10 @@ public class MainTest {
 
 	public static void main(String[] args) throws ParseException {
 		DatabaseConnection connection = new DatabaseConnection();
-		ArrayList<String> personInChargeList = connection.retrieveAllPersonInCharge();
-		Utility utility = new Utility();
-		ArrayList<PersonInCharge> listAllPIC = new ArrayList<>();
-	//	LinkedHashMap<String,LinkedHashMap<Integer,Double>> personInChargePointSystem = new  LinkedHashMap<String,LinkedHashMap<Integer,Double>>();
-		for (int i = 0; i<personInChargeList.size(); i++){
-			String temp = personInChargeList.get(i);
-			ArrayList<Index> indexList = connection.retrieveAllIndexByPerson(utility.changeDateFormatDatabase("01-01-2015"), utility.changeDateFormatDatabase("01-01-2017"), "Visa",temp);	
-			
-			
-		System.out.println(indexList.size());
-			LinkedHashMap<Integer,Double> pointSystem = utility.getIndexCount(indexList);
-			
-			listAllPIC.add(new PersonInCharge(temp, pointSystem));
-		}
 		
-		for (int i= 0; i< personInChargeList.size();i++){
-			System.out.println(personInChargeList.get(i));
-		}
-		
-		for (int i =0; i< listAllPIC.size(); i++){
-			System.out.println(listAllPIC.get(i).getPointSystem().values());
-		}
+	Email email = new Email();
 	
+	email.sendEmail("", "seankwok794@hotmail.com", "SUBJECT", "", "");
 		
 		
 	}

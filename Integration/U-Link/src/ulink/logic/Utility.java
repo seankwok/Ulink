@@ -2,6 +2,10 @@ package ulink.logic;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormatSymbols;
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -15,10 +19,6 @@ import ulink.constructor.Condition;
 import ulink.constructor.Index;
 import ulink.constructor.User;
 import ulink.dao.DatabaseConnection;
-import java.text.DateFormatSymbols;
-import java.text.DecimalFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 public class Utility {
 
 

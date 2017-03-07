@@ -49,11 +49,12 @@ public class DisplayPatientsByIllness extends HttpServlet {
 		//String type = request.getParameter("type");
 		int ID = Integer.parseInt(request.getParameter("ID"));
 		HttpSession session = request.getSession();
-		
+		String name = request.getParameter("name");
+		String direction = request.getParameter("direction");
 		session.setAttribute("ID", ID);
 		Condition condition = connection.retrieveAllConditionByID(ID);
 		
-		ArrayList<Client> clientList = connection.retrieveAllClientListEmail();
+		ArrayList<Client> clientList = connection.retrieveAllClientListEmail(name, direction);
 		ArrayList<ClientByIllness> clientByIllnessList = new ArrayList<>();
 		for (int i = 0; i < clientList.size(); i++) {
 			Client client = clientList.get(i);
