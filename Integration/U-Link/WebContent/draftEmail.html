@@ -181,11 +181,11 @@
 	    	var content = CKEDITOR.instances.editor1.getData();
 	    	var emailSubject = document.getElementById("emailSubject").value;
 	    	var emailCC = document.getElementById("emailCC").value;
-	    	content  = replaceSpace(content);
+	    	//content  = replaceSpace(content);
 	    	sessionStorage.setItem('passContent', content);
-	    	sessionStorage.setItem('emailSubject', emailSubject);
-	    	sessionStorage.setItem('emailCC', emailCC);
-	    	window.location.href = "sendingEmail.html";
+	    	sessionStorage.setItem('subject', emailSubject);
+	    	sessionStorage.setItem('CC', emailCC);
+	    	window.location = "sendingEmail.html";
 	  
 	    }
 	    
