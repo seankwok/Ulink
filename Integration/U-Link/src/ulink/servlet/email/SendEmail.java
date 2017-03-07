@@ -80,7 +80,7 @@ public class SendEmail extends HttpServlet {
 		DatabaseConnection connection = new DatabaseConnection();
 		Condition condition = connection.retrieveAllConditionByID(ID);
 		String subject = request.getParameter("subject");
-
+		String CC = request.getParameter("CC");
 		msg = msg.replaceAll("&nbsp;", "<br>");
 		String temp = "";
 
@@ -101,7 +101,7 @@ public class SendEmail extends HttpServlet {
 
 				// check = emailServer.sendEmail(email[i], subject, temp,
 				// user.getEmail()+"@ulinkassist.com");
-				check = emailServer.sendEmail(email[i], subject, temp, "nabilahbmnk.2014@sis.smu.edu.sg");
+				check = emailServer.sendEmail(email[i], subject,CC, temp, "nabilahbmnk.2014@sis.smu.edu.sg");
 				// check = emailServer.sendEmail(email[i], subject, temp,
 				// "kaixin.teh.2014@sis.smu.edu.sg");
 				// check = emailServer.sendEmail(email[i], subject, temp,

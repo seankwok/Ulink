@@ -13,7 +13,7 @@ import javax.mail.internet.MimeMessage;
 
 public class Email {
 
-	public boolean sendEmail(String email, String Subject, String Msg, String toEmail){
+	public boolean sendEmail(String email, String CC, String Subject, String Msg, String toEmail){
 		
 		
 		final String username = "ulinkas1";
@@ -42,6 +42,8 @@ public class Email {
 				InternetAddress.parse(toEmail));
 			message.addRecipients(Message.RecipientType.CC,
 					InternetAddress.parse("kaixin.teh.2014@sis.smu.edu.sg"));
+			message.addRecipients(Message.RecipientType.CC,
+					InternetAddress.parse(CC));
 			message.addRecipients(Message.RecipientType.CC,
 					InternetAddress.parse("sychien.2014@sis.smu.edu.sg"));
 			message.setSubject(Subject);
