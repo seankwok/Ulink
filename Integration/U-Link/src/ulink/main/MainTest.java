@@ -40,12 +40,14 @@ import ulink.logic.Utility;
 public class MainTest {
 
 	public static void main(String[] args) throws ParseException {
-		DatabaseConnection connection = new DatabaseConnection();
-		
-	Email email = new Email();
+
 	
-	email.sendEmail("", "seankwok794@hotmail.com", "  ", "", "");
-		
+	Calendar startCalendar = new GregorianCalendar();
+	Date current = new Date();
+	Date dob = new Date(2013,12,2);
+	String date = "12/11/2015";
+	System.out.println(Integer.parseInt(date.substring(0,2)) + Integer.parseInt(date.substring(3,5)) + Integer.parseInt(date.substring(6)));
+	
 		
 	}
 }
