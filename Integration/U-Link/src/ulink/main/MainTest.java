@@ -44,7 +44,7 @@ public class MainTest {
 		
 	Email email = new Email();
 	
-	email.sendEmail("", "seankwok794@hotmail.com", "SUBJECT", "", "");
+	email.sendEmail("", "seankwok794@hotmail.com", "  ", "", "");
 		
 		
 	}
