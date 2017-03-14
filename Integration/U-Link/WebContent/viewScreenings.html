@@ -562,7 +562,7 @@ function sortDescScreening(clickedID){
 				        + "<th>Client Name<a href='#' onClick=sortAscClientName(this.id)  id='clientName'>&#9652</a><a href='#' onClick=sortDescClientName(this.id) id='clientName'> &#9662</a></th>"
 				        + "<th>Email<a href='#' onClick=sortAscClientEmail(this.id)  id='email'>&#9652</a><a href='#' onClick=sortDescClientEmail(this.id) id='email'> &#9662</a></th>"
 				        + "<th>Email Sent Date</th>"
-				        + "<th>PIC<a href='#' onClick=sortAscPIC(this.id)  id='PIC'>&#9652</a><a href='#' onClick=sortDescPIC(this.id) id='PIC'> &#9662</a></th>"
+				        + "<th>PIC</th>"
 				        + "<th>Select All	<input type='checkbox' id='select_all'/></th></tr></thead>";
 				      
 				        $.each(json,function(key,value) {
@@ -596,25 +596,25 @@ function sortDescScreening(clickedID){
 				         $("#display").html(table);
 							$('#error').html("");
 
-				           var select_all = document.getElementById("select_all"); //select all checkbox
-				   	 	var checkboxes = document.getElementsByClassName("checkbox"); //checkbox i
-				   		select_all.addEventListener("change", function(e){
-				   		    for (i = 0; i < checkboxes.length; i++) { 
-				   		        checkboxes[i].checked = select_all.checked;
-				   		    }
-				   		});
-				   		for (var i = 0; i < checkboxes.length; i++) {
-				   		    checkboxes[i].addEventListener('change', function(e){ //".checkbox" change 
-				   		        //uncheck "select all", if one of the listed checkbox item is unchecked
-				   		        if(this.checked == false){
-				   		            select_all.checked = false;
-				   		        }
-				   		        //check "select all" if all checkbox items are checked
-				   		        if(document.querySelectorAll('.checkbox:checked').length == checkboxes.length){
-				   		            select_all.checked = true;
-				   		        }
-				   		    });
-				   		}
+							$('#select_all').on('click',function(){
+							    if(this.checked){
+							        $('.checkbox:visible').each(function(){
+							            this.checked = true;
+							        });
+							    }else{
+							         $('.checkbox:visible').each(function(){
+							            this.checked = false;
+							        });
+							    }
+							});
+
+							$('.checkbox:visible').on('click',function(){
+							    if($('.checkbox:checked').length == $('.checkbox:visible').length){
+							        $('#select_all').prop('checked',true);
+							    }else{
+							        $('#select_all').prop('checked',false);
+							    }
+							});
 			       }else{
 			    	   console.log("Not in");
 						$('#error').html("<div class='alert alert-danger' role='alert'><center><b> No patient in database matches criteria </b></center></div>");
@@ -643,7 +643,7 @@ function sortDescScreening(clickedID){
 					        + "<th>Client Name<a href='#' onClick=sortAscClientName(this.id)  id='clientName'>&#9652</a><a href='#' onClick=sortDescClientName(this.id) id='clientName'> &#9662</a></th>"
 					        + "<th>Email<a href='#' onClick=sortAscClientEmail(this.id)  id='email'>&#9652</a><a href='#' onClick=sortDescClientEmail(this.id) id='email'> &#9662</a></th>"
 					        + "<th>Email Sent Date</th>"
-					        + "<th>PIC<a href='#' onClick=sortAscPIC(this.id)  id='PIC'>&#9652</a><a href='#' onClick=sortDescPIC(this.id) id='PIC'> &#9662</a></th>"
+					        + "<th>PIC</th>"
 					        + "<th>Select All	<input type='checkbox' id='select_all'/></th></tr></thead>";
 					      
 					        $.each(json,function(key,value) {
@@ -677,25 +677,25 @@ function sortDescScreening(clickedID){
 					         $("#display").html(table);
 								$('#error').html("");
 
-					           var select_all = document.getElementById("select_all"); //select all checkbox
-					   	 	var checkboxes = document.getElementsByClassName("checkbox"); //checkbox i
-					   		select_all.addEventListener("change", function(e){
-					   		    for (i = 0; i < checkboxes.length; i++) { 
-					   		        checkboxes[i].checked = select_all.checked;
-					   		    }
-					   		});
-					   		for (var i = 0; i < checkboxes.length; i++) {
-					   		    checkboxes[i].addEventListener('change', function(e){ //".checkbox" change 
-					   		        //uncheck "select all", if one of the listed checkbox item is unchecked
-					   		        if(this.checked == false){
-					   		            select_all.checked = false;
-					   		        }
-					   		        //check "select all" if all checkbox items are checked
-					   		        if(document.querySelectorAll('.checkbox:checked').length == checkboxes.length){
-					   		            select_all.checked = true;
-					   		        }
-					   		    });
-					   		}
+								$('#select_all').on('click',function(){
+								    if(this.checked){
+								        $('.checkbox:visible').each(function(){
+								            this.checked = true;
+								        });
+								    }else{
+								         $('.checkbox:visible').each(function(){
+								            this.checked = false;
+								        });
+								    }
+								});
+
+								$('.checkbox:visible').on('click',function(){
+								    if($('.checkbox:checked').length == $('.checkbox:visible').length){
+								        $('#select_all').prop('checked',true);
+								    }else{
+								        $('#select_all').prop('checked',false);
+								    }
+								});
 				       }else{
 							$('#error').html("<div class='alert alert-danger' role='alert'><center><b> No patient in database matches criteria </b></center></div>");
 
@@ -723,7 +723,7 @@ function sortDescScreening(clickedID){
 					        + "<th>Client Name<a href='#' onClick=sortAscClientName(this.id)  id='clientName'>&#9652</a><a href='#' onClick=sortDescClientName(this.id) id='clientName'> &#9662</a></th>"
 					        + "<th>Email<a href='#' onClick=sortAscClientEmail(this.id)  id='email'>&#9652</a><a href='#' onClick=sortDescClientEmail(this.id) id='email'> &#9662</a></th>"
 					        + "<th>Email Sent Date</th>"
-					        + "<th>PIC<a href='#' onClick=sortAscPIC(this.id)  id='PIC'>&#9652</a><a href='#' onClick=sortDescPIC(this.id) id='PIC'> &#9662</a></th>"
+					        + "<th>PIC</th>"
 					        + "<th>Select All	<input type='checkbox' id='select_all'/></th></tr></thead>";
 					      
 					        $.each(json,function(key,value) {
@@ -757,25 +757,25 @@ function sortDescScreening(clickedID){
 					         $("#display").html(table);
 								$('#error').html("");
 
-					           var select_all = document.getElementById("select_all"); //select all checkbox
-					   	 	var checkboxes = document.getElementsByClassName("checkbox"); //checkbox i
-					   		select_all.addEventListener("change", function(e){
-					   		    for (i = 0; i < checkboxes.length; i++) { 
-					   		        checkboxes[i].checked = select_all.checked;
-					   		    }
-					   		});
-					   		for (var i = 0; i < checkboxes.length; i++) {
-					   		    checkboxes[i].addEventListener('change', function(e){ //".checkbox" change 
-					   		        //uncheck "select all", if one of the listed checkbox item is unchecked
-					   		        if(this.checked == false){
-					   		            select_all.checked = false;
-					   		        }
-					   		        //check "select all" if all checkbox items are checked
-					   		        if(document.querySelectorAll('.checkbox:checked').length == checkboxes.length){
-					   		            select_all.checked = true;
-					   		        }
-					   		    });
-					   		}
+								$('#select_all').on('click',function(){
+								    if(this.checked){
+								        $('.checkbox:visible').each(function(){
+								            this.checked = true;
+								        });
+								    }else{
+								         $('.checkbox:visible').each(function(){
+								            this.checked = false;
+								        });
+								    }
+								});
+
+								$('.checkbox:visible').on('click',function(){
+								    if($('.checkbox:checked').length == $('.checkbox:visible').length){
+								        $('#select_all').prop('checked',true);
+								    }else{
+								        $('#select_all').prop('checked',false);
+								    }
+								});
 				       }else{
 							$('#error').html("<div class='alert alert-danger' role='alert'><center><b> No patient in database matches criteria </b></center></div>");
 
@@ -803,7 +803,7 @@ function sortDescScreening(clickedID){
 					        + "<th>Client Name<a href='#' onClick=sortAscClientName(this.id)  id='clientName'>&#9652</a><a href='#' onClick=sortDescClientName(this.id) id='clientName'> &#9662</a></th>"
 					        + "<th>Email<a href='#' onClick=sortAscClientEmail(this.id)  id='email'>&#9652</a><a href='#' onClick=sortDescClientEmail(this.id) id='email'> &#9662</a></th>"
 					        + "<th>Email Sent Date</th>"
-					        + "<th>PIC<a href='#' onClick=sortAscPIC(this.id)  id='PIC'>&#9652</a><a href='#' onClick=sortDescPIC(this.id) id='PIC'> &#9662</a></th>"
+					        + "<th>PIC</th>"
 					        + "<th>Select All	<input type='checkbox' id='select_all'/></th></tr></thead>";
 					      
 					        $.each(json,function(key,value) {
@@ -836,26 +836,25 @@ function sortDescScreening(clickedID){
 					       
 					         $("#display").html(table);
 								$('#error').html("");
+								$('#select_all').on('click',function(){
+								    if(this.checked){
+								        $('.checkbox:visible').each(function(){
+								            this.checked = true;
+								        });
+								    }else{
+								         $('.checkbox:visible').each(function(){
+								            this.checked = false;
+								        });
+								    }
+								});
 
-					           var select_all = document.getElementById("select_all"); //select all checkbox
-					   	 	var checkboxes = document.getElementsByClassName("checkbox"); //checkbox i
-					   		select_all.addEventListener("change", function(e){
-					   		    for (i = 0; i < checkboxes.length; i++) { 
-					   		        checkboxes[i].checked = select_all.checked;
-					   		    }
-					   		});
-					   		for (var i = 0; i < checkboxes.length; i++) {
-					   		    checkboxes[i].addEventListener('change', function(e){ //".checkbox" change 
-					   		        //uncheck "select all", if one of the listed checkbox item is unchecked
-					   		        if(this.checked == false){
-					   		            select_all.checked = false;
-					   		        }
-					   		        //check "select all" if all checkbox items are checked
-					   		        if(document.querySelectorAll('.checkbox:checked').length == checkboxes.length){
-					   		            select_all.checked = true;
-					   		        }
-					   		    });
-					   		}
+								$('.checkbox:visible').on('click',function(){
+								    if($('.checkbox:checked').length == $('.checkbox:visible').length){
+								        $('#select_all').prop('checked',true);
+								    }else{
+								        $('#select_all').prop('checked',false);
+								    }
+								});
 				       }else{
 							$('#error').html("<div class='alert alert-danger' role='alert'><center><b> No patient in database matches criteria </b></center></div>");
 
@@ -883,7 +882,7 @@ function sortDescScreening(clickedID){
 					        + "<th>Client Name<a href='#' onClick=sortAscClientName(this.id)  id='clientName'>&#9652</a><a href='#' onClick=sortDescClientName(this.id) id='clientName'> &#9662</a></th>"
 					        + "<th>Email<a href='#' onClick=sortAscClientEmail(this.id)  id='email'>&#9652</a><a href='#' onClick=sortDescClientEmail(this.id) id='email'> &#9662</a></th>"
 					        + "<th>Email Sent Date</th>"
-					        + "<th>PIC<a href='#' onClick=sortAscPIC(this.id)  id='PIC'>&#9652</a><a href='#' onClick=sortDescPIC(this.id) id='PIC'> &#9662</a></th>"
+					        + "<th>PIC</th>"
 					        + "<th>Select All	<input type='checkbox' id='select_all'/></th></tr></thead>";
 					      
 					        $.each(json,function(key,value) {
@@ -917,25 +916,25 @@ function sortDescScreening(clickedID){
 					         $("#display").html(table);
 								$('#error').html("");
 
-					           var select_all = document.getElementById("select_all"); //select all checkbox
-					   	 	var checkboxes = document.getElementsByClassName("checkbox"); //checkbox i
-					   		select_all.addEventListener("change", function(e){
-					   		    for (i = 0; i < checkboxes.length; i++) { 
-					   		        checkboxes[i].checked = select_all.checked;
-					   		    }
-					   		});
-					   		for (var i = 0; i < checkboxes.length; i++) {
-					   		    checkboxes[i].addEventListener('change', function(e){ //".checkbox" change 
-					   		        //uncheck "select all", if one of the listed checkbox item is unchecked
-					   		        if(this.checked == false){
-					   		            select_all.checked = false;
-					   		        }
-					   		        //check "select all" if all checkbox items are checked
-					   		        if(document.querySelectorAll('.checkbox:checked').length == checkboxes.length){
-					   		            select_all.checked = true;
-					   		        }
-					   		    });
-					   		}
+								$('#select_all').on('click',function(){
+								    if(this.checked){
+								        $('.checkbox:visible').each(function(){
+								            this.checked = true;
+								        });
+								    }else{
+								         $('.checkbox:visible').each(function(){
+								            this.checked = false;
+								        });
+								    }
+								});
+
+								$('.checkbox:visible').on('click',function(){
+								    if($('.checkbox:checked').length == $('.checkbox:visible').length){
+								        $('#select_all').prop('checked',true);
+								    }else{
+								        $('#select_all').prop('checked',false);
+								    }
+								});
 				       }else{
 							$('#error').html("<div class='alert alert-danger' role='alert'><center><b> No patient in database matches criteria </b></center></div>");
 
@@ -963,7 +962,7 @@ function sortDescScreening(clickedID){
 					        + "<th>Client Name<a href='#' onClick=sortAscClientName(this.id)  id='clientName'>&#9652</a><a href='#' onClick=sortDescClientName(this.id) id='clientName'> &#9662</a></th>"
 					        + "<th>Email<a href='#' onClick=sortAscClientEmail(this.id)  id='email'>&#9652</a><a href='#' onClick=sortDescClientEmail(this.id) id='email'> &#9662</a></th>"
 					        + "<th>Email Sent Date</th>"
-					        + "<th>PIC<a href='#' onClick=sortAscPIC(this.id)  id='PIC'>&#9652</a><a href='#' onClick=sortDescPIC(this.id) id='PIC'> &#9662</a></th>"
+					        + "<th>PIC</th>"
 					        + "<th>Select All	<input type='checkbox' id='select_all'/></th></tr></thead>";
 					      
 					        $.each(json,function(key,value) {
@@ -997,25 +996,25 @@ function sortDescScreening(clickedID){
 					         $("#display").html(table);
 								$('#error').html("");
 
-					           var select_all = document.getElementById("select_all"); //select all checkbox
-					   	 	var checkboxes = document.getElementsByClassName("checkbox"); //checkbox i
-					   		select_all.addEventListener("change", function(e){
-					   		    for (i = 0; i < checkboxes.length; i++) { 
-					   		        checkboxes[i].checked = select_all.checked;
-					   		    }
-					   		});
-					   		for (var i = 0; i < checkboxes.length; i++) {
-					   		    checkboxes[i].addEventListener('change', function(e){ //".checkbox" change 
-					   		        //uncheck "select all", if one of the listed checkbox item is unchecked
-					   		        if(this.checked == false){
-					   		            select_all.checked = false;
-					   		        }
-					   		        //check "select all" if all checkbox items are checked
-					   		        if(document.querySelectorAll('.checkbox:checked').length == checkboxes.length){
-					   		            select_all.checked = true;
-					   		        }
-					   		    });
-					   		}
+								$('#select_all').on('click',function(){
+								    if(this.checked){
+								        $('.checkbox:visible').each(function(){
+								            this.checked = true;
+								        });
+								    }else{
+								         $('.checkbox:visible').each(function(){
+								            this.checked = false;
+								        });
+								    }
+								});
+
+								$('.checkbox:visible').on('click',function(){
+								    if($('.checkbox:checked').length == $('.checkbox:visible').length){
+								        $('#select_all').prop('checked',true);
+								    }else{
+								        $('#select_all').prop('checked',false);
+								    }
+								});
 				       }else{
 							$('#error').html("<div class='alert alert-danger' role='alert'><center><b> No patient in database matches criteria </b></center></div>");
 
@@ -1043,7 +1042,7 @@ function sortDescScreening(clickedID){
 					        + "<th>Client Name<a href='#' onClick=sortAscClientName(this.id)  id='clientName'>&#9652</a><a href='#' onClick=sortDescClientName(this.id) id='clientName'> &#9662</a></th>"
 					        + "<th>Email<a href='#' onClick=sortAscClientEmail(this.id)  id='email'>&#9652</a><a href='#' onClick=sortDescClientEmail(this.id) id='email'> &#9662</a></th>"
 					        + "<th>Email Sent Date</th>"
-					        + "<th>PIC<a href='#' onClick=sortAscPIC(this.id)  id='PIC'>&#9652</a><a href='#' onClick=sortDescPIC(this.id) id='PIC'> &#9662</a></th>"
+					        + "<th>PIC</th>"
 					        + "<th>Select All	<input type='checkbox' id='select_all'/></th></tr></thead>";
 					      
 					        $.each(json,function(key,value) {
@@ -1077,25 +1076,25 @@ function sortDescScreening(clickedID){
 					         $("#display").html(table);
 								$('#error').html("");
 
-					           var select_all = document.getElementById("select_all"); //select all checkbox
-					   	 	var checkboxes = document.getElementsByClassName("checkbox"); //checkbox i
-					   		select_all.addEventListener("change", function(e){
-					   		    for (i = 0; i < checkboxes.length; i++) { 
-					   		        checkboxes[i].checked = select_all.checked;
-					   		    }
-					   		});
-					   		for (var i = 0; i < checkboxes.length; i++) {
-					   		    checkboxes[i].addEventListener('change', function(e){ //".checkbox" change 
-					   		        //uncheck "select all", if one of the listed checkbox item is unchecked
-					   		        if(this.checked == false){
-					   		            select_all.checked = false;
-					   		        }
-					   		        //check "select all" if all checkbox items are checked
-					   		        if(document.querySelectorAll('.checkbox:checked').length == checkboxes.length){
-					   		            select_all.checked = true;
-					   		        }
-					   		    });
-					   		}
+								$('#select_all').on('click',function(){
+								    if(this.checked){
+								        $('.checkbox:visible').each(function(){
+								            this.checked = true;
+								        });
+								    }else{
+								         $('.checkbox:visible').each(function(){
+								            this.checked = false;
+								        });
+								    }
+								});
+
+								$('.checkbox:visible').on('click',function(){
+								    if($('.checkbox:checked').length == $('.checkbox:visible').length){
+								        $('#select_all').prop('checked',true);
+								    }else{
+								        $('#select_all').prop('checked',false);
+								    }
+								});
 				       }else{
 							$('#error').html("<div class='alert alert-danger' role='alert'><center><b> No patient in database matches criteria </b></center></div>");
 
@@ -1122,7 +1121,7 @@ function sortDescScreening(clickedID){
 					        + "<th>Client Name<a href='#' onClick=sortAscClientName(this.id)  id='clientName'>&#9652</a><a href='#' onClick=sortDescClientName(this.id) id='clientName'> &#9662</a></th>"
 					        + "<th>Email<a href='#' onClick=sortAscClientEmail(this.id)  id='email'>&#9652</a><a href='#' onClick=sortDescClientEmail(this.id) id='email'> &#9662</a></th>"
 					        + "<th>Email Sent Date</th>"
-					        + "<th>PIC<a href='#' onClick=sortAscPIC(this.id)  id='PIC'>&#9652</a><a href='#' onClick=sortDescPIC(this.id) id='PIC'> &#9662</a></th>"
+					        + "<th>PIC</th>"
 					        + "<th>Select All	<input type='checkbox' id='select_all'/></th></tr></thead>";
 					      
 					        $.each(json,function(key,value) {
@@ -1202,7 +1201,7 @@ function sortDescScreening(clickedID){
 					        + "<th>Client Name<a href='#' onClick=sortAscClientName(this.id)  id='clientName'>&#9652</a><a href='#' onClick=sortDescClientName(this.id) id='clientName'> &#9662</a></th>"
 					        + "<th>Email<a href='#' onClick=sortAscClientEmail(this.id)  id='email'>&#9652</a><a href='#' onClick=sortDescClientEmail(this.id) id='email'> &#9662</a></th>"
 					        + "<th>Email Sent Date</th>"
-					        + "<th>PIC<a href='#' onClick=sortAscPIC(this.id)  id='PIC'>&#9652</a><a href='#' onClick=sortDescPIC(this.id) id='PIC'> &#9662</a></th>"
+					        + "<th>PIC</th>"
 					        + "<th>Select All	<input type='checkbox' id='select_all'/></th></tr></thead>";
 					      
 					        $.each(json,function(key,value) {
