@@ -28,19 +28,21 @@ import ulink.logic.Utility;
 @WebServlet("/DisplayIndexMedicalVisaByPersonInCharge")
 public class DisplayIndexMedicalVisaByPersonInCharge extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public DisplayIndexMedicalVisaByPersonInCharge() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public DisplayIndexMedicalVisaByPersonInCharge() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		DatabaseConnection connection = new DatabaseConnection();
 		String startDate = request.getParameter("startDate");
@@ -49,21 +51,21 @@ public class DisplayIndexMedicalVisaByPersonInCharge extends HttpServlet {
 		ArrayList<String> personInChargeList = connection.retrieveAllPersonInCharge();
 		Utility utility = new Utility();
 		ArrayList<PersonInCharge> listAllPIC = new ArrayList<>();
-	//	LinkedHashMap<String,LinkedHashMap<Integer,Double>> personInChargePointSystem = new  LinkedHashMap<String,LinkedHashMap<Integer,Double>>();
-		for (int i = 0; i<personInChargeList.size(); i++){
+
+		for (int i = 0; i < personInChargeList.size(); i++) {
 			String temp = personInChargeList.get(i);
-			ArrayList<Index> indexList = connection.retrieveAllIndexByPerson(utility.changeDateFormatDatabase(startDate), utility.changeDateFormatDatabase(endDate), team,temp);	
-			LinkedHashMap<Integer,Double> pointSystem = utility.getIndexCount(indexList);
+			ArrayList<Index> indexList = connection.retrieveAllIndexByPerson(
+					utility.changeDateFormatDatabase(startDate), utility.changeDateFormatDatabase(endDate), team, temp);
+			LinkedHashMap<Integer, Double> pointSystem = utility.getIndexCount(indexList);
 			listAllPIC.add(new PersonInCharge(temp, pointSystem));
 		}
 		PrintWriter out = response.getWriter();
 		Gson gson = new Gson();
 
-		
 		JsonArray result = (JsonArray) new Gson().toJsonTree(listAllPIC, new TypeToken<List<PersonInCharge>>() {
 		}.getType());
 		String arrayListToJson = gson.toJson(result);
-		//System.out.print(arrayListToJson);
+		// System.out.print(arrayListToJson);
 
 		out.write(arrayListToJson);
 		out.flush();
@@ -71,9 +73,11 @@ public class DisplayIndexMedicalVisaByPersonInCharge extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

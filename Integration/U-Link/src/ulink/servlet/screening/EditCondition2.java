@@ -24,44 +24,57 @@ import ulink.dao.DatabaseConnection;
 @WebServlet("/EditCondition2")
 public class EditCondition2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public EditCondition2() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-
-		HttpSession session = request.getSession();
-		
-		String conditionId =  (String) session.getAttribute("ID");
-		DatabaseConnection database = new DatabaseConnection();
-		System.out.println(conditionId);
-		Condition conditionType = database.retrieveConditionDetails(Integer.parseInt(conditionId));	
-		PrintWriter out = response.getWriter();
-		Gson gson = new Gson();
-		
-		  String arrayListToJson = gson.toJson(conditionType);
-		  	System.out.println(arrayListToJson);
-			out.write(arrayListToJson);
-			out.flush();
-		return;
+	public EditCondition2() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+
+		HttpSession session = request.getSession();
+
+		String conditionId = (String) session.getAttribute("ID");
+		if (conditionId != null) {
+			DatabaseConnection database = new DatabaseConnection();
+			System.out.println(conditionId);
+			Condition conditionType = database.retrieveConditionDetails(Integer.parseInt(conditionId));
+			PrintWriter out = response.getWriter();
+			Gson gson = new Gson();
+
+			String arrayListToJson = gson.toJson(conditionType);
+			System.out.println(arrayListToJson);
+			out.write(arrayListToJson);
+			out.flush();
+			return;
+		} else {
+			PrintWriter out = response.getWriter();
+			
+
+			out.write("-1");
+			out.flush();
+			return;
+		}
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-		
+
 	}
 
 }

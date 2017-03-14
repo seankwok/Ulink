@@ -42,7 +42,7 @@ public class DisplayAllVisaType extends HttpServlet {
 		ArrayList<Client> list = connection.retrieveAllClientListVisa();
 		LinkedHashMap<String,Integer> visaTypeList = new LinkedHashMap<>();
 		
-		Utility utility = new Utility();
+		
 		
 		for (int i=0; i <list.size(); i++){
 			Client c = list.get(i);
