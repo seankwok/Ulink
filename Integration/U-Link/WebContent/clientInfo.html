@@ -139,6 +139,10 @@
 				dataType : "json",
 				complete : function(data) {
 					var json = jQuery.parseJSON(data.responseText);
+					console.log(json);
+					if (json == "-1"){
+						window.location = "client.html";				
+					}else{
 					screenTable += "<thead>"
 									+"<th class='tableHeader' width='40%'>Common Illness</th>"
 									+"<th class='tableHeader'width='40%'>Recommended Screening</th>"
@@ -156,6 +160,7 @@
 								
 								screenTable	+="</tbody></form></table>"
 			    	$("#sTable").html(screenTable);
+					}
 				}							
 			});
 		}
@@ -197,6 +202,7 @@
 				dataType : "json",
 				complete : function(data) {
 					var json = jQuery.parseJSON(data.responseText);
+					
 					var profile=json[0];
 					profileTable += "<thead><th width='50%'></th><th width='50%'></th></thead>"		
 				       	 cName = profile.clientName;
