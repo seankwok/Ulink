@@ -80,21 +80,14 @@ public class KPIMedicalReport extends HttpServlet {
 		
 		JFreeChart genderAgeReport = generateBarChartKPIMedicalMonth(type, date, thisYearLastMonth, lastYearThisMonth);
 		JFreeChart genderAgeOverall = generateBarChartKPIMedicalYear(type, date, thisYearLastMonth, lastYearThisMonth);
-		// JFreeChart dashboardVisaRequested = generateBarChartVisaRequested();
 
-		String pdfFileName = "pdf-test.pdf";
+
+		String pdfFileName = date + ".pdf";
 		String home = System.getProperty("user.home");
-		//String contextPath = getServletContext().getRealPath(File.separator);
-		//File pdfFile = new File(home +"/Downloads/"+ pdfFileName);
-
+	
 		response.setContentType("application/pdf");
 		response.addHeader("Content-Disposition", "attachment; filename=" + pdfFileName);
-		//response.setContentLength((int) pdfFile.length());
 
-		//FileInputStream fileInputStream = new FileInputStream(pdfFile);
-		//OutputStream responseOutputStream = response.getOutputStream();
-	
-		
 		Document document = new Document();
 		try {
 			writer = PdfWriter.getInstance(document, new FileOutputStream(home +"/Downloads/"+ pdfFileName));
@@ -203,7 +196,7 @@ public class KPIMedicalReport extends HttpServlet {
 			Font font = new Font("Dialog", Font.PLAIN, 6);
 			axis.setTickLabelFont(font);
 			axis2.setTickLabelFont(font);
-			chart.setTitle(new TextTitle("Overall results for Medical Team", new Font("Times New Roman", Font.BOLD, 12)));
+			chart.setTitle(new TextTitle("Overall results for Medical Team in month", new Font("Times New Roman", Font.BOLD, 12)));
 
 			return chart;
 		}
@@ -276,8 +269,8 @@ public class KPIMedicalReport extends HttpServlet {
 			for (int i= 0; i < kpiList.size(); i++) {
 				KPI temp = kpiList.get(i);
 				
-				dataSet.setValue(temp.getInPatient(), "", "inPaitent");
-				dataSet.setValue(temp.getOutPatient(), "", "outPaitent");
+				dataSet.setValue(temp.getInPatient(), temp.getDate(), "inPaitent");
+				dataSet.setValue(temp.getOutPatient(), temp.getDate(), "outPaitent");
 			}
 
 			JFreeChart chart = ChartFactory.createBarChart("Overall results for Medical Team", "", "Number of clients",
@@ -289,7 +282,7 @@ public class KPIMedicalReport extends HttpServlet {
 			Font font = new Font("Dialog", Font.PLAIN, 6);
 			axis.setTickLabelFont(font);
 			axis2.setTickLabelFont(font);
-			chart.setTitle(new TextTitle("Overall results for Medical Team", new Font("Times New Roman", Font.BOLD, 12)));
+			chart.setTitle(new TextTitle("Overall results for Medical Team in year", new Font("Times New Roman", Font.BOLD, 12)));
 
 			return chart;
 		}
