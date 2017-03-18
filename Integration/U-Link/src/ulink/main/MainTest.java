@@ -32,6 +32,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import ulink.constructor.AgeAndGender;
 import ulink.constructor.Client;
 import ulink.constructor.Index;
+import ulink.constructor.KPI;
 import ulink.constructor.PersonInCharge;
 import ulink.dao.DatabaseConnection;
 import ulink.logic.TopK;
@@ -45,7 +46,86 @@ public class MainTest {
 		// writeChartToPDF(generatePieChart(), 500, 800,
 		// "C:\\Users\\Sean\\Desktop\\piechart.pdf");
 	}
+	
+	//KPI Visa
+	public static void writeKPIVisa(int width, int height, String fileName) {
+		PdfWriter writer = null;
 
+		JFreeChart genderAgeReport = generateBarChartKPIVisaMonth();
+		JFreeChart genderAgeOverall = generateBarChartKPIVisaYear();
+		// JFreeChart dashboardVisaRequested = generateBarChartVisaRequested();
+
+		Document document = new Document();
+
+		try {
+			writer = PdfWriter.getInstance(document, new FileOutputStream(fileName));
+			document.open();
+			// Display dashboard for Medical
+			PdfContentByte contentByte = writer.getDirectContent();
+			PdfTemplate template = contentByte.createTemplate(width, height);
+			Graphics2D graphics2d = template.createGraphics(width, height, new DefaultFontMapper());
+			Rectangle2D rectangle2d = new Rectangle2D.Double(0, 0, width, height);
+			genderAgeReport.draw(graphics2d, rectangle2d);
+			Image chartImage = Image.getInstance(template);
+			document.add(chartImage);
+			graphics2d.dispose();
+
+			// Display dashboard for Visa
+			PdfContentByte contentByte2 = writer.getDirectContent();
+			PdfTemplate template2 = contentByte2.createTemplate(width, height);
+			Graphics2D graphics2d2 = template2.createGraphics(width, height, new DefaultFontMapper());
+			Rectangle2D rectangle2d2 = new Rectangle2D.Double(0, 0, width, height);
+			genderAgeOverall.draw(graphics2d2, rectangle2d2);
+			Image chartImage2 = Image.getInstance(template2);
+			document.add(chartImage2);
+			graphics2d2.dispose();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		document.close();
+	}
+	
+	//KPI medical
+	public static void writeKPIMedical(int width, int height, String fileName) {
+		PdfWriter writer = null;
+
+		JFreeChart genderAgeReport = generateBarChartKPIMedicalMonth();
+		JFreeChart genderAgeOverall = generateBarChartKPIMedicalYear();
+		// JFreeChart dashboardVisaRequested = generateBarChartVisaRequested();
+
+		Document document = new Document();
+
+		try {
+			writer = PdfWriter.getInstance(document, new FileOutputStream(fileName));
+			document.open();
+			// Display dashboard for Medical
+			PdfContentByte contentByte = writer.getDirectContent();
+			PdfTemplate template = contentByte.createTemplate(width, height);
+			Graphics2D graphics2d = template.createGraphics(width, height, new DefaultFontMapper());
+			Rectangle2D rectangle2d = new Rectangle2D.Double(0, 0, width, height);
+			genderAgeReport.draw(graphics2d, rectangle2d);
+			Image chartImage = Image.getInstance(template);
+			document.add(chartImage);
+			graphics2d.dispose();
+
+			// Display dashboard for Visa
+			PdfContentByte contentByte2 = writer.getDirectContent();
+			PdfTemplate template2 = contentByte2.createTemplate(width, height);
+			Graphics2D graphics2d2 = template2.createGraphics(width, height, new DefaultFontMapper());
+			Rectangle2D rectangle2d2 = new Rectangle2D.Double(0, 0, width, height);
+			genderAgeOverall.draw(graphics2d2, rectangle2d2);
+			Image chartImage2 = Image.getInstance(template2);
+			document.add(chartImage2);
+			graphics2d2.dispose();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		document.close();
+	}
+
+	//index visa
 	public static void writeIndexVisa(int width, int height, String fileName) {
 		PdfWriter writer = null;
 
@@ -84,6 +164,7 @@ public class MainTest {
 		document.close();
 	}
 	
+	//index medical
 	public static void writeIndexMedical(int width, int height, String fileName) {
 		PdfWriter writer = null;
 
@@ -122,6 +203,7 @@ public class MainTest {
 		document.close();
 	}
 
+	//gender age PDF
 	public static void writeGenderAgePDF(int width, int height, String fileName) {
 		PdfWriter writer = null;
 
@@ -160,6 +242,7 @@ public class MainTest {
 		document.close();
 	}
 
+	//dashboard
 	public static void writeChartToPDF(int width, int height, String fileName) {
 		PdfWriter writer = null;
 
@@ -207,7 +290,351 @@ public class MainTest {
 		}
 		document.close();
 	}
+	
+	//KPI medical current month vs last month
+	public static JFreeChart generateBarChartKPIMedicalMonth() {
 
+		String type = "";
+		String date = "";
+		String thisYearLastMonth = "";
+		String lastYearThisMonth = "";
+		TopK topk = new TopK();
+		
+		int year = Integer.parseInt(date.substring(0, 4));
+		String month = date.substring(5);
+		Utility utility = new Utility();
+		String startDate = utility.getStartDateOfMonth(year+"-"+month+"-"+"01");
+		String endDate = utility.getEndDateOfMonth(year+"-"+month+"-"+"01");
+		int lastMonthDate = Integer.parseInt(thisYearLastMonth.substring(5));
+		int lastMonthYear = Integer.parseInt(thisYearLastMonth.substring(0,4));
+		int lastYearDate = Integer.parseInt(lastYearThisMonth.substring(0, 4));
+		String startDatelastMonth = utility.getStartDateOfMonth(lastMonthYear+"-"+lastMonthDate+"-"+"01");
+		String endDatelastMonth = utility.getEndDateOfMonth(lastMonthYear+"-"+lastMonthDate+"-"+"01");
+		String startDateLastYear = utility.getStartDateOfMonth(lastYearDate+"-"+month+"-"+"01");
+		String endDatelastYear = utility.getEndDateOfMonth(lastYearDate+"-"+month+"-"+"01");
+
+		KPI kpi = topk.getKPI(type, startDate,endDate);
+		KPI lastMonth = topk.getKPI(type, startDatelastMonth,endDatelastMonth);
+		KPI lastyear = topk.getKPI(type,startDateLastYear,endDatelastYear);
+		
+		ArrayList<KPI> kpiList = new ArrayList<>();
+		kpiList.add(kpi);
+		kpiList.add(lastMonth);
+		double outChange = 0;
+		double inChange = 0;
+	
+		if (lastMonth.getInPatient() != 0){
+			inChange = (1.0*kpi.getInPatient()-lastMonth.getInPatient())/lastMonth.getInPatient()*100;
+		}
+		
+		if (lastMonth.getOutPatient() != 0){
+			outChange = (1.0*kpi.getOutPatient()-lastMonth.getOutPatient())/lastMonth.getOutPatient()*100;
+		}
+		kpiList.add(new KPI("Increase\\Decrease (%)",Math.round(inChange),Math.round(outChange)));
+		kpiList.add(kpi);
+		kpiList.add(lastyear);
+		//kpiList.add(LMLY);
+		
+		
+		inChange = 0;
+		outChange = 0;
+		
+		if (lastyear.getInPatient() != 0){
+			if (lastyear.getInPatient() != 0){
+				inChange = (1.0*kpi.getInPatient()-lastyear.getInPatient())/lastyear.getInPatient()*100;
+			} else {
+				inChange = 0;
+			}
+			
+			if (lastyear.getOutPatient() != 0){
+				outChange = (1.0*kpi.getOutPatient()-lastyear.getOutPatient())/lastyear.getOutPatient()*100;
+			} else {
+				outChange = 0;
+			}
+		}
+		kpiList.add(new KPI("Increase\\Decrease (%)",Math.round(inChange),Math.round(outChange)));
+
+		DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
+
+		for (int i= 0; i < kpiList.size(); i++) {
+			KPI temp = kpiList.get(i);
+			
+			dataSet.setValue(temp.getInPatient(), temp.getDate(), "inPaitent");
+			dataSet.setValue(temp.getOutPatient(), temp.getDate(), "outPaitent");
+		}
+
+		JFreeChart chart = ChartFactory.createBarChart("Overall results for Medical Team", "", "Number of clients",
+				dataSet, PlotOrientation.VERTICAL, false, true, true);
+		CategoryPlot p = chart.getCategoryPlot();
+		ValueAxis axis = p.getRangeAxis();
+
+		CategoryAxis axis2 = p.getDomainAxis();
+		Font font = new Font("Dialog", Font.PLAIN, 6);
+		axis.setTickLabelFont(font);
+		axis2.setTickLabelFont(font);
+		chart.setTitle(new TextTitle("Overall results for Medical Team", new Font("Times New Roman", Font.BOLD, 12)));
+
+		return chart;
+	}
+	
+	// KPI Visa current month vs last month
+	public static JFreeChart generateBarChartKPIVisaMonth() {
+		String type = "";
+		String date = "";
+		String thisYearLastMonth = "";
+		String lastYearThisMonth = "";
+		String lastYearLastMonth = "";
+		TopK topk = new TopK();
+		int year = Integer.parseInt(date.substring(0, 4));
+		String month = date.substring(5);
+		//System.out.println("TEST " + month);
+		Utility utility = new Utility();
+		String startDate = utility.getStartDateOfMonth(year+"-"+month+"-"+"01");
+		String endDate = utility.getEndDateOfMonth(year+"-"+month+"-"+"01");
+		int lastMonthDate = Integer.parseInt(thisYearLastMonth.substring(5));
+		int lastMonthYear = Integer.parseInt(thisYearLastMonth.substring(0,4));
+		int lastYearDate = Integer.parseInt(lastYearThisMonth.substring(0, 4));
+		String startDatelastMonth = utility.getStartDateOfMonth(lastMonthYear+"-"+lastMonthDate+"-"+"01");
+		String endDatelastMonth = utility.getEndDateOfMonth(lastMonthYear+"-"+lastMonthDate+"-"+"01");
+		String startDateLastYear = utility.getStartDateOfMonth(lastYearDate+"-"+month+"-"+"01");
+		String endDatelastYear = utility.getEndDateOfMonth(lastYearDate+"-"+month+"-"+"01");
+		
+		//System.out.println(startDate + " " + endDate);
+		
+		KPI kpi = topk.getKPIVisa(type, startDate,endDate);
+		KPI lastMonth = topk.getKPIVisa(type, startDatelastMonth,endDatelastMonth);
+		KPI lastyear = topk.getKPIVisa(type,startDateLastYear,endDatelastYear);
+		//KPI LMLY = topk.getKPI(type,lastYearLastMonth);
+		
+		ArrayList<KPI> kpiList = new ArrayList<>();
+		kpiList.add(kpi);
+		kpiList.add(lastMonth);
+		double outChange = 0;
+		double inChange = 0;
+		
+		if (lastMonth.getInPatient() != 0){
+			inChange = (1.0*kpi.getInPatient()-lastMonth.getInPatient())/lastMonth.getInPatient()*100;
+		}
+		
+		if (lastMonth.getOutPatient() != 0){
+			outChange = (1.0*kpi.getOutPatient()-lastMonth.getOutPatient())/lastMonth.getOutPatient()*100;
+		}
+		kpiList.add(new KPI("Increase\\Decrease (%)",Math.round(inChange),Math.round(outChange)));
+		kpiList.add(kpi);
+		kpiList.add(lastyear);
+		
+		
+		inChange = 0;
+		outChange = 0;
+		
+		if (lastyear.getInPatient() != 0){
+			inChange = (1.0*kpi.getInPatient()-lastyear.getInPatient())/lastyear.getInPatient()*100;
+		} else {
+			inChange = 0;
+		}
+		
+		if (lastyear.getOutPatient() != 0){
+			outChange = (1.0*kpi.getOutPatient()-lastyear.getOutPatient())/lastyear.getOutPatient()*100;
+		} else {
+			outChange = 0;
+		}
+		kpiList.add(new KPI("Increase\\Decrease (%)",Math.round(inChange),Math.round(outChange)));
+		DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
+
+		for (int i= 0; i < kpiList.size(); i++) {
+			KPI temp = kpiList.get(i);
+			
+			dataSet.setValue(temp.getInPatient(), temp.getDate(), "inPaitent");
+			dataSet.setValue(temp.getOutPatient(), temp.getDate(), "outPaitent");
+		}
+
+		JFreeChart chart = ChartFactory.createBarChart("Overall results for Medical Team", "", "Number of clients",
+				dataSet, PlotOrientation.VERTICAL, false, true, true);
+		CategoryPlot p = chart.getCategoryPlot();
+		ValueAxis axis = p.getRangeAxis();
+
+		CategoryAxis axis2 = p.getDomainAxis();
+		Font font = new Font("Dialog", Font.PLAIN, 6);
+		axis.setTickLabelFont(font);
+		axis2.setTickLabelFont(font);
+		chart.setTitle(new TextTitle("Overall results for Medical Team", new Font("Times New Roman", Font.BOLD, 12)));
+
+		return chart;
+	}
+	
+	//KPI medical current year vs last year same month
+	public static JFreeChart generateBarChartKPIVisaYear() {
+
+		String type = "";
+		String date = "";
+		String thisYearLastMonth = "";
+		String lastYearThisMonth = "";
+		TopK topk = new TopK();
+		
+		int year = Integer.parseInt(date.substring(0, 4));
+		String month = date.substring(5);
+		Utility utility = new Utility();
+		String startDate = utility.getStartDateOfMonth(year+"-"+month+"-"+"01");
+		String endDate = utility.getEndDateOfMonth(year+"-"+month+"-"+"01");
+		int lastMonthDate = Integer.parseInt(thisYearLastMonth.substring(5));
+		int lastMonthYear = Integer.parseInt(thisYearLastMonth.substring(0,4));
+		int lastYearDate = Integer.parseInt(lastYearThisMonth.substring(0, 4));
+		String startDatelastMonth = utility.getStartDateOfMonth(lastMonthYear+"-"+lastMonthDate+"-"+"01");
+		String endDatelastMonth = utility.getEndDateOfMonth(lastMonthYear+"-"+lastMonthDate+"-"+"01");
+		String startDateLastYear = utility.getStartDateOfMonth(lastYearDate+"-"+month+"-"+"01");
+		String endDatelastYear = utility.getEndDateOfMonth(lastYearDate+"-"+month+"-"+"01");
+
+		KPI kpi = topk.getKPI(type, startDate,endDate);
+		KPI lastMonth = topk.getKPI(type, startDatelastMonth,endDatelastMonth);
+		KPI lastyear = topk.getKPI(type,startDateLastYear,endDatelastYear);
+		
+		ArrayList<KPI> kpiList = new ArrayList<>();
+		kpiList.add(kpi);
+		kpiList.add(lastMonth);
+		double outChange = 0;
+		double inChange = 0;
+	
+		if (lastMonth.getInPatient() != 0){
+			inChange = (1.0*kpi.getInPatient()-lastMonth.getInPatient())/lastMonth.getInPatient()*100;
+		}
+		
+		if (lastMonth.getOutPatient() != 0){
+			outChange = (1.0*kpi.getOutPatient()-lastMonth.getOutPatient())/lastMonth.getOutPatient()*100;
+		}
+		kpiList.add(new KPI("Increase\\Decrease (%)",Math.round(inChange),Math.round(outChange)));
+		kpiList.add(kpi);
+		kpiList.add(lastyear);
+		//kpiList.add(LMLY);
+		
+		
+		inChange = 0;
+		outChange = 0;
+		
+		if (lastyear.getInPatient() != 0){
+			if (lastyear.getInPatient() != 0){
+				inChange = (1.0*kpi.getInPatient()-lastyear.getInPatient())/lastyear.getInPatient()*100;
+			} else {
+				inChange = 0;
+			}
+			
+			if (lastyear.getOutPatient() != 0){
+				outChange = (1.0*kpi.getOutPatient()-lastyear.getOutPatient())/lastyear.getOutPatient()*100;
+			} else {
+				outChange = 0;
+			}
+		}
+		kpiList.add(new KPI("Increase\\Decrease (%)",Math.round(inChange),Math.round(outChange)));
+
+		DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
+
+		for (int i= 0; i < kpiList.size(); i++) {
+			KPI temp = kpiList.get(i);
+			
+			dataSet.setValue(temp.getInPatient(), "", "inPaitent");
+			dataSet.setValue(temp.getOutPatient(), "", "outPaitent");
+		}
+
+		JFreeChart chart = ChartFactory.createBarChart("Overall results for Medical Team", "", "Number of clients",
+				dataSet, PlotOrientation.VERTICAL, false, true, true);
+		CategoryPlot p = chart.getCategoryPlot();
+		ValueAxis axis = p.getRangeAxis();
+
+		CategoryAxis axis2 = p.getDomainAxis();
+		Font font = new Font("Dialog", Font.PLAIN, 6);
+		axis.setTickLabelFont(font);
+		axis2.setTickLabelFont(font);
+		chart.setTitle(new TextTitle("Overall results for Medical Team", new Font("Times New Roman", Font.BOLD, 12)));
+
+		return chart;
+	}
+	
+	
+	//KPI medical current year vs last year same month
+	public static JFreeChart generateBarChartKPIMedicalYear() {
+
+		String type = "";
+		String date = "";
+		String thisYearLastMonth = "";
+		String lastYearThisMonth = "";
+		TopK topk = new TopK();
+		
+		int year = Integer.parseInt(date.substring(0, 4));
+		String month = date.substring(5);
+		Utility utility = new Utility();
+		String startDate = utility.getStartDateOfMonth(year+"-"+month+"-"+"01");
+		String endDate = utility.getEndDateOfMonth(year+"-"+month+"-"+"01");
+		int lastMonthDate = Integer.parseInt(thisYearLastMonth.substring(5));
+		int lastMonthYear = Integer.parseInt(thisYearLastMonth.substring(0,4));
+		int lastYearDate = Integer.parseInt(lastYearThisMonth.substring(0, 4));
+		String startDatelastMonth = utility.getStartDateOfMonth(lastMonthYear+"-"+lastMonthDate+"-"+"01");
+		String endDatelastMonth = utility.getEndDateOfMonth(lastMonthYear+"-"+lastMonthDate+"-"+"01");
+		String startDateLastYear = utility.getStartDateOfMonth(lastYearDate+"-"+month+"-"+"01");
+		String endDatelastYear = utility.getEndDateOfMonth(lastYearDate+"-"+month+"-"+"01");
+
+		KPI kpi = topk.getKPI(type, startDate,endDate);
+		KPI lastMonth = topk.getKPI(type, startDatelastMonth,endDatelastMonth);
+		KPI lastyear = topk.getKPI(type,startDateLastYear,endDatelastYear);
+		
+		ArrayList<KPI> kpiList = new ArrayList<>();
+		kpiList.add(kpi);
+		kpiList.add(lastMonth);
+		double outChange = 0;
+		double inChange = 0;
+	
+		if (lastMonth.getInPatient() != 0){
+			inChange = (1.0*kpi.getInPatient()-lastMonth.getInPatient())/lastMonth.getInPatient()*100;
+		}
+		
+		if (lastMonth.getOutPatient() != 0){
+			outChange = (1.0*kpi.getOutPatient()-lastMonth.getOutPatient())/lastMonth.getOutPatient()*100;
+		}
+		kpiList.add(new KPI("Increase\\Decrease (%)",Math.round(inChange),Math.round(outChange)));
+		kpiList.add(kpi);
+		kpiList.add(lastyear);
+		//kpiList.add(LMLY);
+		
+		
+		inChange = 0;
+		outChange = 0;
+		
+		if (lastyear.getInPatient() != 0){
+			if (lastyear.getInPatient() != 0){
+				inChange = (1.0*kpi.getInPatient()-lastyear.getInPatient())/lastyear.getInPatient()*100;
+			} else {
+				inChange = 0;
+			}
+			
+			if (lastyear.getOutPatient() != 0){
+				outChange = (1.0*kpi.getOutPatient()-lastyear.getOutPatient())/lastyear.getOutPatient()*100;
+			} else {
+				outChange = 0;
+			}
+		}
+		kpiList.add(new KPI("Increase\\Decrease (%)",Math.round(inChange),Math.round(outChange)));
+
+		DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
+
+		for (int i= 0; i < kpiList.size(); i++) {
+			KPI temp = kpiList.get(i);
+			
+			dataSet.setValue(temp.getInPatient(), "", "inPaitent");
+			dataSet.setValue(temp.getOutPatient(), "", "outPaitent");
+		}
+
+		JFreeChart chart = ChartFactory.createBarChart("Overall results for Medical Team", "", "Number of clients",
+				dataSet, PlotOrientation.VERTICAL, false, true, true);
+		CategoryPlot p = chart.getCategoryPlot();
+		ValueAxis axis = p.getRangeAxis();
+
+		CategoryAxis axis2 = p.getDomainAxis();
+		Font font = new Font("Dialog", Font.PLAIN, 6);
+		axis.setTickLabelFont(font);
+		axis2.setTickLabelFont(font);
+		chart.setTitle(new TextTitle("Overall results for Medical Team", new Font("Times New Roman", Font.BOLD, 12)));
+
+		return chart;
+	}
+	
 	public static JFreeChart generateBarChartIndexMedical() {
 
 		DatabaseConnection connection = new DatabaseConnection();
@@ -270,7 +697,7 @@ public class MainTest {
 		return chart;
 	}
 
-	
+		
 	public static JFreeChart generateBarChartIndexMedicalByPerson() {
 
 		DatabaseConnection connection = new DatabaseConnection();
