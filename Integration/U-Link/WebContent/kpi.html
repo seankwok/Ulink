@@ -40,14 +40,20 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
-	
-	
+		var teamName="";
+		var value = "";
+		var thisYearThisMonth = "";
+		var thisYearLastMonth = "";
+		var lastYearThisMonth = "";
+		var lastYearLastMonth = "";
+		
 	$("#submit").click (function(){
-		var teamName = $('#teamName').val();
+		
+		teamName = $('#teamName').val();
 		var thisMonth = $("#month").val();
 		var thisYear = $("#year").val();
-		var value = thisYear + "-" + thisMonth;
-		var lastYear = thisYear - 1;
+		value = thisYear + "-" + thisMonth;
+		var lastYear = thisYear - 1; 
 		
 		if (thisMonth == 1){ // if choose jan then last month is dec
 			lastMonth = 12;
@@ -56,16 +62,10 @@ $(document).ready(function() {
 			lastMonth = thisMonth -1;
 		}
 		
-		var thisYearThisMonth = thisYear + "-" + thisMonth;
-		var thisYearLastMonth = thisYear + "-" + lastMonth;	
-		var lastYearThisMonth = lastYear + "-" + thisMonth;
-		var lastYearLastMonth = lastYear + "-" + lastMonth;
-		
-		console.log("thisYearThisMonth="+ thisYearThisMonth);
-		console.log("thisYearLastMonth=" + thisYearLastMonth);
-		console.log("lastYearThisMonth" +lastYearThisMonth);
-		console.log("lastYearLastMonth" + lastYearLastMonth);
-		
+		thisYearThisMonth = thisYear + "-" + thisMonth;
+		thisYearLastMonth = thisYear + "-" + lastMonth;	
+		lastYearThisMonth = lastYear + "-" + thisMonth;
+		lastYearLastMonth = lastYear + "-" + lastMonth;
 		
 		var table1 = "<table id='table1'  class='table table-striped' cellspacing='0' width='100%'>";
 		var table2 = "<table id='table2'  class='table table-striped' cellspacing='0' width='100%'>";
@@ -407,6 +407,7 @@ $(document).ready(function() {
 
 	});
 	
+	
 	var start = 2015;
 	var end = new Date().getFullYear();
 	var options = "";
@@ -415,6 +416,26 @@ $(document).ready(function() {
 	}
 	document.getElementById("year").innerHTML = options;
  	
+	$('#export').click(function(){
+		if (teamName == "Medical"){
+			console.log(value);
+			$.ajax({
+				url : "KPIMedicalReport",
+				type : "post",
+				data : 'type=' + teamName + '&date=' + value + '&thisYearLastMonth=' + thisYearLastMonth + '&lastYearThisMonth=' + lastYearThisMonth 
+				
+			});
+		} else{
+			$.ajax({
+				url : "",
+				type : "",
+			
+			});
+		}
+		
+	});
+	
+	
 });
  	</script>
   </head>
@@ -478,12 +499,10 @@ $(document).ready(function() {
       </div>
     <div class="container" align="center">
         <button type="submit" value="Submit" class="btn btn-primary" id="submit">Generate Results</button>
-        <button type="submit" value="export" class="btn btn-primary" id="export">Export</button>
+        <button type="submit" class="btn btn-primary" id="export">Export</button>
     </div>
-
     <br>
     </div>
-        
         <table class="center">
 	        <tr> 
 	        	<td bgcolor="#ffffff" style="width:40%" align="center"><div class='box2'  id="table1"></div></td>

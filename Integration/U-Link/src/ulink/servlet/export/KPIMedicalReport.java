@@ -28,6 +28,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.pdf.DefaultFontMapper;
+
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -67,33 +68,36 @@ public class KPIMedicalReport extends HttpServlet {
 		doGet(request, response);
 		
 		PdfWriter writer = null;
+		///String type, String date, String thisYearLastMonth, String lastYearThisMonth
 		
+		String type = request.getParameter("type");
+		String date = request.getParameter("date");
+		String thisYearLastMonth = request.getParameter("thisYearLastMonth");
+		String lastYearThisMonth = request.getParameter("lastYearThisMonth");
+		System.out.println(date);
 		int width = 300;
 		int height = 200;
 		
-		JFreeChart genderAgeReport = generateBarChartKPIMedicalMonth();
-		JFreeChart genderAgeOverall = generateBarChartKPIMedicalYear();
+		JFreeChart genderAgeReport = generateBarChartKPIMedicalMonth(type, date, thisYearLastMonth, lastYearThisMonth);
+		JFreeChart genderAgeOverall = generateBarChartKPIMedicalYear(type, date, thisYearLastMonth, lastYearThisMonth);
 		// JFreeChart dashboardVisaRequested = generateBarChartVisaRequested();
 
 		String pdfFileName = "pdf-test.pdf";
-		String contextPath = getServletContext().getRealPath(File.separator);
-		File pdfFile = new File(contextPath + pdfFileName);
+		String home = System.getProperty("user.home");
+		//String contextPath = getServletContext().getRealPath(File.separator);
+		//File pdfFile = new File(home +"/Downloads/"+ pdfFileName);
 
 		response.setContentType("application/pdf");
 		response.addHeader("Content-Disposition", "attachment; filename=" + pdfFileName);
-		response.setContentLength((int) pdfFile.length());
+		//response.setContentLength((int) pdfFile.length());
 
-		FileInputStream fileInputStream = new FileInputStream(pdfFile);
-		OutputStream responseOutputStream = response.getOutputStream();
-		int bytes;
-		while ((bytes = fileInputStream.read()) != -1) {
-			responseOutputStream.write(bytes);
-		}
+		//FileInputStream fileInputStream = new FileInputStream(pdfFile);
+		//OutputStream responseOutputStream = response.getOutputStream();
+	
 		
 		Document document = new Document();
-
 		try {
-			writer = PdfWriter.getInstance(document, responseOutputStream);
+			writer = PdfWriter.getInstance(document, new FileOutputStream(home +"/Downloads/"+ pdfFileName));
 			document.open();
 			// Display dashboard for Medical
 			PdfContentByte contentByte = writer.getDirectContent();
@@ -122,14 +126,11 @@ public class KPIMedicalReport extends HttpServlet {
 	}
 
 	//KPI medical current month vs last month
-		public static JFreeChart generateBarChartKPIMedicalMonth() {
+		public static JFreeChart generateBarChartKPIMedicalMonth(String type, String date, String thisYearLastMonth, String lastYearThisMonth) {
 
-			String type = "";
-			String date = "";
-			String thisYearLastMonth = "";
-			String lastYearThisMonth = "";
+
 			TopK topk = new TopK();
-			
+			System.out.println(date);
 			int year = Integer.parseInt(date.substring(0, 4));
 			String month = date.substring(5);
 			Utility utility = new Utility();
@@ -212,12 +213,8 @@ public class KPIMedicalReport extends HttpServlet {
 		
 		
 		//KPI medical current year vs last year same month
-		public static JFreeChart generateBarChartKPIMedicalYear() {
+		public static JFreeChart generateBarChartKPIMedicalYear(String type, String date, String thisYearLastMonth, String lastYearThisMonth) {
 
-			String type = "";
-			String date = "";
-			String thisYearLastMonth = "";
-			String lastYearThisMonth = "";
 			TopK topk = new TopK();
 			
 			int year = Integer.parseInt(date.substring(0, 4));
