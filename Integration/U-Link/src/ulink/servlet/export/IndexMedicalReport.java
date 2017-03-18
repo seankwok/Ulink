@@ -81,7 +81,7 @@ public class IndexMedicalReport extends HttpServlet {
 
 		try {
 
-			String pdfFileName = startDate + type+ ".pdf";
+			String pdfFileName =  type + ".pdf";
 			String home = System.getProperty("user.home");
 			response.setContentType("application/pdf");
 			response.addHeader("Content-Disposition", "attachment; filename=" + pdfFileName);

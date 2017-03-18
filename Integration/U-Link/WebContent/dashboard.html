@@ -53,6 +53,15 @@
 	 			$("#showReferral").hide();
 	 		});
 	 	
+	 		$('#export').click(function(){
+	 				$.ajax({
+	 					url : "DashboardReport",
+	 					type : "post",
+	 					
+	 				});
+	 		
+	 			
+	 		});
 	 	
  	});
  	
@@ -634,7 +643,7 @@
 		<div class="col-md-6" id="lastMonthRef"></div>
 	</div>
 	</div>
-	<button type="submit" value="export" class="btn btn-primary" id="export">Export</button>
+	<button type="submit" class="btn btn-primary" id="export">Export</button>
 	
 	</div>
 	

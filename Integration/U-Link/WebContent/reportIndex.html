@@ -61,9 +61,11 @@
 			}
  		});
  		
+ 	
  		
+	});
  		
- 	});	
+ 	
  	
  	function printChart(response){
  		var nameArray = [];
@@ -145,7 +147,7 @@
  	}
 	
  		function checkDate(startDate,endDate){
-			var team = $("#teamName").val();
+ 			var team = $("#teamName").val();
 			var sendData = {
 					"startDate" : startDate,
 					"endDate":endDate,
@@ -300,6 +302,23 @@
 					}
 			}
 		});
+			$('#export').click(function(){
+	 			if (team == "Medical"){
+	 				$.ajax({
+	 					url : "IndexMedicalReport",
+	 					type : "post",
+	 					data : 'type=' + team + '&startDate=' + startDate + '&endDate=' + endDate
+	 					
+	 				});
+	 			} else{
+	 				$.ajax({
+	 					url : "IndexVisaReport",
+	 					type : "post",
+	 					data : 'type=' + team + '&startDate=' + startDate + '&endDate=' + endDate
+	 				});
+	 			}
+	 			
+	 		});
  	}
  		
  	
@@ -353,7 +372,7 @@
         
 	<div class="container" align="center">
         <button type="submit" value="Submit" class="btn btn-primary" id="submit">Generate Results</button>
-        <button type="submit" value="export" class="btn btn-primary" id="export">Export</button>
+        <button type="submit" class="btn btn-primary" id="export">Export</button>
         
     </div>
      <div id='error'> </div> 

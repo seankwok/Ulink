@@ -74,7 +74,7 @@ public class IndexGenderAgeReport extends HttpServlet {
 
 		try {
 			Date date = new Date();
-			String pdfFileName =  date.toString() + ".pdf";
+			String pdfFileName =  "GenderAge.pdf";
 			String home = System.getProperty("user.home");
 			response.setContentType("application/pdf");
 			response.addHeader("Content-Disposition", "attachment; filename=" + pdfFileName);

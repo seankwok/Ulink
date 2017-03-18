@@ -81,7 +81,7 @@ public class IndexVisaReport extends HttpServlet {
 
 		try {
 
-			String pdfFileName = startDate + type + ".pdf";
+			String pdfFileName =  type + ".pdf";
 			String home = System.getProperty("user.home");
 			response.setContentType("application/pdf");
 			response.addHeader("Content-Disposition", "attachment; filename=" + pdfFileName);
@@ -153,11 +153,11 @@ public class IndexVisaReport extends HttpServlet {
 		String team = "Visa";
 		ArrayList<String> personInChargeList = connection.retrieveAllPersonInCharge();
 		ArrayList<PersonInCharge> listAllPIC = new ArrayList<>();
-
+		System.out.println(date + " TEST");
 		for (int i = 0; i < personInChargeList.size(); i++) {
 			String temp = personInChargeList.get(i);
 			ArrayList<Index> indexList = connection.retrieveAllIndexByPerson(
-					utility.changeDateFormatDatabase(startDate), utility.changeDateFormatDatabase(endDate), team, temp);
+					utility.changeDateExportFormat(startDate), utility.changeDateExportFormat(endDate), team, temp);
 			LinkedHashMap<Integer, Double> pointSystem = utility.getIndexCount(indexList);
 			listAllPIC.add(new PersonInCharge(temp, pointSystem));
 		}

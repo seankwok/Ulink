@@ -26,6 +26,12 @@
 		displayAll();
 		displayPercentage();
 		
+		$('#export').click(function(){
+				$.ajax({
+					url : "IndexGenderAgeReport",
+					type : "post",					
+				});
+		});
 	});
 
 	function displayAll() {
@@ -201,7 +207,7 @@
 		</div>
 		
 		<div class="container" align="center">
-        <button type="submit" value="Submit" class="btn btn-primary" id="submit">Export</button>
+        <button type="submit" class="btn btn-primary" id="export">Export</button>
    		</div>
 		
 	</div>

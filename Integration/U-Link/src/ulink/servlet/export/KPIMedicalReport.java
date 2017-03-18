@@ -139,7 +139,7 @@ public class KPIMedicalReport extends HttpServlet {
 
 			KPI kpi = topk.getKPI(type, startDate,endDate);
 			KPI lastMonth = topk.getKPI(type, startDatelastMonth,endDatelastMonth);
-			KPI lastyear = topk.getKPI(type,startDateLastYear,endDatelastYear);
+			//KPI lastyear = topk.getKPI(type,startDateLastYear,endDatelastYear);
 			
 			ArrayList<KPI> kpiList = new ArrayList<>();
 			kpiList.add(kpi);
@@ -155,36 +155,15 @@ public class KPIMedicalReport extends HttpServlet {
 				outChange = (1.0*kpi.getOutPatient()-lastMonth.getOutPatient())/lastMonth.getOutPatient()*100;
 			}
 			kpiList.add(new KPI("Increase\\Decrease (%)",Math.round(inChange),Math.round(outChange)));
-			kpiList.add(kpi);
-			kpiList.add(lastyear);
-			//kpiList.add(LMLY);
-			
-			
-			inChange = 0;
-			outChange = 0;
-			
-			if (lastyear.getInPatient() != 0){
-				if (lastyear.getInPatient() != 0){
-					inChange = (1.0*kpi.getInPatient()-lastyear.getInPatient())/lastyear.getInPatient()*100;
-				} else {
-					inChange = 0;
-				}
-				
-				if (lastyear.getOutPatient() != 0){
-					outChange = (1.0*kpi.getOutPatient()-lastyear.getOutPatient())/lastyear.getOutPatient()*100;
-				} else {
-					outChange = 0;
-				}
-			}
-			kpiList.add(new KPI("Increase\\Decrease (%)",Math.round(inChange),Math.round(outChange)));
+	
 
 			DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
 
-			for (int i= 0; i < kpiList.size(); i++) {
+			for (int i= 0; i < kpiList.size()-1; i++) {
 				KPI temp = kpiList.get(i);
 				
-				dataSet.setValue(temp.getInPatient(), temp.getDate(), "inPaitent");
 				dataSet.setValue(temp.getOutPatient(), temp.getDate(), "outPaitent");
+				dataSet.setValue(temp.getInPatient(), temp.getDate(), "inPaitent");
 			}
 
 			JFreeChart chart = ChartFactory.createBarChart("Overall results for Medical Team", "", "Number of clients",
@@ -224,30 +203,16 @@ public class KPIMedicalReport extends HttpServlet {
 			String endDatelastYear = utility.getEndDateOfMonth(lastYearDate+"-"+month+"-"+"01");
 
 			KPI kpi = topk.getKPI(type, startDate,endDate);
-			KPI lastMonth = topk.getKPI(type, startDatelastMonth,endDatelastMonth);
+			//KPI lastMonth = topk.getKPI(type, startDatelastMonth,endDatelastMonth);
 			KPI lastyear = topk.getKPI(type,startDateLastYear,endDatelastYear);
 			
 			ArrayList<KPI> kpiList = new ArrayList<>();
 			kpiList.add(kpi);
-			kpiList.add(lastMonth);
+		kpiList.add(lastyear);
 			double outChange = 0;
 			double inChange = 0;
 		
-			if (lastMonth.getInPatient() != 0){
-				inChange = (1.0*kpi.getInPatient()-lastMonth.getInPatient())/lastMonth.getInPatient()*100;
-			}
-			
-			if (lastMonth.getOutPatient() != 0){
-				outChange = (1.0*kpi.getOutPatient()-lastMonth.getOutPatient())/lastMonth.getOutPatient()*100;
-			}
-			kpiList.add(new KPI("Increase\\Decrease (%)",Math.round(inChange),Math.round(outChange)));
-			kpiList.add(kpi);
-			kpiList.add(lastyear);
-			//kpiList.add(LMLY);
-			
-			
-			inChange = 0;
-			outChange = 0;
+		
 			
 			if (lastyear.getInPatient() != 0){
 				if (lastyear.getInPatient() != 0){
@@ -266,11 +231,12 @@ public class KPIMedicalReport extends HttpServlet {
 
 			DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
 
-			for (int i= 0; i < kpiList.size(); i++) {
+			for (int i= 0; i < kpiList.size()-1; i++) {
 				KPI temp = kpiList.get(i);
 				
-				dataSet.setValue(temp.getInPatient(), temp.getDate(), "inPaitent");
+				
 				dataSet.setValue(temp.getOutPatient(), temp.getDate(), "outPaitent");
+				dataSet.setValue(temp.getInPatient(), temp.getDate(), "inPaitent");
 			}
 
 			JFreeChart chart = ChartFactory.createBarChart("Overall results for Medical Team", "", "Number of clients",

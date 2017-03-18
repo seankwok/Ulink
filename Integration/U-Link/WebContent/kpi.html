@@ -243,8 +243,7 @@ $(document).ready(function() {
 						dataType : "json",
 						complete : function(data) {
 						var json = jQuery.parseJSON(JSON.stringify(data));
-						console.log(json);
-						console.log("tets");
+						console.log(json.responseJSON);
 							table3 += "<h4><b>Comparison against previous month</b></h4>"
 							table3 += "<tr><th>Month</th>"
 								  +  "<th>Indonesian Clients</th>"
@@ -391,11 +390,11 @@ $(document).ready(function() {
 								    },
 								    series: [{
 								        name: json.responseJSON[4].date,
-								        data: [json.responseJSON[3].outPatient,json.responseJSON[4].outPatient]
+								        data: [json.responseJSON[4].inPatient,json.responseJSON[4].outPatient]
 
 								    },{
 								        name: json.responseJSON[3].date,
-								        data: [json.responseJSON[3].inPatient,json.responseJSON[4].inPatient]
+								        data: [json.responseJSON[3].inPatient,json.responseJSON[3].outPatient]
 
 								    }]
 								});
@@ -418,7 +417,6 @@ $(document).ready(function() {
  	
 	$('#export').click(function(){
 		if (teamName == "Medical"){
-			console.log(value);
 			$.ajax({
 				url : "KPIMedicalReport",
 				type : "post",
@@ -427,9 +425,10 @@ $(document).ready(function() {
 			});
 		} else{
 			$.ajax({
-				url : "",
-				type : "",
-			
+				url : "KPIVisaReport",
+				type : "post",
+				data : 'type=' + teamName + '&date=' + value + '&thisYearLastMonth=' + thisYearLastMonth + '&lastYearThisMonth=' + lastYearThisMonth 
+
 			});
 		}
 		

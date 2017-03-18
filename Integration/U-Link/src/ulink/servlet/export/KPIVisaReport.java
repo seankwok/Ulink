@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -155,7 +156,7 @@ public class KPIVisaReport extends HttpServlet {
 		
 		KPI kpi = topk.getKPIVisa(type, startDate,endDate);
 		KPI lastMonth = topk.getKPIVisa(type, startDatelastMonth,endDatelastMonth);
-		KPI lastyear = topk.getKPIVisa(type,startDateLastYear,endDatelastYear);
+	//	KPI lastyear = topk.getKPIVisa(type,startDateLastYear,endDatelastYear);
 		//KPI LMLY = topk.getKPI(type,lastYearLastMonth);
 		
 		ArrayList<KPI> kpiList = new ArrayList<>();
@@ -172,28 +173,13 @@ public class KPIVisaReport extends HttpServlet {
 			outChange = (1.0*kpi.getOutPatient()-lastMonth.getOutPatient())/lastMonth.getOutPatient()*100;
 		}
 		kpiList.add(new KPI("Increase\\Decrease (%)",Math.round(inChange),Math.round(outChange)));
-		kpiList.add(kpi);
-		kpiList.add(lastyear);
+
 		
 		
-		inChange = 0;
-		outChange = 0;
 		
-		if (lastyear.getInPatient() != 0){
-			inChange = (1.0*kpi.getInPatient()-lastyear.getInPatient())/lastyear.getInPatient()*100;
-		} else {
-			inChange = 0;
-		}
-		
-		if (lastyear.getOutPatient() != 0){
-			outChange = (1.0*kpi.getOutPatient()-lastyear.getOutPatient())/lastyear.getOutPatient()*100;
-		} else {
-			outChange = 0;
-		}
-		kpiList.add(new KPI("Increase\\Decrease (%)",Math.round(inChange),Math.round(outChange)));
 		DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
 
-		for (int i= 0; i < kpiList.size(); i++) {
+		for (int i= 0; i < kpiList.size()-1; i++) {
 			KPI temp = kpiList.get(i);
 			
 			dataSet.setValue(temp.getInPatient(), temp.getDate(), "inPaitent");
@@ -209,7 +195,7 @@ public class KPIVisaReport extends HttpServlet {
 		Font font = new Font("Dialog", Font.PLAIN, 6);
 		axis.setTickLabelFont(font);
 		axis2.setTickLabelFont(font);
-		chart.setTitle(new TextTitle("Overall results for Medical Team", new Font("Times New Roman", Font.BOLD, 12)));
+		chart.setTitle(new TextTitle("Overall results for Visa Team month", new Font("Times New Roman", Font.BOLD, 12)));
 
 		return chart;
 	}
@@ -217,11 +203,11 @@ public class KPIVisaReport extends HttpServlet {
 	//KPI medical current year vs last year same month
 	public static JFreeChart generateBarChartKPIVisaYear(String type, String date, String thisYearLastMonth, String lastYearThisMonth) {
 
-	
+
 		TopK topk = new TopK();
-		
 		int year = Integer.parseInt(date.substring(0, 4));
 		String month = date.substring(5);
+		//System.out.println("TEST " + month);
 		Utility utility = new Utility();
 		String startDate = utility.getStartDateOfMonth(year+"-"+month+"-"+"01");
 		String endDate = utility.getEndDateOfMonth(year+"-"+month+"-"+"01");
@@ -232,58 +218,48 @@ public class KPIVisaReport extends HttpServlet {
 		String endDatelastMonth = utility.getEndDateOfMonth(lastMonthYear+"-"+lastMonthDate+"-"+"01");
 		String startDateLastYear = utility.getStartDateOfMonth(lastYearDate+"-"+month+"-"+"01");
 		String endDatelastYear = utility.getEndDateOfMonth(lastYearDate+"-"+month+"-"+"01");
-
-		KPI kpi = topk.getKPI(type, startDate,endDate);
-		KPI lastMonth = topk.getKPI(type, startDatelastMonth,endDatelastMonth);
-		KPI lastyear = topk.getKPI(type,startDateLastYear,endDatelastYear);
+		
+		//System.out.println(startDate + " " + endDate);
+		
+		KPI kpi = topk.getKPIVisa(type, startDate,endDate);
+		KPI lastMonth = topk.getKPIVisa(type, startDatelastMonth,endDatelastMonth);
+		KPI lastyear = topk.getKPIVisa(type,startDateLastYear,endDatelastYear);
+		//KPI LMLY = topk.getKPI(type,lastYearLastMonth);
 		
 		ArrayList<KPI> kpiList = new ArrayList<>();
 		kpiList.add(kpi);
-		kpiList.add(lastMonth);
+	//	kpiList.add(lastMonth);
 		double outChange = 0;
 		double inChange = 0;
 	
-		if (lastMonth.getInPatient() != 0){
-			inChange = (1.0*kpi.getInPatient()-lastMonth.getInPatient())/lastMonth.getInPatient()*100;
-		}
-		
-		if (lastMonth.getOutPatient() != 0){
-			outChange = (1.0*kpi.getOutPatient()-lastMonth.getOutPatient())/lastMonth.getOutPatient()*100;
-		}
-		kpiList.add(new KPI("Increase\\Decrease (%)",Math.round(inChange),Math.round(outChange)));
-		kpiList.add(kpi);
+	//	kpiList.add(new KPI("Increase\\Decrease (%)",Math.round(inChange),Math.round(outChange)));
+		//kpiList.add(kpi);
 		kpiList.add(lastyear);
-		//kpiList.add(LMLY);
-		
-		
-		inChange = 0;
-		outChange = 0;
 		
 		if (lastyear.getInPatient() != 0){
-			if (lastyear.getInPatient() != 0){
-				inChange = (1.0*kpi.getInPatient()-lastyear.getInPatient())/lastyear.getInPatient()*100;
-			} else {
-				inChange = 0;
-			}
-			
-			if (lastyear.getOutPatient() != 0){
-				outChange = (1.0*kpi.getOutPatient()-lastyear.getOutPatient())/lastyear.getOutPatient()*100;
-			} else {
-				outChange = 0;
-			}
+			inChange = (1.0*kpi.getInPatient()-lastyear.getInPatient())/lastyear.getInPatient()*100;
+		} else {
+			inChange = 0;
+		}
+		
+		if (lastyear.getOutPatient() != 0){
+			outChange = (1.0*kpi.getOutPatient()-lastyear.getOutPatient())/lastyear.getOutPatient()*100;
+		} else {
+			outChange = 0;
 		}
 		kpiList.add(new KPI("Increase\\Decrease (%)",Math.round(inChange),Math.round(outChange)));
 
 		DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
 
-		for (int i= 0; i < kpiList.size(); i++) {
+		for (int i= 0; i < kpiList.size()-1; i++) {
 			KPI temp = kpiList.get(i);
+			System.out.println(temp.getInPatient()+ "ROWS");	
 			
-			dataSet.setValue(temp.getInPatient(), "", "inPaitent");
-			dataSet.setValue(temp.getOutPatient(), "", "outPaitent");
+			dataSet.setValue(temp.getInPatient(), temp.getDate().substring(temp.getDate().length()-4), "inPaitent");
+			dataSet.setValue(temp.getOutPatient(), temp.getDate().substring(temp.getDate().length()-4), "outPaitent");
 		}
 
-		JFreeChart chart = ChartFactory.createBarChart("Overall results for Medical Team", "", "Number of clients",
+		JFreeChart chart = ChartFactory.createBarChart("Overall results for Visa Team year", "", "Number of clients",
 				dataSet, PlotOrientation.VERTICAL, false, true, true);
 		CategoryPlot p = chart.getCategoryPlot();
 		ValueAxis axis = p.getRangeAxis();

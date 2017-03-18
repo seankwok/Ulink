@@ -168,6 +168,10 @@ public class Utility {
 		return date.substring(6,10)+ "/" + date.substring(3, 5) + "/" + date.substring(0, 2);
 	}
 	
+	public String changeDateExportFormat(String date){
+		return date.substring(0,4)+ "/" + date.substring(5, 7) + "/" + date.substring(8);
+	}
+	
 	public int getAge(String dob) {
 		if (dob.length() > 0 && dob != null && dob != ""){
 			dob = dob.replace('/', '-');
