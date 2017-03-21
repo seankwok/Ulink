@@ -70,7 +70,7 @@ public class SendEmail extends HttpServlet {
 
 		Email emailServer = new Email();
 		HttpSession session = request.getSession();
-
+		User user = (User) session.getAttribute("userDetails");
 		String msg = request.getParameter("msg");
 		// msg = URLEncoder.encode( msg, "ISO-8859-1" ); // H%C3%A9l%C3%A8ne
 		// msg = URLDecoder.decode( msg, "UTF-8" );
@@ -99,9 +99,8 @@ public class SendEmail extends HttpServlet {
 				// System.out.println(temp + " temp");
 				// System.out.println(user.getEmail() + " userEmail");
 
-				// check = emailServer.sendEmail(email[i], subject, temp,
-				// user.getEmail()+"@ulinkassist.com");
-				check = emailServer.sendEmail(email[i], CC, subject, temp, "nabilahbmnk.2014@sis.smu.edu.sg");
+				check = emailServer.sendEmail(email[i], CC, subject, temp, user.getEmail()+"@ulinkassist.com");
+				//check = emailServer.sendEmail(email[i], CC, subject, temp, "nabilahbmnk.2014@sis.smu.edu.sg");
 				// check = emailServer.sendEmail(email[i], subject, temp,
 				// "kaixin.teh.2014@sis.smu.edu.sg");
 				// check = emailServer.sendEmail(email[i], subject, temp,

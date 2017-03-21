@@ -99,9 +99,7 @@
 			
 			complete : function(data) {
 				var json = jQuery.parseJSON(JSON.stringify(data));
-				if (json="-1"){
-					window.location = "viewScreeningsAdult.html";
-				}else{
+				
 				$("#illness").val(json.responseJSON.conditionName);
 				$("#years").val(json.responseJSON.years);
 				$("#age").val(json.responseJSON.ageRequired);
@@ -112,7 +110,7 @@
 					updateInfant();
 				} else{
 					updateAdult();
-				}
+				
 				}
 			}
 		

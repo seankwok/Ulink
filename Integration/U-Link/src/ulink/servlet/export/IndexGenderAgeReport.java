@@ -25,6 +25,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.DefaultFontMapper;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfTemplate;
@@ -39,33 +40,39 @@ import ulink.logic.TopK;
 @WebServlet("/IndexGenderAgeReport")
 public class IndexGenderAgeReport extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public IndexGenderAgeReport() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public IndexGenderAgeReport() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 		PdfWriter writer = null;
-		int width = 300;
-		int height = 200;
-		
+		int width = 500;
+		int height = 400;
+		final String TMP_DIR_PATH = "/AgeGenderReport.pdf";
+		final String image_path = "/ulink.jpg";
+		String filePath = null;
 		JFreeChart genderAgeReport = generateBarChartGenderAge();
 		JFreeChart genderAgeOverall = generateBarChartGenderAgeOverall();
 		// JFreeChart dashboardVisaRequested = generateBarChartVisaRequested();
@@ -73,14 +80,25 @@ public class IndexGenderAgeReport extends HttpServlet {
 		Document document = new Document();
 
 		try {
-			Date date = new Date();
-			String pdfFileName =  "GenderAge.pdf";
-			String home = System.getProperty("user.home");
-			response.setContentType("application/pdf");
-			response.addHeader("Content-Disposition", "attachment; filename=" + pdfFileName);
-			writer = PdfWriter.getInstance(document, new FileOutputStream(home +"/Downloads/"+ pdfFileName));
 
+			filePath = getServletContext().getRealPath(TMP_DIR_PATH);
+
+			String imagePath = getServletContext().getRealPath(image_path);
+			// ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			response.addHeader("Content-Disposition", "attachment;  filename=" + filePath);
+			writer = PdfWriter.getInstance(document, new FileOutputStream(filePath));
+			System.out.println(filePath);
 			document.open();
+			// Display dashboard for Medical
+			Image img = Image.getInstance(imagePath);
+			img.scaleAbsolute(60f, 60f);
+			img.setAlignment(img.ALIGN_CENTER);
+			document.add(img);
+			Paragraph p = new Paragraph("ULINK REPORTING SYSTEM – GENDER AGE REPORT");
+			p.setAlignment(p.ALIGN_CENTER);
+			document.add(p);
+
+			
 			// Display dashboard for Medical
 			PdfContentByte contentByte = writer.getDirectContent();
 			PdfTemplate template = contentByte.createTemplate(width, height);
@@ -105,8 +123,9 @@ public class IndexGenderAgeReport extends HttpServlet {
 			e.printStackTrace();
 		}
 		document.close();
+
 	}
-	
+
 	public static JFreeChart generateBarChartGenderAge() {
 		ArrayList<AgeAndGender> ageGenderList;
 		TopK topk = new TopK();
@@ -120,8 +139,8 @@ public class IndexGenderAgeReport extends HttpServlet {
 			dataSet.addValue(key.getFemale(), "Female", key.getAge());
 		}
 
-		JFreeChart chart = ChartFactory.createBarChart("Gender - Age Report", "", "", dataSet, PlotOrientation.VERTICAL,
-				false, true, true);
+		JFreeChart chart = ChartFactory.createBarChart("Gender - Age Report", "Age", "Percentage Per Age", dataSet, PlotOrientation.VERTICAL,
+				true, true, true);
 		CategoryPlot p = chart.getCategoryPlot();
 		ValueAxis axis = p.getRangeAxis();
 
@@ -145,12 +164,12 @@ public class IndexGenderAgeReport extends HttpServlet {
 
 		for (int i = 0; i < ageGenderList.size(); i++) {
 			AgeAndGender key = ageGenderList.get(i);
-			dataSet.addValue(key.getTotal(), "", key.getAge());
+			dataSet.addValue(key.getTotal(), "Total", key.getAge());
 
 		}
 
-		JFreeChart chart = ChartFactory.createBarChart("Gender - Age Report", "", "", dataSet, PlotOrientation.VERTICAL,
-				false, true, true);
+		JFreeChart chart = ChartFactory.createBarChart("Gender - Age Report", "Age", "Percentage Per Age", dataSet, PlotOrientation.VERTICAL,
+				true, true, true);
 		CategoryPlot p = chart.getCategoryPlot();
 		ValueAxis axis = p.getRangeAxis();
 
@@ -163,6 +182,5 @@ public class IndexGenderAgeReport extends HttpServlet {
 
 		return chart;
 	}
-
 
 }

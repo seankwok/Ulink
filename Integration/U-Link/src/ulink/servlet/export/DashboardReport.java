@@ -3,13 +3,19 @@ package ulink.servlet.export;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,14 +30,20 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.data.category.DefaultCategoryDataset;
 
+import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.DefaultFontMapper;
 import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import ulink.constructor.Client;
+import ulink.constructor.RankingDoctor;
 import ulink.dao.DatabaseConnection;
 import ulink.logic.Utility;
 
@@ -41,34 +53,41 @@ import ulink.logic.Utility;
 @WebServlet("/DashboardReport")
 public class DashboardReport extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public DashboardReport() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public DashboardReport() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
-		int width = 300;
-		int height = 200;
-		
-		PdfWriter writer = null;
+		// doGet(request, response);
+		int width = 500;
+		int height = 400;
+		String filePath = null;
+		// OutputStream out = response.getOutputStream();
 
+		PdfWriter writer = null;
+		final String TMP_DIR_PATH = "/dashboard.pdf";
+		final String image_path = "/ulink.jpg";
 		JFreeChart dashboardMedical = generateBarChartMedical();
 		JFreeChart dashboardVisa = generateBarChartVisa();
 		JFreeChart dashboardVisaRequested = generateBarChartVisaRequested();
@@ -76,15 +95,25 @@ public class DashboardReport extends HttpServlet {
 		Document document = new Document();
 
 		try {
-			
-			Date date = new Date();
-			String pdfFileName  = "dashboard.pdf";
-			String home = System.getProperty("user.home");
 			response.setContentType("application/pdf");
-			response.addHeader("Content-Disposition", "attachment; filename=" + pdfFileName);
-			writer = PdfWriter.getInstance(document, new FileOutputStream(home +"/Downloads/"+ pdfFileName));
+
+			filePath = getServletContext().getRealPath(TMP_DIR_PATH);
+
+			String imagePath = getServletContext().getRealPath(image_path);
+			// ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			response.addHeader("Content-Disposition", "attachment;  filename=" + filePath);
+			writer = PdfWriter.getInstance(document, new FileOutputStream(filePath));
+			System.out.println(filePath);
 			document.open();
 			// Display dashboard for Medical
+			Image img = Image.getInstance(imagePath);
+			img.scaleAbsolute(60f, 60f);
+			img.setAlignment(img.ALIGN_CENTER);
+			document.add(img);
+			Paragraph p = new Paragraph("ULINK REPORTING SYSTEM – DASHBOARD");
+			p.setAlignment(p.ALIGN_CENTER);
+			document.add(p);
+
 			PdfContentByte contentByte = writer.getDirectContent();
 			PdfTemplate template = contentByte.createTemplate(width, height);
 			Graphics2D graphics2d = template.createGraphics(width, height, new DefaultFontMapper());
@@ -114,12 +143,53 @@ public class DashboardReport extends HttpServlet {
 			document.add(chartImage3);
 			graphics2d3.dispose();
 
+		//	document.add(createFirstTable());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		document.close();
+		PrintWriter out = response.getWriter();
+		out.write(filePath);
+		out.flush();
+		// String contextPath = getServletContext().getRealPath(File.separator);
+
 	}
-	
+
+	public static PdfPTable createFirstTable() {
+
+		DatabaseConnection connection = new DatabaseConnection();
+		String date = connection.retrieveLatestDate();
+		Utility utility = new Utility();
+		String startDate = utility.getStartDateOfMonth(date);
+		String endDate = utility.getEndDateOfMonth(startDate);
+		ArrayList<RankingDoctor> list = connection.retrieveAllRankingDoctorDashBoard(startDate, endDate);
+
+		// a table with three columns
+		PdfPTable table = new PdfPTable(4);
+		// the cell object
+		PdfPCell cell;
+		// we add a cell with colspan 3
+		cell = new PdfPCell(new Phrase("Ranking"));
+		table.addCell(cell);
+		cell = new PdfPCell(new Phrase("Name"));
+		table.addCell(cell);
+		// now we add a cell with rowspan 2
+		cell = new PdfPCell(new Phrase("Clinic"));
+		table.addCell(cell);
+		cell = new PdfPCell(new Phrase("Speciality"));
+		table.addCell(cell);
+		// we add the four remaining cells with addCell()
+		for (int i = 0; i < 5; i++) {
+			table.addCell(list.get(i).getRanking() + "");
+			table.addCell(list.get(i).getName());
+			table.addCell(list.get(i).getClinic());
+			table.addCell(list.get(i).getSpeciality());
+		}
+
+		return table;
+	}
+
 	public static JFreeChart generateBarChartMedical() {
 
 		DatabaseConnection connection = new DatabaseConnection();
@@ -147,11 +217,11 @@ public class DashboardReport extends HttpServlet {
 		DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
 
 		for (String key : pastSixMonth.keySet()) {
-			dataSet.setValue(pastSixMonth.get(key), "", key);
+			dataSet.setValue(pastSixMonth.get(key), " Number of clients", key);
 		}
 
-		JFreeChart chart = ChartFactory.createBarChart("Number of Medical Client (Past 6 months)", "",
-				"Number of clients", dataSet, PlotOrientation.VERTICAL, false, true, true);
+		JFreeChart chart = ChartFactory.createBarChart("Number of Medical Client (Past 6 months)", "Month",
+				"Number of clients", dataSet, PlotOrientation.VERTICAL, true, true, true);
 		CategoryPlot p = chart.getCategoryPlot();
 		ValueAxis axis = p.getRangeAxis();
 
@@ -192,11 +262,11 @@ public class DashboardReport extends HttpServlet {
 		DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
 
 		for (String key : pastSixMonth.keySet()) {
-			dataSet.setValue(pastSixMonth.get(key), "", key);
+			dataSet.setValue(pastSixMonth.get(key), "Number of clients", key);
 		}
 
-		JFreeChart chart = ChartFactory.createBarChart("Number of Visa Client (Past 6 months)", "", "Number of clients",
-				dataSet, PlotOrientation.VERTICAL, false, true, true);
+		JFreeChart chart = ChartFactory.createBarChart("Number of Visa Client (Past 6 months)", "Month",
+				"Number of clients", dataSet, PlotOrientation.VERTICAL, true, true, true);
 		CategoryPlot p = chart.getCategoryPlot();
 		ValueAxis axis = p.getRangeAxis();
 

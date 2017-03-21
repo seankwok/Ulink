@@ -420,15 +420,23 @@ $(document).ready(function() {
 			$.ajax({
 				url : "KPIMedicalReport",
 				type : "post",
-				data : 'type=' + teamName + '&date=' + value + '&thisYearLastMonth=' + thisYearLastMonth + '&lastYearThisMonth=' + lastYearThisMonth 
-				
+				data : 'type=' + teamName + '&date=' + value + '&thisYearLastMonth=' + thisYearLastMonth + '&lastYearThisMonth=' + lastYearThisMonth, 
+					complete : function(data) {
+ 						var json = jQuery.parseJSON(JSON.stringify(data));
+ 						window.location = "\KPIMedicalReport.pdf"
+ 						console.log(json);
+ 					}
 			});
 		} else{
 			$.ajax({
 				url : "KPIVisaReport",
 				type : "post",
-				data : 'type=' + teamName + '&date=' + value + '&thisYearLastMonth=' + thisYearLastMonth + '&lastYearThisMonth=' + lastYearThisMonth 
-
+				data : 'type=' + teamName + '&date=' + value + '&thisYearLastMonth=' + thisYearLastMonth + '&lastYearThisMonth=' + lastYearThisMonth, 
+				complete : function(data) {
+						var json = jQuery.parseJSON(JSON.stringify(data));
+						window.location = "\KPIVisaReport.pdf"
+						console.log(json);
+					}
 			});
 		}
 		

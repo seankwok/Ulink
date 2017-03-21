@@ -27,6 +27,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.DefaultFontMapper;
 
 import com.itextpdf.text.pdf.PdfContentByte;
@@ -75,23 +76,35 @@ public class KPIMedicalReport extends HttpServlet {
 		String thisYearLastMonth = request.getParameter("thisYearLastMonth");
 		String lastYearThisMonth = request.getParameter("lastYearThisMonth");
 		System.out.println(date);
-		int width = 300;
-		int height = 200;
+		int width = 500;
+		int height = 400;
+		final String TMP_DIR_PATH = "/KPIMedicalReport.pdf";
+		final String image_path = "/ulink.jpg";
+		String filePath = null;
 		
 		JFreeChart genderAgeReport = generateBarChartKPIMedicalMonth(type, date, thisYearLastMonth, lastYearThisMonth);
 		JFreeChart genderAgeOverall = generateBarChartKPIMedicalYear(type, date, thisYearLastMonth, lastYearThisMonth);
 
 
-		String pdfFileName = date + ".pdf";
-		String home = System.getProperty("user.home");
-	
-		response.setContentType("application/pdf");
-		response.addHeader("Content-Disposition", "attachment; filename=" + pdfFileName);
 
 		Document document = new Document();
 		try {
-			writer = PdfWriter.getInstance(document, new FileOutputStream(home +"/Downloads/"+ pdfFileName));
+			filePath = getServletContext().getRealPath(TMP_DIR_PATH);
+
+			String imagePath = getServletContext().getRealPath(image_path);
+			// ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			response.addHeader("Content-Disposition", "attachment;  filename=" + filePath);
+			writer = PdfWriter.getInstance(document, new FileOutputStream(filePath));
+			System.out.println(filePath);
 			document.open();
+			// Display dashboard for Medical
+			Image img = Image.getInstance(imagePath);
+			img.scaleAbsolute(60f, 60f);
+			img.setAlignment(img.ALIGN_CENTER);
+			document.add(img);
+			Paragraph p = new Paragraph("ULINK REPORTING SYSTEM – KPI MEDICAL REPORT");
+			p.setAlignment(p.ALIGN_CENTER);
+			document.add(p);
 			// Display dashboard for Medical
 			PdfContentByte contentByte = writer.getDirectContent();
 			PdfTemplate template = contentByte.createTemplate(width, height);
@@ -167,7 +180,7 @@ public class KPIMedicalReport extends HttpServlet {
 			}
 
 			JFreeChart chart = ChartFactory.createBarChart("Overall results for Medical Team", "", "Number of clients",
-					dataSet, PlotOrientation.VERTICAL, false, true, true);
+					dataSet, PlotOrientation.VERTICAL, true, true, true);
 			CategoryPlot p = chart.getCategoryPlot();
 			ValueAxis axis = p.getRangeAxis();
 
@@ -239,8 +252,8 @@ public class KPIMedicalReport extends HttpServlet {
 				dataSet.setValue(temp.getInPatient(), temp.getDate(), "inPaitent");
 			}
 
-			JFreeChart chart = ChartFactory.createBarChart("Overall results for Medical Team", "", "Number of clients",
-					dataSet, PlotOrientation.VERTICAL, false, true, true);
+			JFreeChart chart = ChartFactory.createBarChart("Overall results for Medical Team", "", "Number Of Patients",
+					dataSet, PlotOrientation.VERTICAL, true, true, true);
 			CategoryPlot p = chart.getCategoryPlot();
 			ValueAxis axis = p.getRangeAxis();
 

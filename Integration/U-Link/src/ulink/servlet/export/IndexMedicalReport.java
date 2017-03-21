@@ -25,6 +25,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.DefaultFontMapper;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfTemplate;
@@ -65,29 +66,42 @@ public class IndexMedicalReport extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 		PdfWriter writer = null;
-		int width = 300;
-		int height = 200;
-		
+		int width = 500;
+		int height = 400;
+		final String TMP_DIR_PATH = "/IndexMedical.pdf";
+		final String image_path = "/ulink.jpg";
+		String filePath = null;
 		String type = request.getParameter("type");
 		
 		String startDate = request.getParameter("startDate");
 		String endDate = request.getParameter("endDate");
 		
 		JFreeChart genderAgeReport = generateBarChartIndexMedical(startDate, endDate,  type);
-		JFreeChart genderAgeOverall = generateBarChartIndexMedicalByPerson();
+		JFreeChart genderAgeOverall = generateBarChartIndexMedicalByPerson(startDate, endDate);
 		
 
 		Document document = new Document();
 
 		try {
+			filePath = getServletContext().getRealPath(TMP_DIR_PATH);
 
-			String pdfFileName =  type + ".pdf";
-			String home = System.getProperty("user.home");
-			response.setContentType("application/pdf");
-			response.addHeader("Content-Disposition", "attachment; filename=" + pdfFileName);
-			writer = PdfWriter.getInstance(document, new FileOutputStream(home +"/Downloads/"+ pdfFileName));
-
+			String imagePath = getServletContext().getRealPath(image_path);
+			
+			response.addHeader("Content-Disposition", "attachment;  filename=" + filePath);
+			writer = PdfWriter.getInstance(document, new FileOutputStream(filePath));
+			//System.out.println(filePath);
 			document.open();
+			// Display dashboard for Medical
+			Image img = Image.getInstance(imagePath);
+			img.scaleAbsolute(60f, 60f);
+			img.setAlignment(img.ALIGN_CENTER);
+			document.add(img);
+			Paragraph p = new Paragraph("ULINK REPORTING SYSTEM – INDEX MEDICAL");
+			p.setAlignment(p.ALIGN_CENTER);
+			document.add(p);
+
+
+			
 			// Display dashboard for Medical
 			PdfContentByte contentByte = writer.getDirectContent();
 			PdfTemplate template = contentByte.createTemplate(width, height);
@@ -126,11 +140,11 @@ public class IndexMedicalReport extends HttpServlet {
 		DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
 
 		for (Integer key : pointSystem.keySet()) {
-			dataSet.setValue(pointSystem.get(key), "", key);
+			dataSet.setValue(pointSystem.get(key), "Percentage", key);
 		}
 
-		JFreeChart chart = ChartFactory.createBarChart("Overall results for Medical Team", "", "Number of clients",
-				dataSet, PlotOrientation.VERTICAL, false, true, true);
+		JFreeChart chart = ChartFactory.createBarChart("Overall results for Medical Team", "Point of contact", "Percentage of client",
+				dataSet, PlotOrientation.VERTICAL, true, true, true);
 		CategoryPlot p = chart.getCategoryPlot();
 		ValueAxis axis = p.getRangeAxis();
 
@@ -146,14 +160,12 @@ public class IndexMedicalReport extends HttpServlet {
 
 
 		
-	public static JFreeChart generateBarChartIndexMedicalByPerson() {
+	public static JFreeChart generateBarChartIndexMedicalByPerson(String startDate, String endDate) {
 
 		DatabaseConnection connection = new DatabaseConnection();
 		Utility utility = new Utility();
 		String date = connection.retrieveLatestDate();
-		String startDate = utility.getStartDateOfMonth(date);
-		String endDate = utility.getEndDateOfMonth(startDate);
-		String team = "";
+		String team = "Medical";
 		ArrayList<String> personInChargeList = connection.retrieveAllPersonInCharge();
 		ArrayList<PersonInCharge> listAllPIC = new ArrayList<>();
 
@@ -170,13 +182,13 @@ public class IndexMedicalReport extends HttpServlet {
 		for (int i = 0; i < listAllPIC.size(); i++) {
 			PersonInCharge personInCharge = listAllPIC.get(i);
 			for (Integer key : personInCharge.getPointSystem().keySet()) {
-				dataSet.setValue(personInCharge.getPointSystem().get(key), "", personInCharge.getName());
+				System.out.println(personInCharge.getPointSystem().get(key) + " TEST " + key);
+				dataSet.setValue(personInCharge.getPointSystem().get(key), key+"", personInCharge.getName());
 			}
 		}
 		
 		
-		JFreeChart chart = ChartFactory.createBarChart("Number of Medical Client (Past 6 months)", "",
-				"Number of clients", dataSet, PlotOrientation.VERTICAL, false, true, true);
+		JFreeChart chart = ChartFactory.createBarChart("Number of Medical Client (Past 6 months)", "Point of contact", "Percentage of client", dataSet, PlotOrientation.VERTICAL, true, true, true);
 		CategoryPlot p = chart.getCategoryPlot();
 		ValueAxis axis = p.getRangeAxis();
 

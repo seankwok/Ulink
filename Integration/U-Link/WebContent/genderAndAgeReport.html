@@ -29,7 +29,12 @@
 		$('#export').click(function(){
 				$.ajax({
 					url : "IndexGenderAgeReport",
-					type : "post",					
+					type : "post",				
+					complete : function(data) {
+						var json = jQuery.parseJSON(JSON.stringify(data));
+						window.location = "\AgeGenderReport.pdf"
+						console.log(json);
+					}
 				});
 		});
 	});

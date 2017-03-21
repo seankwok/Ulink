@@ -28,6 +28,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.DefaultFontMapper;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfTemplate;
@@ -68,9 +69,11 @@ public class KPIVisaReport extends HttpServlet {
 		doGet(request, response);
 		
 		PdfWriter writer = null;
-		int width = 300;
-		int height = 200;
-		
+		int width = 500;
+		int height = 400;
+		final String TMP_DIR_PATH = "/KPIVisaReport.pdf";
+		final String image_path = "/ulink.jpg";
+		String filePath = null;
 		
 		String type = request.getParameter("type");
 		String date = request.getParameter("date");
@@ -89,25 +92,23 @@ public class KPIVisaReport extends HttpServlet {
 
 		try {
 			
-			//String pdfFileName = "pdf-test.pdf";
-			//String contextPath = getServletContext().getRealPath(File.separator);
-		//	File pdfFile = new File(contextPath + pdfFileName);
+			filePath = getServletContext().getRealPath(TMP_DIR_PATH);
 
-			//response.setContentType("application/pdf");
-			//response.addHeader("Content-Disposition", "attachment; filename=" + pdfFileName);
-			//response.setContentLength((int) pdfFile.length());
-
-			String pdfFileName = date + ".pdf";
-			String home = System.getProperty("user.home");
-			response.setContentType("application/pdf");
-			response.addHeader("Content-Disposition", "attachment; filename=" + pdfFileName);
-			writer = PdfWriter.getInstance(document, new FileOutputStream(home +"/Downloads/"+ pdfFileName));
-
-		
-		
-			response.setContentType("application/pdf");
-			response.addHeader("Content-Disposition", "attachment; filename=" + pdfFileName);
+			String imagePath = getServletContext().getRealPath(image_path);
+			// ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			response.addHeader("Content-Disposition", "attachment;  filename=" + filePath);
+			writer = PdfWriter.getInstance(document, new FileOutputStream(filePath));
+			//System.out.println(filePath);
 			document.open();
+			// Display dashboard for Medical
+			Image img = Image.getInstance(imagePath);
+			img.scaleAbsolute(60f, 60f);
+			img.setAlignment(img.ALIGN_CENTER);
+			document.add(img);
+			Paragraph p = new Paragraph("ULINK REPORTING SYSTEM – KPI VISA REPORT REPORT");
+			p.setAlignment(p.ALIGN_CENTER);
+			document.add(p);
+
 			// Display dashboard for Medical
 			PdfContentByte contentByte = writer.getDirectContent();
 			PdfTemplate template = contentByte.createTemplate(width, height);
@@ -253,7 +254,7 @@ public class KPIVisaReport extends HttpServlet {
 
 		for (int i= 0; i < kpiList.size()-1; i++) {
 			KPI temp = kpiList.get(i);
-			System.out.println(temp.getInPatient()+ "ROWS");	
+			//System.out.println(temp.getInPatient()+ "ROWS");	
 			
 			dataSet.setValue(temp.getInPatient(), temp.getDate().substring(temp.getDate().length()-4), "inPaitent");
 			dataSet.setValue(temp.getOutPatient(), temp.getDate().substring(temp.getDate().length()-4), "outPaitent");

@@ -121,25 +121,25 @@ public class Utility {
 			
 			Index index = indexList.get(i);
 			if (index.getAddress().length() > 0) {
-				System.out.println(index.getAddress());
+				//System.out.println(index.getAddress());
 				point++;
 				
 			}
 			if (index.getEmail().length() > 0) {
-				System.out.println(index.getEmail());
+				//System.out.println(index.getEmail());
 				point++;
 				
 			}
 			if (index.getPhone().length() > 0) {
-				System.out.println(index.getPhone());
+				//System.out.println(index.getPhone());
 				point++;
 				
 			}
-			System.out.print(point);
+			//System.out.print(point);
 			if (pointSystem.containsKey(point)){
 				double temp = pointSystem.get(point);
 				pointSystem.put(point, temp+1);
-				System.out.println(point + " " + temp+1);
+				//System.out.println(point + " " + temp+1);
 			}
 		}
 		

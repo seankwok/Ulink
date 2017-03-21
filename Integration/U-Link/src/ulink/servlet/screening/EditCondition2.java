@@ -44,7 +44,9 @@ public class EditCondition2 extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		String conditionId = (String) session.getAttribute("ID");
+		System.out.println(conditionId);
 		if (conditionId != null) {
+			System.out.println("TERQREQWE");
 			DatabaseConnection database = new DatabaseConnection();
 			System.out.println(conditionId);
 			Condition conditionType = database.retrieveConditionDetails(Integer.parseInt(conditionId));
@@ -56,14 +58,7 @@ public class EditCondition2 extends HttpServlet {
 			out.write(arrayListToJson);
 			out.flush();
 			return;
-		} else {
-			PrintWriter out = response.getWriter();
-			
-
-			out.write("-1");
-			out.flush();
-			return;
-		}
+		} 
 	}
 
 	/**
