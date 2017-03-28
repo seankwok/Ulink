@@ -26,6 +26,17 @@
 		displayAll();
 		displayPercentage();
 		
+		$('#export').click(function(){
+				$.ajax({
+					url : "IndexGenderAgeReport",
+					type : "post",				
+					complete : function(data) {
+						var json = jQuery.parseJSON(JSON.stringify(data));
+						window.location = "\AgeGenderReport.pdf"
+						console.log(json);
+					}
+				});
+		});
 	});
 
 	function displayAll() {
@@ -186,6 +197,7 @@
 
 	
 	<div class="container">
+		<div class="row">
 		<div class="col-md-8">
 		
 		<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
@@ -197,6 +209,12 @@
 		<div id="percentage" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 		
 		</div>
+		</div>
+		
+		<div class="container" align="center">
+        <button type="submit" class="btn btn-primary" id="export">Export</button>
+   		</div>
+		
 	</div>
 
 
