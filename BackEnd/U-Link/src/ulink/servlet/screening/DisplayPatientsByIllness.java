@@ -2,7 +2,9 @@ package ulink.servlet.screening;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.Month;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -64,8 +66,19 @@ public class DisplayPatientsByIllness extends HttpServlet {
 							client.getEmail(), client.getGender(),condition.getScreening(), condition.getConditionName(), connection.retrieveLatestDateSend(client.getClientName(),condition.getScreening()) ,client.getFollowUpPerson()));
 					//System.out.println("TQEQWEQWEQW " + connection.retrieveLatestDateSend(client.getClientName(),condition.getScreening()));
 				}
-			} else if (client.getAge() < 2){
-				if (client.getAge()*12 >= condition.getAgeRequired()  && client.getEmail().length() > 0) {
+			} else if (client.getAge() <= 2 && client.getDateOfBirth().length() > 0){
+				String date = client.getDateOfBirth();
+				//System.out.println(date + "qwewqewqewq");
+				int day = Integer.parseInt(date.substring(0,2));
+				int month = Integer.parseInt(date.substring(3,5)) - 1;  
+				int year = Integer.parseInt(date.substring(6)) + 1900; 
+				
+				Date current = new Date();
+				Date dob = new Date(day,month,year);
+				
+				int months = (current.getMonth() - dob.getMonth()) + (current.getYear() - dob.getYear()) * 12 ;
+				
+				if (months >= condition.getAgeRequired()) {
 					clientByIllnessList.add(new ClientByIllness(client.getClientName(), client.getAge(),
 							client.getEmail(), client.getGender(),condition.getScreening(), condition.getConditionName(), connection.retrieveLatestDateSend(client.getClientName(), condition.getScreening()), client.getFollowUpPerson()));
 

@@ -48,7 +48,7 @@ public class Add extends HttpServlet {
 		String[] types = request.getParameterValues("type");
 		String years = request.getParameter("years");
 		ArrayList<Condition> conditionList = connection.retrieveAllCondition("ID", "ASC");
-	
+		System.out.println(screening);
 		String[] type = types[0].split(",");
 		for (int i = 0; i < type.length; i++) {
 			boolean check = true;

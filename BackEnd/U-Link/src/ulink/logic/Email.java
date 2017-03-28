@@ -42,11 +42,7 @@ public class Email {
 			message.addRecipients(Message.RecipientType.TO,
 				InternetAddress.parse(toEmail));
 			message.addRecipients(Message.RecipientType.CC,
-					InternetAddress.parse("kaixin.teh.2014@sis.smu.edu.sg"));
-			message.addRecipients(Message.RecipientType.CC,
 					InternetAddress.parse(CC));
-			message.addRecipients(Message.RecipientType.CC,
-					InternetAddress.parse("sychien.2014@sis.smu.edu.sg"));
 			message.setSubject(subject);
 			message.setContent(Msg, "text/html; charset=utf-8");
 
