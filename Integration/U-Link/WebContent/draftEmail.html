@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+
+
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="ISO-8859-1">
+	<title>Draft Email</title>
+	 <link href="css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="js/jquery-1.12.0.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+
+<script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
+   
+    <script> 
+	    $(function(){
+	      $("#includedContent").load("navBar.html"); 	      
+	    });
+
+    </script> 
+
+	<style>
+		.errorMsg {
+		   font-size: 15px; 
+		   text-align: center;
+		}		
+		
+		.dropdownSide {
+			  width: 300px !important;
+			  
+		}	
+		
+
+		
+		form {
+		  text-align: center;
+		}
+	</style>
+	
+	
+	<script type="text/javascript">
+	
+	function showFields(){
+		var templateContent = '[clientEmail]<br>[clientName]<br>[screening]' ;
+		 CKEDITOR.instances.editor1.setData(templateContent);
+		 var clients = sessionStorage.getItem('clients');
+		 var array = clients.split(',');
+		 var numSelected = array.length;
+		 var table = " <table class='table table-bordered' width='50%'><tr><th>" + numSelected + " Clients Selected</th></tr>";
+		 array.forEach(function(entry) {
+			    table += "<tr><td>"+entry+"</td><tr>"
+			});
+			
+		
+		 table += "</table>";
+		 $('#clientTab').html(table);
+
+
+	}
+	
+	$(document).ready(function() {
+		showFields();
+		showDropdownList();	
+		
+	});
+	
+		function selectTemplate(clickedID){
+			var sendData = {
+					"templateName" : clickedID
+				};
+	    	$.ajax({	    	
+		    	url : "RetrieveEmailTemplate",
+				type : "post",
+				data : sendData,
+				complete : function(data) {
+					var templateContent = data.responseText;
+					 CKEDITOR.instances.editor1.setData(templateContent);
+				}
+			});
+	
+		}
+	    
+	   	function replaceSpace(msg){
+	   	    var res = encodeURIComponent(msg);
+	   	    return res;
+
+	   	}   
+	    function save(){
+	    	var templateName = $('#template').val();
+	    	if (templateName == ""){
+	      		$('#errMsg').html("Template Name Required!");	 	    		  
+	    	}else{
+		    	var content = CKEDITOR.instances.editor1.getData();
+		    	content  = replaceSpace(content);
+		    	$.ajax({
+					type: 'post',
+					url: "CreateEmailTemplate",
+					data: 'templateName=' + templateName
+						+ '&'
+						+ 'msg=' + content,
+					complete: function(data){
+						var json = jQuery.parseJSON(JSON.stringify(data));
+						var status = json.responseText;
+						var err = "";
+						if(status == "fail"){
+							$('#errMsg').html( "Template Name already exist!");
+						}else{
+							showDropdownList();	
+							$('#exampleModal').modal('hide');
+						}
+						
+					}
+				});
+		    	
+		    	
+		    	$('#errMsg').html("");
+	    	}
+	    }	
+	    
+	    
+	    function showDropdownList(){
+	    	$.ajax({			    	
+					type: 'get',
+					url: "DisplayAllEmailTemplate",
+					complete: function(data){
+						var htmlDD = "<div class='dropdown'> "
+					    	+ "<a id='drop1' href='#' role='button' class='btn btn-link dropdown-toggle' data-toggle='dropdown'>Select Template<b class='caret'></b></a>"
+					    	+ " <ul class='dropdown-menu' role='menu' aria-labelledby='dLabel'>"
+						var json = jQuery.parseJSON(data.responseText);
+						$.each(json, function(key, value){
+							htmlDD += "<li><div class='dropdownSide'><a href='#' onClick=selectTemplate(this.id) id='"+value+"'>"+value+"</a> &nbsp; <a href='#' onClick=deleteEmail(this.id) id='"+value+"'> Delete </a></div> </li>"
+						});
+						 htmlDD += "</ul></div>"
+						 $('#templateDropdown').html(htmlDD);
+					}	    		  
+	    	});	
+	    }
+
+	    function deleteEmail(clickedID){
+			var sendData = {
+					"templateName" : clickedID
+				};
+	    	$.ajax({	    	
+		    	url : "DeleteEmailTemplate",
+				type : "post",
+				data : sendData,
+				complete : function(data) {
+					showDropdownList();	
+				}
+			});
+	    	
+	    }
+	    
+	    function pressSend(){
+	    	var content = CKEDITOR.instances.editor1.getData();
+	    	content  = replaceSpace(content);
+	    	sessionStorage.setItem('passContent', content);
+	    	window.location.href = "sendingEmail.html";
+	  
+	    }
+	    
+
+	</script>
+</head>
+
+
+		
+<body>
+   
+	<div id="includedContent"></div>
+	
+	<div class="page-header">
+		<h1 align="center">New Email</h1>
+	</div>
+	<div class="container" id="clients"></div>
+	
+<div class="container">
+	<table >
+		<tr> 
+			<td><button type="button" class="btn btn-link" data-toggle="modal" data-target='#exampleModal' >Save as Template</button></td>
+			<td><div id='templateDropdown' ></div></td>
+		</tr>
+	</table>
+	<div class="row">
+		  <div class="col-md-10">
+		   		 <textarea id="editor1"></textarea>
+			     <script>
+			         CKEDITOR.replace( 'editor1' );
+			         
+			        
+			     </script>
+			     
+		  </div>
+	
+		  <div class="col-md-2" id='clientTab'> </div>
+	 </div>
+
+ </div>
+ 	<form action="sendingEmail.html" method="POST">
+	   <button  class='btn btn-primary' onclick='pressSend()'>Send</button>
+	</form>
+
+
+
+
+
+		
+
+
+					<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h4 class="modal-title" id="exampleModalLabel"><b>Save Template As</b></h4>
+			      </div>
+			      <div class="modal-body">
+			        <form>
+			          <div class="form-group">
+			            <label for="message-text" class="form-control-label">Template Name:</label>
+			            <textarea class="form-control" id="template" ></textarea>
+				            <div class="modal-footer">
+				        		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				        		<input type="button" class="btn btn-primary" onClick='save()' value='save'> 
+				     		 </div>
+			          </div>
+			        </form>
+			        <div id='errMsg' style='color:red' class='errorMsg'></div>
+			        
+			      </div>
+			    </div>
+			  </div>
+			</div>	
+	</body>
+</html>
