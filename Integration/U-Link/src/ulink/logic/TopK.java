@@ -15,7 +15,6 @@ import ulink.constructor.Consultation;
 import ulink.constructor.KPI;
 import ulink.dao.DatabaseConnection;
 
-
 public class TopK {
 	
 

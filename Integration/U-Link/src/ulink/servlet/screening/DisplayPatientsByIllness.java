@@ -2,9 +2,7 @@ package ulink.servlet.screening;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.Month;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -51,12 +49,11 @@ public class DisplayPatientsByIllness extends HttpServlet {
 		//String type = request.getParameter("type");
 		int ID = Integer.parseInt(request.getParameter("ID"));
 		HttpSession session = request.getSession();
-		String name = request.getParameter("name");
-		String direction = request.getParameter("direction");
+		
 		session.setAttribute("ID", ID);
 		Condition condition = connection.retrieveAllConditionByID(ID);
 		
-		ArrayList<Client> clientList = connection.retrieveAllClientListEmail(name, direction);
+		ArrayList<Client> clientList = connection.retrieveAllClientListEmail();
 		ArrayList<ClientByIllness> clientByIllnessList = new ArrayList<>();
 		for (int i = 0; i < clientList.size(); i++) {
 			Client client = clientList.get(i);
@@ -66,19 +63,8 @@ public class DisplayPatientsByIllness extends HttpServlet {
 							client.getEmail(), client.getGender(),condition.getScreening(), condition.getConditionName(), connection.retrieveLatestDateSend(client.getClientName(),condition.getScreening()) ,client.getFollowUpPerson()));
 					//System.out.println("TQEQWEQWEQW " + connection.retrieveLatestDateSend(client.getClientName(),condition.getScreening()));
 				}
-			} else if (client.getAge() <= 2 && client.getDateOfBirth().length() > 0){
-				String date = client.getDateOfBirth();
-				//System.out.println(date + "qwewqewqewq");
-				int day = Integer.parseInt(date.substring(0,2));
-				int month = Integer.parseInt(date.substring(3,5)) - 1;  
-				int year = Integer.parseInt(date.substring(6)) + 1900; 
-				
-				Date current = new Date();
-				Date dob = new Date(day,month,year);
-				
-				int months = (current.getMonth() - dob.getMonth()) + (current.getYear() - dob.getYear()) * 12 ;
-				
-				if (months >= condition.getAgeRequired()) {
+			} else if (client.getAge() < 2){
+				if (client.getAge()*12 >= condition.getAgeRequired()  && client.getEmail().length() > 0) {
 					clientByIllnessList.add(new ClientByIllness(client.getClientName(), client.getAge(),
 							client.getEmail(), client.getGender(),condition.getScreening(), condition.getConditionName(), connection.retrieveLatestDateSend(client.getClientName(), condition.getScreening()), client.getFollowUpPerson()));
 

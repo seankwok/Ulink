@@ -586,7 +586,7 @@ public class DatabaseConnection {
 	}
 	
 	
-	public ArrayList<Client> retrieveAllClientListEmail(String name, String sortDirection) {
+	public ArrayList<Client> retrieveAllClientListEmail() {
 
 		Connection con;
 		ArrayList<Client> clientList = new ArrayList<Client>();
@@ -595,7 +595,7 @@ public class DatabaseConnection {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
 
 			Statement stmt = con.createStatement();
-			String sql = "SELECT * FROM client group by email order by " +  name + " " + sortDirection;
+			String sql = "SELECT * FROM client group by email";
 			ResultSet rs = stmt.executeQuery(sql);
 			Utility utility = new Utility();
 
@@ -873,7 +873,7 @@ public class DatabaseConnection {
 			//Utility utility = new Utility();
 			PreparedStatement preparedStmt = con.prepareStatement(sql);
 			con.setAutoCommit(false);
-			for (int i = 0; i < clientList.size(); i++) {
+			for (int i = 1; i < clientList.size(); i++) {
 				Client client = clientList.get(i);
 
 				// preparedStmt.setInt(1, client.getID());
@@ -920,17 +920,15 @@ public class DatabaseConnection {
 				preparedStmt.setString(33, client.getBillingStreet());
 				// System.out.println(client.getBillingStreet());
 				try {
-				//	System.out.println(client.getCreatedtime());
-					//Integer.parseInt(client.getCreatedtime().substring(0, 10));
+					Integer.parseInt(client.getCreatedtime().substring(0, 2));
 				} catch (NumberFormatException e) {
-				//	client.setCreatedtime("0" + client.getCreatedtime());
+					client.setCreatedtime("0" + client.getCreatedtime());
 				}
 				// System.out.print(client.getCreatedtime());
-			//	String date = client.getCreatedtime().substring(6, 10) + "-" + client.getCreatedtime().substring(3, 5)
-				//		+ "-" + client.getCreatedtime().substring(0, 2);
+				String date = client.getCreatedtime().substring(6, 10) + "-" + client.getCreatedtime().substring(3, 5)
+						+ "-" + client.getCreatedtime().substring(0, 2);
 				//System.out.println(date);
-			//	System.out.println(client.getCreatedtime() + "Test");
-				preparedStmt.setDate(34, java.sql.Date.valueOf(client.getCreatedtime().substring(0,10)));
+				preparedStmt.setDate(34, java.sql.Date.valueOf(date));
 				preparedStmt.setString(35, client.getPhone());
 				
 				preparedStmt.addBatch();

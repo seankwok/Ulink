@@ -2,10 +2,6 @@ package ulink.logic;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.text.DateFormatSymbols;
-import java.text.DecimalFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -19,6 +15,10 @@ import ulink.constructor.Condition;
 import ulink.constructor.Index;
 import ulink.constructor.User;
 import ulink.dao.DatabaseConnection;
+import java.text.DateFormatSymbols;
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 public class Utility {
 
 
@@ -121,25 +121,25 @@ public class Utility {
 			
 			Index index = indexList.get(i);
 			if (index.getAddress().length() > 0) {
-				//System.out.println(index.getAddress());
+				System.out.println(index.getAddress());
 				point++;
 				
 			}
 			if (index.getEmail().length() > 0) {
-				//System.out.println(index.getEmail());
+				System.out.println(index.getEmail());
 				point++;
 				
 			}
 			if (index.getPhone().length() > 0) {
-				//System.out.println(index.getPhone());
+				System.out.println(index.getPhone());
 				point++;
 				
 			}
-			//System.out.print(point);
+			System.out.print(point);
 			if (pointSystem.containsKey(point)){
 				double temp = pointSystem.get(point);
 				pointSystem.put(point, temp+1);
-				//System.out.println(point + " " + temp+1);
+				System.out.println(point + " " + temp+1);
 			}
 		}
 		
@@ -168,14 +168,10 @@ public class Utility {
 		return date.substring(6,10)+ "/" + date.substring(3, 5) + "/" + date.substring(0, 2);
 	}
 	
-	public String changeDateExportFormat(String date){
-		return date.substring(0,4)+ "/" + date.substring(5, 7) + "/" + date.substring(8);
-	}
-	
 	public int getAge(String dob) {
 		if (dob.length() > 0 && dob != null && dob != ""){
 			dob = dob.replace('/', '-');
-		int year = Integer.parseInt(dob.substring(0,4));
+		int year = Integer.parseInt(dob.substring(6));
 		
 		DateTime datetime = new DateTime();
 		int currentYear = datetime.getYear();

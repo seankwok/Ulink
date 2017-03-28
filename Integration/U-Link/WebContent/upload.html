@@ -49,7 +49,7 @@
 						if (json.responseText == "Not excel file") {
 							$("#inputAlert").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Please select only excel files with .xls or .xlsx extension</strong></div>");
 						} else if(json.responseText == "-1"){
-							$("#inputAlert").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Wrong content</strong></div>");
+							$("#inputAlert").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Incorrect excel file selected</strong></div>");
 						}else{
 							$("#inputAlert").html("<div class='alert alert-success' role='alert'><center><b> Successfully uploaded a file! </b></center></div>");
 							$("#rowsUpdate").html("<div class='alert alert-success' role='alert'><center><b>Number of rows updated: "+ count +"</b></center></div>");
@@ -66,7 +66,13 @@
 		
 	});
 	
-	
+	function logout(){
+		$.ajax({
+			url: "Logout",
+			type: "post",
+			 
+		});
+	}
 	
 	function getLatestUploadTime(){
 		var dateTime = "";

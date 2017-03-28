@@ -69,15 +69,14 @@ public class UploadServlet extends HttpServlet {
 		tmpDir = new File(realPath);
 		if (!tmpDir.isDirectory()) {
 			new File("/MyTempFiles").mkdirs();
-			// throw new ServletException(TMP_DIR_PATH + " is not a directory");
+			//throw new ServletException(TMP_DIR_PATH + " is not a directory");
 		}
 
 		realPath = getServletContext().getRealPath(DESTINATION_DIR_PATH);
 		destinationDir = new File(realPath);
 		if (!destinationDir.isDirectory()) {
 			new File("/MySavedFiles").mkdirs();
-			// throw new ServletException(DESTINATION_DIR_PATH + " is not a
-			// directory");
+			//throw new ServletException(DESTINATION_DIR_PATH + " is not a directory");
 		}
 
 	}
@@ -162,9 +161,7 @@ public class UploadServlet extends HttpServlet {
 
 				Date date2 = new Date();
 
-				if (count > 0) {
-					connection.addDateTime(date2.toString());
-				}
+				connection.addDateTime(date2.toString());
 				// PrintWriter out = response.getWriter();
 
 				out.write("" + count);
@@ -181,9 +178,8 @@ public class UploadServlet extends HttpServlet {
 				TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
 
 				Date date2 = new Date();
-				if (count > 0) {
-					connection.addDateTime(date2.toString());
-				}
+
+				connection.addDateTime(date2.toString());
 				// out.write(count);
 				// out.flush();
 				// response.sendRedirect("./upload.html");

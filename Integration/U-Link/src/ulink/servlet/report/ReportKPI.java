@@ -49,6 +49,7 @@ public class ReportKPI extends HttpServlet {
 		String date = request.getParameter("date");
 		String thisYearLastMonth = request.getParameter("thisYearLastMonth");
 		String lastYearThisMonth = request.getParameter("lastYearThisMonth");
+		String lastYearLastMonth = request.getParameter("lastYearLastMonth");
 		TopK topk = new TopK();
 		
 		int year = Integer.parseInt(date.substring(0, 4));
@@ -63,10 +64,11 @@ public class ReportKPI extends HttpServlet {
 		String endDatelastMonth = utility.getEndDateOfMonth(lastMonthYear+"-"+lastMonthDate+"-"+"01");
 		String startDateLastYear = utility.getStartDateOfMonth(lastYearDate+"-"+month+"-"+"01");
 		String endDatelastYear = utility.getEndDateOfMonth(lastYearDate+"-"+month+"-"+"01");
-
+		//System.out.println(startDatelastMonth);
 		KPI kpi = topk.getKPI(type, startDate,endDate);
 		KPI lastMonth = topk.getKPI(type, startDatelastMonth,endDatelastMonth);
 		KPI lastyear = topk.getKPI(type,startDateLastYear,endDatelastYear);
+		//KPI LMLY = topk.getKPI(type,lastYearLastMonth);
 		
 		ArrayList<KPI> kpiList = new ArrayList<>();
 		kpiList.add(kpi);

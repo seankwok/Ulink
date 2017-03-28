@@ -47,7 +47,6 @@ public class DisplayConditionByClient extends HttpServlet {
 		DatabaseConnection connection = new DatabaseConnection();
 
 		ArrayList<Client> clientList = connection.retrieveAllClientByName(clientName);
-		if (clientList.size() < 0){
 		Client client = clientList.get(0);
 		ArrayList<Condition> conditionList = connection.retrieveAllCondition("ID", "ASC");
 
@@ -70,13 +69,6 @@ public class DisplayConditionByClient extends HttpServlet {
 		out.write(arrayListToJson);
 		out.flush();
 		return;
-		} else {
-			Gson gson = new Gson();
-			PrintWriter out = response.getWriter();
-			
-			out.write("-1");
-			out.flush();
-		}
 
 	}
 

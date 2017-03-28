@@ -40,20 +40,14 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
-		var teamName="";
-		var value = "";
-		var thisYearThisMonth = "";
-		var thisYearLastMonth = "";
-		var lastYearThisMonth = "";
-		var lastYearLastMonth = "";
-		
+	
+	
 	$("#submit").click (function(){
-		
-		teamName = $('#teamName').val();
+		var teamName = $('#teamName').val();
 		var thisMonth = $("#month").val();
 		var thisYear = $("#year").val();
-		value = thisYear + "-" + thisMonth;
-		var lastYear = thisYear - 1; 
+		var value = thisYear + "-" + thisMonth;
+		var lastYear = thisYear - 1;
 		
 		if (thisMonth == 1){ // if choose jan then last month is dec
 			lastMonth = 12;
@@ -62,10 +56,16 @@ $(document).ready(function() {
 			lastMonth = thisMonth -1;
 		}
 		
-		thisYearThisMonth = thisYear + "-" + thisMonth;
-		thisYearLastMonth = thisYear + "-" + lastMonth;	
-		lastYearThisMonth = lastYear + "-" + thisMonth;
-		lastYearLastMonth = lastYear + "-" + lastMonth;
+		var thisYearThisMonth = thisYear + "-" + thisMonth;
+		var thisYearLastMonth = thisYear + "-" + lastMonth;	
+		var lastYearThisMonth = lastYear + "-" + thisMonth;
+		var lastYearLastMonth = lastYear + "-" + lastMonth;
+		
+		console.log("thisYearThisMonth="+ thisYearThisMonth);
+		console.log("thisYearLastMonth=" + thisYearLastMonth);
+		console.log("lastYearThisMonth" +lastYearThisMonth);
+		console.log("lastYearLastMonth" + lastYearLastMonth);
+		
 		
 		var table1 = "<table id='table1'  class='table table-striped' cellspacing='0' width='100%'>";
 		var table2 = "<table id='table2'  class='table table-striped' cellspacing='0' width='100%'>";
@@ -243,7 +243,8 @@ $(document).ready(function() {
 						dataType : "json",
 						complete : function(data) {
 						var json = jQuery.parseJSON(JSON.stringify(data));
-						console.log(json.responseJSON);
+						console.log(json);
+						console.log("tets");
 							table3 += "<h4><b>Comparison against previous month</b></h4>"
 							table3 += "<tr><th>Month</th>"
 								  +  "<th>Indonesian Clients</th>"
@@ -371,7 +372,7 @@ $(document).ready(function() {
 								    yAxis: {
 								        min: 0,
 								        title: {
-								            text: 'Number of clients'
+								            text: 'Number of patients'
 								        }
 								    },
 								    tooltip: {
@@ -390,11 +391,11 @@ $(document).ready(function() {
 								    },
 								    series: [{
 								        name: json.responseJSON[4].date,
-								        data: [json.responseJSON[4].inPatient,json.responseJSON[4].outPatient]
+								        data: [json.responseJSON[3].outPatient,json.responseJSON[4].outPatient]
 
 								    },{
 								        name: json.responseJSON[3].date,
-								        data: [json.responseJSON[3].inPatient,json.responseJSON[3].outPatient]
+								        data: [json.responseJSON[3].inPatient,json.responseJSON[4].inPatient]
 
 								    }]
 								});
@@ -406,7 +407,6 @@ $(document).ready(function() {
 
 	});
 	
-	
 	var start = 2015;
 	var end = new Date().getFullYear();
 	var options = "";
@@ -415,34 +415,6 @@ $(document).ready(function() {
 	}
 	document.getElementById("year").innerHTML = options;
  	
-	$('#export').click(function(){
-		if (teamName == "Medical"){
-			$.ajax({
-				url : "KPIMedicalReport",
-				type : "post",
-				data : 'type=' + teamName + '&date=' + value + '&thisYearLastMonth=' + thisYearLastMonth + '&lastYearThisMonth=' + lastYearThisMonth, 
-					complete : function(data) {
- 						var json = jQuery.parseJSON(JSON.stringify(data));
- 						window.location = "\KPIMedicalReport.pdf"
- 						console.log(json);
- 					}
-			});
-		} else{
-			$.ajax({
-				url : "KPIVisaReport",
-				type : "post",
-				data : 'type=' + teamName + '&date=' + value + '&thisYearLastMonth=' + thisYearLastMonth + '&lastYearThisMonth=' + lastYearThisMonth, 
-				complete : function(data) {
-						var json = jQuery.parseJSON(JSON.stringify(data));
-						window.location = "\KPIVisaReport.pdf"
-						console.log(json);
-					}
-			});
-		}
-		
-	});
-	
-	
 });
  	</script>
   </head>
@@ -506,10 +478,11 @@ $(document).ready(function() {
       </div>
     <div class="container" align="center">
         <button type="submit" value="Submit" class="btn btn-primary" id="submit">Generate Results</button>
-        <button type="submit" class="btn btn-primary" id="export">Export</button>
     </div>
+
     <br>
     </div>
+        
         <table class="center">
 	        <tr> 
 	        	<td bgcolor="#ffffff" style="width:40%" align="center"><div class='box2'  id="table1"></div></td>

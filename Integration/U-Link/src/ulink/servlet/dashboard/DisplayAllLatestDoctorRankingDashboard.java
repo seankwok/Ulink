@@ -52,6 +52,8 @@ public class DisplayAllLatestDoctorRankingDashboard extends HttpServlet {
 		Utility utility = new Utility();
 		String startDate = utility.getStartDateOfMonth(date);
 		String endDate = utility.getEndDateOfMonth(startDate);
+		System.out.println(startDate);
+		System.out.println(endDate);
 		ArrayList<RankingDoctor> list = connection.retrieveAllRankingDoctorDashBoard(startDate,endDate);
 		Gson gson = new Gson();
 
