@@ -71,6 +71,26 @@
 			
 		});
 		
+		function draftEmail(clickedID){ 
+			var clients =  sessionStorage.getItem('clients');
+			clickedID = clickedID.replace("_", " ")
+			if(clients==""){
+				alert("This client has no email!");
+			}else{
+	            sessionStorage.setItem('screeningName',clickedID);
+		    	$.ajax({
+					type: 'post',
+					url: "StoreSendEmail",
+					data: 'email=' + clients,
+					complete: function(data){
+				    		window.location.href = "draftEmail.html";	
+					}
+		    	
+				    	
+				});
+			}	
+		}
+		
 		function displayAppointment() {
 			var appTable = "<table class='table table-bordered'>";
 			$.ajax({
@@ -112,26 +132,35 @@
 		
 		function displayScreening() {
 			var screenTable = "<table class='table table-bordered'>";
+			var screenName = "";
 			$.ajax({
 				url : "DisplayConditionByClient",
 				type : "get",
 				dataType : "json",
 				complete : function(data) {
 					var json = jQuery.parseJSON(data.responseText);
+					console.log(json);
+					if (json == "-1"){
+						window.location = "client.html";				
+					}else{
 					screenTable += "<thead>"
-									+"<th class='tableHeader' width='50%'>Common Illness</th>"
-									+"<th class='tableHeader'width='50%'>Recommended Screening</th>"
+									+"<th class='tableHeader' width='40%'>Common Illness</th>"
+									+"<th class='tableHeader'width='40%'>Recommended Screening</th>"
+									+"<th class='tableHeader'width='10%'>Send</th>"
 								+"</thead>"
 				          $.each(json, function(key, value){
-			        	  screenTable   +="<tbody>"	
+			        	  screenTable   +="<form action=''><tbody>"		
 				          		+"<tr>"
 					                +"<td class='appTd'>"+value["conditionName"]+"</td>"
 					                +"<td class='appTd'>"+value["screening"]+"</td>"
-				                +"</tr>"
+					                +"<td class='appTd'><a class='btn btn-primary btn-sm' href='#' onClick=draftEmail(this.id) id="+ value['screening'].replace(" ", "_") + ">Send as Email</a>"+"</td>"			           
+					                +"</tr>"
 	               				             				                
 							});
-								screenTable	+="</tbody></table>"
+								
+								screenTable	+="</tbody></form></table>"
 			    	$("#sTable").html(screenTable);
+					}
 				}							
 			});
 		}
@@ -173,6 +202,7 @@
 				dataType : "json",
 				complete : function(data) {
 					var json = jQuery.parseJSON(data.responseText);
+					
 					var profile=json[0];
 					profileTable += "<thead><th width='50%'></th><th width='50%'></th></thead>"		
 				       	 cName = profile.clientName;
@@ -216,7 +246,7 @@
 				                +"</tbody></table>"
 				                	               				             				                
 				 
-					
+	                sessionStorage.setItem('clients',profile["email"]);
 			    	$("#myTable").html(profileTable);
 					$("#name").html(cName);
 				}

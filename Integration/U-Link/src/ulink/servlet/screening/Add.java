@@ -35,6 +35,10 @@ public class Add extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		response.setContentType("text/html; charset=utf-8");
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+
 		PrintWriter out = response.getWriter();
 		DatabaseConnection connection = new DatabaseConnection();
 		int count = 0;
@@ -44,16 +48,13 @@ public class Add extends HttpServlet {
 		String[] types = request.getParameterValues("type");
 		String years = request.getParameter("years");
 		ArrayList<Condition> conditionList = connection.retrieveAllCondition("ID", "ASC");
-	
+		System.out.println(screening);
 		String[] type = types[0].split(",");
 		for (int i = 0; i < type.length; i++) {
 			boolean check = true;
 			for (int k = 0; k < conditionList.size(); k++) {
 				Condition condition = conditionList.get(k);
-				System.out.println( type[i] + " gender " + condition.getType());
-				System.out.println(condition.getConditionName() + " Condition  " + illness);
-				System.out.println(condition.getScreening() + " Screening " + screening);
-				if (condition.getConditionName().equals(illness) && condition.getType().equals(type[i]) && condition.getScreening().equals(screening)){
+				if (condition.getConditionName().toLowerCase().trim().equals(illness.toLowerCase().trim()) && condition.getType().toLowerCase().trim().equals(type[i].toLowerCase().trim()) && condition.getScreening().toLowerCase().trim().equals(screening.toLowerCase().trim())){
 			
 					check = false;
 				}
