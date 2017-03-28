@@ -303,18 +303,28 @@
 			}
 		});
 			$('#export').click(function(){
-	 			if (team == "Medical"){
+			console.log(team);
+	 			if (team == "medical"){
 	 				$.ajax({
 	 					url : "IndexMedicalReport",
 	 					type : "post",
-	 					data : 'type=' + team + '&startDate=' + startDate + '&endDate=' + endDate
-	 					
+	 					data : 'type=' + team + '&startDate=' + startDate + '&endDate=' + endDate,
+	 					complete : function(data) {
+	 						var json = jQuery.parseJSON(JSON.stringify(data));
+	 						window.location = "\IndexMedical.pdf"
+	 						console.log(json);
+	 					}	
 	 				});
 	 			} else{
 	 				$.ajax({
 	 					url : "IndexVisaReport",
 	 					type : "post",
-	 					data : 'type=' + team + '&startDate=' + startDate + '&endDate=' + endDate
+	 					data : 'type=' + team + '&startDate=' + startDate + '&endDate=' + endDate,
+	 					complete : function(data) {
+	 						var json = jQuery.parseJSON(JSON.stringify(data));
+	 						window.location = "\IndexVisa.pdf"
+	 						console.log(json);
+	 					}
 	 				});
 	 			}
 	 			

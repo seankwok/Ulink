@@ -175,7 +175,7 @@ public class Utility {
 	public int getAge(String dob) {
 		if (dob.length() > 0 && dob != null && dob != ""){
 			dob = dob.replace('/', '-');
-		int year = Integer.parseInt(dob.substring(6));
+		int year = Integer.parseInt(dob.substring(0,4));
 		
 		DateTime datetime = new DateTime();
 		int currentYear = datetime.getYear();

@@ -72,7 +72,7 @@ public class SendEmail extends HttpServlet {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("userDetails");
 		String msg = request.getParameter("msg");
-		// msg = URLEncoder.encode( msg, "ISO-8859-1" ); // H%C3%A9l%C3%A8ne
+		// msg = URLEncoder.encode( msg, "ISO-8859-1" ); // 
 		// msg = URLDecoder.decode( msg, "UTF-8" );
 		// System.out.println(msg);
 		String[] email = (String[]) session.getAttribute("emailList");

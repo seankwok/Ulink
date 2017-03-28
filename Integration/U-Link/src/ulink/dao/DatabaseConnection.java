@@ -873,7 +873,7 @@ public class DatabaseConnection {
 			//Utility utility = new Utility();
 			PreparedStatement preparedStmt = con.prepareStatement(sql);
 			con.setAutoCommit(false);
-			for (int i = 1; i < clientList.size(); i++) {
+			for (int i = 0; i < clientList.size(); i++) {
 				Client client = clientList.get(i);
 
 				// preparedStmt.setInt(1, client.getID());
@@ -920,15 +920,17 @@ public class DatabaseConnection {
 				preparedStmt.setString(33, client.getBillingStreet());
 				// System.out.println(client.getBillingStreet());
 				try {
-					Integer.parseInt(client.getCreatedtime().substring(0, 2));
+				//	System.out.println(client.getCreatedtime());
+					//Integer.parseInt(client.getCreatedtime().substring(0, 10));
 				} catch (NumberFormatException e) {
-					client.setCreatedtime("0" + client.getCreatedtime());
+				//	client.setCreatedtime("0" + client.getCreatedtime());
 				}
 				// System.out.print(client.getCreatedtime());
-				String date = client.getCreatedtime().substring(6, 10) + "-" + client.getCreatedtime().substring(3, 5)
-						+ "-" + client.getCreatedtime().substring(0, 2);
+			//	String date = client.getCreatedtime().substring(6, 10) + "-" + client.getCreatedtime().substring(3, 5)
+				//		+ "-" + client.getCreatedtime().substring(0, 2);
 				//System.out.println(date);
-				preparedStmt.setDate(34, java.sql.Date.valueOf(date));
+			//	System.out.println(client.getCreatedtime() + "Test");
+				preparedStmt.setDate(34, java.sql.Date.valueOf(client.getCreatedtime().substring(0,10)));
 				preparedStmt.setString(35, client.getPhone());
 				
 				preparedStmt.addBatch();
