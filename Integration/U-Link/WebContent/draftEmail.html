@@ -65,11 +65,29 @@
 	}
 	
 	$(document).ready(function() {
+		var user = "";
+		var screeningName = sessionStorage.getItem('screeningName');
+		presetInputBox();
 		showFields();
 		showDropdownList();	
-		
+		document.getElementById("header").innerHTML =  "Email for " + screeningName + " ";
+
 	});
-	
+    function presetInputBox(){
+    	$.ajax({
+			url : "DisplayLoginUser",
+			type : "get",
+			dataType : "json",
+			complete : function(data) {
+		    	var json = jQuery.parseJSON(JSON.stringify(data));
+				console.log(json.responseText);
+				user = json.responseText;
+				document.getElementById("emailTo").placeholder = user + "@ulinkassist.com";
+				document.getElementById("emailSubject").value  = "Screening Recommendation";
+			}
+    	});
+    }
+
 		function selectTemplate(clickedID){
 			var sendData = {
 					"templateName" : clickedID
