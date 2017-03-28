@@ -99,12 +99,12 @@ public class SendEmail extends HttpServlet {
 				// System.out.println(temp + " temp");
 				// System.out.println(user.getEmail() + " userEmail");
 
-				check = emailServer.sendEmail(email[i], CC, subject, temp, user.getEmail()+"@ulinkassist.com");
-				//check = emailServer.sendEmail(email[i], CC, subject, temp, "nabilahbmnk.2014@sis.smu.edu.sg");
-				// check = emailServer.sendEmail(email[i], subject, temp,
-				// "kaixin.teh.2014@sis.smu.edu.sg");
-				// check = emailServer.sendEmail(email[i], subject, temp,
-				// "sychien.2014@sis.smu.edu.sg");
+				//check = emailServer.sendEmail(email[i], CC, subject, temp, user.getEmail()+"@ulinkassist.com");
+				check = emailServer.sendEmail(email[i], CC, subject, temp, "nabilahbmnk.2014@sis.smu.edu.sg");
+				 check = emailServer.sendEmail(email[i], CC, subject, temp,
+				 "kaixin.teh.2014@sis.smu.edu.sg");
+				 check = emailServer.sendEmail(email[i],CC, subject, temp,
+				 "sychien.2014@sis.smu.edu.sg");
 				// Client name, screening, date Email,
 				TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
 				

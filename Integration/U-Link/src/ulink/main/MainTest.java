@@ -118,78 +118,79 @@ public class MainTest {
 			for (int i = 0; i < temp2.length; i++) {
 				//System.out.println("test test");
 				String temp = temp2[i];
-				 System.out.println(temp2[i]);
+			//	 System.out.println(temp2[i]);
 				if (temp.contains("ACCOUNTID")) {
 					int start = temp.indexOf(">");
 					int end = temp.indexOf("</");
 					// System.out.println(temp.substring(start+1, end));
 					accountID = temp.substring(start + 1, end);
 
-				} else if (temp.contains("val=Account Name")) {
+				} else if (temp.contains("val=\"Account Name")) {
 					int start = temp.indexOf("[CDATA[");
 					int end = temp.indexOf("]");
 					// System.out.println(temp.substring(start+7,end));
 					clientName = temp.substring(start + 7, end);
-				} else if (temp.contains("val=Appointment")) {
+				} else if (temp.contains("val=\"Appointment")) {
 					int start = temp.indexOf("[CDATA[");
 					int end = temp.indexOf("]");
 
 					appointment = temp.substring(start + 7, end);
 
 					// System.out.println(appointment);
-				} else if (temp.contains("val=Billing City")) {
+				} else if (temp.contains("val=\"Billing City")) {
 					int start = temp.indexOf("[CDATA[");
 					int end = temp.indexOf("]");
 
 					billingCity = temp.substring(start + 7, end);
 					// System.out.println(billingCity);
-				} else if (temp.contains("val=Billing Code")) {
+				} else if (temp.contains("val=\"Billing Code")) {
 					int start = temp.indexOf("[CDATA[");
 					int end = temp.indexOf("]");
 
 					billingCode = temp.substring(start + 7, end);
-				} else if (temp.contains("val=Billing Country")) {
+				} else if (temp.contains("val=\"Billing Country")) {
 					int start = temp.indexOf("[CDATA[");
 					int end = temp.indexOf("]");
 
 					billingCountry = temp.substring(start + 7, end);
-				} else if (temp.contains("val=Billing State")) {
+				} else if (temp.contains("val=\"Billing State")) {
 					int start = temp.indexOf("[CDATA[");
 					int end = temp.indexOf("]");
 
 					billingState = temp.substring(start + 7, end);
-				} else if (temp.contains("val=Billing Street")) {
+				} else if (temp.contains("val=\"Billing Street")) {
 					int start = temp.indexOf("[CDATA[");
 					int end = temp.indexOf("]");
 
 					billingStreet = temp.substring(start + 7, end);
-				} else if (temp.contains("val=Client Owner")) {
+				} else if (temp.contains("val=\"Client Owner")) {
 					int start = temp.indexOf("[CDATA[");
 					int end = temp.indexOf("]");
 
 					clientOwner = temp.substring(start + 7, end);
-				} else if (temp.contains("val=Client type")) {
+				} else if (temp.contains("val=\"Client type")) {
 					int start = temp.indexOf("[CDATA[");
 					int end = temp.indexOf("]");
 
 					clientType = temp.substring(start + 7, end);
-				} else if (temp.contains("val=Clinic")) {
+				} else if (temp.contains("val=\"Clinic")) {
 					int start = temp.indexOf("[CDATA[");
 					int end = temp.indexOf("]");
 
 					clinic = temp.substring(start + 7, end);
-				} else if (temp.contains("val=Company (for employee only)")) {
+				} else if (temp.contains("val=\"Company (for employee only)")) {
 					int start = temp.indexOf("[CDATA[");
 					int end = temp.indexOf("]");
 
 					company = temp.substring(start + 7, end);
-				} else if (temp.contains("val=Created Time")) {
+				} else if (temp.contains("val=\"Created Time")) {
 					int start = temp.indexOf("[CDATA[");
 					int end = temp.indexOf("]");
 					count++;
+				//	System.out.println(count);
 					createdTime = temp.substring(start + 7, end);
 					// System.out.println(createdTime+ "Check");
-				} else if (temp.contains("val=Date of birth")) {
+				} else if (temp.contains("val=\"Date of birth")) {
 
 					int start = temp.indexOf("[CDATA[");
 					int end = temp.indexOf("]");
@@ -197,32 +198,32 @@ public class MainTest {
 					dateOfBirth = temp.substring(start + 7, end);
 
 					// System.out.println(dateOfBirth);
-				} else if (temp.contains("val=Doctor")) {
+				} else if (temp.contains("val=\"Doctor")) {
 					int start = temp.indexOf("[CDATA[");
 					int end = temp.indexOf("]");
 
 					doctor = temp.substring(start + 7, end);
-				} else if (temp.contains("val=Email")) {
+				} else if (temp.contains("val=\"Email")) {
 					int start = temp.indexOf("[CDATA[");
 					int end = temp.indexOf("]");
 
 					email = temp.substring(start + 7, end);
-				} else if (temp.contains("val=Follow up person")) {
+				} else if (temp.contains("val=\"Follow up person")) {
 					int start = temp.indexOf("[CDATA[");
 					int end = temp.indexOf("]");
 
 					followUpPerson = temp.substring(start + 7, end);
-				} else if (temp.contains("val=Follow up PIC")) {
+				} else if (temp.contains("val=\"Follow up PIC")) {
 					int start = temp.indexOf("[CDATA[");
 					int end = temp.indexOf("]");
 
 					followUpPIC = temp.substring(start + 7, end);
-				} else if (temp.contains("val=Gender")) {
+				} else if (temp.contains("val=\"Gender")) {
 					int start = temp.indexOf("[CDATA[");
 					int end = temp.indexOf("]");
 
 					gender = temp.substring(start + 7, end);
-				} else if (temp.contains("val=Hospital admitted")) {
+				} else if (temp.contains("val=\"Hospital admitted")) {
 					int start = temp.indexOf("[CDATA[");
 					int end = temp.indexOf("]");
 					hospitalAdmitted = temp.substring(start + 7, end);
@@ -238,7 +239,7 @@ public class MainTest {
 					int start = temp.indexOf("[CDATA[");
 					int end = temp.indexOf("]");
 					nationality = temp.substring(start + 7, end);
-				} else if (temp.contains("val=Other doctor")) {
+				} else if (temp.contains("val=\"Other doctor")) {
 					int start = temp.indexOf("[CDATA[");
 					int end = temp.indexOf("]");
 					otherDoctor = temp.substring(start + 7, end);
@@ -250,10 +251,10 @@ public class MainTest {
 					int start = temp.indexOf("[CDATA[");
 					int end = temp.indexOf("]");
 					PIC = temp.substring(start + 7, end);
-				} else if (temp.contains("val=Referred by")) {
+				} else if (temp.contains("val=\"Referred by")) {
 					int start = temp.indexOf("[CDATA[");
 					int end = temp.indexOf("]");
-					System.out.println(temp);
+					//System.out.println(temp);
 					referredBy = temp.substring(start + 7, end);
 				} else if (temp.contains("Specialty")) {
 					int start = temp.indexOf("[CDATA[");
@@ -304,6 +305,40 @@ public class MainTest {
 							billingCode, billingCountry, billingState, billingStreet, createdTime, phone));
 					// System.out.println(clientList.get(clientList.size() -
 					// 1).getClientName());
+					 accountID = "";
+					 clientOwner = "";
+					 clientName = "";
+					 clientType = "";
+					 company = "";
+					 nationality = "";
+					 gender = "";
+					 dateOfBirth = "";
+					 email = "";
+					 medical = "";
+					 mainDiagnosis = "";
+					 referredBy = "";
+					 PIC = "";
+					 appointment = "";
+					 doctor = "";
+					 specialty = "";
+					 clinic = "";
+					 otherDoctor = "";
+					 followUpPerson = "";
+					 followUpPIC = "";
+					 hospitalAdmitted = "";
+					 log = "";
+					 claim = "";
+					 visaRequestBy = "";
+					 visa = "";
+					 visaType = "";
+					 visaType2 = "";
+					 billingCity = "";
+					 billingCode = "";
+					 billingCountry = "";
+					 billingState = "";
+					 billingStreet = "";
+					 createdTime = "";
+					 phone ="";
 
 				} else if (temp.contains("</row>") && createdTime.length() >= 1) {
 					// System.out.println(createdTime+"check");
@@ -314,6 +349,40 @@ public class MainTest {
 							billingState, billingStreet, createdTime, phone));
 					// System.out.println(clientList.get(clientList.size() -
 					// 1).getClientName());
+					 accountID = "";
+					 clientOwner = "";
+					 clientName = "";
+					 clientType = "";
+					 company = "";
+					 nationality = "";
+					 gender = "";
+					 dateOfBirth = "";
+					 email = "";
+					 medical = "";
+					 mainDiagnosis = "";
+					 referredBy = "";
+					 PIC = "";
+					 appointment = "";
+					 doctor = "";
+					 specialty = "";
+					 clinic = "";
+					 otherDoctor = "";
+					 followUpPerson = "";
+					 followUpPIC = "";
+					 hospitalAdmitted = "";
+					 log = "";
+					 claim = "";
+					 visaRequestBy = "";
+					 visa = "";
+					 visaType = "";
+					 visaType2 = "";
+					 billingCity = "";
+					 billingCode = "";
+					 billingCountry = "";
+					 billingState = "";
+					 billingStreet = "";
+					 createdTime = "";
+					 phone ="";
 
 				}
 				// System.out.println(temp);
