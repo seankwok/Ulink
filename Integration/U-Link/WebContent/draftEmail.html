@@ -181,7 +181,7 @@
 	    	var content = CKEDITOR.instances.editor1.getData();
 	    	var emailSubject = document.getElementById("emailSubject").value;
 	    	var emailCC = document.getElementById("emailCC").value;
-	    	//content  = replaceSpace(content);
+	    	content  = replaceSpace(content);
 	    	sessionStorage.setItem('passContent', content);
 	    	sessionStorage.setItem('subject', emailSubject);
 	    	sessionStorage.setItem('CC', emailCC);
