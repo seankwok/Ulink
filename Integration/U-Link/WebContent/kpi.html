@@ -1,51 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-   
-    <title>KPI</title>
- <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-   
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="js/jquery-1.12.0.js"></script>
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/sb-admin.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+    
+
+    <!-- Bootstrap Core JavaScript -->
+     <script src="js/bootstrap.min.js"></script>
     <script src="js/moment.js"></script>
     <script src="js/bootstrap-datetimepicker.min.js"></script>
-    <script src="js/bootstrap-datetimepicker.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script> 
-	    $(function(){
-	      $("#includedContent").load("navBar.html"); 
-	    });
-    </script> 
+	<script src="js/bootstrap-datetimepicker.js"></script>
+	
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 
-	<script src="https://code.highcharts.com/highcharts.js"></script>
+   <script src="https://code.highcharts.com/highcharts.js"></script>
 	<script src="https://code.highcharts.com/modules/exporting.js"></script>
-	
-	<style>
-	
-	.box2 {
-	  float: left;
-	}
-	
-	table.center {
-    	margin-left:auto; 
-    	margin-right:auto;
-  }
-	</style>
+   
 
-<script type="text/javascript">
-
-$(document).ready(function() {
+ 	<script type="text/javascript">
+	
+	$(document).ready(function() {
+		getLoggedInUser();
+		var user = "";
+		
 		var teamName="";
 		var value = "";
 		var thisYearThisMonth = "";
 		var thisYearLastMonth = "";
 		var lastYearThisMonth = "";
 		var lastYearLastMonth = "";
+
+		var start = 2015;
+		var end = new Date().getFullYear();
+		var options = "";
+		for(var year = start ; year <=end; year++){
+		  options += "<option>"+ year +"</option>";
+		}
+		document.getElementById("year").innerHTML = options;
 		
 	$("#submit").click (function(){
 		
@@ -407,13 +417,6 @@ $(document).ready(function() {
 	});
 	
 	
-	var start = 2015;
-	var end = new Date().getFullYear();
-	var options = "";
-	for(var year = start ; year <=end; year++){
-	  options += "<option>"+ year +"</option>";
-	}
-	document.getElementById("year").innerHTML = options;
  	
 	$('#export').click(function(){
 		if (teamName == "Medical"){
@@ -442,92 +445,190 @@ $(document).ready(function() {
 		
 	});
 	
+	});
 	
-});
- 	</script>
-  </head>
-  <body>
-    
-  	<div id="includedContent"></div>
+	
+	 function getLoggedInUser(){
+	    	$.ajax({
+				url : "DisplayLoginUser",
+				type : "get",
+				dataType : "json",
+				complete : function(data) {
+			    	var json = jQuery.parseJSON(JSON.stringify(data));
+					user = json.responseText;
+					document.getElementById('loggedInAs').innerHTML = user;
+				}
+	    	});
+	    }
+	    
+	    function logout(){
+			$.ajax({
+				url: "Logout",
+				type: "post",
+				
+			});
+		}
 
-    <div class="page-header">
-       <h1 align ="center"><b>KPI</b></h1>
-    </div>
+ 		
 
-      
+	   
+	</script>
+</head>
 
-    <div class="container">
-      <div class="row">
-          <div class="col-md-4">
-          <div class="caption">
-          <div class="form-group">
-            <label>Select Team </label>
-            <select class="form-control" id="teamName">
-              <option value="Medical">Medical</option>
-              <option value="Visa">Visa</option>
-            </select>
-          </div>          
-          </div>
-          </div>
+<body>
 
-          <div class="col-md-4">
-          <div class="form-group">
-          <label> Select Month </label>
-          <select class="form-control" id="month">
-              <option value="01">January</option>
-              <option value="02">February</option>
-              <option value="03">March</option>
-              <option value="04">April</option>
-              <option value="05">May</option>
-              <option value="06">June</option>
-              <option value="07">July</option>
-              <option value="08">August</option>
-              <option value="09">September</option>
-              <option value="10">October</option>
-              <option value="11">November</option>
-              <option value="12">December</option>
-            </select>
-          </div>
-          </div>
-          
-          <div class="col-md-4">
-          <div class="form-group">
-          <label> Select Year </label>
-          <select class="form-control" id="year">
-          
-            </select>
-          </div>
+    <div id="wrapper">
 
-        </div>
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">ULink Reporting System</a>
+            </div>
+            <!-- Top Menu Items -->
+            <ul class="nav navbar-right top-nav">
+            	<li><a href="accountManagement.html"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Account Management <b class="caret"></b></a></li>
+                <li><a><i class="fa fa-user"></i> Logged in as: <p id='loggedInAs'></p> </a></li>
+                <li><a href="login.html" onClick=logout()><span class="glyphicon glyphicon-off" aria-hidden="true"></span>   Logout</a></li>    
+                
+            </ul>
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <li class="active">
+                        <a href="dashboard.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="client.html"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Client List</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Screenings <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="demo" class="collapse">
+                            <li>
+                                <a href="addScreeningAdult.html">Add New Screening</a>
+                            </li>
+                            <li>
+                                <a href="viewScreeningsAdult.html">Recommend Screenings</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#demo2"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Reports <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="demo2" class="collapse">
+                            <li>
+                                <a href="genderAndAgeReport.html">Gender And Age Report</a>
+                            </li>
+                            <li>
+                                <a href="reportIndex.html">Index (Points)</a>
+                            </li>
+                            <li>
+                                <a href="kpi.html">Medical/ VISA KPI</a>
+                            </li>
+                            <li>
+                                <a href="ranking.html">Ranking</a>
+                            </li>
+                           
+                        </ul>
+                    </li>
+                    
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
 
-        
+        <div id="page-wrapper">
 
+            <div class="container-fluid">
 
-      </div>
-    <div class="container" align="center">
-        <button type="submit" value="Submit" class="btn btn-primary" id="submit">Generate Results</button>
-        <button type="submit" class="btn btn-primary" id="export">Export</button>
-    </div>
-    <br>
-    </div>
-        <table class="center">
+			 <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            <b>Report </b> <small> Medical/ VISA KPI</small>
+                            <button class="btn btn-default" id="export"><b>Export this page</b></button>                         
+                        </h1>
+                        
+                    </div>
+                </div>
+
+				<div class="row">
+                  
+		          <div class="col-md-4">
+		          <div class="caption">
+		          <div class="form-group">
+		            <label>Select Team </label>
+		            <select class="form-control" id="teamName">
+		              <option value="Medical">Medical</option>
+		              <option value="Visa">Visa</option>
+		            </select>
+		          </div>          
+		          </div>
+		          </div>
+		
+		          <div class="col-md-4">
+		          <div class="form-group">
+		          <label> Select Month </label>
+		          <select class="form-control" id="month">
+		              <option value="01">January</option>
+		              <option value="02">February</option>
+		              <option value="03">March</option>
+		              <option value="04">April</option>
+		              <option value="05">May</option>
+		              <option value="06">June</option>
+		              <option value="07">July</option>
+		              <option value="08">August</option>
+		              <option value="09">September</option>
+		              <option value="10">October</option>
+		              <option value="11">November</option>
+		              <option value="12">December</option>
+		            </select>
+		          </div>
+		          </div>
+		          
+		          <div class="col-md-4">
+		          <div class="form-group">
+		          <label> Select Year </label>
+		          <select class="form-control" id="year">
+		          
+		            </select>
+		          </div>
+		
+		        </div>
+		 
+				    <div class="container" align="center">
+				        <button type="submit" value="Submit" class="btn btn-primary" id="submit">Generate Results</button>
+				    </div>
+				    <br>
+				    </div>
+				    
+				    <table class="center">
 	        <tr> 
-	        	<td bgcolor="#ffffff" style="width:40%" align="center"><div class='box2'  id="table1"></div></td>
-	        	<td bgcolor="#ffffff" style="width:60%" align="center"><div  class='box2' id="container" ></div>    </td>
+	        	<td bgcolor="#ffffff" style="width:30%" align="center"><div class='box2'  id="table1"></div></td>
+	        	<td bgcolor="#ffffff" style="width:70%" align="center"><div  class='box2' id="container" ></div>    </td>
 	        </tr>
 	        <tr> 
-	        	<td bgcolor="#ffffff" style="width:40%" align="center"><div  class='box2' id="table2"></div></td>
-	        	<td bgcolor="#ffffff" style="width:60%" align="center"><div  class='box2'id="container2"  ></div></td>
+	        	<td bgcolor="#ffffff" style="width:30%" align="center"><div  class='box2' id="table2"></div></td>
+	        	<td bgcolor="#ffffff" style="width:70%" align="center"><div  class='box2' id="container2"  ></div></td>
 	        </tr>
 	        
         </table>
+		   
+	</div>
+            <!-- /.container-fluid -->
 
-   
-   		    	
-   		    	
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
     
+</body>
 
-				
-    			
-  </body>
 </html>
