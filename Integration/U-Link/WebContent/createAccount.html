@@ -1,47 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-   
-    <title>Create Account</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
 
+    <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
-    
-    <style>
-   	 #wrap {
-	    float: left;
-	    position: relative;
-	    left: 50%;
-	}
 
-	#content {
-	    float: left;
-	    position: relative;
-	    left: -50%;
-	}
-    </style>
+    <!-- Custom CSS -->
+    <link href="css/sb-admin.css" rel="stylesheet">
+
+   
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     
-    
-    <script> 
-	    $(function(){
-	      $("#includedContent").load("navBar.html"); 
-	    });
-    </script> 
- 
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+   
+
  	<script type="text/javascript">
+	
 	$(document).ready(function() {
+		getLoggedInUser();
+		var user = "";
 		$("#create").click(function(){
 			var username = $("#inputEmail").val();
 			var password = $("#inputPassword").val();
 			var roles = $("#accountType").val();
 			if(username == "" || password == ""){
 				$("#createSuccess").html("<div class='alert alert-danger' role='alert'><center><strong>Please input empty fields</strong></center></div>");
+				return false;
 			} else{
 			
 			$.ajax({
@@ -71,57 +69,167 @@
 		});
 	});
 	
+	 function getLoggedInUser(){
+	    	$.ajax({
+				url : "DisplayLoginUser",
+				type : "get",
+				dataType : "json",
+				complete : function(data) {
+			    	var json = jQuery.parseJSON(JSON.stringify(data));
+					user = json.responseText;
+					document.getElementById('loggedInAs').innerHTML = user;
+				}
+	    	});
+	    }
+	    
+	    function logout(){
+			$.ajax({
+				url: "Logout",
+				type: "post",
+				
+			});
+		}
 	
- 	</script>
- 	
- 	
- 
-  </head>
-  <body>
-    
-    
-  	<div id="includedContent"></div>
+	
 
-	<div class="panel panel-default">
-	  <div class="panel-body">
-	   <b>Enter New Account details</b>
-	  </div>
-	</div>
 	
-	<form class="form-horizontal" >
-  <div class="form-group">
-    <label class="col-sm-2 control-label">Email</label>
-    <div class="col-sm-4" style="property:value;">
-      <input type="text"  id="inputEmail" placeholder="Email">
-       <b>@ulinkassist.com</b>
+
+	
+	
+	</script>
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">ULink Reporting System</a>
+            </div>
+            <!-- Top Menu Items -->
+            <ul class="nav navbar-right top-nav">
+            	<li><a href="accountManagement.html"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Account Management <b class="caret"></b></a></li>
+                <li><a><i class="fa fa-user"></i> Logged in as: <p id='loggedInAs'></p> </a></li>
+                <li><a href="login.html" onClick=logout()><span class="glyphicon glyphicon-off" aria-hidden="true"></span>   Logout</a></li>    
+                
+            </ul>
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <li class="active">
+                        <a href="dashboard.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="client.html"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Client List</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Screenings <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="demo" class="collapse">
+                            <li>
+                                <a href="addScreeningAdult.html">Add New Screening</a>
+                            </li>
+                            <li>
+                                <a href="viewScreeningsAdult.html">Recommend Screenings</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#demo2"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Reports <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="demo2" class="collapse">
+                            <li>
+                                <a href="genderAndAgeReport.html">Gender And Age Report</a>
+                            </li>
+                            <li>
+                                <a href="reportIndex.html">Index (Points)</a>
+                            </li>
+                            <li>
+                                <a href="kpi.html">Medical/ VISA KPI</a>
+                            </li>
+                            <li>
+                                <a href="ranking.html">Ranking</a>
+                            </li>
+                           
+                        </ul>
+                    </li>
+                    
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+
+        <div id="page-wrapper">
+
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                           Account Management
+                        </h1>
+                        <ol class="breadcrumb">
+                            <li class="active">
+                                <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>   	Enter new account details
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+               
+
+               <div class="row">
+                    <div class="col-lg-6">
+
+                        <form role="form">
+
+                            <div class="form-group" >
+                                <label>Email</label>
+                                <input class="form-control" id="inputEmail"> @ulinkassist.com
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                 <input class="form-control" type="password" id="inputPassword">
+                            </div>
+                            <div class="form-group" >
+                                <label>Account Type</label>
+                                <select class="form-control" id="accountType">
+                                    <option value="admin">Admin</option>
+                                    <option value="non-admin">Non-admin</option>
+                                </select>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-default" id="create">Create account</button>
+					</form>
+					</div>
+					</div>
+                   
+                    
+
+               
+			<div class='col-md-8 col-md-offset-2' id="createSuccess"></div>
+                
+                   
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- /#page-wrapper -->
+
     </div>
-  </div>
- 
- <div class="form-group">
-    <label class="col-sm-2 control-label">Account Type</label>
-    <div class="col-sm-4" > 
-      <select class="form-control" id="accountType" >
-	  <option value="admin">Admin</option>
-	  <option value="non-admin">Non-Admin</option>
-	</select>
-    </div>
-  </div>
-  
-  
-  <div class="form-group">
-    <label class="col-sm-2 control-label">Password</label>
-    <div class="col-sm-4">
-      <input type="password" class="form-control" id="inputPassword" placeholder="Password">
-    </div>
-  </div>
-  
-  
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-default" id="create">Create New Account</button>
-    </div>
-  </div>
-</form>
-	<div class="col-md-8 col-md-offset-2" id="createSuccess"></div>
-  </body>
+    <!-- /#wrapper -->
+
+    
+</body>
+
 </html>
