@@ -1,136 +1,248 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Timeline - Edit Fields</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="js/jquery-1.12.0.js"></script>
-<script src="js/bootstrap.min.js"></script>
-  <script> 
-   $(function(){
-     $("#includedContent").load("navBar.html"); 
-   });
-  </script> 
+    <!-- Custom CSS -->
+    <link href="css/sb-admin.css" rel="stylesheet">
 
-<script type="text/javascript">
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+    
+
+    <!-- Bootstrap Core JavaScript -->
+     <script src="js/bootstrap.min.js"></script>
+    <script src="js/moment.js"></script>
+    <script src="js/bootstrap-datetimepicker.min.js"></script>
+	<script src="js/bootstrap-datetimepicker.js"></script>
+	
+
+ 	<script type="text/javascript">
+	
 	$(document).ready(function() {
+		getLoggedInUser();
+		var user = "";
+		
 		displayAll();
+		
+
 		
 	});
 
-	function updateAdult(){
-		$("#update").click(function() {
-				var age = $('#age').val();
-				var illness = $("#illness").val();
-				var screening = $("#screening").val();
-				var type = $("#type").val();
-				var years= $('#years').val();
-			if(age == "" || illness == "" || screening == "" || type == "" || years == ""){
-				$('#message').html("<div class='alert alert-danger' alert-dismissible role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><center><b> Please input empty fields.</b></center></div>");
-			}else if (type == "infant" && age > 24){
-				$('#message').html("<div class='alert alert-danger' alert-dismissible role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><center><b> Age field has to be less than 24 months.</b></center></div>");
-				return false;
-			}
-			else{
-				$.ajax({
-							url : "Edit",
-							type : "get",
-							data : 'age=' + age + '&' + 'illness='
-									+ illness + '&' + 'screening='
-									+ screening + '&' + 'type=' + type
-									+ '&' + 'years=' + years,
-							dataType : "json",
-							complete : function(data) {
-									$("#message").html("<div class='alert alert-success' role='alert'><strong><center>Changes have been made to selected screening</center></strong></div>");
-									window.location = "viewScreeningsAdult.html";
-							}
-
-						});
-						return false;	
-			}
-				});
-	}
-	
-	function updateInfant(){
-		$("#update").click(function() {
-				var age = $('#age').val();
-				var illness = $("#illness").val();
-				var screening = $("#screening").val();
-				var type = $("#type").val();
-				var years= $('#years').val();
-			if(age == "" || illness == "" || screening == "" || type == "" || years == ""){
-				$('#message').html("<div class='alert alert-danger' alert-dismissible role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><center><b> Please input empty fields.</b></center></div>");
-			}else if (type == "infant" && age > 24){
-				$('#message').html("<div class='alert alert-danger' alert-dismissible role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><center><b> Age field has to be less than 24 months.</b></center></div>");
-				return false;
-			}
-			else{
-				$.ajax({
-							url : "Edit",
-							type : "get",
-							data : 'age=' + age + '&' + 'illness='
-									+ illness + '&' + 'screening='
-									+ screening + '&' + 'type=' + type
-									+ '&' + 'years=' + years,
-							dataType : "json",
-							complete : function(data) {
-									$("#message").html("<div class='alert alert-success' role='alert'><strong><center>Changes have been made to selected screening</center></strong></div>");
-									window.location = "viewScreenings.html";
-							}
-
-						});
-						return false;	
-			}
-				});
-	}
-	
-	
-	function displayAll() {
-		$.ajax({
-			url : "EditCondition2",
-			type : "GET",
-			dataType : "json",
-			
-			complete : function(data) {
-				var json = jQuery.parseJSON(JSON.stringify(data));
-				
-				$("#illness").val(json.responseJSON.conditionName);
-				$("#years").val(json.responseJSON.years);
-				$("#age").val(json.responseJSON.ageRequired);
-				$("#screening").val(json.responseJSON.screening);
-				$("#type").val(json.responseJSON.type);
-				var type = json.responseJSON.type;
-				if (type == "infant"){
-					updateInfant();
-				} else{
-					updateAdult();
-				
+	 function getLoggedInUser(){
+	    	$.ajax({
+				url : "DisplayLoginUser",
+				type : "get",
+				dataType : "json",
+				complete : function(data) {
+			    	var json = jQuery.parseJSON(JSON.stringify(data));
+					user = json.responseText;
+					document.getElementById('loggedInAs').innerHTML = user;
 				}
-			}
+	    	});
+	    }
+	    
+	    function logout(){
+			$.ajax({
+				url: "Logout",
+				type: "post",
+				
+			});
+		}
+
+	    function updateAdult(){
+			$("#update").click(function() {
+					var age = $('#age').val();
+					var illness = $("#illness").val();
+					var screening = $("#screening").val();
+					var type = $("#type").val();
+					var years= $('#years').val();
+				if(age == "" || illness == "" || screening == "" || type == "" || years == ""){
+					$('#message').html("<div class='alert alert-danger' alert-dismissible role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><center><b> Please input empty fields.</b></center></div>");
+				}else if (type == "infant" && age > 24){
+					$('#message').html("<div class='alert alert-danger' alert-dismissible role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><center><b> Age field has to be less than 24 months.</b></center></div>");
+					return false;
+				}
+				else{
+					$.ajax({
+								url : "Edit",
+								type : "get",
+								data : 'age=' + age + '&' + 'illness='
+										+ illness + '&' + 'screening='
+										+ screening + '&' + 'type=' + type
+										+ '&' + 'years=' + years,
+								dataType : "json",
+								complete : function(data) {
+										$("#message").html("<div class='alert alert-success' role='alert'><strong><center>Changes have been made to selected screening</center></strong></div>");
+										window.location = "viewScreeningsAdult.html";
+								}
+
+							});
+							return false;	
+				}
+					});
+		}
 		
+		function updateInfant(){
+			$("#update").click(function() {
+					var age = $('#age').val();
+					var illness = $("#illness").val();
+					var screening = $("#screening").val();
+					var type = $("#type").val();
+					var years= $('#years').val();
+				if(age == "" || illness == "" || screening == "" || type == "" || years == ""){
+					$('#message').html("<div class='alert alert-danger' alert-dismissible role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><center><b> Please input empty fields.</b></center></div>");
+				}else if (type == "infant" && age > 24){
+					$('#message').html("<div class='alert alert-danger' alert-dismissible role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><center><b> Age field has to be less than 24 months.</b></center></div>");
+					return false;
+				}
+				else{
+					$.ajax({
+								url : "Edit",
+								type : "get",
+								data : 'age=' + age + '&' + 'illness='
+										+ illness + '&' + 'screening='
+										+ screening + '&' + 'type=' + type
+										+ '&' + 'years=' + years,
+								dataType : "json",
+								complete : function(data) {
+										$("#message").html("<div class='alert alert-success' role='alert'><strong><center>Changes have been made to selected screening</center></strong></div>");
+										window.location = "viewScreenings.html";
+								}
 
-		});
-	}
+							});
+							return false;	
+				}
+					});
+		}
+		
+		
+		function displayAll() {
+			$.ajax({
+				url : "EditCondition2",
+				type : "GET",
+				dataType : "json",
+				
+				complete : function(data) {
+					var json = jQuery.parseJSON(JSON.stringify(data));
+					
+					$("#illness").val(json.responseJSON.conditionName);
+					$("#years").val(json.responseJSON.years);
+					$("#age").val(json.responseJSON.ageRequired);
+					$("#screening").val(json.responseJSON.screening);
+					$("#type").val(json.responseJSON.type);
+					var type = json.responseJSON.type;
+					if (type == "infant"){
+						updateInfant();
+					} else{
+						updateAdult();
+					
+					}
+				}
+			
 
-
-</script>
+			});
+		}
+	   
+	</script>
 </head>
+
 <body>
 
-  	<div id="includedContent"></div>
+    <div id="wrapper">
 
-	<div class="page-header">
-		<h1 align="center"><b>Edit Screening</b></h1>
-	</div>
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">ULink Reporting System</a>
+            </div>
+            <!-- Top Menu Items -->
+            <ul class="nav navbar-right top-nav">
+            	<li><a href="accountManagement.html"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Account Management <b class="caret"></b></a></li>
+                <li><a><i class="fa fa-user"></i> Logged in as: <p id='loggedInAs'></p> </a></li>
+                <li><a href="login.html" onClick=logout()><span class="glyphicon glyphicon-off" aria-hidden="true"></span>   Logout</a></li>    
+                
+            </ul>
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <li class="active">
+                        <a href="dashboard.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="client.html"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Client List</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Screenings <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="demo" class="collapse">
+                            <li>
+                                <a href="addScreeningAdult.html">Add New Screening</a>
+                            </li>
+                            <li>
+                                <a href="viewScreeningsAdult.html">Recommend Screenings</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#demo2"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Reports <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="demo2" class="collapse">
+                            <li>
+                                <a href="genderAndAgeReport.html">Gender And Age Report</a>
+                            </li>
+                            <li>
+                                <a href="reportIndex.html">Index (Points)</a>
+                            </li>
+                            <li>
+                                <a href="kpi.html">Medical/ VISA KPI</a>
+                            </li>
+                            <li>
+                                <a href="ranking.html">Ranking</a>
+                            </li>
+                           
+                        </ul>
+                    </li>
+                    
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
 
+        <div id="page-wrapper">
 
-	<div class="col-md-8 col-md-offset-2">
+            <div class="container-fluid">
+
+			 <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            <b>Edit Screenings </b>
+                            
+                        </h1>
+                        
+                    </div>
+                </div>
+
+				
+				<div class="col-md-8 col-md-offset-2">
 		<form>
 			<div class="form-group">
 				<label for="age">Age</label> <input type="number" class="form-control"
@@ -169,9 +281,16 @@
 
 <div class='col-md-8 col-md-offset-2'id="message"></div>
 
+			</div>
+            <!-- /.container-fluid -->
 
+        </div>
+        <!-- /#page-wrapper -->
 
+    </div>
+    <!-- /#wrapper -->
 
-
+    
 </body>
+
 </html>

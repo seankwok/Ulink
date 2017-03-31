@@ -1,106 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-   
-    <title>Client</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
 
+    <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
-    
-    <script> 
-	    $(function(){
-	      $("#includedContent").load("navBar.html"); 
-	    });
-    </script> 
 
-<style>
- 	
-	#myInput {
-	    background-position: 10px 12px; /* Position the search icon */
-	    background-repeat: no-repeat; /* Do not repeat the icon image */
-	    width: 30%; /* Full-width */
-	    font-size: 16px; /* Increase font-size */
-	    padding: 12px 20px 12px 40px; /* Add some padding */
-	    border: 1px solid #ddd; /* Add a grey border */
-	    margin-bottom: 12px; /* Add some space below the input */
-	}
-	
-	#table {
-	    border-collapse: collapse; /* Collapse borders */
-	    width: 100%; /* Full-width */
-	    font-size: 18px; /* Increase font-size */
+    <!-- Custom CSS -->
+    <link href="css/sb-admin.css" rel="stylesheet">
 
-	}
-	
-	#table th, #table td {
-	    text-align: left; /* Left-align text */
-	    padding: 10px; /* Add padding */
-	}
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+    
 
-	#table tr {
-	    /* Add a bottom border to all table rows */
-	    border-bottom: 1px solid #ddd; 
-	     padding-bottom: 30px; /* Add padding */
-	}
+    <!-- Bootstrap Core JavaScript -->
+     <script src="js/bootstrap.min.js"></script>
+    <script src="js/moment.js"></script>
+    <script src="js/bootstrap-datetimepicker.min.js"></script>
+	<script src="js/bootstrap-datetimepicker.js"></script>
 	
-	#table tr.header, #table tr:hover {
-	    /* Add background color to the table header and on hover */
-	    font-color: black;
-	}	
+
+ 	<script type="text/javascript">
 	
-	/* unvisited link */
-	a:link {
-	    text-decoration:none;
-	}
+	$(document).ready(function() {
+		getLoggedInUser();
+		var user = "";
+		
+		displayAll();
+		
+		$('input[name=name]').click(function() {
+		    console.log($('input[name=name]:checked').val());
+		});
+		
+		
+	});
+		
 	
-	/* visited link */
-	a:visited {
-	    text-decoration:none;
-	}
 	
-	/* mouse over link */
-	a:hover {
-	    text-decoration:none;
-	}
-	
-	/* selected link */
-	a:active {
-	    text-decoration:none;
-	}
-	
- select
-    {
-        border:0px;
-        outline:0px;
-        width:150px;
-    }
-	.team{
-		width:90px;
-	}
-	
-	.input[type=text] {
-	    width: 130px;
-	    -webkit-transition: width 0.4s ease-in-out;
-	    transition: width 0.4s ease-in-out;
-	}
-	
-	/* When the input field gets focus, change its width to 100% */
-	input[type=text]:focus {
-	    width: 100%;
-	}
-	
-</style>
- 
- <script type="text/javascript">
-		function jsFunction1(value){
+	 function getLoggedInUser(){
+	    	$.ajax({
+				url : "DisplayLoginUser",
+				type : "get",
+				dataType : "json",
+				complete : function(data) {
+			    	var json = jQuery.parseJSON(JSON.stringify(data));
+					user = json.responseText;
+					document.getElementById('loggedInAs').innerHTML = user;
+				}
+	    	});
+	    }
+	    
+	    function logout(){
+			$.ajax({
+				url: "Logout",
+				type: "post",
+				
+			});
+		}
+
+	    function jsFunction1(value){
 			   // set search box value as client type
 			   var txt =  document.getElementById('myInput');
 			   txt.value = value;
@@ -158,7 +125,7 @@
 		
 
 		function displayAll() {
-			var table = "<table id='table' class=' table-hover'>";
+			var table = "<table id='table' class='.table-striped'>";
 			var isEmpty = false;
 			$.ajax({
 				url: "DisplayAllClient",
@@ -208,27 +175,141 @@
 			    }				    
 			});			
 		}
-		
-		$(document).ready(function() {
-			displayAll();
-		} );
-		
-	  
+
+	   
 	</script>
- 
-  </head>
-  
-  <body>
-  
-  	<div id="includedContent"></div>
-	
-    <div class="page-header">
-       <h1 align="center"><b>Client List</b></h1>
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">ULink Reporting System</a>
+            </div>
+            <!-- Top Menu Items -->
+            <ul class="nav navbar-right top-nav">
+            	<li><a href="accountManagement.html"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Account Management <b class="caret"></b></a></li>
+                <li><a><i class="fa fa-user"></i> Logged in as: <p id='loggedInAs'></p> </a></li>
+                <li><a href="login.html" onClick=logout()><span class="glyphicon glyphicon-off" aria-hidden="true"></span>   Logout</a></li>    
+                
+            </ul>
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <li class="active">
+                        <a href="dashboard.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="client.html"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Client List</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Screenings <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="demo" class="collapse">
+                            <li>
+                                <a href="addScreeningAdult.html">Add New Screening</a>
+                            </li>
+                            <li>
+                                <a href="viewScreeningsAdult.html">Recommend Screenings</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#demo2"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Reports <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="demo2" class="collapse">
+                            <li>
+                                <a href="genderAndAgeReport.html">Gender And Age Report</a>
+                            </li>
+                            <li>
+                                <a href="reportIndex.html">Index (Points)</a>
+                            </li>
+                            <li>
+                                <a href="kpi.html">Medical/ VISA KPI</a>
+                            </li>
+                            <li>
+                                <a href="ranking.html">Ranking</a>
+                            </li>
+                           
+                        </ul>
+                    </li>
+                    
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+
+        <div id="page-wrapper">
+
+            <div class="container-fluid">
+
+			 <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            <b>Client List</b> 
+                        </h1>
+                        
+                    </div>
+                </div>
+
+				<div class="row" align="center">
+					<div class="inline">
+                  <input type="radio" id="letter" name="name" value="A" /> A 	
+				  <input type="radio" id="letter" name="name" value="B" /> B 
+				  <input type="radio" id="letter" name="name" value="C" /> C
+				  <input type="radio" id="letter" name="name" value="D" /> D
+				  <input type="radio" id="letter" name="name" value="E" /> E
+				  <input type="radio" id="letter" name="name" value="F" /> F
+				  <input type="radio" id="letter" name="name" value="G" /> G
+				  <input type="radio" id="letter" name="name" value="H" /> H
+				  <input type="radio" id="letter" name="name" value="I" /> I
+				  <input type="radio" id="letter" name="name" value="J" /> J
+				  <input type="radio" id="letter" name="name" value="K" /> K
+				  <input type="radio" id="letter" name="name" value="L" /> L
+				  <input type="radio" id="letter" name="name" value="M" /> M
+				  <input type="radio" id="letter" name="name" value="N" /> N
+				  <input type="radio" id="letter" name="name" value="O" /> O
+				  <input type="radio" id="letter" name="name" value="P" /> P
+				  <input type="radio" id="letter" name="name" value="Q" /> Q
+				  <input type="radio" id="letter" name="name" value="R" /> R
+				  <input type="radio" id="letter" name="name" value="S" /> S
+				  <input type="radio" id="letter" name="name" value="T" /> T
+				  <input type="radio" id="letter" name="name" value="U" /> U
+				  <input type="radio" id="letter" name="name" value="V" /> V
+				  <input type="radio" id="letter" name="name" value="W" /> W
+				  <input type="radio" id="letter" name="name" value="X" /> X
+				  <input type="radio" id="letter" name="name" value="Y" /> Y
+				  <input type="radio" id="letter" name="name" value="Z" /> Z
+				  <input type="hidden"/>
+				  
+				  <input id="myInput" onkeyup="mySearch()" placeholder="Search" name="search"></div>
+		        
+		         </div>
+					<br>
+					<br>
+					
+				
+				<div id="display" class="container" ></div>         
+		         
+			</div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- /#page-wrapper -->
+
     </div>
+    <!-- /#wrapper -->
 
-	<div align="center"><input type="text" id="myInput" onkeyup="mySearch()" placeholder="Search Client by Name.." name="search"></div>
-	<div id="display" class="container"  ></div>
+    
+</body>
 
-
-  </body>
 </html>
