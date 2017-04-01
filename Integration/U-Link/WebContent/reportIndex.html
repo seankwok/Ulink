@@ -34,6 +34,8 @@
 
    <script src="https://code.highcharts.com/highcharts.js"></script>
 	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	
+	
    
 
  	<script type="text/javascript">
@@ -42,18 +44,13 @@
 		getLoggedInUser();
 		var user = "";
 		
-		$("#datepicker1").datepicker({ 
- 			dateFormat: 'dd/mm/yy' 
- 		});
- 		$("#datepicker2").datepicker({ 
- 			dateFormat: 'dd/mm/yy' 
- 		});
  		
  		
  		$("#submit").click (function(){
  			var startDate = $("#datepicker1").val();
 			var endDate = $("#datepicker2").val();
-			
+			console.log(startDate);
+			console.log(endDate);
 			if(startDate=="" || endDate==""){
 				$('#pic').html("");
 				$('#container').html("");
@@ -172,6 +169,10 @@
 			});
 	 		
 	 	}
+	    
+
+
+
 		
  		function checkDate(startDate,endDate){
  			var team = $("#teamName").val();
@@ -330,7 +331,6 @@
 			}
 		});
 			$('#export').click(function(){
-			console.log(team);
 	 			if (team == "medical"){
 	 				$.ajax({
 	 					url : "IndexMedicalReport",
@@ -339,7 +339,6 @@
 	 					complete : function(data) {
 	 						var json = jQuery.parseJSON(JSON.stringify(data));
 	 						window.location = "\IndexMedical.pdf"
-	 						console.log(json);
 	 					}	
 	 				});
 	 			} else{
@@ -350,7 +349,6 @@
 	 					complete : function(data) {
 	 						var json = jQuery.parseJSON(JSON.stringify(data));
 	 						window.location = "\IndexVisa.pdf"
-	 						console.log(json);
 	 					}
 	 				});
 	 			}
@@ -460,15 +458,17 @@
 		
 			          <div class="col-md-4">
 			          <div class="form-group">
-			          	 <label> Select Start Date </label><br>
-						 <input  class="form-control" id="datepicker1" />
+			          	 <label> Select Start Date </label>
+						 <input class="form-control" type="date" data-date-inline-picker="false" data-date-open-on-focus="true" id="datepicker1"/>	 
 			          </div>  
 			          </div>
+			          
+
 		          
 			          <div class="col-md-4">
 			          <div class="form-group">
-			          	 <label> Select End Date </label><br>
-						 <input  class="form-control" id="datepicker2" />
+			          	 <label> Select End Date </label>
+						 <input class="form-control" type="date" data-date-inline-picker="false" data-date-open-on-focus="true" id="datepicker2"/>	 			          	 
 			          </div>  
 			          </div>
 		

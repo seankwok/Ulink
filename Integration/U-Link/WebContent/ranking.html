@@ -41,12 +41,6 @@
 	$(document).ready(function() {
 		getLoggedInUser();
 		var user = "";
-		$("#datepicker1").datepicker({ 
-			dateFormat: 'dd/mm/yy' 
-		});
-		$("#datepicker2").datepicker({ 
-			dateFormat: 'dd/mm/yy' 
-		});
 		
 		$("#submit").click (
 			function(){
@@ -353,7 +347,7 @@
 			          <div class="caption">
 			          <div class="form-group">
 			          	 <label> Select Start Date </label><br>
-						 <input class="form-control" id="datepicker1" />
+						<input class="form-control" type="date" data-date-inline-picker="false" data-date-open-on-focus="true" id="datepicker1"/>	 
 			          </div>          
 			          </div>
 			          </div>
@@ -362,7 +356,7 @@
 			          <div class="caption">
 			          <div class="form-group">
 			          	 <label> Select End Date </label><br>
-						 <input  class="form-control" id="datepicker2" />
+						<input class="form-control" type="date" data-date-inline-picker="false" data-date-open-on-focus="true" id="datepicker2"/>	 
 			          </div>          
 			          </div>
 			          </div>
