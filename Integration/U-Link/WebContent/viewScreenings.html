@@ -598,9 +598,9 @@
 								    }
 								});
 				       }else{
-				    	   console.log("Not in");
 							$('#error').html("<div class='alert alert-danger' role='alert'><center><b> No patient in database matches criteria </b></center></div>");
-
+							console.log("test");
+							return false;
 				       }
 
 				    } 
@@ -1401,7 +1401,8 @@
 				
 				<div class="row">
 				<input type="text" id="myInput" onkeyup="mySearch()" placeholder="Search for">
-				<div align="right"><button class="btn btn-default" id="add"><b>Add new screening</b></button> </div></div>
+				<button class="btn btn-default pull-right" id="add"><b>Add new screening</b></button>
+				</div>
 				<br>
 				
 				<div class="btn-group btn-group-justified" role="group">

@@ -105,7 +105,7 @@ function editItem(clickedID){
 			dataType : "json",
 			complete : function(data) {
 				displayAll();
-					window.location="index.html";
+					window.location="editTimelineSummary.html";
 				
 			}
 
@@ -151,7 +151,7 @@ function viewPatientList(clickedID){
 	       if(json.length != 0){
 	    	   table += "<h3><b>Condition Name:</b>  " + json[0].conditionName +"<br>   <b>Screening Name: </b> "+ json[0].screeningName +"</h3>"
 		        sessionStorage.setItem('screeningName',json[0].screeningName);			      
-		        table += "<thead><tr><th>Age<a href='#' onClick=sortAscClientAge(this.id)  id='age'>&#9652</a><a href='#' onClick=sortDescClientAge(this.id)  id='age'> &#9662</a></th>"
+		        table += "<thead><tr><th>Age (In months)<a href='#' onClick=sortAscClientAge(this.id)  id='age'>&#9652</a><a href='#' onClick=sortDescClientAge(this.id)  id='age'> &#9662</a></th>"
 		        + "<th>Client Name<a href='#' onClick=sortAscClientName(this.id)  id='clientName'>&#9652</a><a href='#' onClick=sortDescClientName(this.id) id='clientName'> &#9662</a></th>"
 		        + "<th>Email<a href='#' onClick=sortAscClientEmail(this.id)  id='email'>&#9652</a><a href='#' onClick=sortDescClientEmail(this.id) id='email'> &#9662</a></th>"
 		        + "<th>Email Sent Date</th>"
@@ -1365,7 +1365,8 @@ function viewPatientList(clickedID){
 				<div class="container">
 				<div class="row">
 				<input type="text" id="myInput" onkeyup="mySearch()" placeholder="Search for">
-				<div align="right"><button class="btn btn-default" id="add"><b>Add new screening</b></button> </div></div>
+				<button class="btn btn-default pull-right" id="add"><b>Add new screening</b></button>
+				</div>
 				<br>
 				<div class="btn-group btn-group-justified" role="group">
 				  <div class="btn-group" role="group">
