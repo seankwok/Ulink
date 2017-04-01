@@ -79,7 +79,7 @@ public class DisplayPatientsByIllness extends HttpServlet {
 				int months = (current.getMonth() - dob.getMonth()) + (current.getYear() - dob.getYear()) * 12 ;
 				
 				if (months >= condition.getAgeRequired()) {
-					clientByIllnessList.add(new ClientByIllness(client.getClientName(), client.getAge(),
+					clientByIllnessList.add(new ClientByIllness(client.getClientName(), months,
 							client.getEmail(), client.getGender(),condition.getScreening(), condition.getConditionName(), connection.retrieveLatestDateSend(client.getClientName(), condition.getScreening()), client.getFollowUpPerson()));
 
 				}

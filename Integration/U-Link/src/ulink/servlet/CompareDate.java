@@ -42,7 +42,7 @@ public class CompareDate extends HttpServlet {
 		String startDate = request.getParameter("startDate");
 		String endDate = request.getParameter("endDate");
 		
-	     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
          try {
 			Date date1 = sdf.parse(startDate);
 			Date date2 = sdf.parse(endDate);
