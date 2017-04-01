@@ -10,9 +10,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -25,8 +27,10 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.CategoryItemRenderer;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.data.category.DefaultCategoryDataset;
 
@@ -129,6 +133,7 @@ public class DashboardReport extends HttpServlet {
 			Graphics2D graphics2d2 = template2.createGraphics(width, height, new DefaultFontMapper());
 			Rectangle2D rectangle2d2 = new Rectangle2D.Double(0, 0, width, height);
 			dashboardVisa.draw(graphics2d2, rectangle2d2);
+
 			Image chartImage2 = Image.getInstance(template2);
 			document.add(chartImage2);
 			graphics2d2.dispose();
@@ -143,7 +148,7 @@ public class DashboardReport extends HttpServlet {
 			document.add(chartImage3);
 			graphics2d3.dispose();
 
-		//	document.add(createFirstTable());
+			// document.add(createFirstTable());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -223,6 +228,7 @@ public class DashboardReport extends HttpServlet {
 		JFreeChart chart = ChartFactory.createBarChart("Number of Medical Client (Past 6 months)", "Month",
 				"Number of clients", dataSet, PlotOrientation.VERTICAL, true, true, true);
 		CategoryPlot p = chart.getCategoryPlot();
+		
 		ValueAxis axis = p.getRangeAxis();
 
 		CategoryAxis axis2 = p.getDomainAxis();
@@ -231,7 +237,14 @@ public class DashboardReport extends HttpServlet {
 		axis2.setTickLabelFont(font);
 		chart.setTitle(
 				new TextTitle("Number of Medical Client (Past 6 months)", new Font("Times New Roman", Font.BOLD, 12)));
+		final CategoryItemRenderer renderer = p.getRenderer();
 
+		renderer.setSeriesItemLabelGenerator(0,
+				new StandardCategoryItemLabelGenerator("{2}", NumberFormat.getInstance()));
+
+		renderer.setSeriesItemLabelsVisible(0, true);
+
+		chart.getCategoryPlot().setRenderer(renderer);
 		return chart;
 	}
 
@@ -276,6 +289,12 @@ public class DashboardReport extends HttpServlet {
 		axis2.setTickLabelFont(font);
 		chart.setTitle(
 				new TextTitle("Number of Visa Client (Past 6 months)", new Font("Times New Roman", Font.BOLD, 12)));
+		final CategoryItemRenderer renderer = p.getRenderer();
+
+		renderer.setSeriesItemLabelGenerator(0,
+				new StandardCategoryItemLabelGenerator("{2}", NumberFormat.getInstance()));
+
+		renderer.setSeriesItemLabelsVisible(0, true);
 
 		return chart;
 	}
@@ -314,6 +333,12 @@ public class DashboardReport extends HttpServlet {
 		axis.setTickLabelFont(font);
 		axis2.setTickLabelFont(font);
 		chart.setTitle(new TextTitle("Type of Visa Requested", new Font("Times New Roman", Font.BOLD, 12)));
+		final CategoryItemRenderer renderer = p.getRenderer();
+
+		renderer.setSeriesItemLabelGenerator(0,
+				new StandardCategoryItemLabelGenerator("{2}", NumberFormat.getInstance()));
+
+		renderer.setSeriesItemLabelsVisible(0, true);
 
 		return chart;
 	}

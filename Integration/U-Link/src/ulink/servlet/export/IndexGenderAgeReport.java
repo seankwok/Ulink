@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -18,8 +19,10 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.CategoryItemRenderer;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.data.category.DefaultCategoryDataset;
 
@@ -150,6 +153,12 @@ public class IndexGenderAgeReport extends HttpServlet {
 		axis2.setTickLabelFont(font);
 
 		chart.setTitle(new TextTitle("Gender - Age Report", new Font("Times New Roman", Font.BOLD, 12)));
+		final CategoryItemRenderer renderer = p.getRenderer();
+
+		renderer.setSeriesItemLabelGenerator(0,
+				new StandardCategoryItemLabelGenerator("{2}", NumberFormat.getInstance()));
+
+		renderer.setSeriesItemLabelsVisible(0, true);
 
 		return chart;
 	}
@@ -179,6 +188,12 @@ public class IndexGenderAgeReport extends HttpServlet {
 		axis2.setTickLabelFont(font);
 
 		chart.setTitle(new TextTitle("Gender - Age Report", new Font("Times New Roman", Font.BOLD, 12)));
+		final CategoryItemRenderer renderer = p.getRenderer();
+
+		renderer.setSeriesItemLabelGenerator(0,
+				new StandardCategoryItemLabelGenerator("{2}", NumberFormat.getInstance()));
+
+		renderer.setSeriesItemLabelsVisible(0, true);
 
 		return chart;
 	}
