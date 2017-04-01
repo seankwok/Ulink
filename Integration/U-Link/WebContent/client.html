@@ -38,7 +38,55 @@
 		displayAll();
 		
 		$('input[name=name]').click(function() {
-		    console.log($('input[name=name]:checked').val());
+		    var firstChar = $('input[name=name]:checked').val();
+		    $.ajax({
+		    	url: "DisplayAllClient",
+				type: "get",
+			    data:'firstChar=' + firstChar,
+			    dataType: "json",
+			    complete: function(data){
+			    	var json = jQuery.parseJSON(data.responseText);
+	    					
+				    table += "<thead>"
+					    	   +"<th>Client Name</th>"			    	
+					    	   +"<th>"
+					    		+"<select onchange='jsFunction1(value)' id='type'>"
+							    	+"<option value='Company' onclick='if (!document.getElementById('searchInput').onchange()) mySearch();'>Company</option>"
+							    	+"<option value='Employee'>Employee</option>"
+							    	+"<option value='Individual'>Individual</option>"
+							    	+"<option value='' selected='selected' >All Client Type</option>"
+					    		 +"</select>"
+						    	+"</th>"
+						    	+"<th width=30% >"
+				    			 +"<select class='team' onchange='jsFunction2(value)' id='team'>"
+							    	+"<option value='Visa'>Visa</option>"
+							    	+"<option value='Medical'>Medical</option>"
+								    +"<option value='' selected='selected'>Team</option>"		    	
+		    					 +"</select>"
+				    			+"</th>"
+			    			+"</thead>"
+				    			
+				    			+"<tbody>"
+			    	$.each(json, function(i, item){
+						table 	+= "<tr>"
+									+"<td>"
+										+ "<a href='#' onClick=directToClientProfile(this.id) id= '"
+					    				+ item.clientName
+					    				+ "'>"+item.clientName +"</a>"
+		    						+ "</td>"
+		    						+ "<td width=30%>"
+		    							+ item.clientType
+		    						+ "</td>"
+			    					+ "<td>"
+			    						+ item.medical
+			    					+ "</td>"
+		    					+ "</tr>"
+		    					
+					});
+			    	table += "</tbody></table>"
+			    	$("#display").html(table);				    	
+			    }	
+	    	});
 		});
 		
 		
