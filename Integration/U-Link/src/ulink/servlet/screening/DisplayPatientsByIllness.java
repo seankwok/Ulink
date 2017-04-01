@@ -69,14 +69,20 @@ public class DisplayPatientsByIllness extends HttpServlet {
 			} else if (client.getAge() <= 2 && client.getDateOfBirth().length() > 0){
 				String date = client.getDateOfBirth();
 				//System.out.println(date + "qwewqewqewq");
-				int day = Integer.parseInt(date.substring(0,2));
-				int month = Integer.parseInt(date.substring(3,5)) - 1;  
-				int year = Integer.parseInt(date.substring(6)) + 1900; 
-				
+				System.out.println(date);
+				int day = Integer.parseInt(date.substring(7));
+				int month = Integer.parseInt(date.substring(5,7))- 1;  
+				int year = Integer.parseInt(date.substring(0,4)); 
+			//	System.out.println(year);
 				Date current = new Date();
 				Date dob = new Date(day,month,year);
+				dob.setYear(year);
+				dob.setMonth(month);
 				
-				int months = (current.getMonth() - dob.getMonth()) + (current.getYear() - dob.getYear()) * 12 ;
+				
+				int months = (current.getMonth() - dob.getMonth()) + ((current.getYear()+1900) - dob.getYear()) * 12 ;
+				
+				//System.out.println(dob.getYear() );
 				
 				if (months >= condition.getAgeRequired()) {
 					clientByIllnessList.add(new ClientByIllness(client.getClientName(), months,
