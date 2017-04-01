@@ -2,6 +2,7 @@ package ulink.main;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import com.itextpdf.text.Document;
@@ -27,7 +28,7 @@ public class TestMain {
 	public static void main(String[] args) throws DocumentException, FileNotFoundException {
 		// TODO Auto-generated method stub
 		
-		  Rectangle small = new Rectangle(290,100);
+		  Rectangle small = new Rectangle(450,300);
 	        Font smallfont = new Font(FontFamily.HELVETICA, 10);
 	        Document document = new Document(small, 5, 5, 5, 5);
 	        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("qwe.pdf"));
@@ -40,42 +41,68 @@ public class TestMain {
 			
 			ArrayList<RankingReferredBy> list = connection.retrieveAllRankingReferredByDashBoard(startDate,endDate);
 	        
+			//this month
+			String month = utility.getMonth(Integer.parseInt(date.substring(5, 7)));
+		
+			
+			//last month
+			LocalDate myDate =LocalDate.parse(connection.retrieveLatestDate());
+			String lastDate = myDate.minusMonths(1).toString();
+		//	Utility utility = new Utility();
+			String lastMonth = utility.getMonth(Integer.parseInt(lastDate.substring(5, 7)));
+			
 	        
-	        PdfPTable table = new PdfPTable(4);
-	        table.setTotalWidth(new float[]{ 60, 60, 60, 60 });
+	        PdfPTable table = new PdfPTable(6);
+	        table.setTotalWidth(new float[]{ 60, 60, 60, 60, 60,60 });
 	        table.setLockedWidth(true);
 	        PdfContentByte cb = writer.getDirectContent();
 	        
 	        // first row
-	        PdfPCell cell = new PdfPCell(new Phrase("TEST"));
+	        PdfPCell cell = new PdfPCell(new Phrase("View Top 5 referral sources"));
 	        cell.setFixedHeight(30);
 	        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 	        cell.setBorder(Rectangle.NO_BORDER);
-	        cell.setColspan(4);
+	        cell.setColspan(6);
+	        table.addCell(cell);
+	        
+	         cell = new PdfPCell(new Phrase(month));
+	        cell.setFixedHeight(30);
+	        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	       // cell.setBorder(Rectangle.NO_BORDER);
+	        cell.setColspan(3);
+	        table.addCell(cell);
+	        cell = new PdfPCell(new Phrase(lastMonth));
+	        cell.setFixedHeight(30);
+	        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	       // cell.setBorder(Rectangle.NO_BORDER);
+	        cell.setColspan(3);
 	        table.addCell(cell);
 	        
 	        for(int i =0; i<5; i++){
 	        
 	        // second row
-	        cell = new PdfPCell(new Phrase(list.get(i).getName()));
+	        cell = new PdfPCell(new Phrase(list.get(i).getRanking()+""));
 	        cell.setFixedHeight(30);
 	        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 	       // cell.setBorder(Rectangle.NO_BORDER);
 	        table.addCell(cell);
-	        Barcode128 code128 = new Barcode128();
-	        code128.setCode("14785236987541");
-	        code128.setCodeType(Barcode128.CODE128);
-	        Image code128Image = code128.createImageWithBarcode(cb, null, null);
-	        cell = new PdfPCell(code128Image, true);
+	       
+	        cell = new PdfPCell(new Phrase(list.get(i).getName()));
 	     //   cell.setBorder(Rectangle.NO_BORDER);
+	        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 	        cell.setFixedHeight(30);
 	        table.addCell(cell);
 	        // third row
-	        table.addCell(cell);
-	        cell = new PdfPCell(new Phrase("and something else here", smallfont));
+	        
+	        cell = new PdfPCell(new Phrase(new Phrase(list.get(i).getCount()+"")));
 	   //     cell.setBorder(Rectangle.NO_BORDER);
-	        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+	        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 	        table.addCell(cell);
 	        }
 	        document.add(table);
