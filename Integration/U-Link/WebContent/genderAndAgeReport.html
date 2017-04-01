@@ -1,39 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<title>Gender by Age Report</title>
 
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom CSS -->
-    <link href="css/sb-admin.css" rel="stylesheet">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="js/jquery-1.12.0.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script> 
+	    $(function(){
+	      $("#includedContent").load("navBar.html"); 
+	    });
+  </script> 
+  
 
-    <!-- Custom Fonts -->
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-
-   <script src="https://code.highcharts.com/highcharts.js"></script>
-	<script src="https://code.highcharts.com/modules/exporting.js"></script>
-   
-
- 	<script type="text/javascript">
-	
+<script type="text/javascript">
 	$(document).ready(function() {
-		getLoggedInUser();
-		var user = "";
-		
 		displayAll();
 		displayPercentage();
 		
@@ -48,255 +37,167 @@
 					}
 				});
 		});
-	
-		
 	});
+
+	function displayAll() {
+		var completedTask;
+		$.ajax({
+			url : "DisplayAgeGenderReport",
+			type : "GET",
+			dataType : "json",
+			complete : function(data) {
+				var json = jQuery.parseJSON(JSON.stringify(data));
+				console.log(json.responseJSON);
+				Highcharts.chart('container', {
+				    chart: {
+				        type: 'column'
+				    },
+				    title: {
+				        text: ' '
+				    },
+				    xAxis: {
+				        categories: [
+				        	'0 - 10',
+				        	'11 - 20',
+				        	'21 - 30',
+				        	'31 - 40',
+				        	'41 - 50',
+				        	'51 - 60',
+				        	'61 - 70',
+				        	'71 - 80',
+				        	'Above 80',       	
+
+				      
+				        ],
+				        crosshair: true
+				    },
+				    yAxis: {
+				        min: 0,
+				        title: {
+				            text: 'Percentage per Age Group (%)'
+				        }
+				    },
+				    tooltip: {
+				        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+				        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+				            '<td style="padding:0"><b>{point.y:.1f} %</b></td></tr>',
+				        footerFormat: '</table>',
+				        shared: true,
+				        useHTML: true
+				    },
+				    plotOptions: {
+				        column: {
+				            pointPadding: 0.2,
+				            borderWidth: 0
+				        }
+				    },  
+				    credits: {
+				 	        enabled: false
+				    },
+				    series: [{
+				        name: 'Male',
+				        color: '#0683E1',
+				        data: [json.responseJSON[0].male,json.responseJSON[1].male,json.responseJSON[2].male,json.responseJSON[3].male,
+				        	json.responseJSON[4].male,json.responseJSON[5].male,json.responseJSON[6].male,json.responseJSON[7].male,json.responseJSON[8].male]
+
+				    }, {
+				        name: 'Female',
+				        color: '#E10906',
+				        data: [json.responseJSON[0].female,json.responseJSON[1].female,json.responseJSON[2].female,json.responseJSON[3].female,
+				        	json.responseJSON[4].female,json.responseJSON[5].female,json.responseJSON[6].female,json.responseJSON[7].female,json.responseJSON[8].female]
+
+				    } ]
+				});
+			}
+		});
+  	}
 	
-	 function getLoggedInUser(){
-	    	$.ajax({
-				url : "DisplayLoginUser",
-				type : "get",
-				dataType : "json",
-				complete : function(data) {
-			    	var json = jQuery.parseJSON(JSON.stringify(data));
-					user = json.responseText;
-					document.getElementById('loggedInAs').innerHTML = user;
-				}
-	    	});
-	    }
-	    
-	    function logout(){
-			$.ajax({
-				url: "Logout",
-				type: "post",
-				
-			});
-		}
+	function displayPercentage(){
+		var completedTask;
+		$.ajax({
+			url : "DisplayAgeGenderReport",
+			type : "GET",
+			dataType : "json",
+			complete : function(data) {
+				var json = jQuery.parseJSON(JSON.stringify(data));
+				console.log(json.responseJSON);
+				Highcharts.chart('percentage', {
+				    chart: {
+				        type: 'column'
+				    },
+				    title: {
+				        text: ' '
+				    },
+				    xAxis: {
+				        categories: [
+				        	'0 - 10',
+				        	'11 - 20',
+				        	'21 - 30',
+				        	'31 - 40',
+				        	'41 - 50',
+				        	'51 - 60',
+				        	'61 - 70',
+				        	'71 - 80',
+				        	'Above 80',       	
+				        ],
+				        crosshair: true
+				    },
+				    yAxis: {
+				        min: 0,
+				        title: {
+				            text: 'Percentage per Age Group (%)'
+				        }
+				    },
+				    tooltip: {
+				        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+				        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+				            '<td style="padding:0"><b>{point.y:.1f} %</b></td></tr>',
+				        footerFormat: '</table>',
+				        shared: true,
+				        useHTML: true
+				    },
+				    plotOptions: {
+				        column: {
+				            pointPadding: 0.1,
+				            borderWidth: 0,
+				            dataLabels: {
+		     	                enabled: true,
+		     	               allowOverlap: true
+		     	            }
+				    
+				        }
+				    },  
+				    credits: {
+				 	        enabled: false
+				    },
+				    series: [{
+				        name: 'Total',
+				        color: '#8A8184',
+				        data: [json.responseJSON[0].total,json.responseJSON[1].total,json.responseJSON[2].total,json.responseJSON[3].total,
+				        	json.responseJSON[4].total,json.responseJSON[5].total,json.responseJSON[6].total,json.responseJSON[7].total,json.responseJSON[8].total]
+
+				    }]
+				});
+			}
+		});
+  	}
 	
-	    function displayAll() {
-			var completedTask;
-			$.ajax({
-				url : "DisplayAgeGenderReport",
-				type : "GET",
-				dataType : "json",
-				complete : function(data) {
-					var json = jQuery.parseJSON(JSON.stringify(data));
-					console.log(json.responseJSON);
-					Highcharts.chart('container', {
-					    chart: {
-					        type: 'column'
-					    },
-					    title: {
-					        text: ' '
-					    },
-					    xAxis: {
-					        categories: [
-					        	'0 - 10',
-					        	'11 - 20',
-					        	'21 - 30',
-					        	'31 - 40',
-					        	'41 - 50',
-					        	'51 - 60',
-					        	'61 - 70',
-					        	'71 - 80',
-					        	'Above 80',       	
+	
+  </script>
 
-					      
-					        ],
-					        crosshair: true
-					    },
-					    yAxis: {
-					        min: 0,
-					        title: {
-					            text: 'Percentage per Age Group (%)'
-					        }
-					    },
-					    tooltip: {
-					        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-					        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-					            '<td style="padding:0"><b>{point.y:.1f} %</b></td></tr>',
-					        footerFormat: '</table>',
-					        shared: true,
-					        useHTML: true
-					    },
-					    plotOptions: {
-					        column: {
-					            pointPadding: 0.2,
-					            borderWidth: 0
-					        }
-					    },  
-					    credits: {
-					 	        enabled: false
-					    },
-					    series: [{
-					        name: 'Male',
-					        color: '#0683E1',
-					        data: [json.responseJSON[0].male,json.responseJSON[1].male,json.responseJSON[2].male,json.responseJSON[3].male,
-					        	json.responseJSON[4].male,json.responseJSON[5].male,json.responseJSON[6].male,json.responseJSON[7].male,json.responseJSON[8].male]
-
-					    }, {
-					        name: 'Female',
-					        color: '#E10906',
-					        data: [json.responseJSON[0].female,json.responseJSON[1].female,json.responseJSON[2].female,json.responseJSON[3].female,
-					        	json.responseJSON[4].female,json.responseJSON[5].female,json.responseJSON[6].female,json.responseJSON[7].female,json.responseJSON[8].female]
-
-					    } ]
-					});
-				}
-			});
-	  	}
-		
-		function displayPercentage(){
-			var completedTask;
-			$.ajax({
-				url : "DisplayAgeGenderReport",
-				type : "GET",
-				dataType : "json",
-				complete : function(data) {
-					var json = jQuery.parseJSON(JSON.stringify(data));
-					console.log(json.responseJSON);
-					Highcharts.chart('percentage', {
-					    chart: {
-					        type: 'column'
-					    },
-					    title: {
-					        text: ' '
-					    },
-					    xAxis: {
-					        categories: [
-					        	'0 - 10',
-					        	'11 - 20',
-					        	'21 - 30',
-					        	'31 - 40',
-					        	'41 - 50',
-					        	'51 - 60',
-					        	'61 - 70',
-					        	'71 - 80',
-					        	'Above 80',       	
-					        ],
-					        crosshair: true
-					    },
-					    yAxis: {
-					        min: 0,
-					        title: {
-					            text: 'Percentage per Age Group (%)'
-					        }
-					    },
-					    tooltip: {
-					        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-					        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-					            '<td style="padding:0"><b>{point.y:.1f} %</b></td></tr>',
-					        footerFormat: '</table>',
-					        shared: true,
-					        useHTML: true
-					    },
-					    plotOptions: {
-					        column: {
-					            pointPadding: 0.1,
-					            borderWidth: 0,
-					            dataLabels: {
-			     	                enabled: true,
-			     	               allowOverlap: true
-			     	            }
-					    
-					        }
-					    },  
-					    credits: {
-					 	        enabled: false
-					    },
-					    series: [{
-					        name: 'Total',
-					        color: '#8A8184',
-					        data: [json.responseJSON[0].total,json.responseJSON[1].total,json.responseJSON[2].total,json.responseJSON[3].total,
-					        	json.responseJSON[4].total,json.responseJSON[5].total,json.responseJSON[6].total,json.responseJSON[7].total,json.responseJSON[8].total]
-
-					    }]
-					});
-				}
-			});
-	  	}
-		
-
-	   
-	</script>
 </head>
 
 <body>
 
-    <div id="wrapper">
-
-        <!-- Navigation -->
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.html">ULink Reporting System</a>
-            </div>
-            <!-- Top Menu Items -->
-            <ul class="nav navbar-right top-nav">
-            	<li><a href="accountManagement.html"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Account Management <b class="caret"></b></a></li>
-                <li><a><i class="fa fa-user"></i> Logged in as: <p id='loggedInAs'></p> </a></li>
-                <li><a href="login.html" onClick=logout()><span class="glyphicon glyphicon-off" aria-hidden="true"></span>   Logout</a></li>    
-                
-            </ul>
-            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav side-nav">
-                    <li class="active">
-                        <a href="dashboard.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
-                    </li>
-                    <li>
-                        <a href="client.html"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Client List</a>
-                    </li>
-                    <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Screenings <i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="demo" class="collapse">
-                            <li>
-                                <a href="addScreeningAdult.html">Add New Screening</a>
-                            </li>
-                            <li>
-                                <a href="viewScreeningsAdult.html">Recommend Screenings</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#demo2"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Reports <i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="demo2" class="collapse">
-                            <li>
-                                <a href="genderAndAgeReport.html">Gender And Age Report</a>
-                            </li>
-                            <li>
-                                <a href="reportIndex.html">Index (Points)</a>
-                            </li>
-                            <li>
-                                <a href="kpi.html">Medical/ VISA KPI</a>
-                            </li>
-                            <li>
-                                <a href="ranking.html">Ranking</a>
-                            </li>
-                           
-                        </ul>
-                    </li>
-                    
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </nav>
-
-        <div id="page-wrapper">
-
-            <div class="container-fluid">
+  	<div id="includedContent"></div>
+<div class="container">
+	 <div class="container-fluid">
 
 			 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            <b>Report </b> <small> Gender & Age</small>
+                            <b>Report </b><small>  Gender-Age</small>
                              <button class="btn btn-primary pull-right" id="export"><b>Export this page</b></button>                         
                         </h1>
                         
@@ -321,22 +222,8 @@
 					
 					
 				</div>
-            
-        
-		
-		
-			
 
-	</div>
-            <!-- /.container-fluid -->
-
-        </div>
-        <!-- /#page-wrapper -->
-
-    </div>
-    <!-- /#wrapper -->
-
-    
+</div>
+		</div>
 </body>
-
 </html>

@@ -3,6 +3,25 @@
 	.user,p{
 		display: inline;
 	}
+	
+	.nav a{
+    color: white;
+    font-weight: 300;
+    font-size: 1.6rem;
+    font-family: "Source Sans Pro", arial, sans serif;
+    }
+    
+    .nav{
+    height: 60px;
+    }
+    
+    .navbar-brand{
+    font-size: 2em;
+    font-weight: bold;
+    font-variant: small-caps;
+    }
+    
+    
 	</style>
 	
 	<script type="text/javascript">	    
@@ -37,7 +56,7 @@
 
 <body>
 
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -47,28 +66,27 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Ulink Assist</a>
+      <a class="navbar-brand" href="#">Ulink Reporting System</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-	        <li><a href="dashboard.html">Dashboard</a></li>
-	        <li><a href="upload.html">Upload Patient Data</a></li>
-	        <li><a href="client.html">Client</a></li>
+	        <li><a href="dashboard.html"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span>		Dashboard</a></li>
+	        <li><a href="client.html"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>		Client List</a></li>
 	        
 	        <li class="dropdown">
-	          <a href="#" class="active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Screenings <span class="caret"></span></a>
+	          <a href="#" class="active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>		Screenings <span class="caret"></span></a>
 	          <ul class="dropdown-menu">
 	            <li><a href="addScreeningAdult.html">Add Screenings</a></li>
-	            <li><a href="viewScreeningsAdult.html">View Screenings</a></li>
+	            <li><a href="viewScreeningsAdult.html">Recommend Screenings</a></li>
 	          </ul>
 	        </li> 
 	        
 	        <li class="dropdown">
-	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reports <span class="caret"></span></a>
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>		Reports <span class="caret"></span></a>
 	          <ul class="dropdown-menu">
-	          <li><a href="genderAndAgeReport.html">Gender and Age Report</a></li>
+	          <li><a href="genderAndAgeReport.html">Gender-Age Report</a></li>
 	            <li><a href="reportIndex.html">Index (Points)</a></li>
 	            <li><a href="kpi.html">Medical/VISA KPI</a></li>
 	              <li><a href="ranking.html">Ranking</a></li>
@@ -78,13 +96,13 @@
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="login.html" onClick=logout()>Logout</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="accountManagement.html">Account Management</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-         <li><a>Currently logged in as: <p id='loggedInAs'></p></a></li>
+      	<li><a>Currently logged in as: <p id='loggedInAs'></p></a></li>
+      	<li><a href="accountManagement.html"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span>		Account Management</a></li>
+        <li><a href="login.html" onClick=logout()><span class="glyphicon glyphicon-off" aria-hidden="true"></span>		Logout</a></li>
+      
+        
+     
+         
       </ul>
       
      

@@ -1,35 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="ISO-8859-1">
+	<title>Draft Email</title>
+	 <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="css/sb-admin.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-    
-
-    <!-- Bootstrap Core JavaScript -->
-     <script src="js/bootstrap.min.js"></script>
+	 <script src="js/bootstrap.min.js"></script>
     <script src="js/moment.js"></script>
     <script src="js/bootstrap-datetimepicker.min.js"></script>
 	<script src="js/bootstrap-datetimepicker.js"></script>
 	
 	<script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
-	
+   
+    <script> 
+	    $(function(){
+	      $("#includedContent").load("navBar.html"); 	      
+	    });
+
+    </script> 
+
 	<style>
 		.errorMsg {
 		   font-size: 15px; 
@@ -49,15 +43,21 @@
 
 	</style>
 
- 	<script type="text/javascript">
 	
- 	function showFields(){
+	
+	<script type="text/javascript">
+	
+	function showFields(){
 		var templateContent = '[clientEmail]<br>[clientName]<br>[screening]' ;
 		 CKEDITOR.instances.editor1.setData(templateContent);
 		 var clients = sessionStorage.getItem('clients');
 		 var array = clients.split(',');
 		 var numSelected = array.length;
-		 var table = " <table class='table table-bordered' width='50%'><tr><th>" + numSelected + " Clients Selected</th></tr>";
+		 if(numSelected == 1){
+			 table = " <table class='table table-bordered' width='50%'><tr><th>" + numSelected + " Client Selected </th></tr>";
+		 }else{
+			 table = " <table class='table table-bordered' width='50%'><tr><th>" + numSelected + " Clients Selected </th></tr>";
+		 }
 		 array.forEach(function(entry) {
 			    table += "<tr><td>"+entry+"</td><tr>"
 			});
@@ -68,236 +68,144 @@
 
 
 	}
- 	
+	
 	$(document).ready(function() {
-		getLoggedInUser();
 		var user = "";
-		
 		var screeningName = sessionStorage.getItem('screeningName');
 		presetInputBox();
 		showFields();
 		showDropdownList();	
 		document.getElementById("header").innerHTML =  "Email for " + screeningName + " ";
-		
 
-		
 	});
-
-	 function getLoggedInUser(){
-	    	$.ajax({
-				url : "DisplayLoginUser",
-				type : "get",
-				dataType : "json",
-				complete : function(data) {
-			    	var json = jQuery.parseJSON(JSON.stringify(data));
-					user = json.responseText;
-					document.getElementById('loggedInAs').innerHTML = user;
-				}
-	    	});
-	    }
-	    
-	    function logout(){
-			$.ajax({
-				url: "Logout",
-				type: "post",
-				
-			});
-		}
-
-	    function presetInputBox(){
-	    	$.ajax({
-				url : "DisplayLoginUser",
-				type : "get",
-				dataType : "json",
-				complete : function(data) {
-			    	var json = jQuery.parseJSON(JSON.stringify(data));
-					console.log(json.responseText);
-					user = json.responseText;
-					document.getElementById("emailTo").placeholder = user + "@ulinkassist.com";
-					document.getElementById("emailSubject").value  = "Screening Recommendation";
-				}
-	    	});
-	    }
-
-			function selectTemplate(clickedID){
-				var sendData = {
-						"templateName" : clickedID
-					};
-		    	$.ajax({	    	
-			    	url : "RetrieveEmailTemplate",
-					type : "post",
-					data : sendData,
-					complete : function(data) {
-						var templateContent = data.responseText;
-						 CKEDITOR.instances.editor1.setData(templateContent);
-					}
-				});
-		
+    function presetInputBox(){
+    	$.ajax({
+			url : "DisplayLoginUser",
+			type : "get",
+			dataType : "json",
+			complete : function(data) {
+		    	var json = jQuery.parseJSON(JSON.stringify(data));
+				console.log(json.responseText);
+				user = json.responseText;
+				document.getElementById("emailTo").placeholder = user + "@ulinkassist.com";
+				document.getElementById("emailSubject").value  = "Screening Recommendation";
 			}
-		    
-		   	function replaceSpace(msg){
-		   	    var res = encodeURIComponent(msg);
-		   	    return res;
+    	});
+    }
+	
+		function selectTemplate(clickedID){
+			var sendData = {
+					"templateName" : clickedID
+				};
+	    	$.ajax({	    	
+		    	url : "RetrieveEmailTemplate",
+				type : "post",
+				data : sendData,
+				complete : function(data) {
+					var templateContent = data.responseText;
+					 CKEDITOR.instances.editor1.setData(templateContent);
+				}
+			});
+	
+		}
+	    
+	   	function replaceSpace(msg){
+	   	    var res = encodeURIComponent(msg);
+	   	    return res;
 
-		   	}   
-		    function save(){
-		    	var templateName = $('#template').val();
-		    	if (templateName == ""){
-		      		$('#errMsg').html("Template Name Required!");	 	    		  
-		    	}else{
-			    	var content = CKEDITOR.instances.editor1.getData();
-			    	content  = replaceSpace(content);
-			    	$.ajax({
-						type: 'post',
-						url: "CreateEmailTemplate",
-						data: 'templateName=' + templateName
-							+ '&'
-							+ 'msg=' + content,
-						complete: function(data){
-							var json = jQuery.parseJSON(JSON.stringify(data));
-							var status = json.responseText;
-							var err = "";
-							if(status == "fail"){
-								$('#errMsg').html( "Template Name already exist!");
-							}else{
-								showDropdownList();	
-								$('#exampleModal').modal('hide');
-							}
-							
+	   	}   
+	    function save(){
+	    	var templateName = $('#template').val();
+	    	if (templateName == ""){
+	      		$('#errMsg').html("Template Name Required!");	 	    		  
+	    	}else{
+		    	var content = CKEDITOR.instances.editor1.getData();
+		    	content  = replaceSpace(content);
+		    	$.ajax({
+					type: 'post',
+					url: "CreateEmailTemplate",
+					data: 'templateName=' + templateName
+						+ '&'
+						+ 'msg=' + content,
+					complete: function(data){
+						var json = jQuery.parseJSON(JSON.stringify(data));
+						var status = json.responseText;
+						var err = "";
+						if(status == "fail"){
+							$('#errMsg').html( "Template Name already exist!");
+						}else{
+							showDropdownList();	
+							$('#exampleModal').modal('hide');
 						}
-					});
-			    	
-			    	
-			    	$('#errMsg').html("");
-		    	}
-		    }	
-		    
-		    
-		    function showDropdownList(){
-		    	$.ajax({			    	
-						type: 'get',
-						url: "DisplayAllEmailTemplate",
-						complete: function(data){
-							var htmlDD = "<div class='dropdown'> "
-						    	+ "<a id='drop1' href='#' role='button' class='btn btn-link dropdown-toggle' data-toggle='dropdown'>Select Template<b class='caret'></b></a>"
-						    	+ " <ul class='dropdown-menu' role='menu' aria-labelledby='dLabel'>"
-							var json = jQuery.parseJSON(data.responseText);
-							$.each(json, function(key, value){
-								htmlDD += "<li><div class='dropdownSide'><a href='#' onClick=selectTemplate(this.id) id='"+value+"'>"+value+"</a> &nbsp; <a href='#' onClick=deleteEmail(this.id) id='"+value+"'> Delete </a></div> </li>"
-							});
-							 htmlDD += "</ul></div>"
-							 $('#templateDropdown').html(htmlDD);
-						}	    		  
-		    	});	
-		    }
-
-		    function deleteEmail(clickedID){
-				var sendData = {
-						"templateName" : clickedID
-					};
-		    	$.ajax({	    	
-			    	url : "DeleteEmailTemplate",
-					type : "post",
-					data : sendData,
-					complete : function(data) {
-						showDropdownList();	
 					}
 				});
 		    	
-		    }
-		    
-		    function pressSend(){
-		    	var content = CKEDITOR.instances.editor1.getData();
-		    	var emailSubject = document.getElementById("emailSubject").value;
-		    	var emailCC = document.getElementById("emailCC").value;
-		    	content  = replaceSpace(content);
-		    	sessionStorage.setItem('passContent', content);
-		    	sessionStorage.setItem('subject', emailSubject);
-		    	sessionStorage.setItem('CC', emailCC);
-		    	window.location.href = "sendingEmail.html";	 
-		  
-		    }
-		    
-		    
-		    function resetField(){
-		    	var templateContent = '[clientEmail]<br>[clientName]<br>[screening]' ;
-				 CKEDITOR.instances.editor1.setData(templateContent);
-			 }
+		    	
+		    	$('#errMsg').html("");
+	    	}
+	    }	
+	    
+	    
+	    function showDropdownList(){
+	    	$.ajax({			    	
+					type: 'get',
+					url: "DisplayAllEmailTemplate",
+					complete: function(data){
+						var htmlDD = "<div class='dropdown'> "
+					    	+ "<a id='drop1' href='#' role='button' class='btn btn-link dropdown-toggle' data-toggle='dropdown'>Select Template<b class='caret'></b></a>"
+					    	+ " <ul class='dropdown-menu' role='menu' aria-labelledby='dLabel'>"
+						var json = jQuery.parseJSON(data.responseText);
+						$.each(json, function(key, value){
+							htmlDD += "<li><div class='dropdownSide'><a href='#' onClick=selectTemplate(this.id) id='"+value+"'>"+value+"</a> &nbsp; <a href='#' onClick=deleteEmail(this.id) id='"+value+"'> Delete </a></div> </li>"
+						});
+						 htmlDD += "</ul></div>"
+						 $('#templateDropdown').html(htmlDD);
+					}	    		  
+	    	});	
+	    }
 
-	   
+	    function deleteEmail(clickedID){
+			var sendData = {
+					"templateName" : clickedID
+				};
+	    	$.ajax({	    	
+		    	url : "DeleteEmailTemplate",
+				type : "post",
+				data : sendData,
+				complete : function(data) {
+					showDropdownList();	
+				}
+			});
+	    	
+	    }
+	    
+	    function pressSend(){
+	    	var content = CKEDITOR.instances.editor1.getData();
+	    	var emailSubject = document.getElementById("emailSubject").value;
+	    	var emailCC = document.getElementById("emailCC").value;
+	    	//content  = replaceSpace(content);
+	    	sessionStorage.setItem('passContent', content);
+	    	sessionStorage.setItem('subject', emailSubject);
+	    	sessionStorage.setItem('CC', emailCC);
+	    	window.location.href = "sendingEmail.html";	  
+	    }
+	    
+	    function resetField(){
+	    	var templateContent = '[clientEmail]<br>[clientName]<br>[screening]' ;
+			 CKEDITOR.instances.editor1.setData(templateContent);
+		 }
+	    
+
 	</script>
 </head>
 
+
+		
 <body>
-
-    <div id="wrapper">
-
-        <!-- Navigation -->
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.html">ULink Reporting System</a>
-            </div>
-            <!-- Top Menu Items -->
-            <ul class="nav navbar-right top-nav">
-            	<li><a href="accountManagement.html"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Account Management <b class="caret"></b></a></li>
-                <li><a><i class="fa fa-user"></i> Logged in as: <p id='loggedInAs'></p> </a></li>
-                <li><a href="login.html" onClick=logout()><span class="glyphicon glyphicon-off" aria-hidden="true"></span>   Logout</a></li>    
-                
-            </ul>
-            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav side-nav">
-                    <li class="active">
-                        <a href="dashboard.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
-                    </li>
-                    <li>
-                        <a href="client.html"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Client List</a>
-                    </li>
-                    <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Screenings <i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="demo" class="collapse">
-                            <li>
-                                <a href="addScreeningAdult.html">Add New Screening</a>
-                            </li>
-                            <li>
-                                <a href="viewScreeningsAdult.html">Recommend Screenings</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#demo2"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Reports <i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="demo2" class="collapse">
-                            <li>
-                                <a href="genderAndAgeReport.html">Gender And Age Report</a>
-                            </li>
-                            <li>
-                                <a href="reportIndex.html">Index (Points)</a>
-                            </li>
-                            <li>
-                                <a href="kpi.html">Medical/ VISA KPI</a>
-                            </li>
-                            <li>
-                                <a href="ranking.html">Ranking</a>
-                            </li>
-                           
-                        </ul>
-                    </li>
-                    
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </nav>
-
-        <div id="page-wrapper">
-
-            <div class="container-fluid">
+   
+	<div id="includedContent"></div>
+	<div class="container">
+	 <div class="container-fluid">
 
 			 <!-- Page Heading -->
                 <div class="row">
@@ -382,14 +290,8 @@
 
 			</div>
             <!-- /.container-fluid -->
-
-        </div>
-        <!-- /#page-wrapper -->
-
-    </div>
-    <!-- /#wrapper -->
-
-    
-</body>
-
+	
+	</div>
+	
+	</body>
 </html>
