@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.NumberFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -36,9 +37,11 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.DefaultFontMapper;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPCell;
@@ -48,6 +51,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import ulink.constructor.Client;
 import ulink.constructor.RankingDoctor;
+import ulink.constructor.RankingReferredBy;
 import ulink.dao.DatabaseConnection;
 import ulink.logic.Utility;
 
@@ -149,7 +153,203 @@ public class DashboardReport extends HttpServlet {
 			graphics2d3.dispose();
 
 			// document.add(createFirstTable());
-		} catch (Exception e) {
+
+			DatabaseConnection connection = new DatabaseConnection();
+			String date = connection.retrieveLatestDate();
+			Utility utility = new Utility();
+			String startDate = utility.getStartDateOfMonth(date);
+			String endDate = utility.getEndDateOfMonth(date);
+
+			ArrayList<RankingReferredBy> list = connection.retrieveAllRankingReferredByDashBoard(startDate, endDate);
+
+			LocalDate myDate = LocalDate.parse(connection.retrieveLatestDate());
+			// Utility utility = new Utility();
+			String lastStartDate = utility.getStartDateOfMonth(myDate.minusMonths(1).toString());
+			String lastEndDate = utility.getEndDateOfMonth(myDate.minusMonths(1).toString());
+
+			ArrayList<RankingReferredBy> lastList = connection.retrieveAllRankingReferredByDashBoard(lastStartDate,
+					lastEndDate);
+
+			// this month
+			String month = utility.getMonth(Integer.parseInt(date.substring(5, 7)));
+
+			// last month
+			// LocalDate myDate
+			// =LocalDate.parse(connection.retrieveLatestDate());
+			String lastDate = myDate.minusMonths(1).toString();
+			// Utility utility = new Utility();
+			String lastMonth = utility.getMonth(Integer.parseInt(lastDate.substring(5, 7)));
+
+			PdfPTable table = new PdfPTable(6);
+			table.setTotalWidth(new float[] { 60, 60, 60, 60, 60, 60 });
+			table.setLockedWidth(true);
+			PdfContentByte cb = writer.getDirectContent();
+
+			// first row
+			PdfPCell cell = new PdfPCell(new Phrase("View Top 5 referral sources"));
+			cell.setFixedHeight(30);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setBorder(Rectangle.NO_BORDER);
+			cell.setColspan(6);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(month));
+			cell.setFixedHeight(30);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			// cell.setBorder(Rectangle.NO_BORDER);
+			cell.setColspan(3);
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase(lastMonth));
+			cell.setFixedHeight(30);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			// cell.setBorder(Rectangle.NO_BORDER);
+			cell.setColspan(3);
+			table.addCell(cell);
+
+			for (int i = 0; i < 5; i++) {
+
+				// second row
+				cell = new PdfPCell(new Phrase(list.get(i).getRanking() + ""));
+				cell.setFixedHeight(30);
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				// cell.setBorder(Rectangle.NO_BORDER);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase(list.get(i).getName()));
+				// cell.setBorder(Rectangle.NO_BORDER);
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setFixedHeight(30);
+				table.addCell(cell);
+
+				// third row
+
+				cell = new PdfPCell(new Phrase(new Phrase(list.get(i).getCount() + "")));
+				// cell.setBorder(Rectangle.NO_BORDER);
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase(lastList.get(i).getRanking() + ""));
+				cell.setFixedHeight(30);
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				// cell.setBorder(Rectangle.NO_BORDER);
+				table.addCell(cell);
+				cell = new PdfPCell(new Phrase(lastList.get(i).getName()));
+				// cell.setBorder(Rectangle.NO_BORDER);
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setFixedHeight(30);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase(new Phrase(lastList.get(i).getCount() + "")));
+				// cell.setBorder(Rectangle.NO_BORDER);
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				table.addCell(cell);
+
+			}
+			document.add(table);
+
+			ArrayList<RankingDoctor> listDoctor = connection.retrieveAllRankingDoctorDashBoard(startDate, endDate);
+
+			ArrayList<RankingDoctor> lastListDoctor = connection.retrieveAllRankingDoctorDashBoard(lastStartDate,
+					lastEndDate);
+
+			PdfPTable table2 = new PdfPTable(8);
+
+			table2.setTotalWidth(new float[] { 60, 60, 60, 60, 60, 60, 60, 60 });
+			table2.setLockedWidth(true);
+
+			// first row
+			cell = new PdfPCell(new Phrase("View Top 5 Doctor"));
+			cell.setFixedHeight(30);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setBorder(Rectangle.NO_BORDER);
+			cell.setColspan(8);
+			table2.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(month));
+			cell.setFixedHeight(30);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			// cell.setBorder(Rectangle.NO_BORDER);
+			cell.setColspan(4);
+			table2.addCell(cell);
+			cell = new PdfPCell(new Phrase(lastMonth));
+			cell.setFixedHeight(30);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			// cell.setBorder(Rectangle.NO_BORDER);
+			cell.setColspan(4);
+			table2.addCell(cell);
+
+			for (int j = 0; j < 5; j++) {
+
+				// second row
+				cell = new PdfPCell(new Phrase(listDoctor.get(j).getRanking() + ""));
+				cell.setFixedHeight(30);
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				// cell.setBorder(Rectangle.NO_BORDER);
+				table2.addCell(cell);
+
+				cell = new PdfPCell(new Phrase(listDoctor.get(j).getName()));
+				// cell.setBorder(Rectangle.NO_BORDER);
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setFixedHeight(30);
+				table2.addCell(cell);
+
+				// third row
+
+				cell = new PdfPCell(new Phrase(new Phrase(listDoctor.get(j).getClinic() + "")));
+				// cell.setBorder(Rectangle.NO_BORDER);
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				table2.addCell(cell);
+
+				cell = new PdfPCell(new Phrase(new Phrase(listDoctor.get(j).getSpeciality() + "")));
+				// cell.setBorder(Rectangle.NO_BORDER);
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				table2.addCell(cell);
+
+				cell = new PdfPCell(new Phrase(lastListDoctor.get(j).getRanking() + ""));
+				cell.setFixedHeight(30);
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				// cell.setBorder(Rectangle.NO_BORDER);
+				table2.addCell(cell);
+				cell = new PdfPCell(new Phrase(lastListDoctor.get(j).getName()));
+				// cell.setBorder(Rectangle.NO_BORDER);
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setFixedHeight(30);
+				table2.addCell(cell);
+				cell = new PdfPCell(new Phrase(new Phrase(lastListDoctor.get(j).getClinic() + "")));
+				// cell.setBorder(Rectangle.NO_BORDER);
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				table2.addCell(cell);
+
+				cell = new PdfPCell(new Phrase(new Phrase(lastListDoctor.get(j).getSpeciality() + "")));
+				// cell.setBorder(Rectangle.NO_BORDER);
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				table2.addCell(cell);
+			}
+			document.add(table2);
+
+		} catch (
+
+		Exception e) {
 			e.printStackTrace();
 		}
 
@@ -228,7 +428,7 @@ public class DashboardReport extends HttpServlet {
 		JFreeChart chart = ChartFactory.createBarChart("Number of Medical Client (Past 6 months)", "Month",
 				"Number of clients", dataSet, PlotOrientation.VERTICAL, true, true, true);
 		CategoryPlot p = chart.getCategoryPlot();
-		
+
 		ValueAxis axis = p.getRangeAxis();
 
 		CategoryAxis axis2 = p.getDomainAxis();

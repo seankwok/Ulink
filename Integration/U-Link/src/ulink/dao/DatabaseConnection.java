@@ -157,18 +157,21 @@ public class DatabaseConnection {
 			Utility utility = new Utility();
 			int ranking = 0;
 			int previous = 0;
+			int check = 0;
 			while (rs.next()) {
 				String referredBy = rs.getString(1);
 				int count = rs.getInt(2);
 
 				if (previous == count) {
 					referredByList.add(new RankingReferredBy(ranking, referredBy, count));
+					check++;
 
 				} else {
 					if (ranking < 5) {
-						ranking++;
-						referredByList.add(new RankingReferredBy(ranking, referredBy, count));
+						check++;
+						referredByList.add(new RankingReferredBy(check, referredBy, count));
 						previous = count;
+						ranking = check;
 					}
 
 				}
@@ -204,6 +207,7 @@ public class DatabaseConnection {
 			ResultSet rs = stmt.executeQuery(sql);
 			// Utility utility = new Utility();
 			int ranking = 0;
+			int check =0;
 			int previous = 0;
 			while (rs.next()) {
 				String doctor = rs.getString(1);
@@ -213,13 +217,15 @@ public class DatabaseConnection {
 
 				if (previous == count) {
 					doctorList.add(new RankingDoctor(ranking, doctor, clinic, specialty, count));
+					check++;
 
 				} else {
 					if (ranking < 3) {
-						ranking++;
-						doctorList.add(new RankingDoctor(ranking, doctor, clinic, specialty, count));
+						check++;
+						
+						doctorList.add(new RankingDoctor(check, doctor, clinic, specialty, count));
 						previous = count;
-
+						ranking = check;
 					}
 				}
 

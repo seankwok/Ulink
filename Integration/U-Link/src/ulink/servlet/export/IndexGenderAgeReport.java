@@ -90,7 +90,7 @@ public class IndexGenderAgeReport extends HttpServlet {
 			// ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			response.addHeader("Content-Disposition", "attachment;  filename=" + filePath);
 			writer = PdfWriter.getInstance(document, new FileOutputStream(filePath));
-			System.out.println(filePath);
+			//System.out.println(filePath);
 			document.open();
 			// Display dashboard for Medical
 			Image img = Image.getInstance(imagePath);
