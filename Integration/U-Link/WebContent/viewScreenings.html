@@ -1,1338 +1,1494 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-   
-    <title>View Screening</title>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+<title>View Screening</title>
 
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script src="js/jquery-1.12.0.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-    <script> 
-	    $(function(){
-	      $("#includedContent").load("navBar.html"); 
-	    });
-    </script> 
-	
- 	
- 	
- 	
- 	
- 	<script type="text/javascript">
-	
+<link href="css/bootstrap.min.css" rel="stylesheet">
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="js/jquery-1.12.0.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script>
+	$(function() {
+		$("#includedContent").load("navBar.html");
+	});
+</script>
+
+
+
+
+
+<script type="text/javascript">
 	$(document).ready(function() {
 		displayAll();
 
-		$("#selectAdult").click(function(){
+		$("#selectAdult").click(function() {
 			window.location = "viewScreeningsAdult.html";
 		});
-			
-		$("#add").click(function(){
+
+		$("#add").click(function() {
 			window.location = "addScreening.html";
 		});
-		
-		$('#export').click(function(){
- 			//do something
- 			
- 		});
-		
+
+		$('#export').click(function(clickedID) {
+			//do something
+
+			var sendData = {
+				"ID" : clickedID
+			};
+			$.ajax({
+				url : "ClientScreeningEmail",
+				type : "post",
+				data : sendData,
+				complete : function(data) {
+					var json = jQuery.parseJSON(JSON.stringify(data));
+					window.location = "/ClientScreeningEmail.xlsx"
+					console.log(json);
+				}
+			});
+
+		});
 	});
-	
 
 	function mySearch() {
-		 var searchText = document.getElementById('myInput').value.toUpperCase();
-		    var targetTable = document.getElementById('table');
-		    var targetTableColCount;			            
-		    //Loop through table rows
-		    for (var rowIndex = 0; rowIndex < targetTable.rows.length; rowIndex++) {
-		        var rowData = '';
+		var searchText = document.getElementById('myInput').value.toUpperCase();
+		var targetTable = document.getElementById('table');
+		var targetTableColCount;
+		//Loop through table rows
+		for (var rowIndex = 0; rowIndex < targetTable.rows.length; rowIndex++) {
+			var rowData = '';
 
-		        //Get column count from header row
-		        if (rowIndex == 0) {
-		           targetTableColCount = targetTable.rows.item(rowIndex).cells.length;
-		           continue; //do not execute further code for header row.
-		        }
-		                
-		        //Process data rows. (rowIndex >= 1)
-		        for (var colIndex = 0; colIndex < targetTableColCount; colIndex++) {
-		            rowData += targetTable.rows.item(rowIndex).cells.item(colIndex).textContent.toUpperCase();
-		        }
+			//Get column count from header row
+			if (rowIndex == 0) {
+				targetTableColCount = targetTable.rows.item(rowIndex).cells.length;
+				continue; //do not execute further code for header row.
+			}
 
-		        //If search term is not found in row data
-		        //then hide the row, else show
-		        if (rowData.indexOf(searchText) == -1)
-		            targetTable.rows.item(rowIndex).style.display = 'none';
-		        else
-		            targetTable.rows.item(rowIndex).style.display = 'table-row';
-		    }
+			//Process data rows. (rowIndex >= 1)
+			for (var colIndex = 0; colIndex < targetTableColCount; colIndex++) {
+				rowData += targetTable.rows.item(rowIndex).cells.item(colIndex).textContent
+						.toUpperCase();
+			}
+
+			//If search term is not found in row data
+			//then hide the row, else show
+			if (rowData.indexOf(searchText) == -1)
+				targetTable.rows.item(rowIndex).style.display = 'none';
+			else
+				targetTable.rows.item(rowIndex).style.display = 'table-row';
 		}
-	
-	function sortAscAge(clickedID){
+	}
+
+	function sortAscAge(clickedID) {
 		var table = "<table id='table' class='table table-condensed' cellspacing='0'>";
 		var sendData = "name=ageRequired &orderDirection=ASC";
-		$.ajax({
-		    url : "DisplayAllInfant",
-		    type : "get",
-		    data : sendData,
-		    complete: function(data){
-		    	var json = jQuery.parseJSON(JSON.stringify(data));
-		    	var response = JSON.parse(json.responseText);
-		    	table += "<thead><tr><th>Starting Age (In Months)<a href='#' onClick=sortAscAge(this.id)  id='ageRequired'>&#9652</a>"
-		    			+ "<a href='#' onClick=sortDescAge(this.id) id='ageRequired'> &#9662</a></th>"
-		    			+ "<th>Common Illness<a href='#' onClick=sortAscIllness(this.id) id='conditionName'> &#9652</a>"
-		    			+ "<a href='#' onClick=sortDescIllness(this.id) id='conditionName'> &#9662</a></th>"
-		    			+ "<th>Screening <a href='#' onClick=sortAscScreening(this.id) id='screening'> &#9652</a>"
-		    			+ "<a href='#' onClick=sortDescIllness(this.id) id='screening'> &#9662</a></th>"
-		    			+"<th>Demographic</th>"
-		    			+ "<th>Regularity of screening</th>"
-		    			+ "<th>View Patients</th>"
-		    			+ "<th>Edit</th>"
-		    			+ "<th>Delete</th></tr></thead>";
-		    	$.each(response,function(key, value) {
-		    		table += "<tbody><tr><td>"
-	    				+ value["ageRequired"]
-	    				+ "</td>"
-	    				+ "<td>"
-	    				+ value["conditionName"]
-    					+ "</td>"
-    					+ "<td>"
-	    				+ value["screening"]
-    					+ "</td>"
-    					+ "<td>"
-	    				+ value["type"]
-    					+ "</td>"
-    					+ "<td>"
-	    				+ value["years"] 
-    					+ "</td>"
-    					+ "<td>"
-	    				+"<a href='#' onClick=viewPatientList(this.id) id= '"
-	    				+ value.ID
-	    				+ "'>View patients</a>"
-    					+ "</td>"
-    					+ "<td>"
-	    				+ "<a href='#' onClick=editItem(this.id) id= '"
-	    				+ value.ID
-	    				+ "'>Edit</a>"
-    					+ "</td>"
-    					+ '<td><a href=# onClick=deleteItem(this.id) id="'
-						+ value.ID
-						+ '">Delete</a></td></tr>'		    				
-						+ "</td></tr></tbody>"
-		    	});
-		    	table += "</table>"
-		    		$("#display").html(table);
-		    	
-		    
-		    }
- 		});
+		$
+				.ajax({
+					url : "DisplayAllInfant",
+					type : "get",
+					data : sendData,
+					complete : function(data) {
+						var json = jQuery.parseJSON(JSON.stringify(data));
+						var response = JSON.parse(json.responseText);
+						table += "<thead><tr><th>Starting Age (In Months)<a href='#' onClick=sortAscAge(this.id)  id='ageRequired'>&#9652</a>"
+								+ "<a href='#' onClick=sortDescAge(this.id) id='ageRequired'> &#9662</a></th>"
+								+ "<th>Common Illness<a href='#' onClick=sortAscIllness(this.id) id='conditionName'> &#9652</a>"
+								+ "<a href='#' onClick=sortDescIllness(this.id) id='conditionName'> &#9662</a></th>"
+								+ "<th>Screening <a href='#' onClick=sortAscScreening(this.id) id='screening'> &#9652</a>"
+								+ "<a href='#' onClick=sortDescIllness(this.id) id='screening'> &#9662</a></th>"
+								+ "<th>Demographic</th>"
+								+ "<th>Regularity of screening</th>"
+								+ "<th>View Patients</th>"
+								+ "<th>Edit</th>"
+								+ "<th>Delete</th></tr></thead>";
+						$
+								.each(
+										response,
+										function(key, value) {
+											table += "<tbody><tr><td>"
+													+ value["ageRequired"]
+													+ "</td>"
+													+ "<td>"
+													+ value["conditionName"]
+													+ "</td>"
+													+ "<td>"
+													+ value["screening"]
+													+ "</td>"
+													+ "<td>"
+													+ value["type"]
+													+ "</td>"
+													+ "<td>"
+													+ value["years"]
+													+ "</td>"
+													+ "<td>"
+													+ "<a href='#' onClick=viewPatientList(this.id) id= '"
+													+ value.ID
+													+ "'>View patients</a>"
+													+ "</td>"
+													+ "<td>"
+													+ "<a href='#' onClick=editItem(this.id) id= '"
+													+ value.ID
+													+ "'>Edit</a>"
+													+ "</td>"
+													+ '<td><a href=# onClick=deleteItem(this.id) id="'
+													+ value.ID
+													+ '">Delete</a></td></tr>'
+													+ "</td></tr></tbody>"
+										});
+						table += "</table>"
+						$("#display").html(table);
 
+					}
+				});
 
-}
-
-function sortDescAge(clickedID){
-	var table = "<table id='table'  class='table table-condensed' cellspacing='0'>";
-	var sendData = "name=ageRequired &orderDirection=DESC";
-	$.ajax({
-	    url : "DisplayAllInfant",
-	    type : "get",
-	    data : sendData,
-	    complete: function(data){
-	    	var json = jQuery.parseJSON(JSON.stringify(data));
-	    	var response = JSON.parse(json.responseText);
-	    	table += "<thead><tr><th>Starting Age (In Months)<a href='#' onClick=sortAscAge(this.id)  id='ageRequired'>&#9652</a>"
-	    			+ "<a href='#' onClick=sortDescAge(this.id) id='ageRequired'> &#9662</a></th>"
-	    			+ "<th>Common Illness<a href='#' onClick=sortAscIllness(this.id) id='conditionName'> &#9652</a>"
-	    			+ "<a href='#' onClick=sortDescIllness(this.id) id='conditionName'> &#9662</a></th>"
-	    			+ "<th>Screening <a href='#' onClick=sortAscScreening(this.id) id='screening'> &#9652</a>"
-	    			+ "<a href='#' onClick=sortDescIllness(this.id) id='screening'> &#9662</a></th>"
-	    			+"<th>Demographic</th>"
-	    			+ "<th>Regularity of screening</th>"
-	    			+ "<th>View Patients</th>"
-	    			+ "<th>Edit</th>"
-	    			+ "<th>Delete</th></tr></thead>";
-	    	$.each(response,function(key, value) {
-	    		table += "<tbody><tr><td>"
-    				+ value["ageRequired"]
-    				+ "</td>"
-    				+ "<td>"
-    				+ value["conditionName"]
-					+ "</td>"
-					+ "<td>"
-    				+ value["screening"]
-					+ "</td>"
-					+ "<td>"
-    				+ value["type"]
-					+ "</td>"
-					+ "<td>"
-    				+ value["years"] 
-					+ "</td>"
-					+ "<td>"
-    				+"<a href='#' onClick=viewPatientList(this.id) id= '"
-    				+ value.ID
-    				+ "'>View patients</a>"
-					+ "</td>"
-					+ "<td>"
-    				+ "<a href='#' onClick=editItem(this.id) id= '"
-    				+ value.ID
-    				+ "'>Edit</a>"
-					+ "</td>"
-					+ '<td><a href=# onClick=deleteItem(this.id) id="'
-					+ value.ID
-					+ '">Delete</a></td></tr>'		    				
-					+ "</td></tr></tbody>"
-	    	});
-	    	table += "</table>"
-	    		$("#display").html(table);
-	    	
-	    
-	    }
-		});
-
-
-}
-
-function sortAscIllness(clickedID){
-	var table = "<table id='table'  class='table table-condensed' cellspacing='0'>";
-	var sendData = "name=conditionName &orderDirection=ASC";
-	$.ajax({
-	    url : "DisplayAllInfant",
-	    type : "get",
-	    data : sendData,
-	    complete: function(data){
-	    	var json = jQuery.parseJSON(JSON.stringify(data));
-	    	var response = JSON.parse(json.responseText);
-	    	table += "<thead><tr><th>Starting Age (In Months)<a href='#' onClick=sortAscAge(this.id)  id='ageRequired'>&#9652</a>"
-	    			+ "<a href='#' onClick=sortDescAge(this.id) id='ageRequired'> &#9662</a></th>"
-	    			+ "<th>Common Illness<a href='#' onClick=sortAscIllness(this.id) id='conditionName'> &#9652</a>"
-	    			+ "<a href='#' onClick=sortDescIllness(this.id) id='conditionName'> &#9662</a></th>"
-	    			+ "<th>Screening <a href='#' onClick=sortAscScreening(this.id) id='screening'> &#9652</a>"
-	    			+ "<a href='#' onClick=sortDescIllness(this.id) id='screening'> &#9662</a></th>"
-	    			+"<th>Demographic</th>"
-	    			+ "<th>Regularity of screening</th>"
-	    			+ "<th>View Patients</th>"
-	    			+ "<th>Edit</th>"
-	    			+ "<th>Delete</th></tr></thead>";
-	    	$.each(response,function(key, value) {
-	    		table += "<tbody><tr><td>"
-    				+ value["ageRequired"]
-    				+ "</td>"
-    				+ "<td>"
-    				+ value["conditionName"]
-					+ "</td>"
-					+ "<td>"
-    				+ value["screening"]
-					+ "</td>"
-					+ "<td>"
-    				+ value["type"]
-					+ "</td>"
-					+ "<td>"
-    				+ value["years"] 
-					+ "</td>"
-					+ "<td>"
-    				+"<a href='#' onClick=viewPatientList(this.id) id= '"
-    				+ value.ID
-    				+ "'>View patients</a>"
-					+ "</td>"
-					+ "<td>"
-    				+ "<a href='#' onClick=editItem(this.id) id= '"
-    				+ value.ID
-    				+ "'>Edit</a>"
-					+ "</td>"
-					+ '<td><a href=# onClick=deleteItem(this.id) id="'
-					+ value.ID
-					+ '">Delete</a></td></tr>'		    				
-					+ "</td></tr></tbody>"
-	    	});
-	    	table += "</table>"
-	    		$("#display").html(table);
-	    	
-	    
-	    }
-		});
-
-
-}
-
-function sortDescIllness(clickedID){
-	var table = "<table id='table'  class='table table-condensed' cellspacing='0'>";
-	var sendData = "name=conditionName &orderDirection=DESC";
-	$.ajax({
-	    url : "DisplayAllInfant",
-	    type : "get",
-	    data : sendData,
-	    complete: function(data){
-	    	var json = jQuery.parseJSON(JSON.stringify(data));
-	    	var response = JSON.parse(json.responseText);
-	    	table += "<thead><tr><th>Starting Age (In Months)<a href='#' onClick=sortAscAge(this.id)  id='ageRequired'>&#9652</a>"
-    			+ "<a href='#' onClick=sortDescAge(this.id) id='ageRequired'> &#9662</a></th>"
-    			+ "<th>Common Illness<a href='#' onClick=sortAscIllness(this.id) id='conditionName'> &#9652</a>"
-    			+ "<a href='#' onClick=sortDescIllness(this.id) id='conditionName'> &#9662</a></th>"
-    			+ "<th>Screening <a href='#' onClick=sortAscScreening(this.id) id='screening'> &#9652</a>"
-    			+ "<a href='#' onClick=sortDescScreening(this.id) id='screening'> &#9662</a></th>"
-    			+"<th>Demographic</th>"
-    			+ "<th>Regularity of screening</th>"
-    			+ "<th>View Patients</th>"
-    			+ "<th>Edit</th>"
-    			+ "<th>Delete</th></tr></thead>";
-	    	$.each(response,function(key, value) {
-	    		table += "<tbody><tr><td>"
-    				+ value["ageRequired"]
-    				+ "</td>"
-    				+ "<td>"
-    				+ value["conditionName"]
-					+ "</td>"
-					+ "<td>"
-    				+ value["screening"]
-					+ "</td>"
-					+ "<td>"
-    				+ value["type"]
-					+ "</td>"
-					+ "<td>"
-    				+ value["years"] 
-					+ "</td>"
-					+ "<td>"
-    				+"<a href='#' onClick=viewPatientList(this.id) id= '"
-    				+ value.ID
-    				+ "'>View patients</a>"
-					+ "</td>"
-					+ "<td>"
-    				+ "<a href='#' onClick=editItem(this.id) id= '"
-    				+ value.ID
-    				+ "'>Edit</a>"
-					+ "</td>"
-					+ '<td><a href=# onClick=deleteItem(this.id) id="'
-					+ value.ID
-					+ '">Delete</a></td></tr>'		    				
-					+ "</td></tr></tbody>"
-	    	});
-	    	table += "</table>"
-	    		$("#display").html(table);
-	    	
-	    
-	    }
-		});
-
-
-}
-
-function sortAscScreening(clickedID){
-	var table = "<table id='table'  class='table table-condensed' cellspacing='0'>";
-	var sendData = "name=screening &orderDirection=ASC";
-	$.ajax({
-	    url : "DisplayAllInfant",
-	    type : "get",
-	    data : sendData,
-	    complete: function(data){
-	    	var json = jQuery.parseJSON(JSON.stringify(data));
-	    	var response = JSON.parse(json.responseText);
-	    	table += "<thead><tr><th>Starting Age (In Months)<a href='#' onClick=sortAscAge(this.id)  id='ageRequired'>&#9652</a>"
-    			+ "<a href='#' onClick=sortDescAge(this.id) id='ageRequired'> &#9662</a></th>"
-    			+ "<th>Common Illness<a href='#' onClick=sortAscIllness(this.id) id='conditionName'> &#9652</a>"
-    			+ "<a href='#' onClick=sortDescIllness(this.id) id='conditionName'> &#9662</a></th>"
-    			+ "<th>Screening <a href='#' onClick=sortAscScreening(this.id) id='screening'> &#9652</a>"
-    			+ "<a href='#' onClick=sortDescScreening(this.id) id='screening'> &#9662</a></th>"
-    			+"<th>Demographic</th>"
-    			+ "<th>Regularity of screening</th>"
-    			+ "<th>View Patients</th>"
-    			+ "<th>Edit</th>"
-    			+ "<th>Delete</th></tr></thead>";
-	    	$.each(response,function(key, value) {
-	    		table += "<tbody><tr><td>"
-    				+ value["ageRequired"]
-    				+ "</td>"
-    				+ "<td>"
-    				+ value["conditionName"]
-					+ "</td>"
-					+ "<td>"
-    				+ value["screening"]
-					+ "</td>"
-					+ "<td>"
-    				+ value["type"]
-					+ "</td>"
-					+ "<td>"
-    				+ value["years"] 
-					+ "</td>"
-					+ "<td>"
-    				+"<a href='#' onClick=viewPatientList(this.id) id= '"
-    				+ value.ID
-    				+ "'>View patients</a>"
-					+ "</td>"
-					+ "<td>"
-    				+ "<a href='#' onClick=editItem(this.id) id= '"
-    				+ value.ID
-    				+ "'>Edit</a>"
-					+ "</td>"
-					+ '<td><a href=# onClick=deleteItem(this.id) id="'
-					+ value.ID
-					+ '">Delete</a></td></tr>'		    				
-					+ "</td></tr></tbody>"
-	    	});
-	    	table += "</table>"
-	    		$("#display").html(table);
-	    	
-	    
-	    }
-		});
-
-
-}
-
-function sortDescScreening(clickedID){
-	var table = "<table id='table' class='table table-condensed' cellspacing='0'>";
-	var sendData = "name=screening &orderDirection=DESC";
-	$.ajax({
-	    url : "DisplayAllInfant",
-	    type : "get",
-	    data : sendData,
-	    complete: function(data){
-	    	var json = jQuery.parseJSON(JSON.stringify(data));
-	    	var response = JSON.parse(json.responseText);
-	    	table += "<thead><tr><th>Starting Age (In Months)<a href='#' onClick=sortAscAge(this.id)  id='ageRequired'>&#9652</a>"
-    			+ "<a href='#' onClick=sortDescAge(this.id) id='ageRequired'> &#9662</a></th>"
-    			+ "<th>Common Illness<a href='#' onClick=sortAscIllness(this.id) id='conditionName'> &#9652</a>"
-    			+ "<a href='#' onClick=sortDescIllness(this.id) id='conditionName'> &#9662</a></th>"
-    			+ "<th>Screening <a href='#' onClick=sortAscScreening(this.id) id='screening'> &#9652</a>"
-    			+ "<a href='#' onClick=sortDescScreening(this.id) id='screening'> &#9662</a></th>"
-    			+"<th>Demographic</th>"
-    			+ "<th>Regularity of screening</th>"
-    			+ "<th>View Patients</th>"
-    			+ "<th>Edit</th>"
-    			+ "<th>Delete</th></tr></thead>";
-	    	$.each(response,function(key, value) {
-	    		table += "<tbody><tr><td>"
-    				+ value["ageRequired"]
-    				+ "</td>"
-    				+ "<td>"
-    				+ value["conditionName"]
-					+ "</td>"
-					+ "<td>"
-    				+ value["screening"]
-					+ "</td>"
-					+ "<td>"
-    				+ value["type"]
-					+ "</td>"
-					+ "<td>"
-    				+ value["years"] 
-					+ "</td>"
-					+ "<td>"
-    				+"<a href='#' onClick=viewPatientList(this.id) id= '"
-    				+ value.ID
-    				+ "'>View patients</a>"
-					+ "</td>"
-					+ "<td>"
-    				+ "<a href='#' onClick=editItem(this.id) id= '"
-    				+ value.ID
-    				+ "'>Edit</a>"
-					+ "</td>"
-					+ '<td><a href=# onClick=deleteItem(this.id) id="'
-					+ value.ID
-					+ '">Delete</a></td></tr>'		    				
-					+ "</td></tr></tbody>"
-	    	});
-	    	table += "</table>"
-	    		$("#display").html(table);
-	    	
-	    
-	    }
-		});
-
-
-}
-	
-	function deleteItem(clickedID){
-		
-		var sendData = {
-				"ID" : clickedID
-			};
-			$.ajax({
-				url : "DeleteCondition",
-				type : "post",
-				data : sendData,
-				dataType : "json",
-				success : function(data) {
-					displayAll();
-				}
-
-			});
-    } 
-
-
-	function editItem(clickedID){
-		var sendData = {
-				"ID" : clickedID
-			};
-			$.ajax({
-				url : "EditCondition",
-				type : "post",
-				data : sendData,
-				dataType : "json",
-				complete : function(data) {
-					displayAll();
-						window.location="editTimelineSummary.html";
-					
-				}
-	
-			});
 	}
 
-		function sendEmail(){ 
-			clients = $('input[name="selectClients"]:checked').map(function() {
-			    return this.value;
-			}).get();
-			if (clients == ""){
-				$('#message').html("<div class='alert alert-danger' role='alert'><center><b> Please select at least 1 client. </b></center></div>");
-			}else{
-		    	$.ajax({
-					type: 'post',
-					url: "StoreSendEmail",
-					data: 'email=' + clients,
-					complete: function(data){	
-						sessionStorage.setItem('clients',clients);
-				    		window.location.href = "draftEmail.html";	
-					}
-		    	
-				    	
-				});
-			} 
-		}
-	
-	
-		function viewPatientList(clickedID){
-			  
-			  var table = "<table id='table'  class='table table-condensed' cellspacing='0'>";
-			  var sendData = "name=age &direction=ASC &ID=" + clickedID;
+	function sortDescAge(clickedID) {
+		var table = "<table id='table'  class='table table-condensed' cellspacing='0'>";
+		var sendData = "name=ageRequired &orderDirection=DESC";
+		$
+				.ajax({
+					url : "DisplayAllInfant",
+					type : "get",
+					data : sendData,
+					complete : function(data) {
+						var json = jQuery.parseJSON(JSON.stringify(data));
+						var response = JSON.parse(json.responseText);
+						table += "<thead><tr><th>Starting Age (In Months)<a href='#' onClick=sortAscAge(this.id)  id='ageRequired'>&#9652</a>"
+								+ "<a href='#' onClick=sortDescAge(this.id) id='ageRequired'> &#9662</a></th>"
+								+ "<th>Common Illness<a href='#' onClick=sortAscIllness(this.id) id='conditionName'> &#9652</a>"
+								+ "<a href='#' onClick=sortDescIllness(this.id) id='conditionName'> &#9662</a></th>"
+								+ "<th>Screening <a href='#' onClick=sortAscScreening(this.id) id='screening'> &#9652</a>"
+								+ "<a href='#' onClick=sortDescIllness(this.id) id='screening'> &#9662</a></th>"
+								+ "<th>Demographic</th>"
+								+ "<th>Regularity of screening</th>"
+								+ "<th>View Patients</th>"
+								+ "<th>Edit</th>"
+								+ "<th>Delete</th></tr></thead>";
+						$
+								.each(
+										response,
+										function(key, value) {
+											table += "<tbody><tr><td>"
+													+ value["ageRequired"]
+													+ "</td>"
+													+ "<td>"
+													+ value["conditionName"]
+													+ "</td>"
+													+ "<td>"
+													+ value["screening"]
+													+ "</td>"
+													+ "<td>"
+													+ value["type"]
+													+ "</td>"
+													+ "<td>"
+													+ value["years"]
+													+ "</td>"
+													+ "<td>"
+													+ "<a href='#' onClick=viewPatientList(this.id) id= '"
+													+ value.ID
+													+ "'>View patients</a>"
+													+ "</td>"
+													+ "<td>"
+													+ "<a href='#' onClick=editItem(this.id) id= '"
+													+ value.ID
+													+ "'>Edit</a>"
+													+ "</td>"
+													+ '<td><a href=# onClick=deleteItem(this.id) id="'
+													+ value.ID
+													+ '">Delete</a></td></tr>'
+													+ "</td></tr></tbody>"
+										});
+						table += "</table>"
+						$("#display").html(table);
 
-			   $.ajax({
-			    url : "DisplayPatientsByIllness",
-			    type : "get",
-			    data : sendData,
-			    dataType : "json",
-			    complete: function(data){
-			        var json = jQuery.parseJSON(data.responseText);
-			       if(json.length != 0){
-			    	   console.log(json.length);
-			    	   table += "<h3><b>Condition Name:</b>  " + json[0].conditionName +"<br>   <b>Screening Name: </b> "+ json[0].screeningName +"</h3>"
-				        sessionStorage.setItem('screeningName',json[0].screeningName);			      
-				        table += "<thead><tr><th>Age<a href='#' onClick=sortAscClientAge(this.id)  id='age'>&#9652</a><a href='#' onClick=sortDescClientAge(this.id)  id='age'> &#9662</a></th>"
-				        + "<th>Client Name<a href='#' onClick=sortAscClientName(this.id)  id='clientName'>&#9652</a><a href='#' onClick=sortDescClientName(this.id) id='clientName'> &#9662</a></th>"
-				        + "<th>Email<a href='#' onClick=sortAscClientEmail(this.id)  id='email'>&#9652</a><a href='#' onClick=sortDescClientEmail(this.id) id='email'> &#9662</a></th>"
-				        + "<th>Email Sent Date</th>"
-				        + "<th>PIC</th>"
-				        + "<th>Select All	<input type='checkbox' id='select_all'/></th></tr></thead>";
-				      
-				        $.each(json,function(key,value) {
-				        
-				          table += "<tbody><tr><td>"
-				          + value["age"]
-				          + "</td>"
-				          + "<td>"
-				          + value["name"]
-				          + "</td>"
-				          + "<td>"
-				          + value["email"]
-				          + "</td>"
-				          + "<td>"
-				          + value["date"]
-				          + "</td>"
-				          + "<td>"
-				          + value["followUpPerson"]
-				          + "</td>"
-				          + "<td>"
-				          + "<input class='checkbox' type='checkbox' name='selectClients' value=" + value["email"]+">"          
-				       + "</td></tr></tbody>"
-				        });
-				        table += "</table>"
-				        table += "<div id='displayNumSelected'></div>"
-				        table += "<div class='container' align='center'>"
-				         + "<div class='inline'><button class='btn btn-default' onclick='sendEmail()'><b>Go to email template</b></button><button type='button' id='export' class='btn btn-default'><b>Export to excel</b></button></div><div class='inline'><div  id='message'></div></div>"
-				           +"</div>"
-				       
-				         $("#display").html(table);
+					}
+				});
+
+	}
+
+	function sortAscIllness(clickedID) {
+		var table = "<table id='table'  class='table table-condensed' cellspacing='0'>";
+		var sendData = "name=conditionName &orderDirection=ASC";
+		$
+				.ajax({
+					url : "DisplayAllInfant",
+					type : "get",
+					data : sendData,
+					complete : function(data) {
+						var json = jQuery.parseJSON(JSON.stringify(data));
+						var response = JSON.parse(json.responseText);
+						table += "<thead><tr><th>Starting Age (In Months)<a href='#' onClick=sortAscAge(this.id)  id='ageRequired'>&#9652</a>"
+								+ "<a href='#' onClick=sortDescAge(this.id) id='ageRequired'> &#9662</a></th>"
+								+ "<th>Common Illness<a href='#' onClick=sortAscIllness(this.id) id='conditionName'> &#9652</a>"
+								+ "<a href='#' onClick=sortDescIllness(this.id) id='conditionName'> &#9662</a></th>"
+								+ "<th>Screening <a href='#' onClick=sortAscScreening(this.id) id='screening'> &#9652</a>"
+								+ "<a href='#' onClick=sortDescIllness(this.id) id='screening'> &#9662</a></th>"
+								+ "<th>Demographic</th>"
+								+ "<th>Regularity of screening</th>"
+								+ "<th>View Patients</th>"
+								+ "<th>Edit</th>"
+								+ "<th>Delete</th></tr></thead>";
+						$
+								.each(
+										response,
+										function(key, value) {
+											table += "<tbody><tr><td>"
+													+ value["ageRequired"]
+													+ "</td>"
+													+ "<td>"
+													+ value["conditionName"]
+													+ "</td>"
+													+ "<td>"
+													+ value["screening"]
+													+ "</td>"
+													+ "<td>"
+													+ value["type"]
+													+ "</td>"
+													+ "<td>"
+													+ value["years"]
+													+ "</td>"
+													+ "<td>"
+													+ "<a href='#' onClick=viewPatientList(this.id) id= '"
+													+ value.ID
+													+ "'>View patients</a>"
+													+ "</td>"
+													+ "<td>"
+													+ "<a href='#' onClick=editItem(this.id) id= '"
+													+ value.ID
+													+ "'>Edit</a>"
+													+ "</td>"
+													+ '<td><a href=# onClick=deleteItem(this.id) id="'
+													+ value.ID
+													+ '">Delete</a></td></tr>'
+													+ "</td></tr></tbody>"
+										});
+						table += "</table>"
+						$("#display").html(table);
+
+					}
+				});
+
+	}
+
+	function sortDescIllness(clickedID) {
+		var table = "<table id='table'  class='table table-condensed' cellspacing='0'>";
+		var sendData = "name=conditionName &orderDirection=DESC";
+		$
+				.ajax({
+					url : "DisplayAllInfant",
+					type : "get",
+					data : sendData,
+					complete : function(data) {
+						var json = jQuery.parseJSON(JSON.stringify(data));
+						var response = JSON.parse(json.responseText);
+						table += "<thead><tr><th>Starting Age (In Months)<a href='#' onClick=sortAscAge(this.id)  id='ageRequired'>&#9652</a>"
+								+ "<a href='#' onClick=sortDescAge(this.id) id='ageRequired'> &#9662</a></th>"
+								+ "<th>Common Illness<a href='#' onClick=sortAscIllness(this.id) id='conditionName'> &#9652</a>"
+								+ "<a href='#' onClick=sortDescIllness(this.id) id='conditionName'> &#9662</a></th>"
+								+ "<th>Screening <a href='#' onClick=sortAscScreening(this.id) id='screening'> &#9652</a>"
+								+ "<a href='#' onClick=sortDescScreening(this.id) id='screening'> &#9662</a></th>"
+								+ "<th>Demographic</th>"
+								+ "<th>Regularity of screening</th>"
+								+ "<th>View Patients</th>"
+								+ "<th>Edit</th>"
+								+ "<th>Delete</th></tr></thead>";
+						$
+								.each(
+										response,
+										function(key, value) {
+											table += "<tbody><tr><td>"
+													+ value["ageRequired"]
+													+ "</td>"
+													+ "<td>"
+													+ value["conditionName"]
+													+ "</td>"
+													+ "<td>"
+													+ value["screening"]
+													+ "</td>"
+													+ "<td>"
+													+ value["type"]
+													+ "</td>"
+													+ "<td>"
+													+ value["years"]
+													+ "</td>"
+													+ "<td>"
+													+ "<a href='#' onClick=viewPatientList(this.id) id= '"
+													+ value.ID
+													+ "'>View patients</a>"
+													+ "</td>"
+													+ "<td>"
+													+ "<a href='#' onClick=editItem(this.id) id= '"
+													+ value.ID
+													+ "'>Edit</a>"
+													+ "</td>"
+													+ '<td><a href=# onClick=deleteItem(this.id) id="'
+													+ value.ID
+													+ '">Delete</a></td></tr>'
+													+ "</td></tr></tbody>"
+										});
+						table += "</table>"
+						$("#display").html(table);
+
+					}
+				});
+
+	}
+
+	function sortAscScreening(clickedID) {
+		var table = "<table id='table'  class='table table-condensed' cellspacing='0'>";
+		var sendData = "name=screening &orderDirection=ASC";
+		$
+				.ajax({
+					url : "DisplayAllInfant",
+					type : "get",
+					data : sendData,
+					complete : function(data) {
+						var json = jQuery.parseJSON(JSON.stringify(data));
+						var response = JSON.parse(json.responseText);
+						table += "<thead><tr><th>Starting Age (In Months)<a href='#' onClick=sortAscAge(this.id)  id='ageRequired'>&#9652</a>"
+								+ "<a href='#' onClick=sortDescAge(this.id) id='ageRequired'> &#9662</a></th>"
+								+ "<th>Common Illness<a href='#' onClick=sortAscIllness(this.id) id='conditionName'> &#9652</a>"
+								+ "<a href='#' onClick=sortDescIllness(this.id) id='conditionName'> &#9662</a></th>"
+								+ "<th>Screening <a href='#' onClick=sortAscScreening(this.id) id='screening'> &#9652</a>"
+								+ "<a href='#' onClick=sortDescScreening(this.id) id='screening'> &#9662</a></th>"
+								+ "<th>Demographic</th>"
+								+ "<th>Regularity of screening</th>"
+								+ "<th>View Patients</th>"
+								+ "<th>Edit</th>"
+								+ "<th>Delete</th></tr></thead>";
+						$
+								.each(
+										response,
+										function(key, value) {
+											table += "<tbody><tr><td>"
+													+ value["ageRequired"]
+													+ "</td>"
+													+ "<td>"
+													+ value["conditionName"]
+													+ "</td>"
+													+ "<td>"
+													+ value["screening"]
+													+ "</td>"
+													+ "<td>"
+													+ value["type"]
+													+ "</td>"
+													+ "<td>"
+													+ value["years"]
+													+ "</td>"
+													+ "<td>"
+													+ "<a href='#' onClick=viewPatientList(this.id) id= '"
+													+ value.ID
+													+ "'>View patients</a>"
+													+ "</td>"
+													+ "<td>"
+													+ "<a href='#' onClick=editItem(this.id) id= '"
+													+ value.ID
+													+ "'>Edit</a>"
+													+ "</td>"
+													+ '<td><a href=# onClick=deleteItem(this.id) id="'
+													+ value.ID
+													+ '">Delete</a></td></tr>'
+													+ "</td></tr></tbody>"
+										});
+						table += "</table>"
+						$("#display").html(table);
+
+					}
+				});
+
+	}
+
+	function sortDescScreening(clickedID) {
+		var table = "<table id='table' class='table table-condensed' cellspacing='0'>";
+		var sendData = "name=screening &orderDirection=DESC";
+		$
+				.ajax({
+					url : "DisplayAllInfant",
+					type : "get",
+					data : sendData,
+					complete : function(data) {
+						var json = jQuery.parseJSON(JSON.stringify(data));
+						var response = JSON.parse(json.responseText);
+						table += "<thead><tr><th>Starting Age (In Months)<a href='#' onClick=sortAscAge(this.id)  id='ageRequired'>&#9652</a>"
+								+ "<a href='#' onClick=sortDescAge(this.id) id='ageRequired'> &#9662</a></th>"
+								+ "<th>Common Illness<a href='#' onClick=sortAscIllness(this.id) id='conditionName'> &#9652</a>"
+								+ "<a href='#' onClick=sortDescIllness(this.id) id='conditionName'> &#9662</a></th>"
+								+ "<th>Screening <a href='#' onClick=sortAscScreening(this.id) id='screening'> &#9652</a>"
+								+ "<a href='#' onClick=sortDescScreening(this.id) id='screening'> &#9662</a></th>"
+								+ "<th>Demographic</th>"
+								+ "<th>Regularity of screening</th>"
+								+ "<th>View Patients</th>"
+								+ "<th>Edit</th>"
+								+ "<th>Delete</th></tr></thead>";
+						$
+								.each(
+										response,
+										function(key, value) {
+											table += "<tbody><tr><td>"
+													+ value["ageRequired"]
+													+ "</td>"
+													+ "<td>"
+													+ value["conditionName"]
+													+ "</td>"
+													+ "<td>"
+													+ value["screening"]
+													+ "</td>"
+													+ "<td>"
+													+ value["type"]
+													+ "</td>"
+													+ "<td>"
+													+ value["years"]
+													+ "</td>"
+													+ "<td>"
+													+ "<a href='#' onClick=viewPatientList(this.id) id= '"
+													+ value.ID
+													+ "'>View patients</a>"
+													+ "</td>"
+													+ "<td>"
+													+ "<a href='#' onClick=editItem(this.id) id= '"
+													+ value.ID
+													+ "'>Edit</a>"
+													+ "</td>"
+													+ '<td><a href=# onClick=deleteItem(this.id) id="'
+													+ value.ID
+													+ '">Delete</a></td></tr>'
+													+ "</td></tr></tbody>"
+										});
+						table += "</table>"
+						$("#display").html(table);
+
+					}
+				});
+
+	}
+
+	function deleteItem(clickedID) {
+
+		var sendData = {
+			"ID" : clickedID
+		};
+		$.ajax({
+			url : "DeleteCondition",
+			type : "post",
+			data : sendData,
+			dataType : "json",
+			success : function(data) {
+				displayAll();
+			}
+
+		});
+	}
+
+	function editItem(clickedID) {
+		var sendData = {
+			"ID" : clickedID
+		};
+		$.ajax({
+			url : "EditCondition",
+			type : "post",
+			data : sendData,
+			dataType : "json",
+			complete : function(data) {
+				displayAll();
+				window.location = "editTimelineSummary.html";
+
+			}
+
+		});
+	}
+
+	function sendEmail() {
+		clients = $('input[name="selectClients"]:checked').map(function() {
+			return this.value;
+		}).get();
+		if (clients == "") {
+			$('#message')
+					.html(
+							"<div class='alert alert-danger' role='alert'><center><b> Please select at least 1 client. </b></center></div>");
+		} else {
+			$.ajax({
+				type : 'post',
+				url : "StoreSendEmail",
+				data : 'email=' + clients,
+				complete : function(data) {
+					sessionStorage.setItem('clients', clients);
+					window.location.href = "draftEmail.html";
+				}
+
+			});
+		}
+	}
+
+	function viewPatientList(clickedID) {
+
+		var table = "<table id='table'  class='table table-condensed' cellspacing='0'>";
+		var sendData = "name=age &direction=ASC &ID=" + clickedID;
+
+		$
+				.ajax({
+					url : "DisplayPatientsByIllness",
+					type : "get",
+					data : sendData,
+					dataType : "json",
+					complete : function(data) {
+						var json = jQuery.parseJSON(data.responseText);
+						if (json.length != 0) {
+							console.log(json.length);
+							table += "<h3><b>Condition Name:</b>  "
+									+ json[0].conditionName
+									+ "<br>   <b>Screening Name: </b> "
+									+ json[0].screeningName + "</h3>"
+							sessionStorage.setItem('screeningName',
+									json[0].screeningName);
+							table += "<thead><tr><th>Age<a href='#' onClick=sortAscClientAge(this.id)  id='age'>&#9652</a><a href='#' onClick=sortDescClientAge(this.id)  id='age'> &#9662</a></th>"
+									+ "<th>Client Name<a href='#' onClick=sortAscClientName(this.id)  id='clientName'>&#9652</a><a href='#' onClick=sortDescClientName(this.id) id='clientName'> &#9662</a></th>"
+									+ "<th>Email<a href='#' onClick=sortAscClientEmail(this.id)  id='email'>&#9652</a><a href='#' onClick=sortDescClientEmail(this.id) id='email'> &#9662</a></th>"
+									+ "<th>Email Sent Date</th>"
+									+ "<th>PIC</th>"
+									+ "<th>Select All	<input type='checkbox' id='select_all'/></th></tr></thead>";
+
+							$
+									.each(
+											json,
+											function(key, value) {
+
+												table += "<tbody><tr><td>"
+														+ value["age"]
+														+ "</td>"
+														+ "<td>"
+														+ value["name"]
+														+ "</td>"
+														+ "<td>"
+														+ value["email"]
+														+ "</td>"
+														+ "<td>"
+														+ value["date"]
+														+ "</td>"
+														+ "<td>"
+														+ value["followUpPerson"]
+														+ "</td>"
+														+ "<td>"
+														+ "<input class='checkbox' type='checkbox' name='selectClients' value=" + value["email"]+">"
+														+ "</td></tr></tbody>"
+											});
+							table += "</table>"
+							table += "<div id='displayNumSelected'></div>"
+							table += "<div class='container' align='center'>"
+									+ "<div class='inline'><button class='btn btn-default' onclick='sendEmail()'><b>Go to email template</b></button><button type='button' id='export' class='btn btn-default'><b>Export to excel</b></button></div><div class='inline'><div  id='message'></div></div>"
+									+ "</div>"
+
+							$("#display").html(table);
 							$('#error').html("");
 
-							$('#select_all').on('click',function(){
-							    if(this.checked){
-							        $('.checkbox:visible').each(function(){
-							            this.checked = true;
-							        });
-							    }else{
-							         $('.checkbox:visible').each(function(){
-							            this.checked = false;
-							        });
-							    }
+							$('#select_all').on('click', function() {
+								if (this.checked) {
+									$('.checkbox:visible').each(function() {
+										this.checked = true;
+									});
+								} else {
+									$('.checkbox:visible').each(function() {
+										this.checked = false;
+									});
+								}
 							});
 
-							$('.checkbox:visible').on('click',function(){
-							    if($('.checkbox:checked').length == $('.checkbox:visible').length){
-							        $('#select_all').prop('checked',true);
-							    }else{
-							        $('#select_all').prop('checked',false);
-							    }
+							$('.checkbox:visible')
+									.on(
+											'click',
+											function() {
+												if ($('.checkbox:checked').length == $('.checkbox:visible').length) {
+													$('#select_all').prop(
+															'checked', true);
+												} else {
+													$('#select_all').prop(
+															'checked', false);
+												}
+											});
+						} else {
+							$('#error')
+									.html(
+											"<div class='alert alert-danger' role='alert'><center><b> No patient in database matches criteria </b></center></div>");
+
+						}
+
+					}
+
+				});
+	}
+
+	function sortAscClientAge(clickedID) {
+		var table = "<table id='table' class='table table-condensed' cellspacing='0'>";
+		var sendData = "name=age &direction=ASC";
+		$
+				.ajax({
+					url : "DisplayPatientsByIllnessSorting",
+					type : "get",
+					data : sendData,
+					complete : function(data) {
+						var json = jQuery.parseJSON(data.responseText);
+						if (json.length != 0) {
+							table += "<h3><b>Condition Name:</b>  "
+									+ json[0].conditionName
+									+ "<br>   <b>Screening Name: </b> "
+									+ json[0].screeningName + "</h3>"
+							sessionStorage.setItem('screeningName',
+									json[0].screeningName);
+							table += "<thead><tr><th>Age<a href='#' onClick=sortAscClientAge(this.id)  id='age'>&#9652</a><a href='#' onClick=sortDescClientAge(this.id)  id='age'> &#9662</a></th>"
+									+ "<th>Client Name<a href='#' onClick=sortAscClientName(this.id)  id='clientName'>&#9652</a><a href='#' onClick=sortDescClientName(this.id) id='clientName'> &#9662</a></th>"
+									+ "<th>Email<a href='#' onClick=sortAscClientEmail(this.id)  id='email'>&#9652</a><a href='#' onClick=sortDescClientEmail(this.id) id='email'> &#9662</a></th>"
+									+ "<th>Email Sent Date</th>"
+									+ "<th>PIC</th>"
+									+ "<th>Select All	<input type='checkbox' id='select_all'/></th></tr></thead>";
+
+							$
+									.each(
+											json,
+											function(key, value) {
+
+												table += "<tbody><tr><td>"
+														+ value["age"]
+														+ "</td>"
+														+ "<td>"
+														+ value["name"]
+														+ "</td>"
+														+ "<td>"
+														+ value["email"]
+														+ "</td>"
+														+ "<td>"
+														+ value["date"]
+														+ "</td>"
+														+ "<td>"
+														+ value["followUpPerson"]
+														+ "</td>"
+														+ "<td>"
+														+ "<input class='checkbox' type='checkbox' name='selectClients' value=" + value["email"]+">"
+														+ "</td></tr></tbody>"
+											});
+							table += "</table>"
+							table += "<div id='displayNumSelected'></div>"
+							table += "<div class='container' align='center'>"
+									+ "<div class='inline'><button class='btn btn-default' onclick='sendEmail()'>Go to email template</button></div><div class='inline'><div  id='message'></div></div>"
+									+ "<br> <button type='button' id='export' class='btn btn-link'><b>Export to excel(in progress)</b></button>"
+									+ "</div>"
+
+							$("#display").html(table);
+							$('#error').html("");
+
+							$('#select_all').on('click', function() {
+								if (this.checked) {
+									$('.checkbox:visible').each(function() {
+										this.checked = true;
+									});
+								} else {
+									$('.checkbox:visible').each(function() {
+										this.checked = false;
+									});
+								}
 							});
-			       }else{
-						$('#error').html("<div class='alert alert-danger' role='alert'><center><b> No patient in database matches criteria </b></center></div>");
 
-			       }
+							$('.checkbox:visible')
+									.on(
+											'click',
+											function() {
+												if ($('.checkbox:checked').length == $('.checkbox:visible').length) {
+													$('#select_all').prop(
+															'checked', true);
+												} else {
+													$('#select_all').prop(
+															'checked', false);
+												}
+											});
+						} else {
+							$('#error')
+									.html(
+											"<div class='alert alert-danger' role='alert'><center><b> No patient in database matches criteria </b></center></div>");
 
-			    } 
-			     
+						}
 
-			   });
-			 }
-		
-		function sortAscClientAge(clickedID){
-			var table = "<table id='table' class='table table-condensed' cellspacing='0'>";
-			var sendData = "name=age &direction=ASC" ;
-			$.ajax({
-			    url : "DisplayPatientsByIllnessSorting",
-			    type : "get",
-			    data : sendData ,
-			    complete: function(data){
-			    	 var json = jQuery.parseJSON(data.responseText);
-				     if(json.length != 0){
-				    	 table += "<h3><b>Condition Name:</b>  " + json[0].conditionName +"<br>   <b>Screening Name: </b> "+ json[0].screeningName +"</h3>"
-					        sessionStorage.setItem('screeningName',json[0].screeningName);			      
-					        table += "<thead><tr><th>Age<a href='#' onClick=sortAscClientAge(this.id)  id='age'>&#9652</a><a href='#' onClick=sortDescClientAge(this.id)  id='age'> &#9662</a></th>"
-					        + "<th>Client Name<a href='#' onClick=sortAscClientName(this.id)  id='clientName'>&#9652</a><a href='#' onClick=sortDescClientName(this.id) id='clientName'> &#9662</a></th>"
-					        + "<th>Email<a href='#' onClick=sortAscClientEmail(this.id)  id='email'>&#9652</a><a href='#' onClick=sortDescClientEmail(this.id) id='email'> &#9662</a></th>"
-					        + "<th>Email Sent Date</th>"
-					        + "<th>PIC</th>"
-					        + "<th>Select All	<input type='checkbox' id='select_all'/></th></tr></thead>";
-					      
-					        $.each(json,function(key,value) {
-					        
-					          table += "<tbody><tr><td>"
-					          + value["age"]
-					          + "</td>"
-					          + "<td>"
-					          + value["name"]
-					          + "</td>"
-					          + "<td>"
-					          + value["email"]
-					          + "</td>"
-					          + "<td>"
-					          + value["date"]
-					          + "</td>"
-					          + "<td>"
-					          + value["followUpPerson"]
-					          + "</td>"
-					          + "<td>"
-					          + "<input class='checkbox' type='checkbox' name='selectClients' value=" + value["email"]+">"          
-					       + "</td></tr></tbody>"
-					        });
-					        table += "</table>"
-					        table += "<div id='displayNumSelected'></div>"
-					        table += "<div class='container' align='center'>"
-					         + "<div class='inline'><button class='btn btn-default' onclick='sendEmail()'>Go to email template</button></div><div class='inline'><div  id='message'></div></div>"
-					         + "<br> <button type='button' id='export' class='btn btn-link'><b>Export to excel(in progress)</b></button>"
-					           +"</div>"
-					       
-					         $("#display").html(table);
-								$('#error').html("");
-
-								$('#select_all').on('click',function(){
-								    if(this.checked){
-								        $('.checkbox:visible').each(function(){
-								            this.checked = true;
-								        });
-								    }else{
-								         $('.checkbox:visible').each(function(){
-								            this.checked = false;
-								        });
-								    }
-								});
-
-								$('.checkbox:visible').on('click',function(){
-								    if($('.checkbox:checked').length == $('.checkbox:visible').length){
-								        $('#select_all').prop('checked',true);
-								    }else{
-								        $('#select_all').prop('checked',false);
-								    }
-								});
-				       }else{
-							$('#error').html("<div class='alert alert-danger' role='alert'><center><b> No patient in database matches criteria </b></center></div>");
-
-				       }
-
-			    }
-	 		});
-
+					}
+				});
 
 	}
-		
-		function sortDescClientAge(clickedID){
-			var table = "<table id='table' class='table table-condensed' cellspacing='0'>";
-			var sendData = "name=age &direction=DESC" ;
-			$.ajax({
-			    url : "DisplayPatientsByIllnessSorting",
-			    type : "get",
-			    data : sendData ,
-			    complete: function(data){
-			    	 var json = jQuery.parseJSON(data.responseText);
-				     if(json.length != 0){
-				    	 table += "<h3><b>Condition Name:</b>  " + json[0].conditionName +"<br>   <b>Screening Name: </b> "+ json[0].screeningName +"</h3>"
-					        sessionStorage.setItem('screeningName',json[0].screeningName);			      
-					        table += "<thead><tr><th>Age<a href='#' onClick=sortAscClientAge(this.id)  id='age'>&#9652</a><a href='#' onClick=sortDescClientAge(this.id)  id='age'> &#9662</a></th>"
-					        + "<th>Client Name<a href='#' onClick=sortAscClientName(this.id)  id='clientName'>&#9652</a><a href='#' onClick=sortDescClientName(this.id) id='clientName'> &#9662</a></th>"
-					        + "<th>Email<a href='#' onClick=sortAscClientEmail(this.id)  id='email'>&#9652</a><a href='#' onClick=sortDescClientEmail(this.id) id='email'> &#9662</a></th>"
-					        + "<th>Email Sent Date</th>"
-					        + "<th>PIC</th>"
-					        + "<th>Select All	<input type='checkbox' id='select_all'/></th></tr></thead>";
-					      
-					        $.each(json,function(key,value) {
-					        
-					          table += "<tbody><tr><td>"
-					          + value["age"]
-					          + "</td>"
-					          + "<td>"
-					          + value["name"]
-					          + "</td>"
-					          + "<td>"
-					          + value["email"]
-					          + "</td>"
-					          + "<td>"
-					          + value["date"]
-					          + "</td>"
-					          + "<td>"
-					          + value["followUpPerson"]
-					          + "</td>"
-					          + "<td>"
-					          + "<input class='checkbox' type='checkbox' name='selectClients' value=" + value["email"]+">"          
-					       + "</td></tr></tbody>"
-					        });
-					        table += "</table>"
-					        table += "<div id='displayNumSelected'></div>"
-					        table += "<div class='container' align='center'>"
-					         + "<div class='inline'><button class='btn btn-default' onclick='sendEmail()'>Go to email template</button></div><div class='inline'><div  id='message'></div></div>"
-					         + "<br> <button type='button' id='export' class='btn btn-link'><b>Export to excel(in progress)</b></button>"
-					           +"</div>"
-					       
-					         $("#display").html(table);
-								$('#error').html("");
 
-								$('#select_all').on('click',function(){
-								    if(this.checked){
-								        $('.checkbox:visible').each(function(){
-								            this.checked = true;
-								        });
-								    }else{
-								         $('.checkbox:visible').each(function(){
-								            this.checked = false;
-								        });
-								    }
-								});
+	function sortDescClientAge(clickedID) {
+		var table = "<table id='table' class='table table-condensed' cellspacing='0'>";
+		var sendData = "name=age &direction=DESC";
+		$
+				.ajax({
+					url : "DisplayPatientsByIllnessSorting",
+					type : "get",
+					data : sendData,
+					complete : function(data) {
+						var json = jQuery.parseJSON(data.responseText);
+						if (json.length != 0) {
+							table += "<h3><b>Condition Name:</b>  "
+									+ json[0].conditionName
+									+ "<br>   <b>Screening Name: </b> "
+									+ json[0].screeningName + "</h3>"
+							sessionStorage.setItem('screeningName',
+									json[0].screeningName);
+							table += "<thead><tr><th>Age<a href='#' onClick=sortAscClientAge(this.id)  id='age'>&#9652</a><a href='#' onClick=sortDescClientAge(this.id)  id='age'> &#9662</a></th>"
+									+ "<th>Client Name<a href='#' onClick=sortAscClientName(this.id)  id='clientName'>&#9652</a><a href='#' onClick=sortDescClientName(this.id) id='clientName'> &#9662</a></th>"
+									+ "<th>Email<a href='#' onClick=sortAscClientEmail(this.id)  id='email'>&#9652</a><a href='#' onClick=sortDescClientEmail(this.id) id='email'> &#9662</a></th>"
+									+ "<th>Email Sent Date</th>"
+									+ "<th>PIC</th>"
+									+ "<th>Select All	<input type='checkbox' id='select_all'/></th></tr></thead>";
 
-								$('.checkbox:visible').on('click',function(){
-								    if($('.checkbox:checked').length == $('.checkbox:visible').length){
-								        $('#select_all').prop('checked',true);
-								    }else{
-								        $('#select_all').prop('checked',false);
-								    }
-								});
-				       }else{
-							$('#error').html("<div class='alert alert-danger' role='alert'><center><b> No patient in database matches criteria </b></center></div>");
+							$
+									.each(
+											json,
+											function(key, value) {
 
-				       }
+												table += "<tbody><tr><td>"
+														+ value["age"]
+														+ "</td>"
+														+ "<td>"
+														+ value["name"]
+														+ "</td>"
+														+ "<td>"
+														+ value["email"]
+														+ "</td>"
+														+ "<td>"
+														+ value["date"]
+														+ "</td>"
+														+ "<td>"
+														+ value["followUpPerson"]
+														+ "</td>"
+														+ "<td>"
+														+ "<input class='checkbox' type='checkbox' name='selectClients' value=" + value["email"]+">"
+														+ "</td></tr></tbody>"
+											});
+							table += "</table>"
+							table += "<div id='displayNumSelected'></div>"
+							table += "<div class='container' align='center'>"
+									+ "<div class='inline'><button class='btn btn-default' onclick='sendEmail()'>Go to email template</button></div><div class='inline'><div  id='message'></div></div>"
+									+ "<br> <button type='button' id='export' class='btn btn-link'><b>Export to excel(in progress)</b></button>"
+									+ "</div>"
 
-			    }
-	 		});
+							$("#display").html(table);
+							$('#error').html("");
 
+							$('#select_all').on('click', function() {
+								if (this.checked) {
+									$('.checkbox:visible').each(function() {
+										this.checked = true;
+									});
+								} else {
+									$('.checkbox:visible').each(function() {
+										this.checked = false;
+									});
+								}
+							});
 
-	}
-		
-		function sortAscClientName(clickedID){
-			var table = "<table id='table' class='table table-condensed' cellspacing='0'>";
-			var sendData = "name=clientName &direction=ASC" ;
-			$.ajax({
-			    url : "DisplayPatientsByIllnessSorting",
-			    type : "get",
-			    data : sendData ,
-			    complete: function(data){
-			    	 var json = jQuery.parseJSON(data.responseText);
-				     if(json.length != 0){
-				    	 table += "<h3><b>Condition Name:</b>  " + json[0].conditionName +"<br>   <b>Screening Name: </b> "+ json[0].screeningName +"</h3>"
-					        sessionStorage.setItem('screeningName',json[0].screeningName);			      
-					        table += "<thead><tr><th>Age<a href='#' onClick=sortAscClientAge(this.id)  id='age'>&#9652</a><a href='#' onClick=sortDescClientAge(this.id)  id='age'> &#9662</a></th>"
-					        + "<th>Client Name<a href='#' onClick=sortAscClientName(this.id)  id='clientName'>&#9652</a><a href='#' onClick=sortDescClientName(this.id) id='clientName'> &#9662</a></th>"
-					        + "<th>Email<a href='#' onClick=sortAscClientEmail(this.id)  id='email'>&#9652</a><a href='#' onClick=sortDescClientEmail(this.id) id='email'> &#9662</a></th>"
-					        + "<th>Email Sent Date</th>"
-					        + "<th>PIC</th>"
-					        + "<th>Select All	<input type='checkbox' id='select_all'/></th></tr></thead>";
-					      
-					        $.each(json,function(key,value) {
-					        
-					          table += "<tbody><tr><td>"
-					          + value["age"]
-					          + "</td>"
-					          + "<td>"
-					          + value["name"]
-					          + "</td>"
-					          + "<td>"
-					          + value["email"]
-					          + "</td>"
-					          + "<td>"
-					          + value["date"]
-					          + "</td>"
-					          + "<td>"
-					          + value["followUpPerson"]
-					          + "</td>"
-					          + "<td>"
-					          + "<input class='checkbox' type='checkbox' name='selectClients' value=" + value["email"]+">"          
-					       + "</td></tr></tbody>"
-					        });
-					        table += "</table>"
-					        table += "<div id='displayNumSelected'></div>"
-					        table += "<div class='container' align='center'>"
-					         + "<div class='inline'><button class='btn btn-default' onclick='sendEmail()'>Go to email template</button></div><div class='inline'><div  id='message'></div></div>"
-					         + "<br> <button type='button' id='export' class='btn btn-link'><b>Export to excel(in progress)</b></button>"
-					           +"</div>"
-					       
-					         $("#display").html(table);
-								$('#error').html("");
-								$('#select_all').on('click',function(){
-								    if(this.checked){
-								        $('.checkbox:visible').each(function(){
-								            this.checked = true;
-								        });
-								    }else{
-								         $('.checkbox:visible').each(function(){
-								            this.checked = false;
-								        });
-								    }
-								});
+							$('.checkbox:visible')
+									.on(
+											'click',
+											function() {
+												if ($('.checkbox:checked').length == $('.checkbox:visible').length) {
+													$('#select_all').prop(
+															'checked', true);
+												} else {
+													$('#select_all').prop(
+															'checked', false);
+												}
+											});
+						} else {
+							$('#error')
+									.html(
+											"<div class='alert alert-danger' role='alert'><center><b> No patient in database matches criteria </b></center></div>");
 
-								$('.checkbox:visible').on('click',function(){
-								    if($('.checkbox:checked').length == $('.checkbox:visible').length){
-								        $('#select_all').prop('checked',true);
-								    }else{
-								        $('#select_all').prop('checked',false);
-								    }
-								});
-				       }else{
-							$('#error').html("<div class='alert alert-danger' role='alert'><center><b> No patient in database matches criteria </b></center></div>");
+						}
 
-				       }
-
-			    }
-	 		});
-
+					}
+				});
 
 	}
-		
-		function sortDescClientName(clickedID){
-			var table = "<table id='table' class='table table-condensed' cellspacing='0'>";
-			var sendData = "name=clientName &direction=DESC" ;
-			$.ajax({
-			    url : "DisplayPatientsByIllnessSorting",
-			    type : "get",
-			    data : sendData ,
-			    complete: function(data){
-			    	 var json = jQuery.parseJSON(data.responseText);
-				     if(json.length != 0){
-				    	 table += "<h3><b>Condition Name:</b>  " + json[0].conditionName +"<br>   <b>Screening Name: </b> "+ json[0].screeningName +"</h3>"
-					        sessionStorage.setItem('screeningName',json[0].screeningName);			      
-					        table += "<thead><tr><th>Age<a href='#' onClick=sortAscClientAge(this.id)  id='age'>&#9652</a><a href='#' onClick=sortDescClientAge(this.id)  id='age'> &#9662</a></th>"
-					        + "<th>Client Name<a href='#' onClick=sortAscClientName(this.id)  id='clientName'>&#9652</a><a href='#' onClick=sortDescClientName(this.id) id='clientName'> &#9662</a></th>"
-					        + "<th>Email<a href='#' onClick=sortAscClientEmail(this.id)  id='email'>&#9652</a><a href='#' onClick=sortDescClientEmail(this.id) id='email'> &#9662</a></th>"
-					        + "<th>Email Sent Date</th>"
-					        + "<th>PIC</th>"
-					        + "<th>Select All	<input type='checkbox' id='select_all'/></th></tr></thead>";
-					      
-					        $.each(json,function(key,value) {
-					        
-					          table += "<tbody><tr><td>"
-					          + value["age"]
-					          + "</td>"
-					          + "<td>"
-					          + value["name"]
-					          + "</td>"
-					          + "<td>"
-					          + value["email"]
-					          + "</td>"
-					          + "<td>"
-					          + value["date"]
-					          + "</td>"
-					          + "<td>"
-					          + value["followUpPerson"]
-					          + "</td>"
-					          + "<td>"
-					          + "<input class='checkbox' type='checkbox' name='selectClients' value=" + value["email"]+">"          
-					       + "</td></tr></tbody>"
-					        });
-					        table += "</table>"
-					        table += "<div id='displayNumSelected'></div>"
-					        table += "<div class='container' align='center'>"
-					         + "<div class='inline'><button class='btn btn-default' onclick='sendEmail()'>Go to email template</button></div><div class='inline'><div  id='message'></div></div>"
-					         + "<br> <button type='button' id='export' class='btn btn-link'><b>Export to excel(in progress)</b></button>"
-					           +"</div>"
-					       
-					         $("#display").html(table);
-								$('#error').html("");
 
-								$('#select_all').on('click',function(){
-								    if(this.checked){
-								        $('.checkbox:visible').each(function(){
-								            this.checked = true;
-								        });
-								    }else{
-								         $('.checkbox:visible').each(function(){
-								            this.checked = false;
-								        });
-								    }
-								});
+	function sortAscClientName(clickedID) {
+		var table = "<table id='table' class='table table-condensed' cellspacing='0'>";
+		var sendData = "name=clientName &direction=ASC";
+		$
+				.ajax({
+					url : "DisplayPatientsByIllnessSorting",
+					type : "get",
+					data : sendData,
+					complete : function(data) {
+						var json = jQuery.parseJSON(data.responseText);
+						if (json.length != 0) {
+							table += "<h3><b>Condition Name:</b>  "
+									+ json[0].conditionName
+									+ "<br>   <b>Screening Name: </b> "
+									+ json[0].screeningName + "</h3>"
+							sessionStorage.setItem('screeningName',
+									json[0].screeningName);
+							table += "<thead><tr><th>Age<a href='#' onClick=sortAscClientAge(this.id)  id='age'>&#9652</a><a href='#' onClick=sortDescClientAge(this.id)  id='age'> &#9662</a></th>"
+									+ "<th>Client Name<a href='#' onClick=sortAscClientName(this.id)  id='clientName'>&#9652</a><a href='#' onClick=sortDescClientName(this.id) id='clientName'> &#9662</a></th>"
+									+ "<th>Email<a href='#' onClick=sortAscClientEmail(this.id)  id='email'>&#9652</a><a href='#' onClick=sortDescClientEmail(this.id) id='email'> &#9662</a></th>"
+									+ "<th>Email Sent Date</th>"
+									+ "<th>PIC</th>"
+									+ "<th>Select All	<input type='checkbox' id='select_all'/></th></tr></thead>";
 
-								$('.checkbox:visible').on('click',function(){
-								    if($('.checkbox:checked').length == $('.checkbox:visible').length){
-								        $('#select_all').prop('checked',true);
-								    }else{
-								        $('#select_all').prop('checked',false);
-								    }
-								});
-				       }else{
-							$('#error').html("<div class='alert alert-danger' role='alert'><center><b> No patient in database matches criteria </b></center></div>");
+							$
+									.each(
+											json,
+											function(key, value) {
 
-				       }
+												table += "<tbody><tr><td>"
+														+ value["age"]
+														+ "</td>"
+														+ "<td>"
+														+ value["name"]
+														+ "</td>"
+														+ "<td>"
+														+ value["email"]
+														+ "</td>"
+														+ "<td>"
+														+ value["date"]
+														+ "</td>"
+														+ "<td>"
+														+ value["followUpPerson"]
+														+ "</td>"
+														+ "<td>"
+														+ "<input class='checkbox' type='checkbox' name='selectClients' value=" + value["email"]+">"
+														+ "</td></tr></tbody>"
+											});
+							table += "</table>"
+							table += "<div id='displayNumSelected'></div>"
+							table += "<div class='container' align='center'>"
+									+ "<div class='inline'><button class='btn btn-default' onclick='sendEmail()'>Go to email template</button></div><div class='inline'><div  id='message'></div></div>"
+									+ "<br> <button type='button' id='export' class='btn btn-link'><b>Export to excel(in progress)</b></button>"
+									+ "</div>"
 
-			    }
-	 		});
+							$("#display").html(table);
+							$('#error').html("");
+							$('#select_all').on('click', function() {
+								if (this.checked) {
+									$('.checkbox:visible').each(function() {
+										this.checked = true;
+									});
+								} else {
+									$('.checkbox:visible').each(function() {
+										this.checked = false;
+									});
+								}
+							});
 
+							$('.checkbox:visible')
+									.on(
+											'click',
+											function() {
+												if ($('.checkbox:checked').length == $('.checkbox:visible').length) {
+													$('#select_all').prop(
+															'checked', true);
+												} else {
+													$('#select_all').prop(
+															'checked', false);
+												}
+											});
+						} else {
+							$('#error')
+									.html(
+											"<div class='alert alert-danger' role='alert'><center><b> No patient in database matches criteria </b></center></div>");
 
-	}
-		
-		function sortAscClientEmail(clickedID){
-			var table = "<table id='table' class='table table-condensed' cellspacing='0'>";
-			var sendData = "name=email &direction=ASC" ;
-			$.ajax({
-			    url : "DisplayPatientsByIllnessSorting",
-			    type : "get",
-			    data : sendData ,
-			    complete: function(data){
-			    	 var json = jQuery.parseJSON(data.responseText);
-				     if(json.length != 0){
-				    	 table += "<h3><b>Condition Name:</b>  " + json[0].conditionName +"<br>   <b>Screening Name: </b> "+ json[0].screeningName +"</h3>"
-					        sessionStorage.setItem('screeningName',json[0].screeningName);			      
-					        table += "<thead><tr><th>Age<a href='#' onClick=sortAscClientAge(this.id)  id='age'>&#9652</a><a href='#' onClick=sortDescClientAge(this.id)  id='age'> &#9662</a></th>"
-					        + "<th>Client Name<a href='#' onClick=sortAscClientName(this.id)  id='clientName'>&#9652</a><a href='#' onClick=sortDescClientName(this.id) id='clientName'> &#9662</a></th>"
-					        + "<th>Email<a href='#' onClick=sortAscClientEmail(this.id)  id='email'>&#9652</a><a href='#' onClick=sortDescClientEmail(this.id) id='email'> &#9662</a></th>"
-					        + "<th>Email Sent Date</th>"
-					        + "<th>PIC</th>"
-					        + "<th>Select All	<input type='checkbox' id='select_all'/></th></tr></thead>";
-					      
-					        $.each(json,function(key,value) {
-					        
-					          table += "<tbody><tr><td>"
-					          + value["age"]
-					          + "</td>"
-					          + "<td>"
-					          + value["name"]
-					          + "</td>"
-					          + "<td>"
-					          + value["email"]
-					          + "</td>"
-					          + "<td>"
-					          + value["date"]
-					          + "</td>"
-					          + "<td>"
-					          + value["followUpPerson"]
-					          + "</td>"
-					          + "<td>"
-					          + "<input class='checkbox' type='checkbox' name='selectClients' value=" + value["email"]+">"          
-					       + "</td></tr></tbody>"
-					        });
-					        table += "</table>"
-					        table += "<div id='displayNumSelected'></div>"
-					        table += "<div class='container' align='center'>"
-					         + "<div class='inline'><button class='btn btn-default' onclick='sendEmail()'>Go to email template</button></div><div class='inline'><div  id='message'></div></div>"
-					         + "<br> <button type='button' id='export' class='btn btn-link'><b>Export to excel(in progress)</b></button>"
-					           +"</div>"
-					       
-					         $("#display").html(table);
-								$('#error').html("");
+						}
 
-								$('#select_all').on('click',function(){
-								    if(this.checked){
-								        $('.checkbox:visible').each(function(){
-								            this.checked = true;
-								        });
-								    }else{
-								         $('.checkbox:visible').each(function(){
-								            this.checked = false;
-								        });
-								    }
-								});
-
-								$('.checkbox:visible').on('click',function(){
-								    if($('.checkbox:checked').length == $('.checkbox:visible').length){
-								        $('#select_all').prop('checked',true);
-								    }else{
-								        $('#select_all').prop('checked',false);
-								    }
-								});
-				       }else{
-							$('#error').html("<div class='alert alert-danger' role='alert'><center><b> No patient in database matches criteria </b></center></div>");
-
-				       }
-
-			    }
-	 		});
-
+					}
+				});
 
 	}
-		
-		function sortDescClientEmail(clickedID){
-			var table = "<table id='table' class='table table-condensed' cellspacing='0'>";
-			var sendData = "name=email &direction=DESC" ;
-			$.ajax({
-			    url : "DisplayPatientsByIllnessSorting",
-			    type : "get",
-			    data : sendData ,
-			    complete: function(data){
-			    	 var json = jQuery.parseJSON(data.responseText);
-				     if(json.length != 0){
-				    	 table += "<h3><b>Condition Name:</b>  " + json[0].conditionName +"<br>   <b>Screening Name: </b> "+ json[0].screeningName +"</h3>"
-					        sessionStorage.setItem('screeningName',json[0].screeningName);			      
-					        table += "<thead><tr><th>Age<a href='#' onClick=sortAscClientAge(this.id)  id='age'>&#9652</a><a href='#' onClick=sortDescClientAge(this.id)  id='age'> &#9662</a></th>"
-					        + "<th>Client Name<a href='#' onClick=sortAscClientName(this.id)  id='clientName'>&#9652</a><a href='#' onClick=sortDescClientName(this.id) id='clientName'> &#9662</a></th>"
-					        + "<th>Email<a href='#' onClick=sortAscClientEmail(this.id)  id='email'>&#9652</a><a href='#' onClick=sortDescClientEmail(this.id) id='email'> &#9662</a></th>"
-					        + "<th>Email Sent Date</th>"
-					        + "<th>PIC</th>"
-					        + "<th>Select All	<input type='checkbox' id='select_all'/></th></tr></thead>";
-					      
-					        $.each(json,function(key,value) {
-					        
-					          table += "<tbody><tr><td>"
-					          + value["age"]
-					          + "</td>"
-					          + "<td>"
-					          + value["name"]
-					          + "</td>"
-					          + "<td>"
-					          + value["email"]
-					          + "</td>"
-					          + "<td>"
-					          + value["date"]
-					          + "</td>"
-					          + "<td>"
-					          + value["followUpPerson"]
-					          + "</td>"
-					          + "<td>"
-					          + "<input class='checkbox' type='checkbox' name='selectClients' value=" + value["email"]+">"          
-					       + "</td></tr></tbody>"
-					        });
-					        table += "</table>"
-					        table += "<div id='displayNumSelected'></div>"
-					        table += "<div class='container' align='center'>"
-					         + "<div class='inline'><button class='btn btn-default' onclick='sendEmail()'>Go to email template</button></div><div class='inline'><div  id='message'></div></div>"
-					         + "<br> <button type='button' id='export' class='btn btn-link'><b>Export to excel(in progress)</b></button>"
-					           +"</div>"
-					       
-					         $("#display").html(table);
-								$('#error').html("");
 
-								$('#select_all').on('click',function(){
-								    if(this.checked){
-								        $('.checkbox:visible').each(function(){
-								            this.checked = true;
-								        });
-								    }else{
-								         $('.checkbox:visible').each(function(){
-								            this.checked = false;
-								        });
-								    }
-								});
+	function sortDescClientName(clickedID) {
+		var table = "<table id='table' class='table table-condensed' cellspacing='0'>";
+		var sendData = "name=clientName &direction=DESC";
+		$
+				.ajax({
+					url : "DisplayPatientsByIllnessSorting",
+					type : "get",
+					data : sendData,
+					complete : function(data) {
+						var json = jQuery.parseJSON(data.responseText);
+						if (json.length != 0) {
+							table += "<h3><b>Condition Name:</b>  "
+									+ json[0].conditionName
+									+ "<br>   <b>Screening Name: </b> "
+									+ json[0].screeningName + "</h3>"
+							sessionStorage.setItem('screeningName',
+									json[0].screeningName);
+							table += "<thead><tr><th>Age<a href='#' onClick=sortAscClientAge(this.id)  id='age'>&#9652</a><a href='#' onClick=sortDescClientAge(this.id)  id='age'> &#9662</a></th>"
+									+ "<th>Client Name<a href='#' onClick=sortAscClientName(this.id)  id='clientName'>&#9652</a><a href='#' onClick=sortDescClientName(this.id) id='clientName'> &#9662</a></th>"
+									+ "<th>Email<a href='#' onClick=sortAscClientEmail(this.id)  id='email'>&#9652</a><a href='#' onClick=sortDescClientEmail(this.id) id='email'> &#9662</a></th>"
+									+ "<th>Email Sent Date</th>"
+									+ "<th>PIC</th>"
+									+ "<th>Select All	<input type='checkbox' id='select_all'/></th></tr></thead>";
 
-								$('.checkbox:visible').on('click',function(){
-								    if($('.checkbox:checked').length == $('.checkbox:visible').length){
-								        $('#select_all').prop('checked',true);
-								    }else{
-								        $('#select_all').prop('checked',false);
-								    }
-								});
-				       }else{
-							$('#error').html("<div class='alert alert-danger' role='alert'><center><b> No patient in database matches criteria </b></center></div>");
+							$
+									.each(
+											json,
+											function(key, value) {
 
-				       }
+												table += "<tbody><tr><td>"
+														+ value["age"]
+														+ "</td>"
+														+ "<td>"
+														+ value["name"]
+														+ "</td>"
+														+ "<td>"
+														+ value["email"]
+														+ "</td>"
+														+ "<td>"
+														+ value["date"]
+														+ "</td>"
+														+ "<td>"
+														+ value["followUpPerson"]
+														+ "</td>"
+														+ "<td>"
+														+ "<input class='checkbox' type='checkbox' name='selectClients' value=" + value["email"]+">"
+														+ "</td></tr></tbody>"
+											});
+							table += "</table>"
+							table += "<div id='displayNumSelected'></div>"
+							table += "<div class='container' align='center'>"
+									+ "<div class='inline'><button class='btn btn-default' onclick='sendEmail()'>Go to email template</button></div><div class='inline'><div  id='message'></div></div>"
+									+ "<br> <button type='button' id='export' class='btn btn-link'><b>Export to excel(in progress)</b></button>"
+									+ "</div>"
 
-			    }
-	 		});
+							$("#display").html(table);
+							$('#error').html("");
 
+							$('#select_all').on('click', function() {
+								if (this.checked) {
+									$('.checkbox:visible').each(function() {
+										this.checked = true;
+									});
+								} else {
+									$('.checkbox:visible').each(function() {
+										this.checked = false;
+									});
+								}
+							});
 
-	}
-		function sortAscPIC(clickedID){
-			var table = "<table id='table' class='table table-condensed' cellspacing='0'>";
-			var sendData = "name=PIC &direction=ASC" ;
-			$.ajax({
-			    url : "DisplayPatientsByIllnessSorting",
-			    type : "get",
-			    data : sendData ,
-			    complete: function(data){
-			    	 var json = jQuery.parseJSON(data.responseText);
-				     if(json.length != 0){
-				    	 table += "<h3><b>Condition Name:</b>  " + json[0].conditionName +"<br>   <b>Screening Name: </b> "+ json[0].screeningName +"</h3>"
-					        sessionStorage.setItem('screeningName',json[0].screeningName);			      
-					        table += "<thead><tr><th>Age<a href='#' onClick=sortAscClientAge(this.id)  id='age'>&#9652</a><a href='#' onClick=sortDescClientAge(this.id)  id='age'> &#9662</a></th>"
-					        + "<th>Client Name<a href='#' onClick=sortAscClientName(this.id)  id='clientName'>&#9652</a><a href='#' onClick=sortDescClientName(this.id) id='clientName'> &#9662</a></th>"
-					        + "<th>Email<a href='#' onClick=sortAscClientEmail(this.id)  id='email'>&#9652</a><a href='#' onClick=sortDescClientEmail(this.id) id='email'> &#9662</a></th>"
-					        + "<th>Email Sent Date</th>"
-					        + "<th>PIC</th>"
-					        + "<th>Select All	<input type='checkbox' id='select_all'/></th></tr></thead>";
-					      
-					        $.each(json,function(key,value) {
-					        
-					          table += "<tbody><tr><td>"
-					          + value["age"]
-					          + "</td>"
-					          + "<td>"
-					          + value["name"]
-					          + "</td>"
-					          + "<td>"
-					          + value["email"]
-					          + "</td>"
-					          + "<td>"
-					          + value["date"]
-					          + "</td>"
-					          + "<td>"
-					          + value["followUpPerson"]
-					          + "</td>"
-					          + "<td>"
-					          + "<input class='checkbox' type='checkbox' name='selectClients' value=" + value["email"]+">"          
-					       + "</td></tr></tbody>"
-					        });
-					        table += "</table>"
-					        table += "<div id='displayNumSelected'></div>"
-					        table += "<div class='container' align='center'>"
-					         + "<div class='inline'><button class='btn btn-default' onclick='sendEmail()'>Go to email template</button></div><div class='inline'><div  id='message'></div></div>"
-					         + "<br> <button type='button' id='export' class='btn btn-link'><b>Export to excel(in progress)</b></button>"
-					           +"</div>"
-					       
-					         $("#display").html(table);
-								$('#error').html("");
+							$('.checkbox:visible')
+									.on(
+											'click',
+											function() {
+												if ($('.checkbox:checked').length == $('.checkbox:visible').length) {
+													$('#select_all').prop(
+															'checked', true);
+												} else {
+													$('#select_all').prop(
+															'checked', false);
+												}
+											});
+						} else {
+							$('#error')
+									.html(
+											"<div class='alert alert-danger' role='alert'><center><b> No patient in database matches criteria </b></center></div>");
 
-					           var select_all = document.getElementById("select_all"); //select all checkbox
-					   	 	var checkboxes = document.getElementsByClassName("checkbox"); //checkbox i
-					   		select_all.addEventListener("change", function(e){
-					   		    for (i = 0; i < checkboxes.length; i++) { 
-					   		        checkboxes[i].checked = select_all.checked;
-					   		    }
-					   		});
-					   		for (var i = 0; i < checkboxes.length; i++) {
-					   		    checkboxes[i].addEventListener('change', function(e){ //".checkbox" change 
-					   		        //uncheck "select all", if one of the listed checkbox item is unchecked
-					   		        if(this.checked == false){
-					   		            select_all.checked = false;
-					   		        }
-					   		        //check "select all" if all checkbox items are checked
-					   		        if(document.querySelectorAll('.checkbox:checked').length == checkboxes.length){
-					   		            select_all.checked = true;
-					   		        }
-					   		    });
-					   		}
-				       }else{
-							$('#error').html("<div class='alert alert-danger' role='alert'><center><b> No patient in database matches criteria </b></center></div>");
+						}
 
-				       }
-
-			    }
-	 		});
-
+					}
+				});
 
 	}
-		
-		function sortDescPIC(clickedID){
-			var table = "<table id='table' class='table table-condensed' cellspacing='0'>";
-			var sendData = "name=PIC &direction=DESC" ;
-			$.ajax({
-			    url : "DisplayPatientsByIllnessSorting",
-			    type : "get",
-			    data : sendData ,
-			    complete: function(data){
-			    	 var json = jQuery.parseJSON(data.responseText);
-				     if(json.length != 0){
-					        table += "<h3><b>Condition Name:</b>  " + json[0].conditionName +"<br>   <b>Screening Name: </b> "+ json[0].screeningName +"</h3>"
-					        sessionStorage.setItem('screeningName',json[0].screeningName);			      
-					        table += "<thead><tr><th>Age<a href='#' onClick=sortAscClientAge(this.id)  id='age'>&#9652</a><a href='#' onClick=sortDescClientAge(this.id)  id='age'> &#9662</a></th>"
-					        + "<th>Client Name<a href='#' onClick=sortAscClientName(this.id)  id='clientName'>&#9652</a><a href='#' onClick=sortDescClientName(this.id) id='clientName'> &#9662</a></th>"
-					        + "<th>Email<a href='#' onClick=sortAscClientEmail(this.id)  id='email'>&#9652</a><a href='#' onClick=sortDescClientEmail(this.id) id='email'> &#9662</a></th>"
-					        + "<th>Email Sent Date</th>"
-					        + "<th>PIC</th>"
-					        + "<th>Select All	<input type='checkbox' id='select_all'/></th></tr></thead>";
-					      
-					        $.each(json,function(key,value) {
-					        
-					          table += "<tbody><tr><td>"
-					          + value["age"]
-					          + "</td>"
-					          + "<td>"
-					          + value["name"]
-					          + "</td>"
-					          + "<td>"
-					          + value["email"]
-					          + "</td>"
-					          + "<td>"
-					          + value["date"]
-					          + "</td>"
-					          + "<td>"
-					          + value["followUpPerson"]
-					          + "</td>"
-					          + "<td>"
-					          + "<input class='checkbox' type='checkbox' name='selectClients' value=" + value["email"]+">"          
-					       + "</td></tr></tbody>"
-					        });
-					        table += "</table>"
-					        table += "<div id='displayNumSelected'></div>"
-					        table += "<div class='container' align='center'>"
-					         + "<div class='inline'><button class='btn btn-default' onclick='sendEmail()'>Go to email template</button></div><div class='inline'><div  id='message'></div></div>"
-					         + "<br> <button type='button' id='export' class='btn btn-link'><b>Export to excel(in progress)</b></button>"
-					           +"</div>"
-					       
-					         $("#display").html(table);
-								$('#error').html("");
 
-					           var select_all = document.getElementById("select_all"); //select all checkbox
-					   	 	var checkboxes = document.getElementsByClassName("checkbox"); //checkbox i
-					   		select_all.addEventListener("change", function(e){
-					   		    for (i = 0; i < checkboxes.length; i++) { 
-					   		        checkboxes[i].checked = select_all.checked;
-					   		    }
-					   		});
-					   		for (var i = 0; i < checkboxes.length; i++) {
-					   		    checkboxes[i].addEventListener('change', function(e){ //".checkbox" change 
-					   		        //uncheck "select all", if one of the listed checkbox item is unchecked
-					   		        if(this.checked == false){
-					   		            select_all.checked = false;
-					   		        }
-					   		        //check "select all" if all checkbox items are checked
-					   		        if(document.querySelectorAll('.checkbox:checked').length == checkboxes.length){
-					   		            select_all.checked = true;
-					   		        }
-					   		    });
-					   		}
-				       }else{
-							$('#error').html("<div class='alert alert-danger' role='alert'><center><b> No patient in database matches criteria </b></center></div>");
+	function sortAscClientEmail(clickedID) {
+		var table = "<table id='table' class='table table-condensed' cellspacing='0'>";
+		var sendData = "name=email &direction=ASC";
+		$
+				.ajax({
+					url : "DisplayPatientsByIllnessSorting",
+					type : "get",
+					data : sendData,
+					complete : function(data) {
+						var json = jQuery.parseJSON(data.responseText);
+						if (json.length != 0) {
+							table += "<h3><b>Condition Name:</b>  "
+									+ json[0].conditionName
+									+ "<br>   <b>Screening Name: </b> "
+									+ json[0].screeningName + "</h3>"
+							sessionStorage.setItem('screeningName',
+									json[0].screeningName);
+							table += "<thead><tr><th>Age<a href='#' onClick=sortAscClientAge(this.id)  id='age'>&#9652</a><a href='#' onClick=sortDescClientAge(this.id)  id='age'> &#9662</a></th>"
+									+ "<th>Client Name<a href='#' onClick=sortAscClientName(this.id)  id='clientName'>&#9652</a><a href='#' onClick=sortDescClientName(this.id) id='clientName'> &#9662</a></th>"
+									+ "<th>Email<a href='#' onClick=sortAscClientEmail(this.id)  id='email'>&#9652</a><a href='#' onClick=sortDescClientEmail(this.id) id='email'> &#9662</a></th>"
+									+ "<th>Email Sent Date</th>"
+									+ "<th>PIC</th>"
+									+ "<th>Select All	<input type='checkbox' id='select_all'/></th></tr></thead>";
 
-				       }
+							$
+									.each(
+											json,
+											function(key, value) {
 
-			    }
-	 		});
+												table += "<tbody><tr><td>"
+														+ value["age"]
+														+ "</td>"
+														+ "<td>"
+														+ value["name"]
+														+ "</td>"
+														+ "<td>"
+														+ value["email"]
+														+ "</td>"
+														+ "<td>"
+														+ value["date"]
+														+ "</td>"
+														+ "<td>"
+														+ value["followUpPerson"]
+														+ "</td>"
+														+ "<td>"
+														+ "<input class='checkbox' type='checkbox' name='selectClients' value=" + value["email"]+">"
+														+ "</td></tr></tbody>"
+											});
+							table += "</table>"
+							table += "<div id='displayNumSelected'></div>"
+							table += "<div class='container' align='center'>"
+									+ "<div class='inline'><button class='btn btn-default' onclick='sendEmail()'>Go to email template</button></div><div class='inline'><div  id='message'></div></div>"
+									+ "<br> <button type='button' id='export' class='btn btn-link'><b>Export to excel(in progress)</b></button>"
+									+ "</div>"
 
+							$("#display").html(table);
+							$('#error').html("");
+
+							$('#select_all').on('click', function() {
+								if (this.checked) {
+									$('.checkbox:visible').each(function() {
+										this.checked = true;
+									});
+								} else {
+									$('.checkbox:visible').each(function() {
+										this.checked = false;
+									});
+								}
+							});
+
+							$('.checkbox:visible')
+									.on(
+											'click',
+											function() {
+												if ($('.checkbox:checked').length == $('.checkbox:visible').length) {
+													$('#select_all').prop(
+															'checked', true);
+												} else {
+													$('#select_all').prop(
+															'checked', false);
+												}
+											});
+						} else {
+							$('#error')
+									.html(
+											"<div class='alert alert-danger' role='alert'><center><b> No patient in database matches criteria </b></center></div>");
+
+						}
+
+					}
+				});
 
 	}
-		
-		
-		function displayAll(){
-			var table = "<table id='table' class='table table-condensed' cellspacing='0' >";
-			var isEmpty = false;
-			sendData = "name=ageRequired&orderDirection=ASC";
-				$.ajax({
-					url: "DisplayAllInfant",
-					type: "get",
-				    data : sendData,    
-				    complete: function(data){
-				    	var json = jQuery.parseJSON(JSON.stringify(data));
-				    	var response = JSON.parse(json.responseText);
-				    	table += "<thead><tr><th>Starting Age (In Months)<a href='#' onClick=sortAscAge(this.id)  id='ageRequired'>&#9652</a>"
-				    			+ "<a href='#' onClick=sortDescAge(this.id) id='ageRequired'> &#9662</a></th>"
-				    			+ "<th>Common Illness<a href='#' onClick=sortAscIllness(this.id) id='conditionName'> &#9652</a>"
-				    			+ "<a href='#' onClick=sortDescIllness(this.id) id='conditionName'> &#9662</a></th>"
-				    			+ "<th>Screening <a href='#' onClick=sortAscScreening(this.id) id='screening'> &#9652</a>"
-				    			+ "<a href='#' onClick=sortDescScreening(this.id) id='screening'> &#9662</a></th>"
-				    			+"<th>Demographic</th>"
-				    			+ "<th>Regularity of screening</th>"
-				    			+ "<th>View Patients</th>"
-				    			+ "<th>Edit</th>"
-				    			+ "<th>Delete</th></tr></thead>";
-				    	$.each(response,function(key, value) {
-				    		table += "<tbody><tr><td>"
-			    				+ value["ageRequired"]
-			    				+ "</td>"
-			    				+ "<td>"
-			    				+ value["conditionName"]
-		    					+ "</td>"
-		    					+ "<td>"
-			    				+ value["screening"]
-		    					+ "</td>"
-		    					+ "<td>"
-			    				+ value["type"]
-		    					+ "</td>"
-		    					+ "<td>"
-			    				+ value["years"] 
-		    					+ "</td>"
-		    					+ "<td>"
-			    				+"<a href='#' onClick=viewPatientList(this.id) id= '"
-			    				+ value.ID
-			    				+ "'>View patients</a>"
-		    					+ "</td>"
-		    					+ "<td>"
-			    				+ "<a href='#' onClick=editItem(this.id) id= '"
-			    				+ value.ID
-			    				+ "'>Edit</a>"
-		    					+ "</td>"
-		    					+ '<td><a href=# onClick=deleteItem(this.id) id="'
-								+ value.ID
-								+ '">Delete</a></td></tr>'		    				
-								+ "</td></tr></tbody>"
-				    	});
-				    	table += "</table>"
-				    		$("#display").html(table);
-				    	
-				    }	
-				    
-				});	
-			
-			
-			}
-			
-	
-		
- </script>
-  </head>
-  
-  <body>
-  	<div id="includedContent"></div>
-   <div class="container">
+
+	function sortDescClientEmail(clickedID) {
+		var table = "<table id='table' class='table table-condensed' cellspacing='0'>";
+		var sendData = "name=email &direction=DESC";
+		$
+				.ajax({
+					url : "DisplayPatientsByIllnessSorting",
+					type : "get",
+					data : sendData,
+					complete : function(data) {
+						var json = jQuery.parseJSON(data.responseText);
+						if (json.length != 0) {
+							table += "<h3><b>Condition Name:</b>  "
+									+ json[0].conditionName
+									+ "<br>   <b>Screening Name: </b> "
+									+ json[0].screeningName + "</h3>"
+							sessionStorage.setItem('screeningName',
+									json[0].screeningName);
+							table += "<thead><tr><th>Age<a href='#' onClick=sortAscClientAge(this.id)  id='age'>&#9652</a><a href='#' onClick=sortDescClientAge(this.id)  id='age'> &#9662</a></th>"
+									+ "<th>Client Name<a href='#' onClick=sortAscClientName(this.id)  id='clientName'>&#9652</a><a href='#' onClick=sortDescClientName(this.id) id='clientName'> &#9662</a></th>"
+									+ "<th>Email<a href='#' onClick=sortAscClientEmail(this.id)  id='email'>&#9652</a><a href='#' onClick=sortDescClientEmail(this.id) id='email'> &#9662</a></th>"
+									+ "<th>Email Sent Date</th>"
+									+ "<th>PIC</th>"
+									+ "<th>Select All	<input type='checkbox' id='select_all'/></th></tr></thead>";
+
+							$
+									.each(
+											json,
+											function(key, value) {
+
+												table += "<tbody><tr><td>"
+														+ value["age"]
+														+ "</td>"
+														+ "<td>"
+														+ value["name"]
+														+ "</td>"
+														+ "<td>"
+														+ value["email"]
+														+ "</td>"
+														+ "<td>"
+														+ value["date"]
+														+ "</td>"
+														+ "<td>"
+														+ value["followUpPerson"]
+														+ "</td>"
+														+ "<td>"
+														+ "<input class='checkbox' type='checkbox' name='selectClients' value=" + value["email"]+">"
+														+ "</td></tr></tbody>"
+											});
+							table += "</table>"
+							table += "<div id='displayNumSelected'></div>"
+							table += "<div class='container' align='center'>"
+									+ "<div class='inline'><button class='btn btn-default' onclick='sendEmail()'>Go to email template</button></div><div class='inline'><div  id='message'></div></div>"
+									+ "<br> <button type='button' id='export' class='btn btn-link'><b>Export to excel(in progress)</b></button>"
+									+ "</div>"
+
+							$("#display").html(table);
+							$('#error').html("");
+
+							$('#select_all').on('click', function() {
+								if (this.checked) {
+									$('.checkbox:visible').each(function() {
+										this.checked = true;
+									});
+								} else {
+									$('.checkbox:visible').each(function() {
+										this.checked = false;
+									});
+								}
+							});
+
+							$('.checkbox:visible')
+									.on(
+											'click',
+											function() {
+												if ($('.checkbox:checked').length == $('.checkbox:visible').length) {
+													$('#select_all').prop(
+															'checked', true);
+												} else {
+													$('#select_all').prop(
+															'checked', false);
+												}
+											});
+						} else {
+							$('#error')
+									.html(
+											"<div class='alert alert-danger' role='alert'><center><b> No patient in database matches criteria </b></center></div>");
+
+						}
+
+					}
+				});
+
+	}
+	function sortAscPIC(clickedID) {
+		var table = "<table id='table' class='table table-condensed' cellspacing='0'>";
+		var sendData = "name=PIC &direction=ASC";
+		$
+				.ajax({
+					url : "DisplayPatientsByIllnessSorting",
+					type : "get",
+					data : sendData,
+					complete : function(data) {
+						var json = jQuery.parseJSON(data.responseText);
+						if (json.length != 0) {
+							table += "<h3><b>Condition Name:</b>  "
+									+ json[0].conditionName
+									+ "<br>   <b>Screening Name: </b> "
+									+ json[0].screeningName + "</h3>"
+							sessionStorage.setItem('screeningName',
+									json[0].screeningName);
+							table += "<thead><tr><th>Age<a href='#' onClick=sortAscClientAge(this.id)  id='age'>&#9652</a><a href='#' onClick=sortDescClientAge(this.id)  id='age'> &#9662</a></th>"
+									+ "<th>Client Name<a href='#' onClick=sortAscClientName(this.id)  id='clientName'>&#9652</a><a href='#' onClick=sortDescClientName(this.id) id='clientName'> &#9662</a></th>"
+									+ "<th>Email<a href='#' onClick=sortAscClientEmail(this.id)  id='email'>&#9652</a><a href='#' onClick=sortDescClientEmail(this.id) id='email'> &#9662</a></th>"
+									+ "<th>Email Sent Date</th>"
+									+ "<th>PIC</th>"
+									+ "<th>Select All	<input type='checkbox' id='select_all'/></th></tr></thead>";
+
+							$
+									.each(
+											json,
+											function(key, value) {
+
+												table += "<tbody><tr><td>"
+														+ value["age"]
+														+ "</td>"
+														+ "<td>"
+														+ value["name"]
+														+ "</td>"
+														+ "<td>"
+														+ value["email"]
+														+ "</td>"
+														+ "<td>"
+														+ value["date"]
+														+ "</td>"
+														+ "<td>"
+														+ value["followUpPerson"]
+														+ "</td>"
+														+ "<td>"
+														+ "<input class='checkbox' type='checkbox' name='selectClients' value=" + value["email"]+">"
+														+ "</td></tr></tbody>"
+											});
+							table += "</table>"
+							table += "<div id='displayNumSelected'></div>"
+							table += "<div class='container' align='center'>"
+									+ "<div class='inline'><button class='btn btn-default' onclick='sendEmail()'>Go to email template</button></div><div class='inline'><div  id='message'></div></div>"
+									+ "<br> <button type='button' id='export' class='btn btn-link'><b>Export to excel(in progress)</b></button>"
+									+ "</div>"
+
+							$("#display").html(table);
+							$('#error').html("");
+
+							var select_all = document
+									.getElementById("select_all"); //select all checkbox
+							var checkboxes = document
+									.getElementsByClassName("checkbox"); //checkbox i
+							select_all.addEventListener("change", function(e) {
+								for (i = 0; i < checkboxes.length; i++) {
+									checkboxes[i].checked = select_all.checked;
+								}
+							});
+							for (var i = 0; i < checkboxes.length; i++) {
+								checkboxes[i]
+										.addEventListener(
+												'change',
+												function(e) { //".checkbox" change 
+													//uncheck "select all", if one of the listed checkbox item is unchecked
+													if (this.checked == false) {
+														select_all.checked = false;
+													}
+													//check "select all" if all checkbox items are checked
+													if (document
+															.querySelectorAll('.checkbox:checked').length == checkboxes.length) {
+														select_all.checked = true;
+													}
+												});
+							}
+						} else {
+							$('#error')
+									.html(
+											"<div class='alert alert-danger' role='alert'><center><b> No patient in database matches criteria </b></center></div>");
+
+						}
+
+					}
+				});
+
+	}
+
+	function sortDescPIC(clickedID) {
+		var table = "<table id='table' class='table table-condensed' cellspacing='0'>";
+		var sendData = "name=PIC &direction=DESC";
+		$
+				.ajax({
+					url : "DisplayPatientsByIllnessSorting",
+					type : "get",
+					data : sendData,
+					complete : function(data) {
+						var json = jQuery.parseJSON(data.responseText);
+						if (json.length != 0) {
+							table += "<h3><b>Condition Name:</b>  "
+									+ json[0].conditionName
+									+ "<br>   <b>Screening Name: </b> "
+									+ json[0].screeningName + "</h3>"
+							sessionStorage.setItem('screeningName',
+									json[0].screeningName);
+							table += "<thead><tr><th>Age<a href='#' onClick=sortAscClientAge(this.id)  id='age'>&#9652</a><a href='#' onClick=sortDescClientAge(this.id)  id='age'> &#9662</a></th>"
+									+ "<th>Client Name<a href='#' onClick=sortAscClientName(this.id)  id='clientName'>&#9652</a><a href='#' onClick=sortDescClientName(this.id) id='clientName'> &#9662</a></th>"
+									+ "<th>Email<a href='#' onClick=sortAscClientEmail(this.id)  id='email'>&#9652</a><a href='#' onClick=sortDescClientEmail(this.id) id='email'> &#9662</a></th>"
+									+ "<th>Email Sent Date</th>"
+									+ "<th>PIC</th>"
+									+ "<th>Select All	<input type='checkbox' id='select_all'/></th></tr></thead>";
+
+							$
+									.each(
+											json,
+											function(key, value) {
+
+												table += "<tbody><tr><td>"
+														+ value["age"]
+														+ "</td>"
+														+ "<td>"
+														+ value["name"]
+														+ "</td>"
+														+ "<td>"
+														+ value["email"]
+														+ "</td>"
+														+ "<td>"
+														+ value["date"]
+														+ "</td>"
+														+ "<td>"
+														+ value["followUpPerson"]
+														+ "</td>"
+														+ "<td>"
+														+ "<input class='checkbox' type='checkbox' name='selectClients' value=" + value["email"]+">"
+														+ "</td></tr></tbody>"
+											});
+							table += "</table>"
+							table += "<div id='displayNumSelected'></div>"
+							table += "<div class='container' align='center'>"
+									+ "<div class='inline'><button class='btn btn-default' onclick='sendEmail()'>Go to email template</button></div><div class='inline'><div  id='message'></div></div>"
+									+ "<br> <button type='button' id='export' class='btn btn-link'><b>Export to excel(in progress)</b></button>"
+									+ "</div>"
+
+							$("#display").html(table);
+							$('#error').html("");
+
+							var select_all = document
+									.getElementById("select_all"); //select all checkbox
+							var checkboxes = document
+									.getElementsByClassName("checkbox"); //checkbox i
+							select_all.addEventListener("change", function(e) {
+								for (i = 0; i < checkboxes.length; i++) {
+									checkboxes[i].checked = select_all.checked;
+								}
+							});
+							for (var i = 0; i < checkboxes.length; i++) {
+								checkboxes[i]
+										.addEventListener(
+												'change',
+												function(e) { //".checkbox" change 
+													//uncheck "select all", if one of the listed checkbox item is unchecked
+													if (this.checked == false) {
+														select_all.checked = false;
+													}
+													//check "select all" if all checkbox items are checked
+													if (document
+															.querySelectorAll('.checkbox:checked').length == checkboxes.length) {
+														select_all.checked = true;
+													}
+												});
+							}
+						} else {
+							$('#error')
+									.html(
+											"<div class='alert alert-danger' role='alert'><center><b> No patient in database matches criteria </b></center></div>");
+
+						}
+
+					}
+				});
+
+	}
+
+	function displayAll() {
+		var table = "<table id='table' class='table table-condensed' cellspacing='0' >";
+		var isEmpty = false;
+		sendData = "name=ageRequired&orderDirection=ASC";
+		$
+				.ajax({
+					url : "DisplayAllInfant",
+					type : "get",
+					data : sendData,
+					complete : function(data) {
+						var json = jQuery.parseJSON(JSON.stringify(data));
+						var response = JSON.parse(json.responseText);
+						table += "<thead><tr><th>Starting Age (In Months)<a href='#' onClick=sortAscAge(this.id)  id='ageRequired'>&#9652</a>"
+								+ "<a href='#' onClick=sortDescAge(this.id) id='ageRequired'> &#9662</a></th>"
+								+ "<th>Common Illness<a href='#' onClick=sortAscIllness(this.id) id='conditionName'> &#9652</a>"
+								+ "<a href='#' onClick=sortDescIllness(this.id) id='conditionName'> &#9662</a></th>"
+								+ "<th>Screening <a href='#' onClick=sortAscScreening(this.id) id='screening'> &#9652</a>"
+								+ "<a href='#' onClick=sortDescScreening(this.id) id='screening'> &#9662</a></th>"
+								+ "<th>Demographic</th>"
+								+ "<th>Regularity of screening</th>"
+								+ "<th>View Patients</th>"
+								+ "<th>Edit</th>"
+								+ "<th>Delete</th></tr></thead>";
+						$
+								.each(
+										response,
+										function(key, value) {
+											table += "<tbody><tr><td>"
+													+ value["ageRequired"]
+													+ "</td>"
+													+ "<td>"
+													+ value["conditionName"]
+													+ "</td>"
+													+ "<td>"
+													+ value["screening"]
+													+ "</td>"
+													+ "<td>"
+													+ value["type"]
+													+ "</td>"
+													+ "<td>"
+													+ value["years"]
+													+ "</td>"
+													+ "<td>"
+													+ "<a href='#' onClick=viewPatientList(this.id) id= '"
+													+ value.ID
+													+ "'>View patients</a>"
+													+ "</td>"
+													+ "<td>"
+													+ "<a href='#' onClick=editItem(this.id) id= '"
+													+ value.ID
+													+ "'>Edit</a>"
+													+ "</td>"
+													+ '<td><a href=# onClick=deleteItem(this.id) id="'
+													+ value.ID
+													+ '">Delete</a></td></tr>'
+													+ "</td></tr></tbody>"
+										});
+						table += "</table>"
+						$("#display").html(table);
+
+					}
+
+				});
+
+	}
+</script>
+</head>
+
+<body>
+	<div id="includedContent"></div>
+	<div class="container">
 		<div class="container-fluid">
 
-			 <!-- Page Heading -->
-                <div class="row">
-                    <div class="col-lg-12" align="center">
-                        <h1 class="page-header">
-                            <b>Recommend Screenings-Infants</b>
-                            
-                        </h1>
-                        
-                    </div>
-                </div>
+			<!-- Page Heading -->
+			<div class="row">
+				<div class="col-lg-12" align="center">
+					<h1 class="page-header">
+						<b>Recommend Screenings-Infants</b>
 
-				<div class="container">
-				
+					</h1>
+
+				</div>
+			</div>
+
+			<div class="container">
+
 				<div class="row">
-				<input type="text" id="myInput" onkeyup="mySearch()" placeholder="Search ">
-				<button class="btn btn-default pull-right" id="add"><b>Add new screening</b></button>
+					<input type="text" id="myInput" onkeyup="mySearch()"
+						placeholder="Search ">
+					<button class="btn btn-default pull-right" id="add">
+						<b>Add new screening</b>
+					</button>
 				</div>
 				<br>
-				
+
 				<div class="btn-group btn-group-justified" role="group">
-				  <div class="btn-group" role="group">
-				    <button type="button" id="selectInfant" class="btn btn-primary"><b>Infants (0-24 months)</b></button>
-				  </div>
-				  <div class="btn-group" role="group">
-				    <button type="button" id="selectAdult" class="btn btn-default"><b>Adults (2 years and above)</b></button>
-				  </div>
+					<div class="btn-group" role="group">
+						<button type="button" id="selectInfant" class="btn btn-primary">
+							<b>Infants (0-24 months)</b>
+						</button>
+					</div>
+					<div class="btn-group" role="group">
+						<button type="button" id="selectAdult" class="btn btn-default">
+							<b>Adults (2 years and above)</b>
+						</button>
+					</div>
 				</div>
-				</div>
-				<br>
-				<br>
-				<div class="container" id="display" align="center">
-				
+			</div>
+			<br> <br>
+			<div class="container" id="display" align="center">
+
 				<div class="container" id="message"></div>
 				<div class="container" id="error"></div>
-		         </div>
 			</div>
-            <!-- /.container-fluid -->
+		</div>
+		<!-- /.container-fluid -->
 	</div>
-  </body>
+</body>
 </html>

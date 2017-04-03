@@ -29,6 +29,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import ulink.constructor.RankingReferredBy;
+import ulink.constructor.RankingSpecialty;
 import ulink.dao.DatabaseConnection;
 import ulink.logic.Utility;
 
@@ -36,59 +37,62 @@ public class TestMain {
 
 	public static void main(String[] args) throws DocumentException, FileNotFoundException {
 		// TODO Auto-generated method stub
-	    XSSFWorkbook workbook = new XSSFWorkbook();
 
-	    //Create a blank sheet
-	    XSSFSheet sheet = workbook.createSheet("Employee Data");
+		DatabaseConnection database = new DatabaseConnection();
+		ArrayList<RankingSpecialty> SpecialtyList;
 
-	    //This data needs to be written (Object[])
-	    Map<String, Object[]> data = new TreeMap<String, Object[]>();
-	    
-	    
-	    data.put("1", new Object[]{"S/N", "Name","Gender" ,"Email"});
-	    
-	    
-	    
-	    
-	    //Iterate over data and write to sheet
-	    Set<String> keyset = data.keySet();
+		Utility utility = new Utility();
+		SpecialtyList = database.retrieveAllRankingSpecialty("2015-01-01", "2017-04-01");
 
-	    int rownum = 0;
-	    for (String key : keyset) 
-	    {
-	        //create a row of excelsheet
-	        Row row = sheet.createRow(rownum++);
+		System.out.println(SpecialtyList.size());
 
-	        //get object array of prerticuler key
-	        Object[] objArr = data.get(key);
+		XSSFWorkbook workbook = new XSSFWorkbook();
 
-	        int cellnum = 0;
+		// Create a blank sheet
+		XSSFSheet sheet = workbook.createSheet("Employee Data");
 
-	        for (Object obj : objArr) 
-	        {
-	            Cell cell = row.createCell(cellnum++);
-	            if (obj instanceof String) 
-	            {
-	                cell.setCellValue((String) obj);
-	            }
-	            else if (obj instanceof Integer) 
-	            {
-	                cell.setCellValue((Integer) obj);
-	            }
-	        }
-	    }
-	    try 
-	    {
-	        //Write the workbook in file system
-	        FileOutputStream out = new FileOutputStream(new File("howtodoinjava_demo.xlsx"));
-	        workbook.write(out);
-	        out.close();
-	        System.out.println("howtodoinjava_demo.xlsx written successfully on disk.");
-	    } 
-	    catch (Exception e)
-	    {
-	        e.printStackTrace();
-	    }
+		// This data needs to be written (Object[])
+		Map<Integer, Object[]> data = new TreeMap<Integer, Object[]>();
+
+		// data.put("1", new Object[] { "S/N", "Name", "Gender", "Email" });
+
+		for (int i = 0; i < SpecialtyList.size(); i++) {
+			RankingSpecialty temp = SpecialtyList.get(i);
+
+			data.put(i, new Object[] { temp.getCount(), temp.getSpecialty() });
+		}
+
+		// Iterate over data and write to sheet
+		Set<Integer> keyset = data.keySet();
+
+		int rownum = 0;
+		for (Integer key : keyset) {
+			// create a row of excelsheet
+			Row row = sheet.createRow(rownum++);
+
+			// get object array of prerticuler key
+			Object[] objArr = data.get(key);
+
+			int cellnum = 0;
+
+			for (Object obj : objArr) {
+				Cell cell = row.createCell(cellnum++);
+				if (obj instanceof String) {
+					cell.setCellValue((String) obj);
+				} else if (obj instanceof Integer) {
+					cell.setCellValue((Integer) obj);
+				}
+			}
+		}
+		try {
+			// Write the workbook in file system
+			FileOutputStream out = new FileOutputStream(new File("howtodoinjava_demo.xlsx"));
+			workbook.write(out);
+			out.close();
+			System.out.println("howtodoinjava_demo.xlsx written successfully on disk.");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

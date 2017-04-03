@@ -15,6 +15,22 @@ import ulink.logic.Utility;
 
 public class DatabaseConnection {
 
+	public void clearDatatable(){
+		Connection con;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "2FeroT8WC0GG");
+
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("TRUNCATE client");
+			con.commit();
+			con.close();
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	 
+	}
+	
 	public ArrayList<String> retrieveAllEmailTemplate() {
 		Connection con;
 		ArrayList<String> templateList = new ArrayList<>();

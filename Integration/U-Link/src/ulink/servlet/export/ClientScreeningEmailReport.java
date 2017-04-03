@@ -69,11 +69,11 @@ public class ClientScreeningEmailReport extends HttpServlet {
 		int ID = Integer.parseInt(request.getParameter("ID"));
 		HttpSession session = request.getSession();
 		String name = request.getParameter("name");
-		String direction = request.getParameter("direction");
+		//String direction = request.getParameter("direction");
 		session.setAttribute("ID", ID);
 		Condition condition = connection.retrieveAllConditionByID(ID);
 
-		ArrayList<Client> clientList = connection.retrieveAllClientListEmail(name, direction);
+		ArrayList<Client> clientList = connection.retrieveAllClientListEmail("age", "ASC");
 		ArrayList<ClientByIllness> clientByIllnessList = new ArrayList<>();
 		for (int i = 0; i < clientList.size(); i++) {
 			Client client = clientList.get(i);
@@ -116,7 +116,7 @@ public class ClientScreeningEmailReport extends HttpServlet {
 		XSSFWorkbook workbook = new XSSFWorkbook();
 
 		// Create a blank sheet
-		XSSFSheet sheet = workbook.createSheet("Employee Data");
+		XSSFSheet sheet = workbook.createSheet("EmployeeData");
 
 		// This data needs to be written (Object[])
 		Map<Integer, Object[]> data = new TreeMap<Integer, Object[]>();

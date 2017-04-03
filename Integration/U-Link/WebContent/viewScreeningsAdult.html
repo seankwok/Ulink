@@ -36,10 +36,25 @@
 			window.location = "addScreeningAdult.html";
 		});
 		
-		$('#export').click(function(){
+		$('#export').click(function(clickedID){
  			//do something
- 			
+			
+ 						var sendData = {
+					"ID" : clickedID
+				};
+				$.ajax({
+					url : "ClientScreeningEmail",
+					type : "post",
+					data : sendData,
+					complete : function(data) {
+						var json = jQuery.parseJSON(JSON.stringify(data));
+						window.location = "/ClientScreeningEmail.xlsx"
+						console.log(json);
+					}
+				});
+		
  		});
+		
 		
 	});
 	
