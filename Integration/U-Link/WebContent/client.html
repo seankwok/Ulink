@@ -32,6 +32,17 @@
 	
  
  <script type="text/javascript">
+ 
+	$(document).ready(function() {
+		displayUsers("A");
+		$('input[name=name]').click(function() {
+		    var firstChar = $('input[name=name]:checked').val();
+		    displayUsers(firstChar);
+		});
+			
+		
+	} );
+	
  function displayUsers(firstChar){
 		console.log(firstChar);
 		var table = "<table id='table' class='table table-hover' cellspacing='0'>";
@@ -81,7 +92,6 @@
 				});
 		    	table += "</tbody></table>"
 		    	$("#display").html(table);				    	
-		   
 			    }	
 	    	});
 		
@@ -137,7 +147,7 @@
 					data : sendData,
 					dataType : "json",
 					complete : function(data) {
-						displayAll();
+						//displayAll();							
 							window.location="clientInfo.html";						
 					}
 				});
@@ -197,17 +207,6 @@
 			});			
 		}
 		
-		$(document).ready(function() {
-			displayUsers("A");
-			$('input[name=name]').click(function() {
-			    var firstChar = $('input[name=name]:checked').val();
-			    displayUsers(firstChar);
-			});
-			
-			
-			
-			
-		} );
 		
 	  
 	</script>
