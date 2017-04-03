@@ -136,7 +136,10 @@
 				type : "get",
 				dataType : "json",
 				complete : function(data) {
+					console.log("before");
 					var json = jQuery.parseJSON(data.responseText);
+					//var json = jQuery.parseJSON(JSON.stringify(data));
+					console.log("after");
 					console.log(json);
 					screenTable += "<thead>"
 									+"<th class='tableHeader' width='40%'>Common Illness</th>"
@@ -168,7 +171,6 @@
 				dataType : "json",
 				complete : function(data) {
 					var json = jQuery.parseJSON(data.responseText);
-					console.log(json);
 					notifTable += "<thead>"
 									+"<th class='tableHeader' width='50%'>Screenings Notifications Sent</th>"
 									+"<th class='tableHeader'width='50%'>Date &amp; Time Sent</th>"

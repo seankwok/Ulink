@@ -44,7 +44,6 @@
 	} );
 	
  function displayUsers(firstChar){
-		console.log(firstChar);
 		var table = "<table id='table' class='table table-hover' cellspacing='0'>";
 		 $.ajax({
 		    	url: "DisplayAllClient",
@@ -53,7 +52,6 @@
 			    dataType: "json",
 			    complete: function(data){
 			    	var json = jQuery.parseJSON(data.responseText);
-	    			console.log(json);
 	    			 table += "<thead>"
 				    	   +"<th>Client Name</th>"			    	
 				    	   +"<th>"
