@@ -29,21 +29,10 @@
 	<script src="https://code.highcharts.com/highcharts.js"></script>
 	<script src="https://code.highcharts.com/modules/exporting.js"></script>
 	
- <style>
-
-	
-
-</style>
+ c
  	<script type="text/javascript">
  	$(document).ready(function() {
  	
- 		$("#datepicker1").datepicker({ 
- 			dateFormat: 'dd/mm/yy' 
- 		});
- 		$("#datepicker2").datepicker({ 
- 			dateFormat: 'dd/mm/yy' 
- 		});
- 		
  		
  		$("#submit").click (function(){
  			var startDate = $("#datepicker1").val();
@@ -54,7 +43,9 @@
 				$('#container').html("");
 				$('#message').html("");
 				$('#error').html("<div class='alert alert-danger' role='alert'><center><b> Enter Start and End Date. </b></center></div>");
-			}else{
+			}else if (startDate == endDate){
+				checkDate(startDate,endDate);
+			} else{
 				$('#error').html("");
 				checkDate(startDate,endDate);
 
@@ -125,6 +116,9 @@
 		            borderWidth: 0
 		        }
 		    },
+		    credits: {
+		 	        enabled: false
+		 	    },
 		    series: [{
 		        name: '0',
 		        data: num0

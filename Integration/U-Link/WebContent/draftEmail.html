@@ -1,29 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta charset="ISO-8859-1">
-	<title>Draft Email</title>
-	 <link href="css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+    <title>Report Index</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-
-	 <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-1.12.0.js"></script>
+    
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
     <script src="js/moment.js"></script>
     <script src="js/bootstrap-datetimepicker.min.js"></script>
 	<script src="js/bootstrap-datetimepicker.js"></script>
 	
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 	<script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
-   
+	
     <script> 
 	    $(function(){
-	      $("#includedContent").load("navBar.html"); 	      
+	      $("#includedContent").load("navBar.html"); 
 	    });
-
     </script> 
-
+	
+   
 	<style>
 		.errorMsg {
 		   font-size: 15px; 
@@ -47,6 +51,7 @@
 	
 	<script type="text/javascript">
 	
+	
 	function showFields(){
 		var templateContent = '[clientEmail]<br>[clientName]<br>[screening]' ;
 		 CKEDITOR.instances.editor1.setData(templateContent);
@@ -69,6 +74,7 @@
 
 	}
 	
+	
 	$(document).ready(function() {
 		var user = "";
 		var screeningName = sessionStorage.getItem('screeningName');
@@ -76,9 +82,10 @@
 		showFields();
 		showDropdownList();	
 		document.getElementById("header").innerHTML =  "Email for " + screeningName + " ";
-
+		
 	});
-    function presetInputBox(){
+    
+	function presetInputBox(){
     	$.ajax({
 			url : "DisplayLoginUser",
 			type : "get",
@@ -194,7 +201,7 @@
 	    	var templateContent = '[clientEmail]<br>[clientName]<br>[screening]' ;
 			 CKEDITOR.instances.editor1.setData(templateContent);
 		 }
-	    
+	      
 
 	</script>
 </head>
@@ -205,7 +212,7 @@
    
 	<div id="includedContent"></div>
 	<div class="container">
-	 <div class="container-fluid">
+	  <div class="container-fluid">
 
 			 <!-- Page Heading -->
                 <div class="row">
@@ -290,7 +297,6 @@
 
 			</div>
             <!-- /.container-fluid -->
-	
 	</div>
 	
 	</body>
