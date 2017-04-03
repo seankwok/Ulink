@@ -47,37 +47,40 @@ public class DisplayConditionByClient extends HttpServlet {
 		DatabaseConnection connection = new DatabaseConnection();
 
 		ArrayList<Client> clientList = connection.retrieveAllClientByName(clientName);
-		if (clientList.size() < 0){
-		Client client = clientList.get(0);
-		ArrayList<Condition> conditionList = connection.retrieveAllCondition("ID", "ASC");
+		if (clientList.size() < 0) {
+			Client client = clientList.get(0);
+			ArrayList<Condition> conditionList = connection.retrieveAllCondition("ID", "ASC");
 
-		ArrayList<Condition> newConditionList = new ArrayList<>();
+			ArrayList<Condition> newConditionList = new ArrayList<>();
 
-		for (int i = 0; i < conditionList.size(); i++) {
-			Condition condition = conditionList.get(i);
-			if (condition.getAgeRequired() <= client.getAge() && condition.getType().toUpperCase().equals(client.getGender().toUpperCase())) {
-				newConditionList.add(condition);
+			for (int i = 0; i < conditionList.size(); i++) {
+				Condition condition = conditionList.get(i);
+				if (condition.getAgeRequired() <= client.getAge()
+						&& condition.getType().toUpperCase().equals(client.getGender().toUpperCase())) {
+					newConditionList.add(condition);
+				}
 			}
-		}
 
-		Gson gson = new Gson();
-		PrintWriter out = response.getWriter();
-		JsonArray result = (JsonArray) new Gson().toJsonTree(newConditionList, new TypeToken<List<Condition>>() {
-		}.getType());
-		String arrayListToJson = gson.toJson(result);
-		System.out.print(arrayListToJson);
-
-		out.write(arrayListToJson);
-		out.flush();
-		return;
-		} else {
 			Gson gson = new Gson();
 			PrintWriter out = response.getWriter();
-			
-			out.write("-1");
-			out.flush();
-		}
+			JsonArray result = (JsonArray) new Gson().toJsonTree(newConditionList, new TypeToken<List<Condition>>() {
+			}.getType());
+			String arrayListToJson = gson.toJson(result);
+			System.out.print(arrayListToJson);
+			if (arrayListToJson.length() > 0) {
 
+				out.write(arrayListToJson);
+				out.flush();
+				return;
+			} else {
+				
+			
+
+				out.write("-1");
+				out.flush();
+			}
+
+		}
 	}
 
 	/**
