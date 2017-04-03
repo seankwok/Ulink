@@ -23,7 +23,7 @@ public class DatabaseConnection {
 
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate("TRUNCATE client");
-			con.commit();
+			//con.commit();
 			con.close();
 		} catch (SQLException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block

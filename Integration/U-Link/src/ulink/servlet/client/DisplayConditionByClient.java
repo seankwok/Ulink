@@ -45,13 +45,17 @@ public class DisplayConditionByClient extends HttpServlet {
 		HttpSession session = request.getSession();
 		String clientName = (String) session.getAttribute("clientName");
 		DatabaseConnection connection = new DatabaseConnection();
-
+		PrintWriter out = response.getWriter();
+		Gson gson = new Gson();
+		ArrayList<Condition> newConditionList = new ArrayList<>();
+	//	System.out.println(clientName + " Name");
 		ArrayList<Client> clientList = connection.retrieveAllClientByName(clientName);
-		if (clientList.size() < 0) {
+	//	System.out.println(clientList.size() + " Size");
+		if (clientList.size() > 0) {
 			Client client = clientList.get(0);
 			ArrayList<Condition> conditionList = connection.retrieveAllCondition("ID", "ASC");
+		//	System.out.println(conditionList.size() + " List");
 
-			ArrayList<Condition> newConditionList = new ArrayList<>();
 
 			for (int i = 0; i < conditionList.size(); i++) {
 				Condition condition = conditionList.get(i);
@@ -61,26 +65,17 @@ public class DisplayConditionByClient extends HttpServlet {
 				}
 			}
 
-			Gson gson = new Gson();
-			PrintWriter out = response.getWriter();
-			JsonArray result = (JsonArray) new Gson().toJsonTree(newConditionList, new TypeToken<List<Condition>>() {
-			}.getType());
-			String arrayListToJson = gson.toJson(result);
-			System.out.print(arrayListToJson);
-			if (arrayListToJson.length() > 0) {
-
-				out.write(arrayListToJson);
-				out.flush();
-				return;
-			} else {
-				
-			
-
-				out.write("-1");
-				out.flush();
-			}
-
 		}
+
+		JsonArray result = (JsonArray) new Gson().toJsonTree(newConditionList, new TypeToken<List<Condition>>() {
+		}.getType());
+		String arrayListToJson = gson.toJson(result);
+		//System.out.print(arrayListToJson + " RQEQWEWQ");
+
+		out.write(arrayListToJson);
+		out.flush();
+		return;
+
 	}
 
 	/**
