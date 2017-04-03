@@ -20,12 +20,40 @@
 	  margin: 0 5px 0 5px;
 	}
 
+
+.control-group {
+		display: inline-block;
+		text-align: left;
+		vertical-align: top;
+	}
+	.control {
+		font-size: 15px;
+		cursor: pointer;
+	}
+	
+	.control input {
+		opacity: 0;
+	}
+	
+	/* Radio button inner circle */
+.control--radio .control__indicator:after {
+	top: 7px;
+	left: 7px;
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: #fff;
+}
     </style>
     
     <script> 
 	    $(function(){
 	      $("#includedContent").load("navBar.html"); 
 	    });
+	    
+	    
+	    
+	    
     </script> 
 
 	
@@ -35,6 +63,7 @@
  
 	$(document).ready(function() {
 		displayUsers("A");
+		
 		$('input[name=name]').click(function() {
 		    var firstChar = $('input[name=name]:checked').val();
 		    displayUsers(firstChar);
@@ -227,47 +256,128 @@
                     </div>
                 </div>
 
-				<div class="row" align="center">
-					<div class="inline">
-                  <input type="radio" id="letter" name="name" value="A" /> A 	
-				  <input type="radio" id="letter" name="name" value="B" /> B
-				  <input type="radio" id="letter" name="name" value="C" /> C 
-				  <input type="radio" id="letter" name="name" value="D" /> D
-				  <input type="radio" id="letter" name="name" value="E" /> E
-				  <input type="radio" id="letter" name="name" value="F" /> F 
-				  <input type="radio" id="letter" name="name" value="G" /> G 
-				  <input type="radio" id="letter" name="name" value="H" /> H 
-				  <input type="radio" id="letter" name="name" value="I" /> I 
-				  <input type="radio" id="letter" name="name" value="J" /> J 
-				  <input type="radio" id="letter" name="name" value="K" /> K 
-				  <input type="radio" id="letter" name="name" value="L" /> L 
-				  <input type="radio" id="letter" name="name" value="M" /> M 
-				  <input type="radio" id="letter" name="name" value="N" /> N 
-				  <input type="radio" id="letter" name="name" value="O" /> O 
-				  <input type="radio" id="letter" name="name" value="P" /> P 
-				  <input type="radio" id="letter" name="name" value="Q" /> Q 
-				  <input type="radio" id="letter" name="name" value="R" /> R 
-				  <input type="radio" id="letter" name="name" value="S" /> S 
-				  <input type="radio" id="letter" name="name" value="T" /> T 
-				  <input type="radio" id="letter" name="name" value="U" /> U 
-				  <input type="radio" id="letter" name="name" value="V" /> V 
-				  <input type="radio" id="letter" name="name" value="W" /> W 
-				  <input type="radio" id="letter" name="name" value="X" /> X 
-				  <input type="radio" id="letter" name="name" value="Y" /> Y 
-				  <input type="radio" id="letter" name="name" value="Z" /> Z 
-				 
-				  
-				  <input id="myInput" onkeyup="mySearch()" placeholder="Search" name="search"></div>
-		        
-		         </div>
+<div class="control-group">
+	<label class="control control--radio">A
+		<input type="radio" name="name"  id="letter" value="A" />
+		<div class="control__indicator"></div>
+	</label>
+	
+	<label class="control control--radio">B
+		<input type="radio" name="name"  id="letter" value="B" />
+		<div class="control__indicator"></div>
+	</label>
+	<label class="control control--radio">C
+		<input type="radio" name="name"  id="letter" value="C" />
+		<div class="control__indicator"></div>
+	</label>
+	<label class="control control--radio">D
+		<input type="radio" name="name"  id="letter" value="D" />
+		<div class="control__indicator"></div>
+	</label>
+	<label class="control control--radio">E
+		<input type="radio" name="name"  id="letter" value="E" />
+		<div class="control__indicator"></div>
+	</label>
+	<label class="control control--radio">F
+		<input type="radio" name="name"  id="letter" value="F" />
+		<div class="control__indicator"></div>
+	</label>
+	<label class="control control--radio">G
+		<input type="radio" name="name"  id="letter" value="G" />
+		<div class="control__indicator"></div>
+	</label>
+	<label class="control control--radio">H
+		<input type="radio" name="name"  id="letter" value="H" />
+		<div class="control__indicator"></div>
+	</label>
+	<label class="control control--radio">I
+		<input type="radio" name="name"  id="letter" value="I" />
+		<div class="control__indicator"></div>
+	</label>
+	<label class="control control--radio">J
+		<input type="radio" name="name"  id="letter" value="J" />
+		<div class="control__indicator"></div>
+	</label>
+	<label class="control control--radio">K
+		<input type="radio" name="name"  id="letter" value="K" />
+		<div class="control__indicator"></div>
+	</label>
+	<label class="control control--radio">L
+		<input type="radio" name="name"  id="letter" value="L" />
+		<div class="control__indicator"></div>
+	</label>
+	<label class="control control--radio">M
+		<input type="radio" name="name"  id="letter" value="M" />
+		<div class="control__indicator"></div>
+	</label>
+	<label class="control control--radio">N
+		<input type="radio" name="name"  id="letter" value="N" />
+		<div class="control__indicator"></div>
+	</label>
+	
+	<label class="control control--radio">O
+		<input type="radio" name="name"  id="letter" value="O" />
+		<div class="control__indicator"></div>
+	</label>
+	<label class="control control--radio">P
+		<input type="radio" name="name"  id="letter" value="P" />
+		<div class="control__indicator"></div>
+	</label>
+	<label class="control control--radio">Q
+		<input type="radio" name="name"  id="letter" value="Q" />
+		<div class="control__indicator"></div>
+	</label>
+	<label class="control control--radio">R
+		<input type="radio" name="name"  id="letter" value="R" />
+		<div class="control__indicator"></div>
+	</label>
+	<label class="control control--radio">S
+		<input type="radio" name="name"  id="letter" value="S" />
+		<div class="control__indicator"></div>
+	</label>
+	<label class="control control--radio">T
+		<input type="radio" name="name"  id="letter" value="T" />
+		<div class="control__indicator"></div>
+	</label>
+	<label class="control control--radio">U
+		<input type="radio" name="name"  id="letter" value="U" />
+		<div class="control__indicator"></div>
+	</label>
+	<label class="control control--radio">V
+		<input type="radio" name="name"  id="letter" value="V" />
+		<div class="control__indicator"></div>
+	</label>
+	<label class="control control--radio">W
+		<input type="radio" name="name"  id="letter" value="W" />
+		<div class="control__indicator"></div>
+	</label>
+	<label class="control control--radio">X
+		<input type="radio" name="name"  id="letter" value="X" />
+		<div class="control__indicator"></div>
+	</label>
+	<label class="control control--radio">Y
+		<input type="radio" name="name"  id="letter" value="Y" />
+		<div class="control__indicator"></div>
+	</label>
+	<label class="control control--radio">Z
+		<input type="radio" name="name"  id="letter" value="Z" />
+		<div class="control__indicator"></div>
+	</label>
+
+</div>
+
+<input id="myInput" onkeyup="mySearch()" placeholder="Search" name="search"></div>
 					<br>
 					<br>
 					
-									
+			
 				<div id="display" class="container" ></div>         
 		         
 			</div>
             <!-- /.container-fluid -->
+            
+            
 	</div>
   </body>
 </html>
+ 
