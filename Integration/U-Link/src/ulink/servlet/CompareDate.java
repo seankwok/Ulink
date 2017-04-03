@@ -50,9 +50,12 @@ public class CompareDate extends HttpServlet {
 			
 			Gson gson = new Gson();
 			PrintWriter out = response.getWriter();
-			String arrayListToJson = gson.toJson(date1.before(date2));
+			String arrayListToJson = "same";
+			
+			if (!startDate.equals(endDate)){
+			arrayListToJson = gson.toJson(date1.before(date2));
 			//System.out.print(arrayListToJson);
-
+			}
 			out.write(arrayListToJson);
 			out.flush();
 			return;

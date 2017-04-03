@@ -63,6 +63,7 @@ public class ClientScreeningEmailReport extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 		DatabaseConnection connection = new DatabaseConnection();
+		System.out.println("Enter email");
 		// int age = Integer.parseInt(request.getParameter("age"));
 		// String gender = request.getParameter("gender");
 		// String type = request.getParameter("type");

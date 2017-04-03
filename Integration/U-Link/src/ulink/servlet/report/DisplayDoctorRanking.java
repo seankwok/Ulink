@@ -45,10 +45,11 @@ public class DisplayDoctorRanking extends HttpServlet {
 		ArrayList<RankingDoctor> doctorList;
 		String startDate = request.getParameter("startDate");
 		String endDate = request.getParameter("endDate");
-		Utility utility = new Utility();
-		doctorList = database.retrieveAllRankingDoctor(utility.changeDateFormatDatabase(startDate), utility.changeDateFormatDatabase(endDate));
 		
-
+		Utility utility = new Utility();
+		doctorList = database.retrieveAllRankingDoctor(utility.changeDateExportFormat(startDate), utility.changeDateExportFormat(endDate));
+		
+		
 		Gson gson = new Gson();
 
 		JsonArray result = (JsonArray) new Gson().toJsonTree(doctorList, new TypeToken<List<RankingDoctor>>() {

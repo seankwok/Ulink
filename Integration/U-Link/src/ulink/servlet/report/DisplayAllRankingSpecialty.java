@@ -46,7 +46,7 @@ public class DisplayAllRankingSpecialty extends HttpServlet {
 		String startDate = request.getParameter("startDate");
 		String endDate = request.getParameter("endDate");
 		Utility utility = new Utility();
-		SpecialtyList = database.retrieveAllRankingSpecialty(utility.changeDateFormatDatabase(startDate), utility.changeDateFormatDatabase(endDate));
+		SpecialtyList = database.retrieveAllRankingSpecialty(utility.changeDateExportFormat(startDate), utility.changeDateExportFormat(endDate));
 		
 
 		Gson gson = new Gson();

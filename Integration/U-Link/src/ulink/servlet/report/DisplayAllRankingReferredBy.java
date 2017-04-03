@@ -45,9 +45,10 @@ public class DisplayAllRankingReferredBy extends HttpServlet {
 		ArrayList<RankingReferredBy> referredByList;
 		String startDate = request.getParameter("startDate");
 		String endDate = request.getParameter("endDate");
+		System.out.println(startDate);
 		//dd/mm/yyyy >> yyyy/mm/dd
 		Utility utility = new Utility();
-		referredByList = database.retrieveAllRankingReferredBy(utility.changeDateFormatDatabase(startDate), utility.changeDateFormatDatabase(endDate));
+		referredByList = database.retrieveAllRankingReferredBy(utility.changeDateExportFormat(startDate), utility.changeDateExportFormat(endDate));
 		
 
 		Gson gson = new Gson();

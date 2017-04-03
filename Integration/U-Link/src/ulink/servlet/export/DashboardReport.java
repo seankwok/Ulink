@@ -209,7 +209,13 @@ public class DashboardReport extends HttpServlet {
 			cell.setColspan(3);
 			table.addCell(cell);
 
-			for (int i = 0; i < 5; i++) {
+			int check = list.size();
+			
+			if (check > 5){
+				check = 5;
+			}
+			
+			for (int i = 0; i < check; i++) {
 
 				// second row
 				cell = new PdfPCell(new Phrase(list.get(i).getRanking() + ""));
@@ -290,7 +296,10 @@ public class DashboardReport extends HttpServlet {
 			cell.setColspan(4);
 			table2.addCell(cell);
 
-			for (int j = 0; j < 5; j++) {
+			if (check > 5){
+				check = 5;
+			}
+			for (int j = 0; j < check; j++) {
 
 				// second row
 				cell = new PdfPCell(new Phrase(listDoctor.get(j).getRanking() + ""));
