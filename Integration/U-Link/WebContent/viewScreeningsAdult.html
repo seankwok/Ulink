@@ -201,7 +201,7 @@
 			         +"</div>"
 			       
 			         $("#display").html(table);
-						$('#error').html("");
+						
 
 						$('#select_all').on('click',function(){
 						    if(this.checked){
@@ -224,6 +224,7 @@
 						});
 					
 		       }else{
+		    	   console.log("no patient");
 					$('#error').html("<div class='alert alert-danger' role='alert'><center><b> No patient in database matches criteria </b></center></div>");
 
 		       }
@@ -1312,10 +1313,11 @@
 				<div class="container" id="display" align="center">
 				
 				<div class="container" id="message"></div>
-				<div class="container" id="error"></div>
+				
 		         </div>
 			</div>
             <!-- /.container-fluid -->
+            <div class="container" id="error"></div>
 </div>
   </body>
 </html>

@@ -537,7 +537,6 @@
 					complete : function(data) {
 						var json = jQuery.parseJSON(data.responseText);
 						if (json.length != 0) {
-							console.log(json.length);
 							table += "<h3><b>Condition Name:</b>  "
 									+ json[0].conditionName
 									+ "<br>   <b>Screening Name: </b> "
@@ -1484,10 +1483,11 @@
 			<div class="container" id="display" align="center">
 
 				<div class="container" id="message"></div>
-				<div class="container" id="error"></div>
 			</div>
 		</div>
 		<!-- /.container-fluid -->
+		
+				<div class="container" id="error"></div>
 	</div>
 </body>
 </html>
