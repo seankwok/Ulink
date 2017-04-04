@@ -60,7 +60,7 @@ public class RankingDoctorReport extends HttpServlet {
 		String startDate = request.getParameter("startDate");
 		String endDate = request.getParameter("endDate");
 		Utility utility = new Utility();
-		doctorList = database.retrieveAllRankingDoctor(utility.changeDateFormatDatabase(startDate), utility.changeDateFormatDatabase(endDate));
+		doctorList = database.retrieveAllRankingDoctor(utility.changeDateExportFormat(startDate), utility.changeDateExportFormat(endDate));
 		
 		
 		int width = 500;

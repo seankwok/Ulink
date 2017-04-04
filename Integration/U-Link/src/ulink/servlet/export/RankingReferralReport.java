@@ -60,7 +60,7 @@ public class RankingReferralReport extends HttpServlet {
 		String endDate = request.getParameter("endDate");
 		//dd/mm/yyyy >> yyyy/mm/dd
 		Utility utility = new Utility();
-		referredByList = database.retrieveAllRankingReferredBy(utility.changeDateFormatDatabase(startDate), utility.changeDateFormatDatabase(endDate));
+		referredByList = database.retrieveAllRankingReferredBy(utility.changeDateExportFormat(startDate), utility.changeDateExportFormat(endDate));
 		
 
 		

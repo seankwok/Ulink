@@ -60,7 +60,7 @@ public class RankingDoctorBySpecialty extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		DatabaseConnection connection = new DatabaseConnection();
 		Utility utility = new Utility();
-		ArrayList<RankingDoctorSpecialty> doctorList = connection.retrieveAllDoctorBySpecialty(specialty,utility.changeDateFormatDatabase(startDate),utility.changeDateFormatDatabase(endDate));
+		ArrayList<RankingDoctorSpecialty> doctorList = connection.retrieveAllDoctorBySpecialty(specialty,utility.changeDateExportFormat(startDate),utility.changeDateExportFormat(endDate));
 		
 		int width = 500;
 		int height = 400;

@@ -104,15 +104,19 @@ public class DashboardReport extends HttpServlet {
 
 		try {
 			response.setContentType("application/pdf");
-
+			
 			filePath = getServletContext().getRealPath(TMP_DIR_PATH);
 
+			
+			
 			String imagePath = getServletContext().getRealPath(image_path);
 			// ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			response.addHeader("Content-Disposition", "attachment;  filename=" + filePath);
 			writer = PdfWriter.getInstance(document, new FileOutputStream(filePath));
 			System.out.println(filePath);
 			document.open();
+			
+
 			// Display dashboard for Medical
 			Image img = Image.getInstance(imagePath);
 			img.scaleAbsolute(60f, 60f);
@@ -121,36 +125,7 @@ public class DashboardReport extends HttpServlet {
 			Paragraph p = new Paragraph("ULINK REPORTING SYSTEM – DASHBOARD");
 			p.setAlignment(p.ALIGN_CENTER);
 			document.add(p);
-
-			PdfContentByte contentByte = writer.getDirectContent();
-			PdfTemplate template = contentByte.createTemplate(width, height);
-			Graphics2D graphics2d = template.createGraphics(width, height, new DefaultFontMapper());
-			Rectangle2D rectangle2d = new Rectangle2D.Double(0, 0, width, height);
-			dashboardMedical.draw(graphics2d, rectangle2d);
-			Image chartImage = Image.getInstance(template);
-			document.add(chartImage);
-			graphics2d.dispose();
-
-			// Display dashboard for Visa
-			PdfContentByte contentByte2 = writer.getDirectContent();
-			PdfTemplate template2 = contentByte2.createTemplate(width, height);
-			Graphics2D graphics2d2 = template2.createGraphics(width, height, new DefaultFontMapper());
-			Rectangle2D rectangle2d2 = new Rectangle2D.Double(0, 0, width, height);
-			dashboardVisa.draw(graphics2d2, rectangle2d2);
-
-			Image chartImage2 = Image.getInstance(template2);
-			document.add(chartImage2);
-			graphics2d2.dispose();
-
-			// Display dashboard for visa type
-			PdfContentByte contentByte3 = writer.getDirectContent();
-			PdfTemplate template3 = contentByte3.createTemplate(width, height);
-			Graphics2D graphics2d3 = template3.createGraphics(width, height, new DefaultFontMapper());
-			Rectangle2D rectangle2d3 = new Rectangle2D.Double(0, 0, width, height);
-			dashboardVisaRequested.draw(graphics2d3, rectangle2d3);
-			Image chartImage3 = Image.getInstance(template3);
-			document.add(chartImage3);
-			graphics2d3.dispose();
+	
 
 			// document.add(createFirstTable());
 
@@ -260,7 +235,7 @@ public class DashboardReport extends HttpServlet {
 				table.addCell(cell);
 
 			}
-			document.add(table);
+		
 
 			ArrayList<RankingDoctor> listDoctor = connection.retrieveAllRankingDoctorDashBoard(startDate, endDate);
 
@@ -354,7 +329,46 @@ public class DashboardReport extends HttpServlet {
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				table2.addCell(cell);
 			}
+			
+			
+		
+			document.add(table);
 			document.add(table2);
+			
+
+
+			// Display dashboard for visa type
+			PdfContentByte contentByte3 = writer.getDirectContent();
+			PdfTemplate template3 = contentByte3.createTemplate(width, height);
+			Graphics2D graphics2d3 = template3.createGraphics(width, height, new DefaultFontMapper());
+			Rectangle2D rectangle2d3 = new Rectangle2D.Double(0, 0, width, height);
+			dashboardVisaRequested.draw(graphics2d3, rectangle2d3);
+			Image chartImage3 = Image.getInstance(template3);
+			document.add(chartImage3);
+			graphics2d3.dispose();
+			
+			
+			PdfContentByte contentByte = writer.getDirectContent();
+			PdfTemplate template = contentByte.createTemplate(width, height);
+			Graphics2D graphics2d = template.createGraphics(width, height, new DefaultFontMapper());
+			Rectangle2D rectangle2d = new Rectangle2D.Double(0, 0, width, height);
+			dashboardMedical.draw(graphics2d, rectangle2d);
+			Image chartImage = Image.getInstance(template);
+			document.add(chartImage);
+			graphics2d.dispose();
+
+			// Display dashboard for Visa
+			PdfContentByte contentByte2 = writer.getDirectContent();
+			PdfTemplate template2 = contentByte2.createTemplate(width, height);
+			Graphics2D graphics2d2 = template2.createGraphics(width, height, new DefaultFontMapper());
+			Rectangle2D rectangle2d2 = new Rectangle2D.Double(0, 0, width, height);
+			dashboardVisa.draw(graphics2d2, rectangle2d2);
+
+			Image chartImage2 = Image.getInstance(template2);
+			document.add(chartImage2);
+			graphics2d2.dispose();
+
+			
 
 		} catch (
 
