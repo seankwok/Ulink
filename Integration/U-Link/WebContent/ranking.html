@@ -43,7 +43,7 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
-
+	
 	
 	$("#submit").click (
 		function(){
@@ -62,244 +62,236 @@ $(document).ready(function() {
 
 		});
 	
-	function checkDate(startDate,endDate){
-		var criteria = $("#criteria").val();
-		var sendData = {
-				"startDate" : startDate,
-				"endDate":endDate,
-		};
-		$.ajax({
-	    	url : "CompareDate",
-			type : "get",
-			data : sendData,
-			success : function(data) {
-				var json = jQuery.parseJSON(JSON.stringify(data));
-					if(json == "false"){
-						$('#error').html("<div class='alert alert-danger' role='alert'><center><b> Start Date should be earlier than End Date. </b></center></div>");
-						$("#result").html("");
-					}else{
-							
-						var count = 0;
-						var previous;
-						var url="";
-						var table = "<table>"
-						
-						if (criteria=="Doctor"){
-								table += "<thead>"
-										  +"<th>Ranking</th>"
-										  +"<th>"+criteria+"</th>"
-										  +"<th>Clinic</th>"
-										  +"<th>Specialty</th>"
-										  +"<th>Number of Appointments</th>"
-									  +"</thead>";
-								url="DisplayDoctorRanking";
-						
-					   }else if(criteria=="Referral"){
-							table += "<thead>"
-									  +"<th>Ranking</th>"
-									  +"<th>Referred By</th>"
-									  +"<th>Number of Referred Cases</th>"
-							  	  +"</thead>";
-							url="DisplayAllRankingReferredBy";
-						
-					   }else{//criteria== specialty
-							table += "<thead>"
-									  +"<th>Ranking</th>"
-									  +"<th>"+criteria+"</th>"
-									  +"<th>Number of Engagements</th>"
-									  +"<th>List of Doctors</th>"
-						  		  +"</thead>";
-							url="DisplayAllRankingSpecialty";
-					}				
-						$.ajax({
-						url : url,
-						type : "get",
-						data : 'startDate=' + startDate + '&' + 'endDate=' + endDate,
-						dataType : "json",
-						success : function(data) {
-							var json = jQuery.parseJSON(JSON.stringify(data));	
-							table += "<tbody>"
-							$.each(json,function(key, value) {
+			function checkDate(startDate,endDate){
+				var criteria = $("#criteria").val();
+				var sendData = {
+						"startDate" : startDate,
+						"endDate":endDate,
+				};
+				$.ajax({
+			    	url : "CompareDate",
+					type : "get",
+					data : sendData,
+					success : function(data) {
+						var json = jQuery.parseJSON(JSON.stringify(data));
+							if(json == "false"){
+								$('#error').html("<div class='alert alert-danger' role='alert'><center><b> Start Date should be earlier than End Date. </b></center></div>");
+								$("#result").html("");
+							}else{
+									
+								var count = 0;
+								var previous;
+								var url="";
+								var table = "<table>"
 								
 								if (criteria=="Doctor"){
-									if(previous != value["numAppointment"]){
-										count += 1;	
-									}
-									table += "<tr>" 
-										  +"<td>"+count+"</td>"
-										  +"<td>"+value["name"]+"</td>"
-										  +"<td>"+value["clinic"]+"</td>"
-										  +"<td>"+value["speciality"]+"</td>"
-										  +"<td>"+value["numAppointment"]+"</td>"	
-										  +"</tr>"	
-										  
-									  previous = value["numAppointment"];
-									
-								}else if(criteria=="Referral"){
-									if(previous != value["count"]){
-										count += 1;	
-									}
-									table += "<tr>" 
-										  +"<td>"+count+"</td>"
-										  +"<td>"+value["name"]+"</td>"
-										  +"<td>"+value["count"]+"</td>"
-										  +"</tr>"	
-										  
-									  previous = value["count"];
-									
-								}else{
-									if(previous != value["count"]){
-										count += 1;	
-									}
-									table += "<tr>" 
-										  +"<td>"+count+"</td>"
-										  +"<td>"+value["Specialty"]+"</td>"
-										  +"<td>"+value["count"]+"</td>"
-										  +"<td>"
-										  	+"<a href='#' onClick=viewDoctors(this.id) id= '"
-						    				+ value['Specialty']
-						    				+ "'>View Doctors</a>"
-										  +"</td>"
-									  +"</tr>"	
-									  	previous = value["count"];						
+										table += "<thead>"
+												  +"<th>Ranking</th>"
+												  +"<th>"+criteria+"</th>"
+												  +"<th>Clinic</th>"
+												  +"<th>Specialty</th>"
+												  +"<th>Number of Appointments</th>"
+											  +"</thead>";
+										url="DisplayDoctorRanking";
+								
+							   }else if(criteria=="Referral"){
+									table += "<thead>"
+											  +"<th>Ranking</th>"
+											  +"<th>Referred By</th>"
+											  +"<th>Number of Referred Cases</th>"
+									  	  +"</thead>";
+									url="DisplayAllRankingReferredBy";
+								
+							   }else{//criteria== specialty
+									table += "<thead>"
+											  +"<th>Ranking</th>"
+											  +"<th>"+criteria+"</th>"
+											  +"<th>Number of Engagements</th>"
+											  +"<th>List of Doctors</th>"
+								  		  +"</thead>";
+									url="DisplayAllRankingSpecialty";
+							}				
+								$.ajax({
+								url : url,
+								type : "get",
+								data : 'startDate=' + startDate + '&' + 'endDate=' + endDate,
+								dataType : "json",
+								success : function(data) {
+									var json = jQuery.parseJSON(JSON.stringify(data));	
+									table += "<tbody>"
+									$.each(json,function(key, value) {
+										
+										if (criteria=="Doctor"){
+											if(previous != value["numAppointment"]){
+												count += 1;	
+											}
+											table += "<tr>" 
+												  +"<td>"+count+"</td>"
+												  +"<td>"+value["name"]+"</td>"
+												  +"<td>"+value["clinic"]+"</td>"
+												  +"<td>"+value["speciality"]+"</td>"
+												  +"<td>"+value["numAppointment"]+"</td>"	
+												  +"</tr>"	
+												  
+											  previous = value["numAppointment"];
+											
+										}else if(criteria=="Referral"){
+											if(previous != value["count"]){
+												count += 1;	
+											}
+											table += "<tr>" 
+												  +"<td>"+count+"</td>"
+												  +"<td>"+value["name"]+"</td>"
+												  +"<td>"+value["count"]+"</td>"
+												  +"</tr>"	
+												  
+											  previous = value["count"];
+											
+										}else{
+											if(previous != value["count"]){
+												count += 1;	
+											}
+											table += "<tr>" 
+												  +"<td>"+count+"</td>"
+												  +"<td>"+value["Specialty"]+"</td>"
+												  +"<td>"+value["count"]+"</td>"
+												  +"<td>"
+												  	+"<a href='#' onClick=viewDoctors(this.id) id= '"
+								    				+ value['Specialty']
+								    				+ "'>View Doctors</a>"
+												  +"</td>"
+											  +"</tr>"	
+											  	previous = value["count"];						
+											}
+										});
+										table += "</body></table>"
+										$("#clickedSpeciality").html("");
+										$('#result').html(table);  
+										$('#error').html(""); 									
 									}
 								});
-								table += "</body></table>"
-								$("#clickedSpeciality").html("");
-								$('#result').html(table);  
-								$('#error').html(""); 									
 							}
-						});
 					}
+				});
 			}
-		});
-	}
+ 	
+	});
+				
+function viewDoctors(clickedID){
+	var startDate = $("#datepicker1").val();
+	var endDate = $("#datepicker2").val();
 	
-	function viewDoctors(clickedID){
-		var startDate = $("#datepicker1").val();
-		var endDate = $("#datepicker2").val();
-		
 
-		var sendData = {
-				"Specialty" :clickedID,
-				"startDate" :startDate,
-				"endDate" :	endDate
-			};
-		var speciality = "";
-		var rank = 0;
-		var prev ="";
-		
-		var table = "<table id='table' width='80%'>";
-			$.ajax({
-				url : "DisplayDoctorBySpecialty",
-				type : "get",
-				data : sendData ,
-				dataType : "json",
-				complete: function(data){
-					var json = jQuery.parseJSON(data.responseText);
-				    	table += "<thead>"
-			    			+"<th>Ranking</th>"
-			    			+"<th>Doctor</th>"
-			    			+"<th>Number of Engagement</th>"
-		    			+"</thead>";
-		    			+ "<tbody>"
-		    			$.each(json,function(key, value) {
-			    		speciality = value["Specialty"]
-			    		if(prev != value["engagement"]){
-							rank += 1;	
-						}
-					table +="<tr>"
-							  +"<td>"+rank+"</td>"
-							  +"<td>"+value["name"]+"</td>"	 
-							  +"<td>"+value["engagement"]+"</td>"
-							+ "</tr>"
-						prev = value["engagement"];
-		    		});
-		    		table += "</tbody></table>"
-		    		$("#result").html(table);
-		    		$("#clickedSpeciality").html("Speciality: "+clickedID);
-				}	
-			});
-	}
-});
+	var sendData = {
+			"Specialty" :clickedID,
+			"startDate" :startDate,
+			"endDate" :	endDate
+		};
+	var speciality = "";
+	var rank = 0;
+	var prev ="";
+	
+	var table = "<table id='table' width='80%'>";
+		$.ajax({
+			url : "DisplayDoctorBySpecialty",
+			type : "get",
+			data : sendData ,
+			dataType : "json",
+			complete: function(data){
+				var json = jQuery.parseJSON(data.responseText);
+			    	table += "<thead>"
+		    			+"<th>Ranking</th>"
+		    			+"<th>Doctor</th>"
+		    			+"<th>Number of Engagement</th>"
+	    			+"</thead>";
+	    			+ "<tbody>"
+	    			$.each(json,function(key, value) {
+		    		speciality = value["Specialty"]
+		    		if(prev != value["engagement"]){
+						rank += 1;	
+					}
+				table +="<tr>"
+						  +"<td>"+rank+"</td>"
+						  +"<td>"+value["name"]+"</td>"	 
+						  +"<td>"+value["engagement"]+"</td>"
+						+ "</tr>"
+					prev = value["engagement"];
+	    		});
+	    		table += "</tbody></table>"
+	    		$("#result").html(table);
+	    		$("#clickedSpeciality").html("Speciality: "+clickedID);
+			}	
+		});
+}
 </script>
 
 </head>
 <body>
 
 	<div id="includedContent"></div>
-	<div class="container">
-	 <div class="container-fluid">
+	<div class="page-header">
+		<h1 align="center">Ranking</h1>
+	</div>
+	
+	
+    <div class="container">
+      <div class="row">
+          <div class="col-md-4">
+          <div class="caption">
+          <div class="form-group">
+               <label>Select Criteria </label> 
+				<select class="form-control" id="criteria">
+					<option value="Doctor">Doctor</option>
+					<option value="Referral">Referral</option>
+					<option value="Speciality">Specialty</option>
+				</select>
+          </div>          
+          </div>
+          </div>
 
-			 <!-- Page Heading -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1 class="page-header">
-                            <b>Report  </b><small>  Ranking </small>
-                             <button class="btn btn-primary pull-right" id="export"><b>Export this page</b></button>                         
-                        </h1>
-                        
-                    </div>
-                </div>
+          <div class="col-md-4">
+          <div class="caption">
+          <div class="form-group">
+          	 <label> Select Start Date </label><br>
+			 <input class="form-control" type="date" data-date-inline-picker="false" data-date-open-on-focus="true" id="datepicker1"/>	 
+          </div>          
+          </div>
+          </div>
+          
+          <div class="col-md-4">
+          <div class="caption">
+          <div class="form-group">
+          	 <label> Select End Date </label><br>
+			 <input class="form-control" type="date" data-date-inline-picker="false" data-date-open-on-focus="true" id="datepicker2"/>	 
+          </div>          
+          </div>
+          </div>
 
-				<div class="row">
-                    <div class="col-md-4">
-			          <div class="caption">
-			          <div class="form-group">
-			               <label>Select Criteria </label> 
-							<select class="form-control" id="criteria">
-								<option value="Doctor">Doctor</option>
-								<option value="Referral">Referral</option>
-								<option value="Speciality">Specialty</option>
-							</select>
-			          </div>          
-			          </div>
-			          </div>
-			
-			          <div class="col-md-4">
-			          <div class="caption">
-			          <div class="form-group">
-			          	 <label> Select Start Date </label><br>
-						<input class="form-control" type="date" data-date-inline-picker="false" data-date-open-on-focus="true" id="datepicker1"/>	 
-			          </div>          
-			          </div>
-			          </div>
-			          
-			          <div class="col-md-4">
-			          <div class="caption">
-			          <div class="form-group">
-			          	 <label> Select End Date </label><br>
-						<input class="form-control" type="date" data-date-inline-picker="false" data-date-open-on-focus="true" id="datepicker2"/>	 
-			          </div>          
-			          </div>
-			          </div>
-		         </div>
-		         <div class="container" align="center">
-			        <button type="submit" value="Submit" class="btn btn-primary" id="submit">Generate Results</button>
-			    </div>
-			    
-			    <div class="container" align="left" id="table1"></div>
-			  
-			  	<div class="container" align="left" id="table2"></div>
-			    </div>
-				
-				 <div class ='container' id='error'> </div> 
-			
-					
-				
-				<br>
-			
-				<div id='clickedSpeciality' class='subTitle'> </div>
-				
-				<br>
-				
-				<div class="container" >
-					<table class="table table-striped" id="result"></table>
-				</div>
-					         
-		         
-			</div>
-            <!-- /.container-fluid -->
+      </div>
+    <div class="container" align="center">
+        <button type="submit" value="Submit" class="btn btn-primary" id="submit">Generate Results</button>
+        <button type="submit" value="export" class="btn btn-primary" id="export">Export</button>
+    </div>
+    
+    <br>
+    <div class="container" align="left" id="table1"></div>
+  
+  	<div class="container" align="left" id="table2"></div>
+    </div>
+	
+	 <div class ='container' id='error'> </div> 
+
+		
+	
+	<br><br>
+
+	<div id='clickedSpeciality' class='subTitle'> </div>
+	
+	<br>
+	
+	<div class="container" >
+		<table class="table table-striped" id="result"></table>
+	</div>
 	
 </body>
 </html>
