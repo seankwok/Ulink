@@ -12,9 +12,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-    
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    
     <script> 
 	    $(function(){
 	      $("#includedContent").load("navBar.html"); 
@@ -23,9 +20,11 @@
     
  <style>
  	
+ 	
+	
 	.myHeader{
 		font-weight: bold;
-		font-size: 16px;
+		font-size: 18px;
 		color: #092473;
 	}
 	
@@ -59,20 +58,7 @@
 		width: 90%;
 	    margin: auto;
 	}
-	
-	.panel-heading .accordion-toggle:after {
-    /* symbol for "opening" panels */
-    font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
-    content: "\e114";    /* adjust as needed, taken from bootstrap.css */
-    float: right;        /* adjust as needed */
-    color: grey;         /* adjust as needed */
-}
-.panel-heading .accordion-toggle.collapsed:after {
-    /* symbol for "collapsed" panels */
-    content: "\e080";    /* adjust as needed, taken from bootstrap.css */
-}
-	
-	
+
  	</style>
  
  <script type="text/javascript">
@@ -82,28 +68,8 @@
 			displayAppointment();
 			displayScreening();
 			displayNotif();
-			var acc = document.getElementsByClassName("accordion");
-			var i;
-
-			for (i = 0; i < acc.length; i++) {
-			    acc[i].onclick = function(){
-			        /* Toggle between adding and removing the "active" class,
-			        to highlight the button that controls the panel */
-			        this.classList.toggle("active");
-
-			        /* Toggle between hiding and showing the active panel */
-			        var panel = this.nextElementSibling;
-			        if (panel.style.display === "block") {
-			            panel.style.display = "none";
-			        } else {
-			            panel.style.display = "block";
-			        }
-			    }
-			}
 			
 		});
-		
-		
 		
 		function draftEmail(clickedID){ 
 			var clients =  sessionStorage.getItem('clients');
@@ -172,11 +138,11 @@
 				type : "get",
 				dataType : "json",
 				complete : function(data) {
-					console.log("before");
 					var json = jQuery.parseJSON(data.responseText);
-					//var json = jQuery.parseJSON(JSON.stringify(data));
-					console.log("after");
 					console.log(json);
+					if (json == "-1"){
+						window.location = "client.html";				
+					}else{
 					screenTable += "<thead>"
 									+"<th class='tableHeader' width='40%'>Common Illness</th>"
 									+"<th class='tableHeader'width='40%'>Recommended Screening</th>"
@@ -192,9 +158,9 @@
 	               				             				                
 							});
 								
-					screenTable	+="</tbody></form></table>"
+								screenTable	+="</tbody></form></table>"
 			    	$("#sTable").html(screenTable);
-					
+					}
 				}							
 			});
 		}
@@ -295,87 +261,33 @@
   <body>
     
   	<div id="includedContent"></div>
-<div class="container">
-   <div class="container-fluid">
 
-			 <!-- Page Heading -->
-                <div class="row">
-                    <div class="col-lg-12" align="center">
-                        <h1 class="page-header">
-                            <b>Client Info- </b> <small id="name"></small>  
-                                <a href="client.html"><button type="button" class="btn btn-xs"  style="float: left;"> &crarr;back</button></a>                    
-                                              
-                        </h1>
-                    </div>
-                </div>
 
-		
+	
+    <div class="page-header">
+       <h1 align="center" id="name"></h1>
+    </div>
+    
     <div align="right"id="myTable"></div>  
     
-    
-		    
-		    <div class = "container">
+   <div class="ex1">
+   		<div align="center" class='tableName'> Appointment Date &amp; Time </div><br> 
+ 		<div align="center" id="aTable"> </div>
 
-  
-  <div class="panel-group" id="accordion">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-          Appointment Date &amp; Time
-        </a>
-      </h4>
-    </div>
-    <div id="collapseOne" class="panel-collapse collapse in">
-      <div class="panel-body" id="aTable">
+   </div>
 
-      </div>
-    </div>
-  </div>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-          Screenings
-        </a>
-      </h4>
-    </div>
-    <div id="collapseTwo" class="panel-collapse collapse">
-      <div class="panel-body" id="sTable">
-
-      </div>
-    </div>
-  </div>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-          Screenings Notification
-        </a>
-      </h4>
-    </div>
-    <div id="collapseThree" class="panel-collapse collapse">
-      <div class="panel-body" id="nTable">
-      
-      </div>
-    </div>
-  </div>
-</div>
-  
-  
-</div> <!-- end container -->
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-			
-
-
-
-	</div>
-        <!-- /.container-fluid -->
+   <div class="ex1">
+   		<div align="center" class='tableName'>Screenings</div>
+		<div align="center"  id="sTable"></div>
+   </div>
 	
-	</div>
+	<div class="ex1">
+   		<div align="center" class='tableName'> Screenings Notification </div><br> 
+ 		<div align="center" id="nTable"> </div>
+
+   </div>
+	
+	
 
 	    
   </body>
