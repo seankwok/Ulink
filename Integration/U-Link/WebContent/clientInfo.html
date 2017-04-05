@@ -139,7 +139,6 @@
 				dataType : "json",
 				complete : function(data) {
 					var json = jQuery.parseJSON(data.responseText);
-					console.log(json);
 					if (json == "-1"){
 						window.location = "client.html";				
 					}else{
@@ -195,6 +194,7 @@
 		function goBack(){
 			var selectedChar = sessionStorage.getItem('selectedChar');
 			sessionStorage.setItem('selectedChar', selectedChar);
+			sessionStorage.setItem('navi', "fromBack");
 			window.location.href = "client.html";	  
 		}
 		

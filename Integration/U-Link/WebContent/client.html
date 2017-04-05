@@ -61,11 +61,17 @@
  
  <script type="text/javascript">
  
-	$(document).ready(function() {		
+	$(document).ready(function() {	
 		var selectedChar = sessionStorage.getItem('selectedChar');
-		if (selectedChar == null){
+		var navi = sessionStorage.getItem('navi');
+		
+		if (navi == null ){
+			window.sessionStorage.removeItem(selectedChar)
+			window.sessionStorage.removeItem('navi')
 			displayUsers("A");
 		}else{
+			window.sessionStorage.removeItem(selectedChar)
+			window.sessionStorage.removeItem('navi')
 		    displayUsers(selectedChar);		
 
 		}	
