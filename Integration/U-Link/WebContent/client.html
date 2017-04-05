@@ -61,14 +61,20 @@
  
  <script type="text/javascript">
  
-	$(document).ready(function() {
-		displayUsers("A");
+	$(document).ready(function() {		
+		var selectedChar = sessionStorage.getItem('selectedChar');
+		if (selectedChar == null){
+			displayUsers("A");
+		}else{
+		    displayUsers(selectedChar);		
+
+		}	
 		
 		$('input[name=name]').click(function() {
 		    var firstChar = $('input[name=name]:checked').val();
-		    displayUsers(firstChar);
+	    	sessionStorage.setItem('selectedChar', firstChar);
+	    	displayUsers(firstChar);
 		});
-			
 		
 	} );
 	
