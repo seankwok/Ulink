@@ -38,6 +38,7 @@
 		displayTopDocLastMonth();
 		displayTopReferralThisMonth();
 		displayTopReferralLastMonth();
+		
 		$("#showDoctor").toggle('show');
 		$("#showReferral").hide();
 		
@@ -89,31 +90,31 @@
 								+ "<td>" + json.responseJSON[0].name + "</td>"
 								+ "<td>" + json.responseJSON[0].clinic
 								+ "</td>" + "<td>"
-								+ json.responseJSON[0].speciality
+								+ json.responseJSON[0].specialty
 								+ "</td></tr>" + "<tr><td>"
 								+ json.responseJSON[1].ranking + "</td>"
 								+ "<td>" + json.responseJSON[1].name + "</td>"
 								+ "<td>" + json.responseJSON[1].clinic
 								+ "</td>" + "<td>"
-								+ json.responseJSON[1].speciality
+								+ json.responseJSON[1].specialty
 								+ "</td></tr>" + "<tr><td>"
 								+ json.responseJSON[2].ranking + "</td>"
 								+ "<td>" + json.responseJSON[2].name + "</td>"
 								+ "<td>" + json.responseJSON[2].clinic
 								+ "</td>" + "<td>"
-								+ json.responseJSON[2].speciality
+								+ json.responseJSON[2].specialty
 								+ "</td></tr>" + "<tr><td>"
 								+ json.responseJSON[3].ranking + "</td>"
 								+ "<td>" + json.responseJSON[3].name + "</td>"
 								+ "<td>" + json.responseJSON[3].clinic
 								+ "</td>" + "<td>"
-								+ json.responseJSON[3].speciality
+								+ json.responseJSON[3].specialty
 								+ "</td></tr>" + "<tr><td>"
 								+ json.responseJSON[4].ranking + "</td>"
 								+ "<td>" + json.responseJSON[4].name + "</td>"
 								+ "<td>" + json.responseJSON[4].clinic
 								+ "</td>" + "<td>"
-								+ json.responseJSON[4].speciality
+								+ json.responseJSON[4].specialty
 								+ "</td></tr></tbody></table>"
 
 						$('#thisMonthDoc').html(thisMonthDoc);
@@ -140,23 +141,23 @@
 						+ json.responseJSON[0].ranking + "</td>" + "<td>"
 						+ json.responseJSON[0].name + "</td>" + "<td>"
 						+ json.responseJSON[0].clinic + "</td>" + "<td>"
-						+ json.responseJSON[0].speciality + "</td></tr>"
+						+ json.responseJSON[0].specialty + "</td></tr>"
 						+ "<tr><td>" + json.responseJSON[1].ranking + "</td>"
 						+ "<td>" + json.responseJSON[1].name + "</td>" + "<td>"
 						+ json.responseJSON[1].clinic + "</td>" + "<td>"
-						+ json.responseJSON[1].speciality + "</td></tr>"
+						+ json.responseJSON[1].specialty + "</td></tr>"
 						+ "<tr><td>" + json.responseJSON[2].ranking + "</td>"
 						+ "<td>" + json.responseJSON[2].name + "</td>" + "<td>"
 						+ json.responseJSON[2].clinic + "</td>" + "<td>"
-						+ json.responseJSON[2].speciality + "</td></tr>"
+						+ json.responseJSON[2].specialty + "</td></tr>"
 						+ "<tr><td>" + json.responseJSON[3].ranking + "</td>"
 						+ "<td>" + json.responseJSON[3].name + "</td>" + "<td>"
 						+ json.responseJSON[3].clinic + "</td>" + "<td>"
-						+ json.responseJSON[3].speciality + "</td></tr>"
+						+ json.responseJSON[3].specialty + "</td></tr>"
 						+ "<tr><td>" + json.responseJSON[4].ranking + "</td>"
 						+ "<td>" + json.responseJSON[4].name + "</td>" + "<td>"
 						+ json.responseJSON[4].clinic + "</td>" + "<td>"
-						+ json.responseJSON[4].speciality
+						+ json.responseJSON[4].specialty
 						+ "</td></tr></tbody></table>"
 				$('#lastMonthDoc').html(lastMonthDoc);
 			}
