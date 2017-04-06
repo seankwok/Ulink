@@ -88,7 +88,7 @@ public class DashboardReport extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		// doGet(request, response);
-		int width = 500;
+		int width = 550;
 		int height = 400;
 		String filePath = null;
 		// OutputStream out = response.getOutputStream();
@@ -458,6 +458,7 @@ public class DashboardReport extends HttpServlet {
 		Font font = new Font("Dialog", Font.PLAIN, 6);
 		axis.setTickLabelFont(font);
 		axis2.setTickLabelFont(font);
+		
 		chart.setTitle(
 				new TextTitle("Number of Medical Client (Past 6 months)", new Font("Times New Roman", Font.BOLD, 12)));
 		final CategoryItemRenderer renderer = p.getRenderer();

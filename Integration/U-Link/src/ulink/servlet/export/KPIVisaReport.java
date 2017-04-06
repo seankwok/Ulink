@@ -108,7 +108,7 @@ public class KPIVisaReport extends HttpServlet {
 			img.scaleAbsolute(60f, 60f);
 			img.setAlignment(img.ALIGN_CENTER);
 			document.add(img);
-			Paragraph p = new Paragraph("ULINK REPORTING SYSTEM – KPI VISA REPORT REPORT");
+			Paragraph p = new Paragraph("ULINK REPORTING SYSTEM – KPI VISA REPORT");
 			p.setAlignment(p.ALIGN_CENTER);
 			document.add(p);
 
@@ -199,13 +199,16 @@ public class KPIVisaReport extends HttpServlet {
 		Font font = new Font("Dialog", Font.PLAIN, 6);
 		axis.setTickLabelFont(font);
 		axis2.setTickLabelFont(font);
-		chart.setTitle(new TextTitle("Overall results for Visa Team month", new Font("Times New Roman", Font.BOLD, 12)));
+		chart.setTitle(new TextTitle("Overall results for Visa Team in month", new Font("Times New Roman", Font.BOLD, 12)));
 		final CategoryItemRenderer renderer = p.getRenderer();
 
 		renderer.setSeriesItemLabelGenerator(0,
 				new StandardCategoryItemLabelGenerator("{2}", NumberFormat.getInstance()));
+		renderer.setSeriesItemLabelGenerator(1,
+				new StandardCategoryItemLabelGenerator("{2}", NumberFormat.getInstance()));
 
 		renderer.setSeriesItemLabelsVisible(0, true);
+		renderer.setSeriesItemLabelsVisible(1, true);
 
 		return chart;
 	}
@@ -278,13 +281,16 @@ public class KPIVisaReport extends HttpServlet {
 		Font font = new Font("Dialog", Font.PLAIN, 6);
 		axis.setTickLabelFont(font);
 		axis2.setTickLabelFont(font);
-		chart.setTitle(new TextTitle("Overall results for Medical Team", new Font("Times New Roman", Font.BOLD, 12)));
+		chart.setTitle(new TextTitle("Overall results for Visa Team", new Font("Times New Roman", Font.BOLD, 12)));
 		final CategoryItemRenderer renderer = p.getRenderer();
 
 		renderer.setSeriesItemLabelGenerator(0,
 				new StandardCategoryItemLabelGenerator("{2}", NumberFormat.getInstance()));
+		renderer.setSeriesItemLabelGenerator(1,
+				new StandardCategoryItemLabelGenerator("{2}", NumberFormat.getInstance()));
 
 		renderer.setSeriesItemLabelsVisible(0, true);
+		renderer.setSeriesItemLabelsVisible(1, true);
 
 		return chart;
 	}

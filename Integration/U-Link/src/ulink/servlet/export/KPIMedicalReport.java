@@ -196,8 +196,11 @@ public class KPIMedicalReport extends HttpServlet {
 
 			renderer.setSeriesItemLabelGenerator(0,
 					new StandardCategoryItemLabelGenerator("{2}", NumberFormat.getInstance()));
+			renderer.setSeriesItemLabelGenerator(1,
+					new StandardCategoryItemLabelGenerator("{2}", NumberFormat.getInstance()));
 
 			renderer.setSeriesItemLabelsVisible(0, true);
+			renderer.setSeriesItemLabelsVisible(1, true);
 
 			return chart;
 		}
