@@ -163,7 +163,7 @@ public class DashboardReport extends HttpServlet {
 			PdfContentByte cb = writer.getDirectContent();
 
 			// first row
-			PdfPCell cell = new PdfPCell(new Phrase("Top 5 referral sources"));
+			PdfPCell cell = new PdfPCell(new Phrase("Top 5 Referral Sources"));
 			cell.setFixedHeight(30);
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -187,7 +187,7 @@ public class DashboardReport extends HttpServlet {
 			table.addCell(cell);
 
 			
-			cell = new PdfPCell(new Phrase("rank"));
+			cell = new PdfPCell(new Phrase("Rank"));
 			cell.setFixedHeight(30);
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -302,14 +302,14 @@ public class DashboardReport extends HttpServlet {
 			cell.setColspan(8);
 			table2.addCell(cell);
 
-			cell = new PdfPCell(new Phrase(month));
+			cell = new PdfPCell(new Phrase(month+"-"+year));
 			cell.setFixedHeight(30);
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			// cell.setBorder(Rectangle.NO_BORDER);
 			cell.setColspan(4);
 			table2.addCell(cell);
-			cell = new PdfPCell(new Phrase(lastMonth));
+			cell = new PdfPCell(new Phrase(lastMonth+"-"+lastYear));
 			cell.setFixedHeight(30);
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -541,11 +541,11 @@ public class DashboardReport extends HttpServlet {
 		DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
 
 		for (String key : pastSixMonth.keySet()) {
-			dataSet.setValue(pastSixMonth.get(key), " Number of patient", key);
+			dataSet.setValue(pastSixMonth.get(key), " Number of Patient", key);
 		}
 
-		JFreeChart chart = ChartFactory.createBarChart("Number of Medical patient (Past 6 months)", "Month",
-				"Number of patient", dataSet, PlotOrientation.VERTICAL, true, true, true);
+		JFreeChart chart = ChartFactory.createBarChart("Number of Medical Patient (Past 6 months)", "Month",
+				"Number of Patient", dataSet, PlotOrientation.VERTICAL, true, true, true);
 		CategoryPlot p = chart.getCategoryPlot();
 
 		ValueAxis axis = p.getRangeAxis();
@@ -556,7 +556,7 @@ public class DashboardReport extends HttpServlet {
 		axis2.setTickLabelFont(font);
 		
 		chart.setTitle(
-				new TextTitle("Number of Medical patient (Past 6 months)", new Font("Times New Roman", Font.BOLD, 12)));
+				new TextTitle("Number of Medical Patient (Past 6 months)", new Font("Times New Roman", Font.BOLD, 12)));
 		final CategoryItemRenderer renderer = p.getRenderer();
 
 		renderer.setSeriesItemLabelGenerator(0,
@@ -595,11 +595,11 @@ public class DashboardReport extends HttpServlet {
 		DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
 
 		for (String key : pastSixMonth.keySet()) {
-			dataSet.setValue(pastSixMonth.get(key), "Number of patients", key);
+			dataSet.setValue(pastSixMonth.get(key), "Number of Client", key);
 		}
 
 		JFreeChart chart = ChartFactory.createBarChart("Number of Visa Client (Past 6 months)", "Month",
-				"Number of patient", dataSet, PlotOrientation.VERTICAL, true, true, true);
+				"Number of Patient", dataSet, PlotOrientation.VERTICAL, true, true, true);
 		CategoryPlot p = chart.getCategoryPlot();
 		ValueAxis axis = p.getRangeAxis();
 

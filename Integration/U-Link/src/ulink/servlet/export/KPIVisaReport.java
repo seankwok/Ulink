@@ -186,11 +186,11 @@ public class KPIVisaReport extends HttpServlet {
 		for (int i= 0; i < kpiList.size()-1; i++) {
 			KPI temp = kpiList.get(i);
 			
-			dataSet.setValue(temp.getInPatient(), temp.getDate(), "indonesian");
-			dataSet.setValue(temp.getOutPatient(), temp.getDate(), "non-indonesian");
+			dataSet.setValue(temp.getInPatient(), temp.getDate(), "Indonesian");
+			dataSet.setValue(temp.getOutPatient(), temp.getDate(), "Non-Indonesian");
 		}
 
-		JFreeChart chart = ChartFactory.createBarChart("Overall results for Medical Team", "", "Number of clients",
+		JFreeChart chart = ChartFactory.createBarChart("Overall results for Medical Team", "", "Number of Clients",
 				dataSet, PlotOrientation.VERTICAL, false, true, true);
 		CategoryPlot p = chart.getCategoryPlot();
 		ValueAxis axis = p.getRangeAxis();
@@ -268,11 +268,11 @@ public class KPIVisaReport extends HttpServlet {
 			KPI temp = kpiList.get(i);
 			//System.out.println(temp.getInPatient()+ "ROWS");	
 			
-			dataSet.setValue(temp.getInPatient(), temp.getDate().substring(temp.getDate().length()-4), "indonesian");
-			dataSet.setValue(temp.getOutPatient(), temp.getDate().substring(temp.getDate().length()-4), "non-indonesian");
+			dataSet.setValue(temp.getInPatient(), temp.getDate().substring(temp.getDate().length()-4), "Indonesian");
+			dataSet.setValue(temp.getOutPatient(), temp.getDate().substring(temp.getDate().length()-4), "Non-indonesian");
 		}
 
-		JFreeChart chart = ChartFactory.createBarChart("Overall results for Visa Team year", "", "Number of clients",
+		JFreeChart chart = ChartFactory.createBarChart("Overall results for Visa Team year", "", "Number of Clients",
 				dataSet, PlotOrientation.VERTICAL, false, true, true);
 		CategoryPlot p = chart.getCategoryPlot();
 		ValueAxis axis = p.getRangeAxis();
