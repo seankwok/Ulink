@@ -129,7 +129,7 @@ $(document).ready(function() {
 												  +"<td>"+count+"</td>"
 												  +"<td>"+value["name"]+"</td>"
 												  +"<td>"+value["clinic"]+"</td>"
-												  +"<td>"+value["speciality"]+"</td>"
+												  +"<td>"+value["specialty"]+"</td>"
 												  +"<td>"+value["numAppointment"]+"</td>"	
 												  +"</tr>"	
 												  
@@ -165,7 +165,7 @@ $(document).ready(function() {
 											}
 										});
 										table += "</body></table>"
-										$("#clickedSpeciality").html("");
+										$("#clickedSpecialty").html("");
 										$('#result').html(table);  
 										$('#error').html(""); 									
 									}
@@ -187,7 +187,7 @@ function viewDoctors(clickedID){
 			"startDate" :startDate,
 			"endDate" :	endDate
 		};
-	var speciality = "";
+	var specialty = "";
 	var rank = 0;
 	var prev ="";
 	
@@ -207,7 +207,7 @@ function viewDoctors(clickedID){
 	    			+"</thead>";
 	    			+ "<tbody>"
 	    			$.each(json,function(key, value) {
-		    		speciality = value["Specialty"]
+		    		specialty = value["Specialty"]
 		    		if(prev != value["engagement"]){
 						rank += 1;	
 					}
@@ -220,7 +220,7 @@ function viewDoctors(clickedID){
 	    		});
 	    		table += "</tbody></table>"
 	    		$("#result").html(table);
-	    		$("#clickedSpeciality").html("Speciality: "+clickedID);
+	    		$("#clickedSpecialty").html("Specialty: "+clickedID);
 			}	
 		});
 }
@@ -254,7 +254,7 @@ function viewDoctors(clickedID){
 				<select class="form-control" id="criteria">
 					<option value="Doctor">Doctor</option>
 					<option value="Referral">Referral</option>
-					<option value="Speciality">Specialty</option>
+					<option value="Specialty">Specialty</option>
 				</select>
           </div>          
           </div>
@@ -295,7 +295,7 @@ function viewDoctors(clickedID){
 	
 	<br><br>
 
-	<div id='clickedSpeciality' class='subTitle'> </div>
+	<div id='clickedSpecialty' class='subTitle'> </div>
 	
 	<br>
 	
