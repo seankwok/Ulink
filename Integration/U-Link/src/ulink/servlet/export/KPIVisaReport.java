@@ -186,8 +186,8 @@ public class KPIVisaReport extends HttpServlet {
 		for (int i= 0; i < kpiList.size()-1; i++) {
 			KPI temp = kpiList.get(i);
 			
-			dataSet.setValue(temp.getInPatient(), temp.getDate(), "inPaitent");
-			dataSet.setValue(temp.getOutPatient(), temp.getDate(), "outPaitent");
+			dataSet.setValue(temp.getInPatient(), temp.getDate(), "indonesian");
+			dataSet.setValue(temp.getOutPatient(), temp.getDate(), "non-indonesian");
 		}
 
 		JFreeChart chart = ChartFactory.createBarChart("Overall results for Medical Team", "", "Number of clients",
@@ -268,8 +268,8 @@ public class KPIVisaReport extends HttpServlet {
 			KPI temp = kpiList.get(i);
 			//System.out.println(temp.getInPatient()+ "ROWS");	
 			
-			dataSet.setValue(temp.getInPatient(), temp.getDate().substring(temp.getDate().length()-4), "inPaitent");
-			dataSet.setValue(temp.getOutPatient(), temp.getDate().substring(temp.getDate().length()-4), "outPaitent");
+			dataSet.setValue(temp.getInPatient(), temp.getDate().substring(temp.getDate().length()-4), "indonesian");
+			dataSet.setValue(temp.getOutPatient(), temp.getDate().substring(temp.getDate().length()-4), "non-indonesian");
 		}
 
 		JFreeChart chart = ChartFactory.createBarChart("Overall results for Visa Team year", "", "Number of clients",
@@ -281,7 +281,7 @@ public class KPIVisaReport extends HttpServlet {
 		Font font = new Font("Dialog", Font.PLAIN, 6);
 		axis.setTickLabelFont(font);
 		axis2.setTickLabelFont(font);
-		chart.setTitle(new TextTitle("Overall results for Visa Team", new Font("Times New Roman", Font.BOLD, 12)));
+		chart.setTitle(new TextTitle("Overall results for Visa Team in year", new Font("Times New Roman", Font.BOLD, 12)));
 		final CategoryItemRenderer renderer = p.getRenderer();
 
 		renderer.setSeriesItemLabelGenerator(0,

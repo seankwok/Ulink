@@ -164,7 +164,7 @@ public class RankingDoctorReport extends HttpServlet {
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				table.addCell(cell);
 
-				cell = new PdfPCell(new Phrase(doctorList.get(i).getSpeciality()));
+				cell = new PdfPCell(new Phrase(doctorList.get(i).getspecialty()));
 				cell.setFixedHeight(30);
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);

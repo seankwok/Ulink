@@ -182,7 +182,7 @@ public class KPIMedicalReport extends HttpServlet {
 				dataSet.setValue(temp.getInPatient(), temp.getDate(), "inPaitent");
 			}
 
-			JFreeChart chart = ChartFactory.createBarChart("Overall results for Medical Team", "", "Number of clients",
+			JFreeChart chart = ChartFactory.createBarChart("Overall results for Medical Team", "", "Number of Patients",
 					dataSet, PlotOrientation.VERTICAL, true, true, true);
 			CategoryPlot p = chart.getCategoryPlot();
 			ValueAxis axis = p.getRangeAxis();
@@ -278,8 +278,11 @@ public class KPIMedicalReport extends HttpServlet {
 
 			renderer.setSeriesItemLabelGenerator(0,
 					new StandardCategoryItemLabelGenerator("{2}", NumberFormat.getInstance()));
+			renderer.setSeriesItemLabelGenerator(1,
+					new StandardCategoryItemLabelGenerator("{2}", NumberFormat.getInstance()));
 
 			renderer.setSeriesItemLabelsVisible(0, true);
+			renderer.setSeriesItemLabelsVisible(1, true);
 
 			return chart;
 		}

@@ -147,13 +147,15 @@ public class DashboardReport extends HttpServlet {
 
 			// this month
 			String month = utility.getMonth(Integer.parseInt(date.substring(5, 7)));
-
+			String year = date.substring(0, 4);
+			
 			// last month
 			// LocalDate myDate
 			// =LocalDate.parse(connection.retrieveLatestDate());
 			String lastDate = myDate.minusMonths(1).toString();
 			// Utility utility = new Utility();
 			String lastMonth = utility.getMonth(Integer.parseInt(lastDate.substring(5, 7)));
+			String lastYear = lastDate.substring(0,4);
 
 			PdfPTable table = new PdfPTable(6);
 			table.setTotalWidth(new float[] { 60, 60, 60, 60, 60, 60 });
@@ -161,7 +163,7 @@ public class DashboardReport extends HttpServlet {
 			PdfContentByte cb = writer.getDirectContent();
 
 			// first row
-			PdfPCell cell = new PdfPCell(new Phrase("View Top 5 referral sources"));
+			PdfPCell cell = new PdfPCell(new Phrase("Top 5 referral sources"));
 			cell.setFixedHeight(30);
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -169,19 +171,63 @@ public class DashboardReport extends HttpServlet {
 			cell.setColspan(6);
 			table.addCell(cell);
 
-			cell = new PdfPCell(new Phrase(month));
+			cell = new PdfPCell(new Phrase(month+"-"+year));
 			cell.setFixedHeight(30);
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			// cell.setBorder(Rectangle.NO_BORDER);
 			cell.setColspan(3);
 			table.addCell(cell);
-			cell = new PdfPCell(new Phrase(lastMonth));
+			cell = new PdfPCell(new Phrase(lastMonth+"-"+lastYear));
 			cell.setFixedHeight(30);
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			// cell.setBorder(Rectangle.NO_BORDER);
 			cell.setColspan(3);
+			table.addCell(cell);
+
+			
+			cell = new PdfPCell(new Phrase("rank"));
+			cell.setFixedHeight(30);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			// cell.setBorder(Rectangle.NO_BORDER);
+			cell.setColspan(1);
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("Referred By"));
+			cell.setFixedHeight(30);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			// cell.setBorder(Rectangle.NO_BORDER);
+			cell.setColspan(1);
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("Number of cases referred"));
+			cell.setFixedHeight(30);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			// cell.setBorder(Rectangle.NO_BORDER);
+			cell.setColspan(1);
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("Rank"));
+			cell.setFixedHeight(30);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			// cell.setBorder(Rectangle.NO_BORDER);
+			cell.setColspan(1);
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("Referred By"));
+			cell.setFixedHeight(30);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			// cell.setBorder(Rectangle.NO_BORDER);
+			cell.setColspan(1);
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("Number of cases referred"));
+			cell.setFixedHeight(30);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			// cell.setBorder(Rectangle.NO_BORDER);
+			cell.setColspan(1);
 			table.addCell(cell);
 
 			int check = list.size();
@@ -248,7 +294,7 @@ public class DashboardReport extends HttpServlet {
 			table2.setLockedWidth(true);
 
 			// first row
-			cell = new PdfPCell(new Phrase("View Top 5 Doctor"));
+			cell = new PdfPCell(new Phrase("Top 5 Doctor"));
 			cell.setFixedHeight(30);
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -269,6 +315,56 @@ public class DashboardReport extends HttpServlet {
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			// cell.setBorder(Rectangle.NO_BORDER);
 			cell.setColspan(4);
+			table2.addCell(cell);
+			
+			cell = new PdfPCell(new Phrase("Rank"));
+			cell.setFixedHeight(30);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			// cell.setBorder(Rectangle.NO_BORDER);
+			table2.addCell(cell);
+			cell = new PdfPCell(new Phrase("Doctor"));
+			cell.setFixedHeight(30);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			// cell.setBorder(Rectangle.NO_BORDER);
+			table2.addCell(cell);
+			cell = new PdfPCell(new Phrase("Clinic"));
+			cell.setFixedHeight(30);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			// cell.setBorder(Rectangle.NO_BORDER);
+			table2.addCell(cell);
+			cell = new PdfPCell(new Phrase("Specialty"));
+			cell.setFixedHeight(30);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			// cell.setBorder(Rectangle.NO_BORDER);
+			table2.addCell(cell);
+			
+			cell = new PdfPCell(new Phrase("Rank"));
+			cell.setFixedHeight(30);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			// cell.setBorder(Rectangle.NO_BORDER);
+			table2.addCell(cell);
+			cell = new PdfPCell(new Phrase("Doctor"));
+			cell.setFixedHeight(30);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			// cell.setBorder(Rectangle.NO_BORDER);
+			table2.addCell(cell);
+			cell = new PdfPCell(new Phrase("Clinic"));
+			cell.setFixedHeight(30);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			// cell.setBorder(Rectangle.NO_BORDER);
+			table2.addCell(cell);
+			cell = new PdfPCell(new Phrase("Specialty"));
+			cell.setFixedHeight(30);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			// cell.setBorder(Rectangle.NO_BORDER);
 			table2.addCell(cell);
 
 			if (check > 5){
@@ -299,7 +395,7 @@ public class DashboardReport extends HttpServlet {
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				table2.addCell(cell);
 
-				cell = new PdfPCell(new Phrase(new Phrase(listDoctor.get(j).getSpeciality() + "")));
+				cell = new PdfPCell(new Phrase(new Phrase(listDoctor.get(j).getspecialty() + "")));
 				// cell.setBorder(Rectangle.NO_BORDER);
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -323,7 +419,7 @@ public class DashboardReport extends HttpServlet {
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				table2.addCell(cell);
 
-				cell = new PdfPCell(new Phrase(new Phrase(lastListDoctor.get(j).getSpeciality() + "")));
+				cell = new PdfPCell(new Phrase(new Phrase(lastListDoctor.get(j).getspecialty() + "")));
 				// cell.setBorder(Rectangle.NO_BORDER);
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -412,7 +508,7 @@ public class DashboardReport extends HttpServlet {
 			table.addCell(list.get(i).getRanking() + "");
 			table.addCell(list.get(i).getName());
 			table.addCell(list.get(i).getClinic());
-			table.addCell(list.get(i).getSpeciality());
+			table.addCell(list.get(i).getspecialty());
 		}
 
 		return table;
@@ -445,11 +541,11 @@ public class DashboardReport extends HttpServlet {
 		DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
 
 		for (String key : pastSixMonth.keySet()) {
-			dataSet.setValue(pastSixMonth.get(key), " Number of clients", key);
+			dataSet.setValue(pastSixMonth.get(key), " Number of patient", key);
 		}
 
-		JFreeChart chart = ChartFactory.createBarChart("Number of Medical Client (Past 6 months)", "Month",
-				"Number of clients", dataSet, PlotOrientation.VERTICAL, true, true, true);
+		JFreeChart chart = ChartFactory.createBarChart("Number of Medical patient (Past 6 months)", "Month",
+				"Number of patient", dataSet, PlotOrientation.VERTICAL, true, true, true);
 		CategoryPlot p = chart.getCategoryPlot();
 
 		ValueAxis axis = p.getRangeAxis();
@@ -460,7 +556,7 @@ public class DashboardReport extends HttpServlet {
 		axis2.setTickLabelFont(font);
 		
 		chart.setTitle(
-				new TextTitle("Number of Medical Client (Past 6 months)", new Font("Times New Roman", Font.BOLD, 12)));
+				new TextTitle("Number of Medical patient (Past 6 months)", new Font("Times New Roman", Font.BOLD, 12)));
 		final CategoryItemRenderer renderer = p.getRenderer();
 
 		renderer.setSeriesItemLabelGenerator(0,
@@ -499,11 +595,11 @@ public class DashboardReport extends HttpServlet {
 		DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
 
 		for (String key : pastSixMonth.keySet()) {
-			dataSet.setValue(pastSixMonth.get(key), "Number of clients", key);
+			dataSet.setValue(pastSixMonth.get(key), "Number of patients", key);
 		}
 
 		JFreeChart chart = ChartFactory.createBarChart("Number of Visa Client (Past 6 months)", "Month",
-				"Number of clients", dataSet, PlotOrientation.VERTICAL, true, true, true);
+				"Number of patient", dataSet, PlotOrientation.VERTICAL, true, true, true);
 		CategoryPlot p = chart.getCategoryPlot();
 		ValueAxis axis = p.getRangeAxis();
 
