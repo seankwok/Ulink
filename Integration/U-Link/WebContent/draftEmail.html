@@ -92,7 +92,6 @@
 			dataType : "json",
 			complete : function(data) {
 		    	var json = jQuery.parseJSON(JSON.stringify(data));
-				console.log(json.responseText);
 				user = json.responseText;
 				document.getElementById("emailTo").placeholder = user + "@ulinkassist.com";
 				document.getElementById("emailSubject").value  = "Screening Recommendation";
