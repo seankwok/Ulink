@@ -4,16 +4,16 @@ public class RankingDoctor {
 	
 	private String name;
 	private String clinic;
-	private String speciality;
+	private String specialty;
 	private int numAppointment;
 	private int ranking; 
 	
-	public RankingDoctor(int ranking, String name, String clinic, String speciality, int numAppointment) {
+	public RankingDoctor(int ranking, String name, String clinic, String specialty, int numAppointment) {
 		super();
 		this.ranking = ranking;
 		this.name = name;
 		this.clinic = clinic;
-		this.speciality = speciality;
+		this.specialty = specialty;
 		this.numAppointment = numAppointment;
 	}
 	
@@ -37,11 +37,11 @@ public class RankingDoctor {
 	public void setClinic(String clinic) {
 		this.clinic = clinic;
 	}
-	public String getSpeciality() {
-		return speciality;
+	public String getspecialty() {
+		return specialty;
 	}
-	public void setSpeciality(String speciality) {
-		this.speciality = speciality;
+	public void setspecialty(String specialty) {
+		this.specialty = specialty;
 	}
 	public int getNumAppointment() {
 		return numAppointment;
