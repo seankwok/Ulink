@@ -38,6 +38,10 @@
 	 text-align: center;
 	}
 
+
+	.title{
+	display: inline-block;
+	}
 </style>
 
 <script type="text/javascript">
@@ -62,124 +66,7 @@ $(document).ready(function() {
 
 		});
 	
-			function checkDate(startDate,endDate){
-				 criteria = $("#criteria").val();
-				var sendData = {
-						"startDate" : startDate,
-						"endDate":endDate,
-				};
-				
-				$.ajax({
-			    	url : "CompareDate",
-					type : "get",
-					data : sendData,
-					success : function(data) {
-						var json = jQuery.parseJSON(JSON.stringify(data));
-							if(json == "false"){
-								$('#error').html("<div class='alert alert-danger' role='alert'><center><b> Start Date should be earlier than End Date. </b></center></div>");
-								$("#result").html("");
-							}else{
-									
-								var count = 0;
-								var previous;
-								var url="";
-								var table = "<table>"
-								
-								if (criteria=="Doctor"){
-										table += "<thead>"
-												  +"<th>Ranking</th>"
-												  +"<th>"+criteria+"</th>"
-												  +"<th>Clinic</th>"
-												  +"<th>Specialty</th>"
-												  +"<th>Number of Appointments</th>"
-											  +"</thead>";
-										url="DisplayDoctorRanking";
-								
-							   }else if(criteria=="Referral"){
-									table += "<thead>"
-											  +"<th>Ranking</th>"
-											  +"<th>Referred By</th>"
-											  +"<th>Number of Referred Cases</th>"
-									  	  +"</thead>";
-									url="DisplayAllRankingReferredBy";
-								
-							   }else{//criteria== specialty
-									table += "<thead>"
-											  +"<th>Ranking</th>"
-											  +"<th>"+criteria+"</th>"
-											  +"<th>Number of Engagements</th>"
-											  +"<th>List of Doctors</th>"
-								  		  +"</thead>";
-									url="DisplayAllRankingSpecialty";
-							}				
-								$.ajax({
-								url : url,
-								type : "get",
-								data : 'startDate=' + startDate + '&' + 'endDate=' + endDate,
-								dataType : "json",
-								success : function(data) {
-									var json = jQuery.parseJSON(JSON.stringify(data));	
-									table += "<tbody>"
-									$.each(json,function(key, value) {
-										
-										if (criteria=="Doctor"){
-											if(previous != value["numAppointment"]){
-												count += 1;	
-											}
-											table += "<tr>" 
-												  +"<td>"+count+"</td>"
-												  +"<td>"+value["name"]+"</td>"
-												  +"<td>"+value["clinic"]+"</td>"
-												  +"<td>"+value["specialty"]+"</td>"
-												  +"<td>"+value["numAppointment"]+"</td>"	
-												  +"</tr>"	
-												  
-											  previous = value["numAppointment"];
-											
-										}else if(criteria=="Referral"){
-											if(previous != value["count"]){
-												count += 1;	
-											}
-											table += "<tr>" 
-												  +"<td>"+count+"</td>"
-												  +"<td>"+value["name"]+"</td>"
-												  +"<td>"+value["count"]+"</td>"
-												  +"</tr>"	
-												  
-											  previous = value["count"];
-											
-										}else{
-											if(previous != value["count"]){
-												count += 1;	
-											}
-											table += "<tr>" 
-												  +"<td>"+count+"</td>"
-												  +"<td>"+value["Specialty"]+"</td>"
-												  +"<td>"+value["count"]+"</td>"
-												  +"<td>"
-												  	+"<a href='#' onClick=viewDoctors(this.id) id= '"
-								    				+ value['Specialty']
-								    				+ "'>View Doctors</a>"
-												  +"</td>"
-											  +"</tr>"	
-											  	previous = value["count"];						
-											}
-										});
-										table += "</body></table>"
-										$("#clickedSpecialty").html("");
-										$('#result').html(table);  
-										$('#error').html(""); 									
-									}
-								});
-							}
-					}
-				});
-				
-				
-			}
-			
-			
-			$("#export").click(function(){
+		$("#export").click(function(){
 				console.log(startDate);
 				if (criteria == "Doctor"){
 						$.ajax({
@@ -220,17 +107,148 @@ $(document).ready(function() {
 			});
  	
 	});
+	
+function checkDate(startDate,endDate){
+	 criteria = $("#criteria").val();
+	var sendData = {
+			"startDate" : startDate,
+			"endDate":endDate,
+	};
+	
+	$.ajax({
+   	url : "CompareDate",
+		type : "get",
+		data : sendData,
+		success : function(data) {
+			var json = jQuery.parseJSON(JSON.stringify(data));
+				if(json == "false"){
+					$('#error').html("<div class='alert alert-danger' role='alert'><center><b> Start Date should be earlier than End Date. </b></center></div>");
+					$("#result").html("");
+				}else{
+						
+					var count = 0;
+					var previous;
+					var url="";
+					var table = "<table>"
+					
+					if (criteria=="Doctor"){
+							table += "<thead>"
+									  +"<th>Ranking</th>"
+									  +"<th>"+criteria+"</th>"
+									  +"<th>Clinic</th>"
+									  +"<th>Specialty</th>"
+									  +"<th>Number of Appointments</th>"
+								  +"</thead>";
+							url="DisplayDoctorRanking";
+					
+				   }else if(criteria=="Referral"){
+						table += "<thead>"
+								  +"<th>Ranking</th>"
+								  +"<th>Referred By</th>"
+								  +"<th>Number of Referred Cases</th>"
+						  	  +"</thead>";
+						url="DisplayAllRankingReferredBy";
+					
+				   }else{//criteria== specialty
+						table += "<thead>"
+								  +"<th>Ranking</th>"
+								  +"<th>"+criteria+"</th>"
+								  +"<th>Number of Engagements</th>"
+								  +"<th>List of Doctors</th>"
+					  		  +"</thead>";
+						url="DisplayAllRankingSpecialty";
+				}				
+					$.ajax({
+					url : url,
+					type : "get",
+					data : 'startDate=' + startDate + '&' + 'endDate=' + endDate,
+					dataType : "json",
+					success : function(data) {
+						var json = jQuery.parseJSON(JSON.stringify(data));	
+						table += "<tbody>"
+						$.each(json,function(key, value) {
+							
+							if (criteria=="Doctor"){
+								if(previous != value["numAppointment"]){
+									count += 1;	
+								}
+								table += "<tr>" 
+									  +"<td>"+count+"</td>"
+									  +"<td>"+value["name"]+"</td>"
+									  +"<td>"+value["clinic"]+"</td>"
+									  +"<td>"+value["specialty"]+"</td>"
+									  +"<td>"+value["numAppointment"]+"</td>"	
+									  +"</tr>"	
+									  
+								  previous = value["numAppointment"];
+								
+							}else if(criteria=="Referral"){
+								if(previous != value["count"]){
+									count += 1;	
+								}
+								table += "<tr>" 
+									  +"<td>"+count+"</td>"
+									  +"<td>"+value["name"]+"</td>"
+									  +"<td>"+value["count"]+"</td>"
+									  +"</tr>"	
+									  
+								  previous = value["count"];
+								
+							}else{
+								if(previous != value["count"]){
+									count += 1;	
+								}
+								table += "<tr>" 
+									  +"<td>"+count+"</td>"
+									  +"<td>"+value["Specialty"]+"</td>"
+									  +"<td>"+value["count"]+"</td>"
+									  +"<td>"
+									  	+"<a href='#' onClick=viewDoctors(this.id) id= '"
+					    				+ value['Specialty']
+					    				+ "'>View Doctors</a>"
+									  +"</td>"
+								  +"</tr>"	
+								  	previous = value["count"];						
+								}
+							});
+							table += "</body></table>"
+							$("#clickedSpecialty").html("");
+							$("#back").html("");
+							$('#result').html(table);  
+							$('#error').html(""); 									
+						}
+					});
+				}
+		}
+	});
+	
+	
+}
+	
+function goBack(){
+	var startDate = sessionStorage.getItem('startDate');
+	var endDate = sessionStorage.getItem('endDate');
+	var specialty = sessionStorage.getItem('specialty');
+	console.log(startDate); 
+	console.log(endDate);  
+	console.log(specialty); 
+	checkDate(startDate,endDate)
+}	
 				
 function viewDoctors(clickedID){
-	var startDate = $("#datepicker1").val();
-	var endDate = $("#datepicker2").val();
+	 startDate = $("#datepicker1").val();
+	 endDate = $("#datepicker2").val();
 	
-
 	var sendData = {
 			"Specialty" :clickedID,
 			"startDate" :startDate,
 			"endDate" :	endDate
 		};
+	
+	sessionStorage.setItem('specialty', clickedID);
+	sessionStorage.setItem('startDate', startDate);
+	sessionStorage.setItem('endDate', endDate);
+	
 	var specialty = "";
 	var rank = 0;
 	var prev ="";
@@ -252,6 +270,7 @@ function viewDoctors(clickedID){
 	    			+ "<tbody>"
 	    			$.each(json,function(key, value) {
 		    		specialty = value["Specialty"]
+		    		
 		    		if(prev != value["engagement"]){
 						rank += 1;	
 					}
@@ -264,6 +283,8 @@ function viewDoctors(clickedID){
 	    		});
 	    		table += "</tbody></table>"
 	    		$("#result").html(table);
+	    		
+	    		$("#back").html("<button type='button' class='btn btn-medium'  style='float: left;' onClick='goBack()'> &crarr;back</button>");
 	    		$("#clickedSpecialty").html("Specialty: "+clickedID);
 			}	
 		});
@@ -338,13 +359,17 @@ function viewDoctors(clickedID){
 		
 	
 	<br><br>
-
+	<div class="title">
 	<div id='clickedSpecialty' class='subTitle'> </div>
+	<div id='back' class='subTitle'> </div>
+	</div>
 	
 	<br>
 	
 	<div class="container" >
 		<table class="table table-striped" id="result"></table>
+			
+		
 	</div>
 	
 	</div>
