@@ -63,7 +63,6 @@
 				complete : function(data) {
 					var json = jQuery.parseJSON(JSON.stringify(data));
 					window.location = "\dashboard.pdf"
-					console.log(json);
 				}
 
 			});
@@ -82,7 +81,6 @@
 					dataType : "json",
 					complete : function(data) {
 						var json = jQuery.parseJSON(JSON.stringify(data));
-						console.log(json.responseJSON);
 						thisMonthDoc += "<h4><b><center>" + thisMonth + "</center></b></h4>"
 						thisMonthDoc += "<th>Rank</th><th>Doctor</th><th>Clinic</th><th>Specialty</th>"
 						thisMonthDoc += "<tbody>" + "<tr><td>"
@@ -174,7 +172,6 @@
 			dataType : "json",
 			complete : function(data) {
 				var json = jQuery.parseJSON(JSON.stringify(data));
-				console.log(json.responseJSON);
 				thisMonthRef += "<h4><b><center>" + thisMonth + "</center></b></h4>"
 				thisMonthRef += "<th>Rank</th>" + "<th>Referred By</th>"
 						+ "<th>Number of cases referred</th>"
@@ -242,7 +239,6 @@
 			complete : function(data) {
 				var json = jQuery.parseJSON(JSON.stringify(data));
 				thisMonth = json.responseText;
-				console.log("this month = " + thisMonth);
 			}
 		});
 	}
@@ -255,7 +251,6 @@
 			complete : function(data) {
 				var json = jQuery.parseJSON(JSON.stringify(data));
 				lastMonth = json.responseText;
-				console.log("last month = " + lastMonth);
 			}
 		});
 	}
