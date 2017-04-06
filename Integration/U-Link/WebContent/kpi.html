@@ -416,6 +416,7 @@ $(document).ready(function() {
 	document.getElementById("year").innerHTML = options;
  	
 	$('#export').click(function(){
+		console.log(teamName);
 		if (teamName == "Medical"){
 			$.ajax({
 				url : "KPIMedicalReport",
