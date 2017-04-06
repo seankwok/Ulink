@@ -43,13 +43,13 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
+	var startDate = "";
+	var endDate = "";
+	var criteria = "";
 	
-	
-	$("#submit").click (
-		function(){
-						
-			var startDate = $("#datepicker1").val();
-			var endDate = $("#datepicker2").val();
+	$("#submit").click (function(){
+			 startDate = $("#datepicker1").val();
+			 endDate = $("#datepicker2").val();
 			
 			if(startDate=="" || endDate==""){
 				$('#result').html("");
@@ -63,11 +63,12 @@ $(document).ready(function() {
 		});
 	
 			function checkDate(startDate,endDate){
-				var criteria = $("#criteria").val();
+				 criteria = $("#criteria").val();
 				var sendData = {
 						"startDate" : startDate,
 						"endDate":endDate,
 				};
+				
 				$.ajax({
 			    	url : "CompareDate",
 					type : "get",
@@ -173,7 +174,50 @@ $(document).ready(function() {
 							}
 					}
 				});
+				
+				
 			}
+			
+			
+			$("#export").click(function(){
+				console.log(startDate);
+				if (criteria == "Doctor"){
+						$.ajax({
+							url : "RankingDoctorReport",
+							type : "post",
+							data : 'startDate=' + startDate + '&endDate=' + endDate,
+							complete : function(data) {
+								var json = jQuery.parseJSON(JSON.stringify(data));
+								console.log(json);
+								window.location = "\RankingDoctor.pdf"
+								console.log("Testing doc1111");
+
+							}
+							
+						});
+					} else if (criteria == "Referral"){
+						$.ajax({
+							url : "RankingReferralReport",
+							type : "post",
+							data : 'startDate=' + startDate + '&endDate=' + endDate,
+							complete : function(data) {
+								var json = jQuery.parseJSON(JSON.stringify(data));
+								window.location = "\RankingReferral.pdf"
+							}
+						});
+					} else{
+						$.ajax({
+							url : "RankingSpecialtyReport",
+							type : "post",
+							data : 'startDate=' + startDate + '&endDate=' + endDate,
+							complete : function(data) {
+								var json = jQuery.parseJSON(JSON.stringify(data));
+								window.location = "\RankingSpecialty.pdf"
+							}
+						});
+						
+					}
+			});
  	
 	});
 				
@@ -236,10 +280,10 @@ function viewDoctors(clickedID){
 			 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="page-header">
-                            <h1><b>Report </b><small>  Ranking</small></h1>
-                             <h4><a href = "" download id="export"><b>Click to export</b></a></h4>                       
-                        </div>
+                         <h1 class="page-header">
+                            <b>Report</b> <small> Ranking </small>
+                            <button class="btn btn-primary pull-right" id="export"><b>Export this page</b></button>
+                        </h1>
                         
                     </div>
                 </div>

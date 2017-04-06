@@ -34,12 +34,23 @@
  
  	<script type="text/javascript">
  	$(document).ready(function() {
- 	
+ 		var team = "";
+		var startDate = "";
+		var endDate = "";
  		
+		sessionStorage.removeItem("team");
+		sessionStorage.removeItem("startDate");
+		sessionStorage.removeItem("endDate");
+		
  		$("#submit").click (function(){
- 			var startDate = $("#datepicker1").val();
-			var endDate = $("#datepicker2").val();
-			
+ 			 team = $("#teamName").val();
+ 			 startDate = $("#datepicker1").val();
+ 			 endDate = $("#datepicker2").val();
+ 			
+ 			//sessionStorage.setItem('team',team);
+ 			//sessionStorage.setItem('startDate',startDate);
+ 			//sessionStorage.setItem('endDate',endDate);
+ 			 
 			if(startDate=="" || endDate==""){
 				$('#pic').html("");
 				$('#container').html("");
@@ -299,18 +310,30 @@
 			}
 		});
 			$('#export').click(function(){
+				//team= sessionStorage.getItem("team");
+				//startDate= sessionStorage.getItem("startDate");
+				//endDate= sessionStorage.getItem("endDate");
+				console.log(team);
 	 			if (team == "Medical"){
 	 				$.ajax({
 	 					url : "IndexMedicalReport",
 	 					type : "post",
-	 					data : 'type=' + team + '&startDate=' + startDate + '&endDate=' + endDate
+	 					data : 'type=' + team + '&startDate=' + startDate + '&endDate=' + endDate,
+	 					complete : function(data) {
+						var json = jQuery.parseJSON(JSON.stringify(data));
+						window.location = "\IndexMedical.pdf"
+						}
 	 					
 	 				});
 	 			} else{
 	 				$.ajax({
 	 					url : "IndexVisaReport",
 	 					type : "post",
-	 					data : 'type=' + team + '&startDate=' + startDate + '&endDate=' + endDate
+	 					data : 'type=' + team + '&startDate=' + startDate + '&endDate=' + endDate,
+	 					complete : function(data) {
+						var json = jQuery.parseJSON(JSON.stringify(data));
+						window.location = "\IndexVisa.pdf"
+	 					}
 	 				});
 	 			}
 	 			
@@ -337,10 +360,10 @@
 			 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="page-header">
-                            <h1><b>Report<small>  Index Point System</small></h1>
-                             <h4><a href = "" download id="export"><b>Click to export</b></a></h4>                         
-                        </div>
+                         <h1 class="page-header">
+                            <b>Report</b> <small> Index Point System </small>
+                            <button class="btn btn-primary pull-right" id="export"><b>Export this page</b></button>
+                        </h1>
                         
                     </div>
                 </div>
