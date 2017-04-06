@@ -43,7 +43,6 @@
 				dataType: "json",
 				async: false,
 				complete : function(data) {
-					console.log(data);
 					if (data.responseText == 'fail'){
 						$("#createSuccess").html("<div class='alert alert-danger' role='alert'><center><strong>Username is taken</strong></center></div>");
 						return false;
