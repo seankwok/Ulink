@@ -38,19 +38,18 @@
 		displayTopDocLastMonth();
 		displayTopReferralThisMonth();
 		displayTopReferralLastMonth();
-
 		$("#showDoctor").toggle('show');
 		$("#showReferral").hide();
 		
 		
 		$("#selectRef").click(function(event) {
-			$("#showReferral").toggle('show');
 			$("#showDoctor").hide();
+			$("#showReferral").toggle('show');
 		});
 
 		$("#selectDoc").click(function(event) {
-			$("#showDoctor").toggle('show');
 			$("#showReferral").hide();
+			$("#showDoctor").toggle('show');
 		});
 
 		
@@ -71,6 +70,168 @@
 		});
 
 	});
+	function displayTopDocThisMonth() {
+
+		var thisMonthDoc = "<table id='thisMonthDoc'  class='table table-bordered' cellspacing='0' width='100%'>";
+
+		$
+				.ajax({
+					url : "DisplayAllLatestDoctorRankingDashboard",
+					type : "get",
+					dataType : "json",
+					complete : function(data) {
+						var json = jQuery.parseJSON(JSON.stringify(data));
+						console.log(json.responseJSON);
+						thisMonthDoc += "<h4><b><center>" + thisMonth + "</center></b></h4>"
+						thisMonthDoc += "<th>Rank</th><th>Doctor</th><th>Clinic</th><th>Specialty</th>"
+						thisMonthDoc += "<tbody>" + "<tr><td>"
+								+ json.responseJSON[0].ranking + "</td>"
+								+ "<td>" + json.responseJSON[0].name + "</td>"
+								+ "<td>" + json.responseJSON[0].clinic
+								+ "</td>" + "<td>"
+								+ json.responseJSON[0].speciality
+								+ "</td></tr>" + "<tr><td>"
+								+ json.responseJSON[1].ranking + "</td>"
+								+ "<td>" + json.responseJSON[1].name + "</td>"
+								+ "<td>" + json.responseJSON[1].clinic
+								+ "</td>" + "<td>"
+								+ json.responseJSON[1].speciality
+								+ "</td></tr>" + "<tr><td>"
+								+ json.responseJSON[2].ranking + "</td>"
+								+ "<td>" + json.responseJSON[2].name + "</td>"
+								+ "<td>" + json.responseJSON[2].clinic
+								+ "</td>" + "<td>"
+								+ json.responseJSON[2].speciality
+								+ "</td></tr>" + "<tr><td>"
+								+ json.responseJSON[3].ranking + "</td>"
+								+ "<td>" + json.responseJSON[3].name + "</td>"
+								+ "<td>" + json.responseJSON[3].clinic
+								+ "</td>" + "<td>"
+								+ json.responseJSON[3].speciality
+								+ "</td></tr>" + "<tr><td>"
+								+ json.responseJSON[4].ranking + "</td>"
+								+ "<td>" + json.responseJSON[4].name + "</td>"
+								+ "<td>" + json.responseJSON[4].clinic
+								+ "</td>" + "<td>"
+								+ json.responseJSON[4].speciality
+								+ "</td></tr></tbody></table>"
+
+						$('#thisMonthDoc').html(thisMonthDoc);
+					}
+				});
+
+	}
+
+	function displayTopDocLastMonth() {
+
+		var lastMonthDoc = "<table id='lastMonthDoc'  class='table table-bordered' cellspacing='0' width='100%'>";
+
+		$.ajax({
+			url : "DisplayAllPastDoctorRankingDashboard",
+			type : "get",
+			dataType : "json",
+			complete : function(data) {
+				var json = jQuery.parseJSON(JSON.stringify(data));
+				lastMonthDoc += "<h4><b><center>" + lastMonth + "</center></b></h4>"
+				lastMonthDoc += "<th>Rank</th>" + "<th>Doctor</th>"
+						+ "<th>Clinic</th>" + "<th>Specialty</th>"
+
+				lastMonthDoc += "<tbody>" + "<tr><td>"
+						+ json.responseJSON[0].ranking + "</td>" + "<td>"
+						+ json.responseJSON[0].name + "</td>" + "<td>"
+						+ json.responseJSON[0].clinic + "</td>" + "<td>"
+						+ json.responseJSON[0].speciality + "</td></tr>"
+						+ "<tr><td>" + json.responseJSON[1].ranking + "</td>"
+						+ "<td>" + json.responseJSON[1].name + "</td>" + "<td>"
+						+ json.responseJSON[1].clinic + "</td>" + "<td>"
+						+ json.responseJSON[1].speciality + "</td></tr>"
+						+ "<tr><td>" + json.responseJSON[2].ranking + "</td>"
+						+ "<td>" + json.responseJSON[2].name + "</td>" + "<td>"
+						+ json.responseJSON[2].clinic + "</td>" + "<td>"
+						+ json.responseJSON[2].speciality + "</td></tr>"
+						+ "<tr><td>" + json.responseJSON[3].ranking + "</td>"
+						+ "<td>" + json.responseJSON[3].name + "</td>" + "<td>"
+						+ json.responseJSON[3].clinic + "</td>" + "<td>"
+						+ json.responseJSON[3].speciality + "</td></tr>"
+						+ "<tr><td>" + json.responseJSON[4].ranking + "</td>"
+						+ "<td>" + json.responseJSON[4].name + "</td>" + "<td>"
+						+ json.responseJSON[4].clinic + "</td>" + "<td>"
+						+ json.responseJSON[4].speciality
+						+ "</td></tr></tbody></table>"
+				$('#lastMonthDoc').html(lastMonthDoc);
+			}
+		});
+
+	}
+
+	function displayTopReferralThisMonth() {
+
+		var thisMonthRef = "<table id='thisMonthRef'  class='table table-bordered' cellspacing='0' width='100%'>";
+		$.ajax({
+			url : "DisplayAllLatestReferredbyDashboard",
+			type : "get",
+			dataType : "json",
+			complete : function(data) {
+				var json = jQuery.parseJSON(JSON.stringify(data));
+				console.log(json.responseJSON);
+				thisMonthRef += "<h4><b><center>" + thisMonth + "</center></b></h4>"
+				thisMonthRef += "<th>Rank</th>" + "<th>Referred By</th>"
+						+ "<th>Number of cases referred</th>"
+				thisMonthRef += "<tbody>" + "<tr><td>"
+						+ json.responseJSON[0].ranking + "</td>" + "<td>"
+						+ json.responseJSON[0].name + "</td>" + "<td>"
+						+ json.responseJSON[0].count + "</td></tr>"
+						+ "<tr><td>" + json.responseJSON[1].ranking + "</td>"
+						+ "<td>" + json.responseJSON[1].name + "</td>" + "<td>"
+						+ json.responseJSON[1].count + "</td></tr>"
+						+ "<tr><td>" + json.responseJSON[2].ranking + "</td>"
+						+ "<td>" + json.responseJSON[2].name + "</td>" + "<td>"
+						+ json.responseJSON[2].count + "</td></tr>"
+						+ "<tr><td>" + json.responseJSON[3].ranking + "</td>"
+						+ "<td>" + json.responseJSON[3].name + "</td>" + "<td>"
+						+ json.responseJSON[3].count + "</td></tr>"
+						+ "<tr><td>" + json.responseJSON[4].ranking + "</td>"
+						+ "<td>" + json.responseJSON[4].name + "</td>" + "<td>"
+						+ json.responseJSON[4].count
+						+ "</td></tr></tbody></table>"
+				$('#thisMonthRef').html(thisMonthRef);
+			}
+		});
+	}
+
+	function displayTopReferralLastMonth() {
+
+		var lastMonthRef = "<table id='lastMonthRef'  class='table table-bordered' cellspacing='0' width='100%'>";
+		$.ajax({
+			url : "DisplayAllPastReferredbyDashboard",
+			type : "get",
+			dataType : "json",
+			complete : function(data) {
+				var json = jQuery.parseJSON(JSON.stringify(data));
+				lastMonthRef += "<h4><b><center>" + lastMonth + "</center></b></h4>"
+				lastMonthRef += "<th>Rank</th>" + "<th>Referred By</th>"
+						+ "<th>Number of cases referred</th>"
+				lastMonthRef += "<tbody>" + "<tr><td>"
+						+ json.responseJSON[0].ranking + "</td>" + "<td>"
+						+ json.responseJSON[0].name + "</td>" + "<td>"
+						+ json.responseJSON[0].count + "</td></tr>"
+						+ "<tr><td>" + json.responseJSON[1].ranking + "</td>"
+						+ "<td>" + json.responseJSON[1].name + "</td>" + "<td>"
+						+ json.responseJSON[1].count + "</td></tr>"
+						+ "<tr><td>" + json.responseJSON[2].ranking + "</td>"
+						+ "<td>" + json.responseJSON[2].name + "</td>" + "<td>"
+						+ json.responseJSON[2].count + "</td></tr>"
+						+ "<tr><td>" + json.responseJSON[3].ranking + "<td>"
+						+ json.responseJSON[3].name + "</td>" + "<td>"
+						+ json.responseJSON[3].count + "</td></tr>"
+						+ "<tr><td>" + json.responseJSON[4].ranking + "</td>"
+						+ "<td>" + json.responseJSON[4].name + "</td>" + "<td>"
+						+ json.responseJSON[4].count
+						+ "</td></tr></tbody></table>"
+				$('#lastMonthRef').html(lastMonthRef);
+			}
+		});
+	}
 
 	function displayThisMonth() {
 		$.ajax({
@@ -301,168 +462,7 @@
 				});
 	}
 
-	function displayTopDocThisMonth() {
 
-		var thisMonthDoc = "<table id='thisMonthDoc'  class='table table-bordered' cellspacing='0' width='100%'>";
-
-		$
-				.ajax({
-					url : "DisplayAllLatestDoctorRankingDashboard",
-					type : "get",
-					dataType : "json",
-					complete : function(data) {
-						var json = jQuery.parseJSON(JSON.stringify(data));
-						console.log(json.responseJSON);
-						thisMonthDoc += "<h4><b><center>" + thisMonth + "</center></b></h4>"
-						thisMonthDoc += "<th>Rank</th><th>Doctor</th><th>Clinic</th><th>Specialty</th>"
-						thisMonthDoc += "<tbody>" + "<tr><td>"
-								+ json.responseJSON[0].ranking + "</td>"
-								+ "<td>" + json.responseJSON[0].name + "</td>"
-								+ "<td>" + json.responseJSON[0].clinic
-								+ "</td>" + "<td>"
-								+ json.responseJSON[0].speciality
-								+ "</td></tr>" + "<tr><td>"
-								+ json.responseJSON[1].ranking + "</td>"
-								+ "<td>" + json.responseJSON[1].name + "</td>"
-								+ "<td>" + json.responseJSON[1].clinic
-								+ "</td>" + "<td>"
-								+ json.responseJSON[1].speciality
-								+ "</td></tr>" + "<tr><td>"
-								+ json.responseJSON[2].ranking + "</td>"
-								+ "<td>" + json.responseJSON[2].name + "</td>"
-								+ "<td>" + json.responseJSON[2].clinic
-								+ "</td>" + "<td>"
-								+ json.responseJSON[2].speciality
-								+ "</td></tr>" + "<tr><td>"
-								+ json.responseJSON[3].ranking + "</td>"
-								+ "<td>" + json.responseJSON[3].name + "</td>"
-								+ "<td>" + json.responseJSON[3].clinic
-								+ "</td>" + "<td>"
-								+ json.responseJSON[3].speciality
-								+ "</td></tr>" + "<tr><td>"
-								+ json.responseJSON[4].ranking + "</td>"
-								+ "<td>" + json.responseJSON[4].name + "</td>"
-								+ "<td>" + json.responseJSON[4].clinic
-								+ "</td>" + "<td>"
-								+ json.responseJSON[4].speciality
-								+ "</td></tr></tbody></table>"
-
-						$('#thisMonthDoc').html(thisMonthDoc);
-					}
-				});
-
-	}
-
-	function displayTopDocLastMonth() {
-
-		var lastMonthDoc = "<table id='lastMonthDoc'  class='table table-bordered' cellspacing='0' width='100%'>";
-
-		$.ajax({
-			url : "DisplayAllPastDoctorRankingDashboard",
-			type : "get",
-			dataType : "json",
-			complete : function(data) {
-				var json = jQuery.parseJSON(JSON.stringify(data));
-				lastMonthDoc += "<h4><b><center>" + lastMonth + "</center></b></h4>"
-				lastMonthDoc += "<th>Rank</th>" + "<th>Doctor</th>"
-						+ "<th>Clinic</th>" + "<th>Specialty</th>"
-
-				lastMonthDoc += "<tbody>" + "<tr><td>"
-						+ json.responseJSON[0].ranking + "</td>" + "<td>"
-						+ json.responseJSON[0].name + "</td>" + "<td>"
-						+ json.responseJSON[0].clinic + "</td>" + "<td>"
-						+ json.responseJSON[0].speciality + "</td></tr>"
-						+ "<tr><td>" + json.responseJSON[1].ranking + "</td>"
-						+ "<td>" + json.responseJSON[1].name + "</td>" + "<td>"
-						+ json.responseJSON[1].clinic + "</td>" + "<td>"
-						+ json.responseJSON[1].speciality + "</td></tr>"
-						+ "<tr><td>" + json.responseJSON[2].ranking + "</td>"
-						+ "<td>" + json.responseJSON[2].name + "</td>" + "<td>"
-						+ json.responseJSON[2].clinic + "</td>" + "<td>"
-						+ json.responseJSON[2].speciality + "</td></tr>"
-						+ "<tr><td>" + json.responseJSON[3].ranking + "</td>"
-						+ "<td>" + json.responseJSON[3].name + "</td>" + "<td>"
-						+ json.responseJSON[3].clinic + "</td>" + "<td>"
-						+ json.responseJSON[3].speciality + "</td></tr>"
-						+ "<tr><td>" + json.responseJSON[4].ranking + "</td>"
-						+ "<td>" + json.responseJSON[4].name + "</td>" + "<td>"
-						+ json.responseJSON[4].clinic + "</td>" + "<td>"
-						+ json.responseJSON[4].speciality
-						+ "</td></tr></tbody></table>"
-				$('#lastMonthDoc').html(lastMonthDoc);
-			}
-		});
-
-	}
-
-	function displayTopReferralThisMonth() {
-
-		var thisMonthRef = "<table id='thisMonthRef'  class='table table-bordered' cellspacing='0' width='100%'>";
-		$.ajax({
-			url : "DisplayAllLatestReferredbyDashboard",
-			type : "get",
-			dataType : "json",
-			complete : function(data) {
-				var json = jQuery.parseJSON(JSON.stringify(data));
-				console.log(json.responseJSON);
-				thisMonthRef += "<h4><b><center>" + thisMonth + "</center></b></h4>"
-				thisMonthRef += "<th>Rank</th>" + "<th>Referred By</th>"
-						+ "<th>Number of cases referred</th>"
-				thisMonthRef += "<tbody>" + "<tr><td>"
-						+ json.responseJSON[0].ranking + "</td>" + "<td>"
-						+ json.responseJSON[0].name + "</td>" + "<td>"
-						+ json.responseJSON[0].count + "</td></tr>"
-						+ "<tr><td>" + json.responseJSON[1].ranking + "</td>"
-						+ "<td>" + json.responseJSON[1].name + "</td>" + "<td>"
-						+ json.responseJSON[1].count + "</td></tr>"
-						+ "<tr><td>" + json.responseJSON[2].ranking + "</td>"
-						+ "<td>" + json.responseJSON[2].name + "</td>" + "<td>"
-						+ json.responseJSON[2].count + "</td></tr>"
-						+ "<tr><td>" + json.responseJSON[3].ranking + "</td>"
-						+ "<td>" + json.responseJSON[3].name + "</td>" + "<td>"
-						+ json.responseJSON[3].count + "</td></tr>"
-						+ "<tr><td>" + json.responseJSON[4].ranking + "</td>"
-						+ "<td>" + json.responseJSON[4].name + "</td>" + "<td>"
-						+ json.responseJSON[4].count
-						+ "</td></tr></tbody></table>"
-				$('#thisMonthRef').html(thisMonthRef);
-			}
-		});
-	}
-
-	function displayTopReferralLastMonth() {
-
-		var lastMonthRef = "<table id='lastMonthRef'  class='table table-bordered' cellspacing='0' width='100%'>";
-		$.ajax({
-			url : "DisplayAllPastReferredbyDashboard",
-			type : "get",
-			dataType : "json",
-			complete : function(data) {
-				var json = jQuery.parseJSON(JSON.stringify(data));
-				lastMonthRef += "<h4><b><center>" + lastMonth + "</center></b></h4>"
-				lastMonthRef += "<th>Rank</th>" + "<th>Referred By</th>"
-						+ "<th>Number of cases referred</th>"
-				lastMonthRef += "<tbody>" + "<tr><td>"
-						+ json.responseJSON[0].ranking + "</td>" + "<td>"
-						+ json.responseJSON[0].name + "</td>" + "<td>"
-						+ json.responseJSON[0].count + "</td></tr>"
-						+ "<tr><td>" + json.responseJSON[1].ranking + "</td>"
-						+ "<td>" + json.responseJSON[1].name + "</td>" + "<td>"
-						+ json.responseJSON[1].count + "</td></tr>"
-						+ "<tr><td>" + json.responseJSON[2].ranking + "</td>"
-						+ "<td>" + json.responseJSON[2].name + "</td>" + "<td>"
-						+ json.responseJSON[2].count + "</td></tr>"
-						+ "<tr><td>" + json.responseJSON[3].ranking + "<td>"
-						+ json.responseJSON[3].name + "</td>" + "<td>"
-						+ json.responseJSON[3].count + "</td></tr>"
-						+ "<tr><td>" + json.responseJSON[4].ranking + "</td>"
-						+ "<td>" + json.responseJSON[4].name + "</td>" + "<td>"
-						+ json.responseJSON[4].count
-						+ "</td></tr></tbody></table>"
-				$('#lastMonthRef').html(lastMonthRef);
-			}
-		});
-	}
 </script>
 
 </head>
