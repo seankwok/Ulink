@@ -190,7 +190,7 @@ public class KPIVisaReport extends HttpServlet {
 			dataSet.setValue(temp.getOutPatient(), temp.getDate(), "Non-Indonesian");
 		}
 
-		JFreeChart chart = ChartFactory.createBarChart("Overall results for Medical Team", "", "Number of Clients",
+		JFreeChart chart = ChartFactory.createBarChart("Overall results for Visa Team", "", "Number of Clients",
 				dataSet, PlotOrientation.VERTICAL, false, true, true);
 		CategoryPlot p = chart.getCategoryPlot();
 		ValueAxis axis = p.getRangeAxis();
