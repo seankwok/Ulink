@@ -26,7 +26,7 @@
  
 	$(document).ready(function() {
 			
-		 var screeningName="";
+		var screeningName="";
 		displayAll();
 		$("#selectInfant").click(function(){
 			window.location = "viewScreenings.html";
@@ -36,9 +36,13 @@
 			window.location = "addScreeningAdult.html";
 		});
 		
-		$('#export').click(function(clickedID){
-			
- 						var sendData = {
+		
+	});
+	
+	function exportPDF(){
+		clickedID = sessionStorage.getItem("clickedID");
+		console.log(clickedID);
+ 			var sendData = {
 					"ID" : clickedID
 				};
 				$.ajax({
@@ -47,15 +51,13 @@
 					data : sendData,
 					complete : function(data) {
 						var json = jQuery.parseJSON(JSON.stringify(data));
-						window.location = "/ClientScreeningEmail.xlsx"
+						window.location = "/ClientScreeningEmail.pdf"
 					}
 				});
 		
- 		});
+ 		
 		
-		
-	});
-	
+	}
 	function mySearch() {
 
 		 var searchText = document.getElementById('myInput').value.toUpperCase();
@@ -152,7 +154,7 @@
 		  
 		  var table = "<table id='table' class='table table-condensed' cellspacing='0' >";
 		  var sendData = "name=age &direction=ASC &ID=" + clickedID;
-		  
+		  sessionStorage.setItem("clickedID",clickedID);
 		   $.ajax({
 		    url : "DisplayPatientsByIllness",
 		    type : "get",
@@ -194,7 +196,7 @@
 			        table += "</table>"
 			        table += "<div id='displayNumSelected'></div>"
 			        table += "<div class='container' align='center'>"
-						+ "<div class='inline'><button class='btn btn-default' onclick='sendEmail()'><b>Go to email template</b></button><button type='button' id='export' class='btn btn-default'><a href = '' download><b>Export</b></a></button></div><div class='inline'><div  id='message'></div></div>"
+						+ "<div class='inline'><button class='btn btn-default' onclick='sendEmail()'><b>Go to email template</b></button><button type='button' onclick='exportPDF()' class='btn btn-default'><b>Export</b></button></div><div class='inline'><div  id='message'></div></div>"
 			         + "<br> "
 			         +"</div>"
 			       
@@ -276,7 +278,7 @@
 				        table += "<div id='displayNumSelected'></div>"
 				        table += "<div class='container' align='center'>"
 				         + "<div class='inline'><button class='btn btn-default' onclick='sendEmail()'>Go to email template</button></div><div class='inline'><div  id='message'></div></div>"
-				         + "<br> <button type='button' id='export' class='btn btn-link'><b>Export to excel(in progress)</b></button>"
+				         + "<br> <button type='button' onclick='exportPDF()' class='btn btn-default'><b>Export</b></button>"
 				           +"</div>"
 				       
 				         $("#display").html(table);
@@ -356,7 +358,7 @@
 				        table += "<div id='displayNumSelected'></div>"
 				        table += "<div class='container' align='center'>"
 				         + "<div class='inline'><button class='btn btn-default' onclick='sendEmail()'>Go to email template</button></div><div class='inline'><div  id='message'></div></div>"
-				         + "<br> <button type='button' id='export' class='btn btn-link'><b>Export to excel(in progress)</b></button>"
+				         + "<br> <button type='button' onclick='exportPDF()' class='btn btn-default'><b>Export</b></button>"
 				           +"</div>"
 				       
 				         $("#display").html(table);
@@ -436,7 +438,7 @@
 				        table += "<div id='displayNumSelected'></div>"
 				        table += "<div class='container' align='center'>"
 				         + "<div class='inline'><button class='btn btn-default' onclick='sendEmail()'>Go to email template</button></div><div class='inline'><div  id='message'></div></div>"
-				         + "<br> <button type='button' id='export' class='btn btn-link'><b>Export to excel(in progress)</b></button>"
+				         + "<br> <button type='button' onclick='exportPDF()' class='btn btn-default'><b>Export</b></button>"
 				           +"</div>"
 				       
 				         $("#display").html(table);
@@ -516,7 +518,7 @@
 				        table += "<div id='displayNumSelected'></div>"
 				        table += "<div class='container' align='center'>"
 				         + "<div class='inline'><button class='btn btn-default' onclick='sendEmail()'>Go to email template</button></div><div class='inline'><div  id='message'></div></div>"
-				         + "<br> <button type='button' id='export' class='btn btn-link'><b>Export to excel(in progress)</b></button>"
+				         + "<br> <button type='button' onclick='exportPDF()' class='btn btn-default'><b>Export</b></button>"
 				           +"</div>"
 				       
 				         $("#display").html(table);
@@ -596,7 +598,7 @@
 				        table += "<div id='displayNumSelected'></div>"
 				        table += "<div class='container' align='center'>"
 				         + "<div class='inline'><button class='btn btn-default' onclick='sendEmail()'>Go to email template</button></div><div class='inline'><div  id='message'></div></div>"
-				         + "<br> <button type='button' id='export' class='btn btn-link'><b>Export to excel(in progress)</b></button>"
+				         + "<br> <button type='button' onclick='exportPDF()' class='btn btn-default'><b>Export</b></button>"
 				           +"</div>"
 				       
 				         $("#display").html(table);
@@ -676,7 +678,7 @@
 				        table += "<div id='displayNumSelected'></div>"
 				        table += "<div class='container' align='center'>"
 				         + "<div class='inline'><button class='btn btn-default' onclick='sendEmail()'>Go to email template</button></div><div class='inline'><div  id='message'></div></div>"
-				         + "<br> <button type='button' id='export' class='btn btn-link'><b>Export to excel(in progress)</b></button>"
+				         + "<br> <button type='button' onclick='exportPDF()' class='btn btn-default'><b>Export</b></button>"
 				           +"</div>"
 				       
 				         $("#display").html(table);

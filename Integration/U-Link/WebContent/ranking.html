@@ -67,6 +67,7 @@ $(document).ready(function() {
 		});
 	
 		$("#export").click(function(){
+			criteria = sessionStorage.getItem("criteria");
 				if (criteria == "Doctor"){
 						$.ajax({
 							url : "RankingDoctorReport",
@@ -107,6 +108,7 @@ $(document).ready(function() {
 	
 function checkDate(startDate,endDate){
 	 criteria = $("#criteria").val();
+	 sessionStorage.setItem("criteria",criteria);
 	var sendData = {
 			"startDate" : startDate,
 			"endDate":endDate,
