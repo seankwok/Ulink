@@ -79,7 +79,6 @@ $(document).ready(function() {
 			dataType : "json",
 			complete : function(data) {
 				var json = jQuery.parseJSON(JSON.stringify(data));
-				console.log(json.responseJSON);
 				if (teamName == "Medical") {
 					table1 += "<h4><b>Comparison against previous month</b></h4>"
 					table1 += "<tr><th>Month</th>"
@@ -243,7 +242,6 @@ $(document).ready(function() {
 						dataType : "json",
 						complete : function(data) {
 						var json = jQuery.parseJSON(JSON.stringify(data));
-						console.log(json.responseJSON);
 							table3 += "<h4><b>Comparison against previous month</b></h4>"
 							table3 += "<tr><th>Month</th>"
 								  +  "<th>Indonesian Clients</th>"
@@ -416,7 +414,6 @@ $(document).ready(function() {
 	document.getElementById("year").innerHTML = options;
  	
 	$('#export').click(function(){
-		console.log(teamName);
 		if (teamName == "Medical"){
 			$.ajax({
 				url : "KPIMedicalReport",
@@ -425,7 +422,6 @@ $(document).ready(function() {
 					complete : function(data) {
  						var json = jQuery.parseJSON(JSON.stringify(data));
  						window.location = "\KPIMedicalReport.pdf"
- 						console.log(json);
  					}
 			});
 		} else{
@@ -436,7 +432,6 @@ $(document).ready(function() {
 				complete : function(data) {
 						var json = jQuery.parseJSON(JSON.stringify(data));
 						window.location = "\KPIVisaReport.pdf"
-						console.log(json);
 					}
 			});
 		}

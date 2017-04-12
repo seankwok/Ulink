@@ -67,7 +67,6 @@ $(document).ready(function() {
 		});
 	
 		$("#export").click(function(){
-				console.log(startDate);
 				if (criteria == "Doctor"){
 						$.ajax({
 							url : "RankingDoctorReport",
@@ -75,9 +74,7 @@ $(document).ready(function() {
 							data : 'startDate=' + startDate + '&endDate=' + endDate,
 							complete : function(data) {
 								var json = jQuery.parseJSON(JSON.stringify(data));
-								console.log(json);
 								window.location = "\RankingDoctor.pdf"
-								console.log("Testing doc1111");
 
 							}
 							
@@ -229,9 +226,7 @@ function goBack(){
 	var startDate = sessionStorage.getItem('startDate');
 	var endDate = sessionStorage.getItem('endDate');
 	var specialty = sessionStorage.getItem('specialty');
-	console.log(startDate); 
-	console.log(endDate);  
-	console.log(specialty); 
+	
 	checkDate(startDate,endDate)
 }	
 				

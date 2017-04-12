@@ -45,7 +45,6 @@ function deleteItem(clickedID){
 		var sendData = {
 				"email" : clickedID
 			};
-			console.log(clickedID);
 			$.ajax({
 				url : "DeleteUser",
 				type : "post",
@@ -53,7 +52,6 @@ function deleteItem(clickedID){
 				dataType : "json",
 				complete : function(data) {
 					displayAll();
-					console.log("delete");
 				}
 
 			});
@@ -91,7 +89,6 @@ function deleteItem(clickedID){
 		    dataType : "json",
 		    success: function(data){		    	
 		    		var json = jQuery.parseJSON(JSON.stringify(data));
-			    	console.log(data);
 			    	table += "<table class='table table-hover'><tr><th>User Email</th><th>Password</th><th>Delete</th></tr>";
 			    	$.each(json,function(key, value) {
 			    		table += "<tr><td>"

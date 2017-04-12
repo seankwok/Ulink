@@ -20,7 +20,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 
-	
 
     <script> 
 	    $(function(){
@@ -47,9 +46,7 @@
  			 startDate = $("#datepicker1").val();
  			 endDate = $("#datepicker2").val();
  			
- 			//sessionStorage.setItem('team',team);
- 			//sessionStorage.setItem('startDate',startDate);
- 			//sessionStorage.setItem('endDate',endDate);
+ 			
  			 
 			if(startDate=="" || endDate==""){
 				$('#pic').html("");
@@ -310,10 +307,7 @@
 			}
 		});
 			$('#export').click(function(){
-				//team= sessionStorage.getItem("team");
-				//startDate= sessionStorage.getItem("startDate");
-				//endDate= sessionStorage.getItem("endDate");
-				console.log(team);
+				
 	 			if (team == "Medical"){
 	 				$.ajax({
 	 					url : "IndexMedicalReport",
@@ -360,10 +354,14 @@
 			 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
-                         <h1 class="page-header">
-                            <b>Report</b> <small> Index Point System </small>
+                         <div class="page-header">
+                            <h1><b>Report</b> <small> Index Point System </small></h1>
                             <button class="btn btn-primary pull-right" id="export"><b>Export this page</b></button>
-                        </h1>
+                            <p style="font-size:95%;">The Index (Point of Contact) function shows the number of clients' contact information collected per team.</p>
+                            <br>1 point is awarded for each of the following: Email, Address, Phone number.
+							<br>This graph shows the number of clients' contact information collected per employee</p>
+                            
+                        </div>
                         
                     </div>
                 </div>

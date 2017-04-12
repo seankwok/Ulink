@@ -37,7 +37,6 @@
 		});
 		
 		$('#export').click(function(clickedID){
- 			//do something
 			
  						var sendData = {
 					"ID" : clickedID
@@ -49,7 +48,6 @@
 					complete : function(data) {
 						var json = jQuery.parseJSON(JSON.stringify(data));
 						window.location = "/ClientScreeningEmail.xlsx"
-						console.log(json);
 					}
 				});
 		
@@ -196,7 +194,7 @@
 			        table += "</table>"
 			        table += "<div id='displayNumSelected'></div>"
 			        table += "<div class='container' align='center'>"
-						+ "<div class='inline'><button class='btn btn-default' onclick='sendEmail()'><b>Go to email template</b></button><button type='button' id='export' class='btn btn-default'><a href = '' download><b>Export to excel</b></a></button></div><div class='inline'><div  id='message'></div></div>"
+						+ "<div class='inline'><button class='btn btn-default' onclick='sendEmail()'><b>Go to email template</b></button><button type='button' id='export' class='btn btn-default'><a href = '' download><b>Export</b></a></button></div><div class='inline'><div  id='message'></div></div>"
 			         + "<br> "
 			         +"</div>"
 			       
@@ -224,7 +222,6 @@
 						});
 					
 		       }else{
-		    	   console.log("no patient");
 					$('#error').html("<div class='alert alert-danger' role='alert'><center><b> No patient in database matches criteria </b></center></div>");
 
 		       }
@@ -727,7 +724,6 @@
 		    complete: function(data){
 		    	var json = jQuery.parseJSON(JSON.stringify(data));
 		    	var response = JSON.parse(json.responseText);
-		    	console.log(response);
 		    	table += "<thead><tr><th>Starting Age<a href='#' onClick=sortAscAge(this.id)  id='ageRequired'>&#9652</a>"
 		    			+ "<a href='#' onClick=sortDescAge(this.id) id='ageRequired'> &#9662</a></th>"
 		    			+ "<th>Common Illness<a href='#' onClick=sortAscIllness(this.id) id='conditionName'> &#9652</a>"

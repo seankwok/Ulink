@@ -33,7 +33,6 @@
 					complete : function(data) {
 						var json = jQuery.parseJSON(JSON.stringify(data));
 						window.location = "\AgeGenderReport.pdf"
-						console.log(json);
 					}
 				});
 		});
@@ -47,7 +46,6 @@
 			dataType : "json",
 			complete : function(data) {
 				var json = jQuery.parseJSON(JSON.stringify(data));
-				console.log(json.responseJSON);
 				Highcharts.chart('container', {
 				    chart: {
 				        type: 'column'
@@ -120,7 +118,6 @@
 			dataType : "json",
 			complete : function(data) {
 				var json = jQuery.parseJSON(JSON.stringify(data));
-				console.log(json.responseJSON);
 				Highcharts.chart('percentage', {
 				    chart: {
 				        type: 'column'
