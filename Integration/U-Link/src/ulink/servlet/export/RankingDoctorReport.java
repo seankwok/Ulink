@@ -14,6 +14,7 @@ import org.jfree.chart.JFreeChart;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
@@ -85,6 +86,11 @@ public class RankingDoctorReport extends HttpServlet {
 			writer = PdfWriter.getInstance(document, new FileOutputStream(filePath));
 			System.out.println(filePath);
 			document.open();
+			// Display dashboard for Medical
+			Image img = Image.getInstance(imagePath);
+			img.scaleAbsolute(60f, 60f);
+			img.setAlignment(img.ALIGN_CENTER);
+			document.add(img);
 			Paragraph p = new Paragraph("ULINK REPORTING SYSTEM");
 			p.setAlignment(p.ALIGN_CENTER);
 			document.add(p);
@@ -95,7 +101,7 @@ public class RankingDoctorReport extends HttpServlet {
 			PdfContentByte cb = writer.getDirectContent();
 
 			// first row
-			PdfPCell cell = new PdfPCell(new Phrase("Criteria : Doctor"));
+			PdfPCell cell = new PdfPCell(new Phrase("Criteria : Doctor - " + startDate + " to " + endDate));
 			cell.setFixedHeight(30);
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -170,7 +176,7 @@ public class RankingDoctorReport extends HttpServlet {
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				// cell.setBorder(Rectangle.NO_BORDER);
 				table.addCell(cell);
-				cell = new PdfPCell(new Phrase(doctorList.get(i).getNumAppointment()));
+				cell = new PdfPCell(new Phrase(doctorList.get(i).getNumAppointment() + ""));
 				// cell.setBorder(Rectangle.NO_BORDER);
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -185,6 +191,7 @@ public class RankingDoctorReport extends HttpServlet {
 		} catch(Exception e){
 			
 		}
+		document.close();
 	}
 
 }

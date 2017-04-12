@@ -191,7 +191,7 @@ public class KPIVisaReport extends HttpServlet {
 		}
 
 		JFreeChart chart = ChartFactory.createBarChart("Overall results for Visa Team", "", "Number of Clients",
-				dataSet, PlotOrientation.VERTICAL, false, true, true);
+				dataSet, PlotOrientation.VERTICAL, true, true, true);
 		CategoryPlot p = chart.getCategoryPlot();
 		ValueAxis axis = p.getRangeAxis();
 
@@ -268,12 +268,12 @@ public class KPIVisaReport extends HttpServlet {
 			KPI temp = kpiList.get(i);
 			//System.out.println(temp.getInPatient()+ "ROWS");	
 			
-			dataSet.setValue(temp.getInPatient(), temp.getDate().substring(temp.getDate().length()-4), "Indonesian");
-			dataSet.setValue(temp.getOutPatient(), temp.getDate().substring(temp.getDate().length()-4), "Non-indonesian");
+			dataSet.setValue(temp.getInPatient(), temp.getDate(), "Indonesian");
+			dataSet.setValue(temp.getOutPatient(), temp.getDate(), "Non-indonesian");
 		}
 
 		JFreeChart chart = ChartFactory.createBarChart("Overall results for Visa Team year", "", "Number of Clients",
-				dataSet, PlotOrientation.VERTICAL, false, true, true);
+				dataSet, PlotOrientation.VERTICAL, true, true, true);
 		CategoryPlot p = chart.getCategoryPlot();
 		ValueAxis axis = p.getRangeAxis();
 

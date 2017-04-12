@@ -158,7 +158,7 @@ public class DashboardReport extends HttpServlet {
 			String lastYear = lastDate.substring(0,4);
 
 			PdfPTable table = new PdfPTable(6);
-			table.setTotalWidth(new float[] { 60, 60, 60, 60, 60, 60 });
+			table.setTotalWidth(new float[] { 80, 80, 80, 80, 80, 80 });
 			table.setLockedWidth(true);
 			PdfContentByte cb = writer.getDirectContent();
 
@@ -366,7 +366,9 @@ public class DashboardReport extends HttpServlet {
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			// cell.setBorder(Rectangle.NO_BORDER);
 			table2.addCell(cell);
-
+			
+			check = listDoctor.size();
+			
 			if (check > 5){
 				check = 5;
 			}
@@ -435,7 +437,7 @@ public class DashboardReport extends HttpServlet {
 
 			// Display dashboard for visa type
 			PdfContentByte contentByte3 = writer.getDirectContent();
-			PdfTemplate template3 = contentByte3.createTemplate(width, height);
+			PdfTemplate template3 = contentByte3.createTemplate(600, height);
 			Graphics2D graphics2d3 = template3.createGraphics(width, height, new DefaultFontMapper());
 			Rectangle2D rectangle2d3 = new Rectangle2D.Double(0, 0, width, height);
 			dashboardVisaRequested.draw(graphics2d3, rectangle2d3);

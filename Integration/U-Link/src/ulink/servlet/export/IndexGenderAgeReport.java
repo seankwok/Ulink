@@ -142,7 +142,7 @@ public class IndexGenderAgeReport extends HttpServlet {
 			dataSet.addValue(key.getFemale(), "Female", key.getAge());
 		}
 
-		JFreeChart chart = ChartFactory.createBarChart("Gender - Age Report", "Age", "Percentage Per Age", dataSet, PlotOrientation.VERTICAL,
+		JFreeChart chart = ChartFactory.createBarChart("Age Report", "Age", "Percentage Per Age", dataSet, PlotOrientation.VERTICAL,
 				true, true, true);
 		CategoryPlot p = chart.getCategoryPlot();
 		ValueAxis axis = p.getRangeAxis();
@@ -180,7 +180,7 @@ public class IndexGenderAgeReport extends HttpServlet {
 
 		}
 
-		JFreeChart chart = ChartFactory.createBarChart("Gender - Age Report", "Age", "Percentage Per Age", dataSet, PlotOrientation.VERTICAL,
+		JFreeChart chart = ChartFactory.createBarChart("Age Report", "Age", "Percentage Per Age", dataSet, PlotOrientation.VERTICAL,
 				true, true, true);
 		CategoryPlot p = chart.getCategoryPlot();
 		ValueAxis axis = p.getRangeAxis();

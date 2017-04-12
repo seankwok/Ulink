@@ -21,6 +21,15 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import ulink.constructor.Client;
@@ -62,6 +71,8 @@ public class ClientScreeningEmailReport extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+		System.out.println("TEST");
+		
 		DatabaseConnection connection = new DatabaseConnection();
 		System.out.println("Enter email");
 		// int age = Integer.parseInt(request.getParameter("age"));
@@ -112,55 +123,121 @@ public class ClientScreeningEmailReport extends HttpServlet {
 				}
 			}
 		}
+		String filePath = null;
+		// OutputStream out = response.getOutputStream();
 
-		// TODO Auto-generated method stub
-		XSSFWorkbook workbook = new XSSFWorkbook();
+		PdfWriter writer = null;
+		final String TMP_DIR_PATH = "/ClientScreeningEmail.pdf";
+		final String image_path = "/ulink.jpg";
+		
+		Document document = new Document();
 
-		// Create a blank sheet
-		XSSFSheet sheet = workbook.createSheet("EmployeeData");
-
-		// This data needs to be written (Object[])
-		Map<Integer, Object[]> data = new TreeMap<Integer, Object[]>();
-		data.put(0, new Object[] { "S/N", "Name", "Gender", "Email" });
-		for (int i = 0; i < clientByIllnessList.size(); i++) {
-			data.put(i+1, new Object[] { i+1, clientByIllnessList.get(i).getName(), clientByIllnessList.get(i).getGender(), clientByIllnessList.get(i).getEmail() });
-		}
-
-		// Iterate over data and write to sheet
-		Set<Integer> keyset = data.keySet();
-
-		int rownum = 0;
-		for (Integer key : keyset) {
-			// create a row of excelsheet
-			Row row = sheet.createRow(rownum++);
-
-			// get object array of prerticuler key
-			Object[] objArr = data.get(key);
-
-			int cellnum = 0;
-
-			for (Object obj : objArr) {
-				Cell cell = row.createCell(cellnum++);
-				if (obj instanceof String) {
-					cell.setCellValue((String) obj);
-				} else if (obj instanceof Integer) {
-					cell.setCellValue((Integer) obj);
-				}
-			}
-		}
 		try {
-			// Write the workbook in file system
-			String filePath = getServletContext().getRealPath("/ClientScreeningEmail.xlsx");
-			response.addHeader("Content-Disposition", "attachment;  filename=" + filePath);
-			
-			FileOutputStream out = new FileOutputStream(filePath);
-			workbook.write(out);
-			out.close();
-			System.out.println("howtodoinjava_demo.xlsx written successfully on disk.");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+			response.setContentType("application/pdf");
 
+			filePath = getServletContext().getRealPath(TMP_DIR_PATH);
+
+			String imagePath = getServletContext().getRealPath(image_path);
+			// ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			response.addHeader("Content-Disposition", "attachment;  filename=" + filePath);
+			writer = PdfWriter.getInstance(document, new FileOutputStream(filePath));
+			System.out.println(filePath);
+			document.open();
+			// Display dashboard for Medical
+			Image img = Image.getInstance(imagePath);
+			img.scaleAbsolute(60f, 60f);
+			img.setAlignment(img.ALIGN_CENTER);
+			document.add(img);
+			Paragraph p = new Paragraph("ULINK REPORTING SYSTEM");
+			p.setAlignment(p.ALIGN_CENTER);
+			document.add(p);
+			
+			PdfPTable table = new PdfPTable(4);
+			table.setTotalWidth(new float[] {120, 120, 120, 120 });
+			table.setLockedWidth(true);
+			PdfContentByte cb = writer.getDirectContent();
+
+			// first row
+			PdfPCell cell = new PdfPCell(new Phrase(condition.getConditionName()));
+			cell.setFixedHeight(30);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setBorder(Rectangle.NO_BORDER);
+			cell.setColspan(4);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase("S/N"));
+			cell.setFixedHeight(30);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			// cell.setBorder(Rectangle.NO_BORDER);
+			cell.setColspan(1);
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("Name"));
+			cell.setFixedHeight(30);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			// cell.setBorder(Rectangle.NO_BORDER);
+			cell.setColspan(1);
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("Gender"));
+			cell.setFixedHeight(30);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			// cell.setBorder(Rectangle.NO_BORDER);
+			cell.setColspan(1);
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("Email"));
+			cell.setFixedHeight(30);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			// cell.setBorder(Rectangle.NO_BORDER);
+			cell.setColspan(1);
+			table.addCell(cell);
+	
+			
+			for (int i = 0; i < clientByIllnessList.size(); i++) {
+				
+				// second row
+				cell = new PdfPCell(new Phrase((i+1)+ ""));
+				cell.setFixedHeight(30);
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				// cell.setBorder(Rectangle.NO_BORDER);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase(clientByIllnessList.get(i).getName()));
+				// cell.setBorder(Rectangle.NO_BORDER);
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setFixedHeight(30);
+				table.addCell(cell);
+
+				// third row
+
+				cell = new PdfPCell(new Phrase(new Phrase(clientByIllnessList.get(i).getGender())));
+				// cell.setBorder(Rectangle.NO_BORDER);
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase(clientByIllnessList.get(i).getEmail()));
+				cell.setFixedHeight(30);
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				// cell.setBorder(Rectangle.NO_BORDER);
+				table.addCell(cell);
+		
+				
+
+			}
+			document.add(table);
+			
+			
+		} catch(Exception e){
+			
+		}
+		document.close();
 	}
 
 }

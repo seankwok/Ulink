@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
@@ -61,7 +62,8 @@ public class RankingSpecialtyReport extends HttpServlet {
 		String startDate = request.getParameter("startDate");
 		String endDate = request.getParameter("endDate");
 		Utility utility = new Utility();
-		SpecialtyList = database.retrieveAllRankingSpecialty(utility.changeDateFormatDatabase(startDate), utility.changeDateExportFormat(endDate));
+		System.out.println(startDate);
+		SpecialtyList = database.retrieveAllRankingSpecialty(utility.changeDateExportFormat(startDate), utility.changeDateExportFormat(endDate));
 		
 		
 		int width = 500;
@@ -86,17 +88,22 @@ public class RankingSpecialtyReport extends HttpServlet {
 			writer = PdfWriter.getInstance(document, new FileOutputStream(filePath));
 			System.out.println(filePath);
 			document.open();
+			// Display dashboard for Medical
+			Image img = Image.getInstance(imagePath);
+			img.scaleAbsolute(60f, 60f);
+			img.setAlignment(img.ALIGN_CENTER);
+			document.add(img);
 			Paragraph p = new Paragraph("ULINK REPORTING SYSTEM");
 			p.setAlignment(p.ALIGN_CENTER);
 			document.add(p);
 			
 			PdfPTable table = new PdfPTable(2);
-			table.setTotalWidth(new float[] { 60, 60 });
+			table.setTotalWidth(new float[] { 120, 120 });
 			table.setLockedWidth(true);
 			PdfContentByte cb = writer.getDirectContent();
 
 			// first row
-			PdfPCell cell = new PdfPCell(new Phrase("Criteria : Specialty"));
+			PdfPCell cell = new PdfPCell(new Phrase("Criteria : Specialty - " + startDate + " to " + endDate));
 			cell.setFixedHeight(30);
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -112,6 +119,7 @@ public class RankingSpecialtyReport extends HttpServlet {
 			// cell.setBorder(Rectangle.NO_BORDER);
 			cell.setColspan(1);
 			table.addCell(cell);
+			
 			cell = new PdfPCell(new Phrase("Count"));
 			cell.setFixedHeight(30);
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -129,13 +137,16 @@ public class RankingSpecialtyReport extends HttpServlet {
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				// cell.setBorder(Rectangle.NO_BORDER);
+				cell.setColspan(1);
 				table.addCell(cell);
 
-				cell = new PdfPCell(new Phrase(SpecialtyList.get(i).getCount()));
+				cell = new PdfPCell(new Phrase(SpecialtyList.get(i).getCount()+""));
+				System.out.println(SpecialtyList.get(i).getCount());
 				// cell.setBorder(Rectangle.NO_BORDER);
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				cell.setFixedHeight(30);
+				cell.setColspan(1);
 				table.addCell(cell);
 
 				// third row
@@ -151,6 +162,7 @@ public class RankingSpecialtyReport extends HttpServlet {
 		} catch(Exception e){
 			
 		}
+		document.close();
 	}
 
 }

@@ -134,8 +134,8 @@ public class IndexVisaReport extends HttpServlet {
 		DatabaseConnection connection = new DatabaseConnection();
 		Utility utility = new Utility();
 	
-		ArrayList<Index> indexList = connection.retrieveAllIndex(utility.changeDateFormatDatabase(startDate),
-				utility.changeDateFormatDatabase(endDate), team);
+		ArrayList<Index> indexList = connection.retrieveAllIndex(utility.changeDateExportFormat(startDate),
+				utility.changeDateExportFormat(endDate), team);
 		LinkedHashMap<Integer, Double> pointSystem = utility.getIndexCount(indexList);
 
 		DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
@@ -179,7 +179,7 @@ public class IndexVisaReport extends HttpServlet {
 		for (int i = 0; i < personInChargeList.size(); i++) {
 			String temp = personInChargeList.get(i);
 			ArrayList<Index> indexList = connection.retrieveAllIndexByPerson(
-					utility.changeDateFormatDatabase(startDate), utility.changeDateFormatDatabase(endDate), team, temp);
+					utility.changeDateExportFormat(startDate), utility.changeDateExportFormat(endDate), team, temp);
 			LinkedHashMap<Integer, Double> pointSystem = utility.getIndexCount(indexList);
 			listAllPIC.add(new PersonInCharge(temp, pointSystem));
 		}

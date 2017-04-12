@@ -169,7 +169,7 @@ public class Utility {
 	}
 	
 	public String changeDateExportFormat(String date){
-		return date.substring(0,4)+ "/" + date.substring(5, 7) + "/" + date.substring(8);
+		return date.substring(0,4)+ "/" + date.substring(5, 7) + "/" + date.substring(8,10);
 	}
 	
 	public int getAge(String dob) {

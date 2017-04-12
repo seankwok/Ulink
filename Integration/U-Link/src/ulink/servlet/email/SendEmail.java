@@ -111,7 +111,7 @@ public class SendEmail extends HttpServlet {
 				Date date2 = new Date();
 				
 				String datetime = date2.getDate() + "/" + (date2.getMonth()+1) + "/" + (date2.getYear() + 1900) + " "
-						+ date2.getHours() + ":" + date2.getMinutes();
+						+ date2.getHours() + ":" + date2.getMinutes() + "H";
 
 				connection.createEmailDate(connection.getNameByEmail(email[i]), condition.getScreening(), datetime);
 			}

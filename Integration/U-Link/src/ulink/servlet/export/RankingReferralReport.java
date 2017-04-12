@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
@@ -86,17 +87,22 @@ public class RankingReferralReport extends HttpServlet {
 			writer = PdfWriter.getInstance(document, new FileOutputStream(filePath));
 			System.out.println(filePath);
 			document.open();
+			// Display dashboard for Medical
+			Image img = Image.getInstance(imagePath);
+			img.scaleAbsolute(60f, 60f);
+			img.setAlignment(img.ALIGN_CENTER);
+			document.add(img);
 			Paragraph p = new Paragraph("ULINK REPORTING SYSTEM");
 			p.setAlignment(p.ALIGN_CENTER);
 			document.add(p);
 			
 			PdfPTable table = new PdfPTable(3);
-			table.setTotalWidth(new float[] {60, 60, 60 });
+			table.setTotalWidth(new float[] {60, 120, 60 });
 			table.setLockedWidth(true);
 			PdfContentByte cb = writer.getDirectContent();
 
 			// first row
-			PdfPCell cell = new PdfPCell(new Phrase("Criteria : Referral"));
+			PdfPCell cell = new PdfPCell(new Phrase("Criteria : Referral - " + startDate + " to " + endDate));
 			cell.setFixedHeight(30);
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -130,7 +136,7 @@ public class RankingReferralReport extends HttpServlet {
 			for (int i = 0; i < referredByList.size(); i++) {
 				
 				// second row
-				cell = new PdfPCell(new Phrase(referredByList.get(i).getRanking()));
+				cell = new PdfPCell(new Phrase(referredByList.get(i).getRanking() + ""));
 				cell.setFixedHeight(30);
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -146,7 +152,8 @@ public class RankingReferralReport extends HttpServlet {
 
 				// third row
 
-				cell = new PdfPCell(new Phrase(new Phrase(referredByList.get(i).getCount())));
+				cell = new PdfPCell(new Phrase(new Phrase(referredByList.get(i).getCount() + "")));
+				
 				// cell.setBorder(Rectangle.NO_BORDER);
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -162,6 +169,7 @@ public class RankingReferralReport extends HttpServlet {
 		} catch(Exception e){
 			
 		}
+		document.close();
 	}
 
 }
