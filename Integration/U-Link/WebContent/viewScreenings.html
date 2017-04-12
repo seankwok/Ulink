@@ -31,7 +31,6 @@
 		});
 
 		$('#export').click(function(clickedID) {
-			console.log(clickedID);
 			var sendData = {
 				"ID" : clickedID
 			};
@@ -41,7 +40,7 @@
 				data : sendData,
 				complete : function(data) {
 					var json = jQuery.parseJSON(JSON.stringify(data));
-					window.location = "/ClientScreeningEmail.pdf"
+					window.location = "\ClientScreeningEmail.pdf"
 				}
 			});
 
