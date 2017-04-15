@@ -397,7 +397,8 @@ public class DashboardReport extends HttpServlet {
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				table2.addCell(cell);
 
-				cell = new PdfPCell(new Phrase(new Phrase(listDoctor.get(j).getspecialty() + "")));
+				cell = new PdfPCell(new Phrase(listDoctor.get(j).getspecialty()));
+				
 				// cell.setBorder(Rectangle.NO_BORDER);
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -415,13 +416,13 @@ public class DashboardReport extends HttpServlet {
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				cell.setFixedHeight(30);
 				table2.addCell(cell);
-				cell = new PdfPCell(new Phrase(new Phrase(lastListDoctor.get(j).getClinic() + "")));
+				cell = new PdfPCell(new Phrase(lastListDoctor.get(j).getClinic()));
 				// cell.setBorder(Rectangle.NO_BORDER);
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				table2.addCell(cell);
 
-				cell = new PdfPCell(new Phrase(new Phrase(lastListDoctor.get(j).getspecialty() + "")));
+				cell = new PdfPCell(new Phrase(lastListDoctor.get(j).getspecialty()));
 				// cell.setBorder(Rectangle.NO_BORDER);
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -437,7 +438,7 @@ public class DashboardReport extends HttpServlet {
 
 			// Display dashboard for visa type
 			PdfContentByte contentByte3 = writer.getDirectContent();
-			PdfTemplate template3 = contentByte3.createTemplate(600, height);
+			PdfTemplate template3 = contentByte3.createTemplate(630, height);
 			Graphics2D graphics2d3 = template3.createGraphics(width, height, new DefaultFontMapper());
 			Rectangle2D rectangle2d3 = new Rectangle2D.Double(0, 0, width, height);
 			dashboardVisaRequested.draw(graphics2d3, rectangle2d3);

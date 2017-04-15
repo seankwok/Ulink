@@ -96,7 +96,7 @@ public class RankingDoctorReport extends HttpServlet {
 			document.add(p);
 			
 			PdfPTable table = new PdfPTable(5);
-			table.setTotalWidth(new float[] {60, 60, 60, 60, 60 });
+			table.setTotalWidth(new float[] {120, 120, 120, 120, 120 });
 			table.setLockedWidth(true);
 			PdfContentByte cb = writer.getDirectContent();
 
@@ -138,7 +138,7 @@ public class RankingDoctorReport extends HttpServlet {
 			cell.setColspan(1);
 			table.addCell(cell);
 			cell = new PdfPCell(new Phrase("Number of Appointments"));
-			cell.setFixedHeight(30);
+			cell.setFixedHeight(40);
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			// cell.setBorder(Rectangle.NO_BORDER);
@@ -149,7 +149,8 @@ public class RankingDoctorReport extends HttpServlet {
 				
 				// second row
 				cell = new PdfPCell(new Phrase(doctorList.get(i).getRanking() + ""));
-				cell.setFixedHeight(30);
+				//System.out.println(doctorList.get(i).getRanking());
+				cell.setFixedHeight(40);
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				// cell.setBorder(Rectangle.NO_BORDER);

@@ -89,7 +89,7 @@ public class RankingDoctorBySpecialty extends HttpServlet {
 			document.add(p);
 			
 			PdfPTable table = new PdfPTable(2);
-			table.setTotalWidth(new float[] { 60, 60 });
+			table.setTotalWidth(new float[] { 120, 120 });
 			table.setLockedWidth(true);
 			PdfContentByte cb = writer.getDirectContent();
 

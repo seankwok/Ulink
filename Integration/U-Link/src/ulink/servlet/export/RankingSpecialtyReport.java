@@ -97,8 +97,8 @@ public class RankingSpecialtyReport extends HttpServlet {
 			p.setAlignment(p.ALIGN_CENTER);
 			document.add(p);
 			
-			PdfPTable table = new PdfPTable(2);
-			table.setTotalWidth(new float[] { 120, 120 });
+			PdfPTable table = new PdfPTable(3);
+			table.setTotalWidth(new float[] {120, 120, 120 });
 			table.setLockedWidth(true);
 			PdfContentByte cb = writer.getDirectContent();
 
@@ -108,10 +108,17 @@ public class RankingSpecialtyReport extends HttpServlet {
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			cell.setBorder(Rectangle.NO_BORDER);
-			cell.setColspan(2);
+			cell.setColspan(3);
 			table.addCell(cell);
 
-	
+			cell = new PdfPCell(new Phrase("Ranking"));
+			cell.setFixedHeight(30);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			// cell.setBorder(Rectangle.NO_BORDER);
+			cell.setColspan(1);
+			table.addCell(cell);
+			
 			cell = new PdfPCell(new Phrase("Specialty"));
 			cell.setFixedHeight(30);
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -130,6 +137,15 @@ public class RankingSpecialtyReport extends HttpServlet {
 		
 			
 			for (int i = 0; i < SpecialtyList.size(); i++) {
+				
+				//first Row
+				cell = new PdfPCell(new Phrase(SpecialtyList.get(i).getRanking()+ ""));
+				cell.setFixedHeight(30);
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				// cell.setBorder(Rectangle.NO_BORDER);
+				cell.setColspan(1);
+				table.addCell(cell);
 				
 				// second row
 				cell = new PdfPCell(new Phrase(SpecialtyList.get(i).getSpecialty()));

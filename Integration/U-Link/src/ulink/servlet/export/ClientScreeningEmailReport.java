@@ -72,7 +72,7 @@ public class ClientScreeningEmailReport extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 		System.out.println("TEST");
-		
+
 		DatabaseConnection connection = new DatabaseConnection();
 		System.out.println("Enter email");
 		// int age = Integer.parseInt(request.getParameter("age"));
@@ -81,7 +81,12 @@ public class ClientScreeningEmailReport extends HttpServlet {
 		int ID = Integer.parseInt(request.getParameter("ID"));
 		HttpSession session = request.getSession();
 		String name = request.getParameter("name");
-		//String direction = request.getParameter("direction");
+		String [] clients = request.getParameterValues("clients");
+		String[] email = request.getParameterValues("email");
+		
+		System.out.println(ID);
+		System.out.println(clients);
+		// String direction = request.getParameter("direction");
 		session.setAttribute("ID", ID);
 		Condition condition = connection.retrieveAllConditionByID(ID);
 
@@ -123,15 +128,15 @@ public class ClientScreeningEmailReport extends HttpServlet {
 				}
 			}
 		}
-		String filePath = null;
+	/*	String filePath = null;
 		// OutputStream out = response.getOutputStream();
 
 		PdfWriter writer = null;
 		final String TMP_DIR_PATH = "/ClientScreeningEmail.pdf";
 		final String image_path = "/ulink.jpg";
-		
-		Document document = new Document();
 
+		Document document = new Document();
+		
 		try {
 			response.setContentType("application/pdf");
 
@@ -151,9 +156,9 @@ public class ClientScreeningEmailReport extends HttpServlet {
 			Paragraph p = new Paragraph("ULINK REPORTING SYSTEM");
 			p.setAlignment(p.ALIGN_CENTER);
 			document.add(p);
-			
+
 			PdfPTable table = new PdfPTable(4);
-			table.setTotalWidth(new float[] {120, 120, 120, 120 });
+			table.setTotalWidth(new float[] { 120, 120, 120, 120 });
 			table.setLockedWidth(true);
 			PdfContentByte cb = writer.getDirectContent();
 
@@ -194,12 +199,11 @@ public class ClientScreeningEmailReport extends HttpServlet {
 			// cell.setBorder(Rectangle.NO_BORDER);
 			cell.setColspan(1);
 			table.addCell(cell);
-	
-			
+
 			for (int i = 0; i < clientByIllnessList.size(); i++) {
-				
+
 				// second row
-				cell = new PdfPCell(new Phrase((i+1)+ ""));
+				cell = new PdfPCell(new Phrase((i + 1) + ""));
 				cell.setFixedHeight(30);
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -227,17 +231,15 @@ public class ClientScreeningEmailReport extends HttpServlet {
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				// cell.setBorder(Rectangle.NO_BORDER);
 				table.addCell(cell);
-		
-				
 
 			}
 			document.add(table);
-			
-			
-		} catch(Exception e){
-			
-		}
-		document.close();
+
+		} catch (Exception e) {
+
+		} 
+			document.close();
+		*/
 	}
 
 }

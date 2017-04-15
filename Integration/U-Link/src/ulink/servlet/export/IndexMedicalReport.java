@@ -191,7 +191,7 @@ public class IndexMedicalReport extends HttpServlet {
 		for (int i = 0; i < listAllPIC.size(); i++) {
 			PersonInCharge personInCharge = listAllPIC.get(i);
 			for (Integer key : personInCharge.getPointSystem().keySet()) {
-				System.out.println(personInCharge.getPointSystem().get(key) + " TEST " + key);
+				//System.out.println(personInCharge.getPointSystem().get(key) + " TEST " + key);
 				dataSet.setValue(personInCharge.getPointSystem().get(key), key+"", personInCharge.getName());
 			}
 		}
@@ -211,8 +211,20 @@ public class IndexMedicalReport extends HttpServlet {
 
 		renderer.setSeriesItemLabelGenerator(0,
 				new StandardCategoryItemLabelGenerator("{2}", NumberFormat.getInstance()));
+		renderer.setSeriesItemLabelGenerator(1,
+				new StandardCategoryItemLabelGenerator("{2}", NumberFormat.getInstance()));
+		renderer.setSeriesItemLabelGenerator(2,
+				new StandardCategoryItemLabelGenerator("{2}", NumberFormat.getInstance()));
+		renderer.setSeriesItemLabelGenerator(3,
+				new StandardCategoryItemLabelGenerator("{2}", NumberFormat.getInstance()));
 
+		
+		
+		
 		renderer.setSeriesItemLabelsVisible(0, true);
+		renderer.setSeriesItemLabelsVisible(1, true);
+		renderer.setSeriesItemLabelsVisible(2, true);
+		renderer.setSeriesItemLabelsVisible(3, true);
 
 		return chart;
 	}

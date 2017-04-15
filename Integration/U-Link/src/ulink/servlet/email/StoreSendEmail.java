@@ -33,6 +33,7 @@ public class StoreSendEmail extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		String[] email = request.getParameterValues("email");
+		
 		session.setAttribute("emailList", email);
 		PrintWriter out = response.getWriter();
 		String jsonInString = "{\"status\":\"success\"}";

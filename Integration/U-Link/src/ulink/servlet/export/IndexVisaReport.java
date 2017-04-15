@@ -206,10 +206,23 @@ public class IndexVisaReport extends HttpServlet {
 				new TextTitle("Number of Visa Client (Past 6 months)", new Font("Times New Roman", Font.BOLD, 12)));
 		final CategoryItemRenderer renderer = p.getRenderer();
 
+
 		renderer.setSeriesItemLabelGenerator(0,
 				new StandardCategoryItemLabelGenerator("{2}", NumberFormat.getInstance()));
+		renderer.setSeriesItemLabelGenerator(1,
+				new StandardCategoryItemLabelGenerator("{2}", NumberFormat.getInstance()));
+		renderer.setSeriesItemLabelGenerator(2,
+				new StandardCategoryItemLabelGenerator("{2}", NumberFormat.getInstance()));
+		renderer.setSeriesItemLabelGenerator(3,
+				new StandardCategoryItemLabelGenerator("{2}", NumberFormat.getInstance()));
 
+		
+		
+		
 		renderer.setSeriesItemLabelsVisible(0, true);
+		renderer.setSeriesItemLabelsVisible(1, true);
+		renderer.setSeriesItemLabelsVisible(2, true);
+		renderer.setSeriesItemLabelsVisible(3, true);
 
 		return chart;
 	}
