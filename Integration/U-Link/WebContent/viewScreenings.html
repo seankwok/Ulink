@@ -34,17 +34,14 @@
 	
 	function exportPDF(){
 		clickedID = sessionStorage.getItem("clickedID");
-		clients = $('input[name="selectClients"]:checked').map(function() {
+		var clients = $('input[name="selectClients"]:checked').map(function() {
 		    return this.value;
 		}).get();
- 			var sendData = {
-					"ID" : clickedID,
-					"clients": clients
-				};
+ 			
 				$.ajax({
 					url : "ClientScreeningEmail",
 					type : "post",
-					data : sendData,
+					data : 'ID=' + clickedID + "&clients=" + clients,
 					complete : function(data) {
 						var json = jQuery.parseJSON(JSON.stringify(data));
 						window.location = "\ClientScreeningEmail.pdf"

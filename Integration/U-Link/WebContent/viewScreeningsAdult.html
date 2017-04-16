@@ -42,23 +42,20 @@
 	
 	function exportPDF(){ 
 		clickedID = sessionStorage.getItem("clickedID");
-		clients = $('input[name="selectClients"]:checked').map(function() {
+		var clients = $('input[name="selectClients"]:checked').map(function() {
 		    return this.value;
 		}).get();
 		if (clients == ""){
 			$('#message').html("<div class='alert alert-danger' role='alert'><center><b> Please select at least 1 client. </b></center></div>");
 		}else{
-			var sendData = {
-					"ID" : clickedID,
-					"clients": clients
-				};
+			
 			$.ajax({
 				url : "ClientScreeningEmail",
 				type : "post",
-				data : sendData,
+				data : 'ID=' + clickedID + "&clients=" + clients,
 				complete : function(data) {
 					var json = jQuery.parseJSON(JSON.stringify(data));
-					//window.location = "\ClientScreeningEmail.pdf"
+					window.location = "\ClientScreeningEmail.pdf"
 				}
 			});
 		} 
