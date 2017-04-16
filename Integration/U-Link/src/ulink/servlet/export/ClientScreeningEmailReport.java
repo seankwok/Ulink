@@ -109,9 +109,10 @@ public class ClientScreeningEmailReport extends HttpServlet {
 			} else if (client.getAge() <= 2 && client.getDateOfBirth().length() > 0) {
 				String date = client.getDateOfBirth();
 				// System.out.println(date + "qwewqewqewq");
-				int day = Integer.parseInt(date.substring(0, 2));
-				int month = Integer.parseInt(date.substring(3, 5)) - 1;
-				int year = Integer.parseInt(date.substring(6)) + 1900;
+				System.out.println(date);
+				int day = Integer.parseInt(date.substring(8));
+				int month = Integer.parseInt(date.substring(5, 7)) - 1;
+				int year = Integer.parseInt(date.substring(0,4)) + 1900;
 
 				Date current = new Date();
 				Date dob = new Date(day, month, year);
@@ -128,7 +129,7 @@ public class ClientScreeningEmailReport extends HttpServlet {
 				}
 			}
 		}
-	/*	String filePath = null;
+		String filePath = null;
 		// OutputStream out = response.getOutputStream();
 
 		PdfWriter writer = null;
@@ -239,7 +240,7 @@ public class ClientScreeningEmailReport extends HttpServlet {
 
 		} 
 			document.close();
-		*/
+		
 	}
 
 }

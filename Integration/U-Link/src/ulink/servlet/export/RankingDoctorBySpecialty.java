@@ -89,7 +89,7 @@ public class RankingDoctorBySpecialty extends HttpServlet {
 			document.add(p);
 			
 			PdfPTable table = new PdfPTable(2);
-			table.setTotalWidth(new float[] { 120, 120 });
+			table.setTotalWidth(new float[] { 120, 120, 120 });
 			table.setLockedWidth(true);
 			PdfContentByte cb = writer.getDirectContent();
 
@@ -110,7 +110,7 @@ public class RankingDoctorBySpecialty extends HttpServlet {
 			// cell.setBorder(Rectangle.NO_BORDER);
 			cell.setColspan(1);
 			table.addCell(cell);
-			cell = new PdfPCell(new Phrase("Count"));
+			cell = new PdfPCell(new Phrase("Number of Engagements"));
 			cell.setFixedHeight(30);
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);

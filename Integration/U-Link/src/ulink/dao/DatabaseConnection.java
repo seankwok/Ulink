@@ -237,7 +237,7 @@ public class DatabaseConnection {
 					check++;
 
 				} else {
-					if (ranking < 3) {
+					if (check < 5) {
 						check++;
 
 						doctorList.add(new RankingDoctor(check, doctor, clinic, specialty, count));

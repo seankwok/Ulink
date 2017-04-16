@@ -127,7 +127,7 @@ public class RankingSpecialtyReport extends HttpServlet {
 			cell.setColspan(1);
 			table.addCell(cell);
 			
-			cell = new PdfPCell(new Phrase("Count"));
+			cell = new PdfPCell(new Phrase("Number of Engagements"));
 			cell.setFixedHeight(30);
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -157,7 +157,7 @@ public class RankingSpecialtyReport extends HttpServlet {
 				table.addCell(cell);
 
 				cell = new PdfPCell(new Phrase(SpecialtyList.get(i).getCount()+""));
-				System.out.println(SpecialtyList.get(i).getCount());
+				//System.out.println(SpecialtyList.get(i).getCount());
 				// cell.setBorder(Rectangle.NO_BORDER);
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
