@@ -82,53 +82,15 @@ public class ClientScreeningEmailReport extends HttpServlet {
 		HttpSession session = request.getSession();
 		String name = request.getParameter("name");
 		String [] clients = request.getParameterValues("clients");
-		String[] email = request.getParameterValues("email");
-		
-		System.out.println(ID);
-		System.out.println(clients);
+		//String[] email = request.getParameterValues("email");
+		clients = clients[0].split(",");
+	//	System.out.println(ID);
+		//System.out.println(clients[0]);
 		// String direction = request.getParameter("direction");
 		session.setAttribute("ID", ID);
 		Condition condition = connection.retrieveAllConditionByID(ID);
 
-		ArrayList<Client> clientList = connection.retrieveAllClientListEmail("age", "ASC");
-		ArrayList<ClientByIllness> clientByIllnessList = new ArrayList<>();
-		for (int i = 0; i < clientList.size(); i++) {
-			Client client = clientList.get(i);
-			if ((condition.getType().toLowerCase().equals("male") || condition.getType().toLowerCase().equals("female"))
-					&& client.getEmail().length() > 0) {
-				if (client.getAge() >= condition.getAgeRequired()
-						&& client.getGender().toLowerCase().equals(condition.getType().toLowerCase())) {
-					clientByIllnessList
-							.add(new ClientByIllness(client.getClientName(), client.getAge(), client.getEmail(),
-									client.getGender(), condition.getScreening(), condition.getConditionName(),
-									connection.retrieveLatestDateSend(client.getClientName(), condition.getScreening()),
-									client.getFollowUpPerson()));
-					// System.out.println("TQEQWEQWEQW " +
-					// connection.retrieveLatestDateSend(client.getClientName(),condition.getScreening()));
-				}
-			} else if (client.getAge() <= 2 && client.getDateOfBirth().length() > 0) {
-				String date = client.getDateOfBirth();
-				// System.out.println(date + "qwewqewqewq");
-				System.out.println(date);
-				int day = Integer.parseInt(date.substring(8));
-				int month = Integer.parseInt(date.substring(5, 7)) - 1;
-				int year = Integer.parseInt(date.substring(0,4)) + 1900;
-
-				Date current = new Date();
-				Date dob = new Date(day, month, year);
-
-				int months = (current.getMonth() - dob.getMonth()) + (current.getYear() - dob.getYear()) * 12;
-
-				if (months >= condition.getAgeRequired()) {
-					clientByIllnessList
-							.add(new ClientByIllness(client.getClientName(), client.getAge(), client.getEmail(),
-									client.getGender(), condition.getScreening(), condition.getConditionName(),
-									connection.retrieveLatestDateSend(client.getClientName(), condition.getScreening()),
-									client.getFollowUpPerson()));
-
-				}
-			}
-		}
+		
 		String filePath = null;
 		// OutputStream out = response.getOutputStream();
 
@@ -201,8 +163,10 @@ public class ClientScreeningEmailReport extends HttpServlet {
 			cell.setColspan(1);
 			table.addCell(cell);
 
-			for (int i = 0; i < clientByIllnessList.size(); i++) {
-
+			for (int i = 0; i < clients.length; i++) {
+				
+				ClientByIllness clientByIllness = connection.getClientByEmail(clients[i]);
+				
 				// second row
 				cell = new PdfPCell(new Phrase((i + 1) + ""));
 				cell.setFixedHeight(30);
@@ -211,7 +175,7 @@ public class ClientScreeningEmailReport extends HttpServlet {
 				// cell.setBorder(Rectangle.NO_BORDER);
 				table.addCell(cell);
 
-				cell = new PdfPCell(new Phrase(clientByIllnessList.get(i).getName()));
+				cell = new PdfPCell(new Phrase(clientByIllness.getName()));
 				// cell.setBorder(Rectangle.NO_BORDER);
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -220,13 +184,13 @@ public class ClientScreeningEmailReport extends HttpServlet {
 
 				// third row
 
-				cell = new PdfPCell(new Phrase(new Phrase(clientByIllnessList.get(i).getGender())));
+				cell = new PdfPCell(new Phrase(new Phrase(clientByIllness.getGender())));
 				// cell.setBorder(Rectangle.NO_BORDER);
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				table.addCell(cell);
 
-				cell = new PdfPCell(new Phrase(clientByIllnessList.get(i).getEmail()));
+				cell = new PdfPCell(new Phrase(clientByIllness.getEmail()));
 				cell.setFixedHeight(30);
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);

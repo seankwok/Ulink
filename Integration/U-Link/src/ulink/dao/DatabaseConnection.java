@@ -431,6 +431,42 @@ public class DatabaseConnection {
 		return name;
 
 	}
+	
+	public ClientByIllness getClientByEmail(String email) {
+		Connection con;
+		String name = null;
+		//int age;
+		//String email;
+		String gender= null;
+		//String screeningName;
+		//String conditionName;
+		//String date;
+		//String followUpPerson;
+	
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ulink", "root", "9eueuBNc8bM3");
+
+			Statement stmt = con.createStatement();
+			String sql = "Select clientName, gender from client where email = '" + email + "' group by email limit 1" ;
+			ResultSet rs = stmt.executeQuery(sql);
+			Utility utility = new Utility();
+
+			while (rs.next()) {
+				name = rs.getString(1);
+				gender = rs.getString(2);
+			}
+
+			con.close();
+
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return new ClientByIllness(name, 0, email, gender, null,null,null,null);
+
+	}
 
 	public ArrayList<RankingDoctor> retrieveAllRankingDoctor(String startDate, String endDate) {
 		Connection con;
